@@ -1,0 +1,35 @@
+﻿@model Newtonsoft.Json.Linq.JArray
+<br />
+<div class="text-center">
+    @Accountingsystem.Resources.ProductCreate.ItemsData
+</div>
+<br />
+
+<div class="table-responsive mb-4 mt-4">
+    <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>@Accountingsystem.Resources.SettlementOfStoresDetails.ItemNumber</th>
+                <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Item</th>
+                <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Quantity</th>
+                <th>@Accountingsystem.Resources.ProductCreate.AverageItemCost</th>
+                <th>@Accountingsystem.Resources.ProductCreate.AverageTotalCost</th>
+                <th>@Accountingsystem.Resources.ProductCreate.SellingPrice</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>@item["Product_ID"]</td>
+                    <td>@item["Prod_Name"]</td>
+                    <td>@item["Product_Quantity"]</td>
+                    <td>@item["Product_Avg_Cost"]</td>
+                    <td>@item["Batch_Cost"]</td>
+                    <td>@item["SalesPrice"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,93 @@
+﻿@model Accountingsystem.Models.Maintenance_Invoice_Master
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>التفاصيل</h2>
+
+<div>
+    <h4>تفاصيل فاتورة الصيانة</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("رقم الفاتورة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Main_Invoice_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("العميل")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ البدء")
+        </dt>
+
+        <dd>
+            @Model.Starting_Date.ToString("yyyy/MM/dd ")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ الانتهاء")
+        </dt>
+
+        <dd>
+            @Model.Ending_Date.ToString("yyyy/MM/dd ")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("رقم الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscription_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("رقم الفاتورة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Main_Invoice_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("الوصف")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describtion)
+        </dd>
+
+    </dl>
+</div>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>الصنف</th>
+            <th>الكمية</th>
+
+        </tr>
+
+        @foreach (var detail in Model.Maintenance_Invoice_Detail)
+        {
+            <tr>
+                <td>@detail.Subscription_Name</td>
+             
+                <td> @Math.Round(detail.Subscription_Cost, 2, MidpointRounding.AwayFromZero)</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<a class="btn BTN-style final-BTN" href="@Url.Action("Index")">العودة إلي القائمة</a>

@@ -1,0 +1,273 @@
+﻿@model Accountingsystem.Models.Vacations
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.VacationsCreate.VacationDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+     
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                @Accountingsystem.Resources.VacationsCreate.VacationDetails
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.Employee)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Employee.Emp_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.VacationType)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Vacation_Types.Vacation_Type)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.NumberOfDays)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.NumberOfDay)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.Case)
+                                        </div>
+                                        <div>
+                                            @if (Model.Status == null)
+                                            {
+
+                                                @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.Pending)
+                                            }
+                                            @if (Model.Status == true)
+                                            {
+
+                                                @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.VacationWasApproved)
+                                            }
+
+                                            @if (Model.Status == false)
+                                            {
+
+                                                @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.VacationWasRefused)
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.EnterVacationStartDate)
+                                        </div>
+                                        <div>
+                                            @Model.Start_Date_Vacations.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.VacationEndDate)
+                                        </div>
+                                        <div>
+                                            @Model.End_Date_Vacations.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.VacationReason)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.Reason, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.VacationsCreate.Notes)
+                            </div>
+
+                            @Html.TextAreaFor(model => model.MangerDescription, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row layout-top-spacing">
+                @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@ && Model.Attachment != null)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="downbtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("ReturnVacationFile", new { id = Model.Vacation_Id })">
+                                @Accountingsystem.Resources.VacationsCreate.DownloadVacationFile
+                                <span id="downbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                }
+                @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@ && Model.Status==null)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="Approvbtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("ApprovfoVacation", new { id = Model.Vacation_Id })">
+                             @Accountingsystem.Resources.VacationsCreate.Approvals
+                                <span id="ApprovbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+                        </div>
+
+                    </div>
+                }
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+                            {
+                            <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                                @Accountingsystem.Resources.VacationsCreate.AllVacationsList
+                                <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                                <a id="Listvacbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("IndexOfPenddingVac")'>
+                                    @Accountingsystem.Resources.VacationsCreate.ListOfVacationsUnderAccreditation
+                                    <span id="ListvacbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+                                <a id="ListEmp" class="btn btn-block btn-outline-secondary mb-lg-0"  href="@Url.Action("IndexOfEmployee", new { id = Model.Employee_Id})">
+                                    @Accountingsystem.Resources.VacationsCreate.ListOfEmployeeVacations
+                                    <span id="ListEmpSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            </div>
+                    </div>
+
+                </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+   
+        $("#downbtn").click(function (e) {
+            $("#downbtnSpinner").show();
+        });
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+        $("#Approvbtn").click(function (e) {
+            $("#ApprovbtnSpinner").show();
+        });
+        $("#Listvacbtn").click(function (e) {
+            $("#ListvacbtnSpinner").show();
+        });
+        $("#ListEmp").click(function (e) {
+            $("#ListEmpSpinner").show();
+        });
+    </script>
+    
+}

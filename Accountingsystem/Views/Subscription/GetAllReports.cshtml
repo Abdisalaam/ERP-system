@@ -1,0 +1,182 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title =Accountingsystem.Resources.validate.ReportSub;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        @Accountingsystem.Resources.validate.ReportSub
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="row col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetsubTeam", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.ReportSubTeam
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesReturnReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("getListAllSubscriptionPDF", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.ReportAllSub
+                            <span id="salesReturnReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SubSciptionTypeView", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.ReportSubType
+                            <span id="salesClassificationReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn1" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SubscriptionStop", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.ReportSubStatus
+                            <span id="salesClassificationoReportBtn1Spinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn2" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("MaintainanceReport", new { controller = "ReportsNew" })'>
+                            @Accountingsystem.Resources.validate.ReportSubTrans
+                            <span id="salesClassificationoReportBtn2Spinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn3" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SubscriptionInvoiceReport", new { controller = "ReportsNew" })'>
+                            @Accountingsystem.Resources.validate.ReportSubSales
+                            <span id="salesClassificationoReportBtn3Spinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn4" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SubscriptionInvoiceReportForEmployee", new { controller = "ReportsNew" })'>
+                            @Accountingsystem.Resources.validate.ReportSubSalesForEmp
+                            <span id="salesClassificationoReportBtn4Spinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn5" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetSubsNonPaid", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.ReportSubPayed
+                            <span id="salesClassificationoReportBtn5Spinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="CustomerSubscribtionReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetCustomerSubScribtion", new { controller = "Reports" })'>
+                            @Accountingsystem.Resources.validate.CustomerSubscribtionReport
+                            <span id="CustomerSubscribtionReportpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@*<h2 class="HEADTITLE-STYLE">تقارير المخازن</h2>
+
+    <a class="btn BTN-style" href='@Url.Action("MakeWareHouseGet")'>
+        تقارير تكاليف المخازن
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("getDetailOfStore","ReportsNew")'>
+        تقرير كميات المخزن بالتكلفة
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("CardOfProductQuanity","ReportsNew")'>
+        كارت الصنف بالكمية
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("CardOfStore","ReportsNew")'>
+        كارت الصنف فى المخزن
+    </a>*@
+@section Scripts {
+
+
+    <script type="text/javascript">
+        $("#salesReportBtn").click(function (e) {
+            $("#salesReportBtnSpinner").show();
+        });
+        $("#CustomerSubscribtionReportBtn").click(function (e) {
+            $("#CustomerSubscribtionReportpinner").show();
+        });
+        
+        $("#salesReturnReportBtn").click(function (e) {
+            $("#salesReturnReportBtnSpinner").show();
+        });
+        $("#salesClassificationReportBtn").click(function (e) {
+            $("#salesClassificationReportBtnSpinner").show();
+        });
+        $("#salesClassificationoReportBtn1").click(function (e) {
+            $("#salesClassificationoReportBtn1Spinner").show();
+        });
+        $("#salesClassificationoReportBtn2").click(function (e) {
+            $("#salesClassificationoReportBtn2Spinner").show();
+        });
+        $("#salesClassificationoReportBtn3").click(function (e) {
+            $("#salesClassificationoReportBtn3Spinner").show();
+        });
+        $("#salesClassificationoReportBtn4").click(function (e) {
+            $("#salesClassificationoReportBtn4Spinner").show();
+        });
+        $("#salesClassificationoReportBtn5").click(function (e) {
+            $("#salesClassificationoReportBtn5Spinner").show();
+        });
+    </script>
+}
+
+

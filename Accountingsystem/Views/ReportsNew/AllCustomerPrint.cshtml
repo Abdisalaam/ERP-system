@@ -1,0 +1,241 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.ReportsNewVM.CustomerInfoVM>
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+    table, th, td {
+        border-bottom: 2px solid black;
+        border-collapse: collapse;
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير العملاء</title>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.FirstOrDefault().company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.FirstOrDefault().company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="1300">
+
+
+                <tr style="border-bottom:hidden">
+                    <td style="text-align:right;">@Model.FirstOrDefault().company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير العملاء / Customers Report
+
+        </div>
+
+
+        <br />
+
+        <table dir="rtl">
+            <thead>
+                <tr>
+
+                    <th width="100">
+                        رقم العميل<br /> Code
+                    </th>
+
+                    <th>
+                        العميل<br /> Customer
+                    </th>
+                    @if (Model.Where(a => a.customer.Customer_Website != null && a.customer.Customer_Website != "").Count() > 0)
+                    {
+                        <th>
+                            الموقع الالكتروني<br /> website
+                        </th>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_Mail != null && a.customer.Customer_Mail != "").Count() > 0)
+                    {
+                        <th>
+                            الايميل<br /> Email
+                        </th>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_TaxNumber != null && a.customer.Customer_TaxNumber != "").Count() > 0)
+                    {
+                        <th>
+                            الرقم الضريبي<br /> VAT NO
+                        </th>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_Address != null && a.customer.Customer_Address != "").Count() > 0)
+                    {
+                        <th>
+                            العنوان<br />Address
+                        </th>
+                    }
+                        <th>
+                            الجوال <br />
+                            Phone
+                        </th>
+                        <th>
+                            الرصيد
+                            <br />
+                            Balance
+                        </th>
+
+                    </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                <tr>
+                    <td width="200">
+
+                        @item.CustomerCode
+                    </td>
+                    <td>
+
+                        @item.CustomerName
+                    </td>
+                    @if (Model.Where(a => a.customer.Customer_Website != null && a.customer.Customer_Website != "").Count() > 0)
+                    {
+                        <td>
+                           @item.customer.Customer_Website
+                        </td>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_Mail != null && a.customer.Customer_Mail != "").Count() > 0)
+                    {
+                        <td>
+                            @item.customer.Customer_Mail
+                        </td>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_TaxNumber != null && a.customer.Customer_TaxNumber != "").Count() > 0)
+                    {
+                        <td>
+                            @item.customer.Customer_TaxNumber
+                        </td>
+                    }
+                    @if (Model.Where(a => a.customer.Customer_Address != null && a.customer.Customer_Address != "").Count() > 0)
+                    {
+                        <td>
+                            @item.customer.Customer_Address
+                        </td>
+                    }
+
+                    <td>
+
+                        @item.CustomerPhone
+                    </td>
+                    <td>
+                        @item.Balance
+                    </td>
+                </tr>
+                   
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

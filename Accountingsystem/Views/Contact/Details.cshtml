@@ -1,0 +1,60 @@
+﻿@model Accountingsystem.Models.Contacts
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>التفاصيل</h2>
+
+<div>
+   
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+
+
+                    <td id="Rec_ID">
+                        @Html.DisplayFor(model => model.Contact_Name)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("اسم جهة الاتصال")
+                    </th>
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Contact_Company)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("شركة التابعة لي جهة الاتصال")
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Contact_Email)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("لبريد الالكتروني لجهة الاتصال")
+                    </th>
+                    @{var thisCust = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(Model.Customer_Id.ToString())); }
+                    <td class="col-md-2">
+                        @Html.HiddenFor(model => model.Customer_Id)
+                        <h>@thisCust.Customer_Name</h>
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("العميل")
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+        </div>
+        <p>
+            @Html.ActionLink("تعديل", "Edit", new { /* id = Model.PrimaryKey */ }) |
+            @Html.ActionLink("العودة الي القائمة", "Index")
+        </p>

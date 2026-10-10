@@ -1,0 +1,29 @@
+﻿@model Accountingsystem.ViewModel.PurMasterVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="col-md-5">
+        <div class="Dropdownlist">
+            @Html.DropDownListFor(model => model.SelectedCurrencyId, Model.MyCurrencyList, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+            @Html.ValidationMessageFor(model => model.SelectedCurrencyId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <span class="required-mark col-md-1">*</span>
+    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceCreatePurchase.SelectCurrency>
+        <i class="fas fa-question-circle"></i>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="control-label" for="SelectedCurrencyId">@Accountingsystem.Resources.PurchaseInvoiceCreatePurchase.Currency</label>
+        </div>
+    </div>
+
+
+}
+@*<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+@*@Scripts.Render("~/bundles/jqueryval")*@

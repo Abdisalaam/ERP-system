@@ -1,0 +1,1157 @@
+﻿@using Microsoft.AspNet.Identity
+@{ var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    Accountingsystem.Models.ProductBatches.CreateProductBatch();
+    Accountingsystem.Models.ChartOfAccounting.changeAccountValue();
+    var usermanger = User.Identity.GetUserId();
+    var usermangername = User.Identity.GetUserName();
+    var role = Accountingsystem.Models.SystemRole.getsystemFunctionByUser(usermanger);
+    var expence = true;
+    var project = true;
+    var hr = true;
+    var subscript = true;
+    var asset = true;
+    var Accounting = true;
+    var ChartOfAccount = true;
+    var Report = true;
+    var Maintenance = false;
+    var Casher = false;
+    var sewing = false;
+    var Supplier = true;
+    var purchase = true;
+    var sales = true;
+    var commissions = false;
+    var Attendingandleaving = false;
+    var numberOfStore = 5000;
+    var numberofPOS = 5000;
+    var subledger = 5000;
+    var store = 5000;
+    var lang = "";
+    HttpCookie cookie = Request.Cookies["Language"];
+    if (cookie == null || cookie.Value == null || cookie.Value == "ar")
+    {
+        lang = "ar";
+    }
+    else
+    {
+        lang = "en";
+    }
+    if (package != null)
+    {
+        if (package.Expenses != null)
+        {
+            expence = package.Expenses.Value;
+        }
+        if (package.Casher != null)
+        {
+            Casher = package.Casher.Value;
+        }
+        if (package.Commission != null)
+        {
+            commissions = package.Commission.Value;
+        }
+        if (package.Accounting != null)
+        {
+            Accounting = package.Accounting.Value;
+        }
+        if (package.ChartOfAccount != null)
+        {
+            ChartOfAccount = package.ChartOfAccount.Value;
+        }
+        if (package.ReportsAndPending != null)
+        {
+            Report = package.ReportsAndPending.Value;
+        }
+        if (package.Maintenance != null)
+        {
+            Maintenance = package.Maintenance.Value;
+        }
+        if (package.Suppliers != null)
+        {
+            Supplier = package.Suppliers.Value;
+        }
+        if (package.Purchase != null)
+        {
+            purchase = package.Purchase.Value;
+        }
+        if (package.Sales != null)
+        {
+            sales = package.Sales.Value;
+        }
+        if (package.Attendingandleaving != null)
+        {
+            Attendingandleaving = package.Attendingandleaving.Value;
+        }
+        if (package.Sewing != null)
+        {
+            sewing = package.Sewing.Value;
+        }
+        project = package.Project;
+        hr = package.HR;
+        asset = package.Asset;
+        subscript = package.Subscribtion;
+        numberOfStore = package.Number_store;
+        numberofPOS = package.Number_POS;
+        subledger = package.Number_subLedgger;
+        store = package.Number_store;
+    }
+}
+<!DOCTYPE html>
+<html lang="ar-AR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/Image/ByanatyLogo.png")">
+    <link href="@Url.Content("~/ContentRTL/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/ContentRTL/assets/js/loader.js")"></script>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="@Url.Content("~/ContentRTL/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentRTL/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="@Url.Content("~/ContentRTL/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .deleteicon {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BEGIN LOADER -->
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <!--  END LOADER -->
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container fixed-top">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item theme-brand flex-row  text-center">
+                <li class="nav-item theme-logo">
+                    <a href='@Url.Action("Index", "Home")'>
+                        <img src="@Url.Content("~/Image/ByanatyLogo.png")" class="navbar-logo" alt="logo">
+                    </a>
+                </li>
+                <li class="nav-item theme-text">
+                    <a href='@Url.Action("Index", "Home")' class="nav-link">@Accountingsystem.Resources.SharedLayout.SutumaticLogoName</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-0 ml-auto">
+                <li class="nav-item align-self-center search-animated">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <form class="form-inline search-full form-inline search" role="search">
+                        <div class="search-bar">
+                            <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="ابحث...">
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown user-profile-dropdown">
+                        <div style="color: #ffffff; padding-top:15px;">
+                            @User.Identity.GetUserName()
+                        </div>
+                    </li>
+
+                }
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+                            <div class="dropdown-item">
+                                @Html.Partial("_LoginPartial")
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <!--  END NAVBAR  -->
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+        <!--  BEGIN NAVBAR  -->
+        <div class="sub-header-container">
+            <header class="header navbar navbar-expand-sm">
+                <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+                <ul class="navbar-nav flex-row">
+                    <li>
+                        <div class="page-header">
+                            <nav class="breadcrumb-one" aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    @{
+                                        if (Accountingsystem.Models.Company.GetCompanies().Any())
+                                        {
+                                            <li class="breadcrumb-item"><a href='@Url.Action("Index","Home")'>@Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Name</a></li>
+
+                                        }
+                                        else
+                                        {
+                                            <li class="nav-item theme-text">
+                                                <a href='@Url.Action("Index","Home")' class="nav-link">صتماتيك</a>
+                                            </li>
+                                        }
+                                    }
+
+                                </ol>
+                            </nav>
+                        </div>
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <!--  END NAVBAR  -->
+        <!--  BEGIN SIDEBAR  -->
+        <div class="sidebar-wrapper sidebar-theme">
+
+            <nav id="sidebar">
+                @*<div class="shadow-bottom"></div>*@
+                <ul class="list-unstyled menu-categories" id="accordionExample">
+
+
+
+                    @if (role.Contains("s-jk"))
+                    {
+
+                        <li class="menu">
+                            <a href='@Url.Action("Index", "Home", new { Recalculate = 1 })' class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-pie" class="svg-inline--fa fa-chart-pie fa-w-17" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 512"><path fill="currentColor" d="M527.79 288H290.5l158.03 158.03c6.04 6.04 15.98 6.53 22.19.68 38.7-36.46 65.32-85.61 73.13-140.86 1.34-9.46-6.51-17.85-16.06-17.85zm-15.83-64.8C503.72 103.74 408.26 8.28 288.8.04 279.68-.59 272 7.1 272 16.24V240h223.77c9.14 0 16.82-7.68 16.19-16.8zM224 288V50.71c0-9.55-8.39-17.4-17.84-16.06C86.99 51.49-4.1 155.6.14 280.37 4.5 408.51 114.83 513.59 243.03 511.98c50.4-.63 96.97-16.87 135.26-44.03 7.9-5.6 8.42-17.23 1.57-24.08L224 288z"></path></svg>
+                                    @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>*@
+                                    <span>@Accountingsystem.Resources.List.ControlBoard</span>
+                                </div>
+                                <div>
+
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="dashboardDep" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "Home", new { Recalculate = 1 })'> @Accountingsystem.Resources.List.Statistics </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (Accounting == true && role.Contains("s-ac"))
+                    {
+                        <li class="menu">
+                            <a href="#accountingDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                    <span>@Accountingsystem.Resources.List.FinancialDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="accountingDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-ac-da-cr"))
+                                {
+                                    <li><a href='@Url.Action("FillGlForCreate", "GLMaster")'><span>@Accountingsystem.Resources.List.FinancialConstraints</span></a></li>
+                                }
+
+                                @if (role.Contains("s-ac-da-cr"))
+                                {
+                                    <li><a href='@Url.Action("FillGlForCreateSettelment", "GLMaster")'><span>@Accountingsystem.Resources.validate.SettlementGL</span></a></li>
+                                }
+                                @if (role.Contains("s-ac-au"))
+                                {
+                                    <li><a href='@Url.Action("IndexAuto", "GLMaster")'><span>@Accountingsystem.Resources.List.MechanicalConstraints</span></a></li>
+                                }
+                                @if (role.Contains("s-ac-da-cs"))
+                                {
+                                    <li><a href='@Url.Action("FillGlForCreateStartGL", "GLMaster")'><span>@Accountingsystem.Resources.List.OpiningConstraints</span></a></li>
+                                }
+                                @if (role.Contains("s-ac-ct-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Create", "CatchReceipt", new { child = 0, type = "" })'>
+
+                                            <span>@Accountingsystem.Resources.List.CatchReceipt</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-ac-sp-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Create", "SpentRecipt", new { child = 0, type = "" })'>
+
+                                            <span>@Accountingsystem.Resources.List.SpentRecipt</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-ac-rp"))
+
+                                {
+                                    <li><a href='@Url.Action("GetAllReportfinancial", "Reports")'> <span>@Accountingsystem.Resources.List.FinancialReports  </span></a></li>
+                                }
+
+
+                            </ul>
+                        </li>
+                    }
+
+                    @if (expence == true && role.Contains("s-ex"))
+                    {
+                        <li class="menu">
+                            <a href="#expencesDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.Expense</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="expencesDep" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "Expense")'>
+
+                                        <span>@Accountingsystem.Resources.ExpenseIndex.ExpensesList</span>
+                                    </a>
+                                </li>
+                                @if (role.Contains("s-ex-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("CreateNew", "Expense")'>
+
+                                            <span>@Accountingsystem.Resources.List.CreateExpense</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='@Url.Action("Create", "Expense")'>
+
+                                            <span>@Accountingsystem.Resources.validate.Createmultipleexpenses</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (sewing == true)
+                    {
+                        <li class="menu">
+                            <a href="#swingDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+
+                                    @if (lang == "en")
+                                    {
+                                        <span>@package.SewingEng</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@package.SewingArab</span>
+                                    }
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="swingDep" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "Sewing")'>
+
+                                        <span>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href='@Url.Action("Create", "Sewing")'>
+
+                                        <span>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create</span>
+                                    </a>
+                                </li>
+
+                                @if (usermangername == "ByanatySuperAdmin@mydataitc.com")
+                                {
+
+                                    <li>
+                                        <a href='@Url.Action("Index", "Question")'>
+
+                                            <span>الاسئلة</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (sales == true && role.Contains("s-sl"))
+                    {
+                        <li class="menu">
+                            <a href="#salesDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-invoice" class="svg-inline--fa fa-file-invoice fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M288 256H96v64h192v-64zm89-151L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm256 304c0 4.42-3.58 8-8 8h-80c-4.42 0-8-3.58-8-8v-16c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16zm0-200v96c0 8.84-7.16 16-16 16H80c-8.84 0-16-7.16-16-16v-96c0-8.84 7.16-16 16-16h224c8.84 0 16 7.16 16 16z"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.Sales</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="salesDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-sl-of-cr"))
+                                {
+                                    <li><a href='@Url.Action("CreateOffer", "OfferPriceMaster")'> <span>@Accountingsystem.Resources.List.PriceOffer</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-iv-cr"))
+                                {
+
+
+                                    <li><a href=" @Url.Action("AddNewInvoice", "InvoiceMaster", new { orderido = 0, customerId = 0 })"> <span>@Accountingsystem.Resources.List.FutureBillings</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-sr-cr"))
+                                {
+
+
+                                    <li><a href='@Url.Action("addnewSaleReciept", "SalesReceiptMaster", new { cust_Id = 0 })'> <span>@Accountingsystem.Resources.List.CashBills</span></a></li>
+                                }
+
+                                @if (role.Contains("s-sl-ri-cr"))
+                                {
+
+                                    <li><a href='@Url.Action("AddNewRevInvoiceDetail", "ReverseSalesInvoiceMaster")'> <span>@Accountingsystem.Resources.validate.CreateCrediteNotice</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-rr-cr"))
+                                {
+
+                                    <li><a href='@Url.Action("AddNewRevInvoiceDetails", "ReverseSalesReceiptMaster")'> <span>@Accountingsystem.Resources.validate.CreateCrediteNoticeCash</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-cr-cr"))
+                                {
+
+                                    <li><a href='@Url.Action("Create", "Receipt", new { cust_ID = 0 })'><span>@Accountingsystem.Resources.List.CatchReceiptOfSales</span></a></li>
+                                }
+
+
+                                @if (role.Contains("s-sl-rt"))
+                                {
+
+
+                                    <li>
+
+                                        <a href='@Url.Action("GetAllReportsInvoiceSales", "Reports")'>
+
+                                            <span>@Accountingsystem.Resources.List.SalesReports</span>
+                                        </a>
+                                    </li>
+                                }
+                                <li>
+
+                                    <a href='@Url.Action("GetAllSalesSetting", "SalesSetting")'>
+
+                                        <span>@Accountingsystem.Resources.SalesSetting.SalesSettings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (Casher == true && role.Contains("s-ch"))
+                    {
+                        <li class="menu">
+                            <a href="#Cashier" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cash-register" class="svg-inline--fa fa-cash-register fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M511.1 378.8l-26.7-160c-2.6-15.4-15.9-26.7-31.6-26.7H208v-64h96c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H48c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h96v64H59.1c-15.6 0-29 11.3-31.6 26.7L.8 378.7c-.6 3.5-.9 7-.9 10.5V480c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32v-90.7c.1-3.5-.2-7-.8-10.5zM280 248c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16zm-32 64h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16zm-32-80c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16zM80 80V48h192v32H80zm40 200h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16zm16 64v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16zm216 112c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h176c4.4 0 8 3.6 8 8v16zm24-112c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16zm48-80c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16z"></path></svg>
+                                    <span> @Accountingsystem.Resources.CachierCreate.Title</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="Cashier" data-parent="#accordionExample">
+
+                                @if (role.Contains("s-ch-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Cachier")'> <span>@Accountingsystem.Resources.CachierCreate.CreateNewOrder</span></a></li>
+                                }
+                                @if (role.Contains("s-ch-iv"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Cachier")'> <span>@Accountingsystem.Resources.CachierCreate.List</span></a></li>
+                                }
+                                @if (role.Contains("s-ch-re"))
+                                {
+                                    <li><a href='@Url.Action("ReverseOrdersIndex", "Cachier")'> <span>@Accountingsystem.Resources.validate.CreditNoticeList</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-rt"))
+                                {
+                                    <li>
+
+                                        <a href='@Url.Action("GetAllReportsInvoiceSales", "Reports")'>
+
+                                            <span>@Accountingsystem.Resources.List.SalesReports</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (role.Contains("s-ch-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("StartSelling", "Cachier")'> <span>@Accountingsystem.Resources.CachierCreate.StartSelling</span></a></li>
+                                }
+                                @if (role.Contains("s-ch-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("CloseCachier", "Cachier")'> <span>@Accountingsystem.Resources.CachierCreate.EndSelling</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (numberofPOS > 0 && role.Contains("s-ps"))
+                    {
+                        <li class="menu">
+                            <a href="#POS" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cash-register" class="svg-inline--fa fa-cash-register fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M511.1 378.8l-26.7-160c-2.6-15.4-15.9-26.7-31.6-26.7H208v-64h96c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H48c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h96v64H59.1c-15.6 0-29 11.3-31.6 26.7L.8 378.7c-.6 3.5-.9 7-.9 10.5V480c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32v-90.7c.1-3.5-.2-7-.8-10.5zM280 248c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16zm-32 64h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16zm-32-80c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16zM80 80V48h192v32H80zm40 200h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16zm16 64v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16zm216 112c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h176c4.4 0 8 3.6 8 8v16zm24-112c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16zm48-80c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16z"></path></svg>
+                                    <span> @Accountingsystem.Resources.List.QuickStoreSalesDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="POS" data-parent="#accordionExample">
+                                @if (role.Contains("s-ps-pos"))
+                                {
+                                    <li><a href='@Url.Action("Index", "PointOfSale")'> <span>@Accountingsystem.Resources.List.QuickStoreSalesList</span></a></li>
+                                }
+                                @if (role.Contains("s-ps-iv"))
+                                {
+                                    <li><a href='@Url.Action("Index", "MasterPOSInvoice")'> <span>@Accountingsystem.Resources.List.QuickInventorySalesList</span></a></li>
+                                }
+                                @if (role.Contains("s-ps-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "MasterPOSInvoice")'> <span>@Accountingsystem.Resources.SalesReceiptMasterAddnewSaleReciept.CashReceiptDetailsTitle</span></a></li>
+                                }
+
+                                @if (role.Contains("s-ps-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("CreateInvoiceMaster", "MasterPOSInvoice")'> <span>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.CreateSalesInvoice</span></a></li>
+                                }
+                                @if (role.Contains("s-ps-cr-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "ReceiptPOS")'> <span>@Accountingsystem.Resources.List.CatchReceipt</span></a></li>
+                                }
+                                @if (role.Contains("s-ps-re"))
+                                {
+                                    <li><a href='@Url.Action("Index", "ReversePOSInvoice")'> <span>@Accountingsystem.Resources.validate.CreditNoticeList</span></a></li>
+                                }
+                                @if (role.Contains("s-sl-rt"))
+                                {
+                                    <li>
+
+                                        <a href='@Url.Action("GetAllReportsInvoiceSales", "Reports")'>
+
+                                            <span>@Accountingsystem.Resources.List.SalesReports</span>
+                                        </a>
+                                    </li>
+                                }
+                                <li>
+
+                                    <a href='@Url.Action("GetAllSalesSetting", "SalesSetting")'>
+
+                                        <span>@Accountingsystem.Resources.SalesSetting.SalesSettings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (role.Contains("s-cu"))
+                    {
+                        <li class="menu">
+                            <a href="#Cust" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-friends" class="svg-inline--fa fa-user-friends fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M192 256c61.9 0 112-50.1 112-112S253.9 32 192 32 80 82.1 80 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C51.6 288 0 339.6 0 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zM480 256c53 0 96-43 96-96s-43-96-96-96-96 43-96 96 43 96 96 96zm48 32h-3.8c-13.9 4.8-28.6 8-44.2 8s-30.3-3.2-44.2-8H432c-20.4 0-39.2 5.9-55.7 15.4 24.4 26.3 39.7 61.2 39.7 99.8v38.4c0 2.2-.5 4.3-.6 6.4H592c26.5 0 48-21.5 48-48 0-61.9-50.1-112-112-112z"></path></svg>
+                                    <span> @Accountingsystem.Resources.List.Customers</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="Cust" data-parent="#accordionExample">
+
+                                <li><a href='@Url.Action("Index", "Customer")'> <span> @Accountingsystem.Resources.CustomerIndex.List</span></a></li>
+                                @if (role.Contains("s-cu-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Customer")'> <span> @Accountingsystem.Resources.CustomerCreate.CreateCustomer</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (purchase == true && role.Contains("s-pu"))
+                    {
+                        <li class="menu">
+                            <a href="#purchaseDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.PurchasingSection</span>
+
+
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="purchaseDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-pu-of-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("CreatePurchaseOrd", "PurchaseOrderMaster")'>
+                                            <span> @Accountingsystem.Resources.List.PurchaseOrder</span>
+
+                                        </a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-pu-iv-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("CreatePurchaseInv", "PurchaseInvoice", new { supId = 0 })'>
+                                            <span>@Accountingsystem.Resources.List.PurchaseInvoice</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-pu-ri-cr"))
+                                {
+                                    <li><a href='@Url.Action("AddRecallPurchOrder", "RecalPurchInvoiceMaster")'><span>@Accountingsystem.Resources.List.RecalPurcheInvoice</span></a></li>
+                                }
+                                @if (role.Contains("s-pu-cr-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Payment", new { suppId = 0 })'><span>@Accountingsystem.Resources.List.SuppliersSpentReceipt </span></a></li>
+                                }
+                                @if (subledger > 0 && role.Contains("s-pu-ct-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Create", "CostDistribution")'>
+                                            <span>@Accountingsystem.Resources.List.ImportCostsDistribution</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-pu-rt"))
+                                {
+                                    <li>
+
+                                        <a href='@Url.Action("GetAllReportsPurchases", "Reports")'>
+
+                                            <span>@Accountingsystem.Resources.List.ReportsPurchases</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (Supplier == true && role.Contains("s-sp"))
+                    {
+                        <li class="menu">
+                            <a href="#Supp" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="parachute-box" class="svg-inline--fa fa-parachute-box fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M511.9 175c-9.1-75.6-78.4-132.4-158.3-158.7C390 55.7 416 116.9 416 192h28.1L327.5 321.5c-2.5-.6-4.8-1.5-7.5-1.5h-48V192h112C384 76.8 315.1 0 256 0S128 76.8 128 192h112v128h-48c-2.7 0-5 .9-7.5 1.5L67.9 192H96c0-75.1 26-136.3 62.4-175.7C78.5 42.7 9.2 99.5.1 175c-1.1 9.1 6.8 17 16 17h8.7l136.7 151.9c-.7 2.6-1.6 5.2-1.6 8.1v128c0 17.7 14.3 32 32 32h128c17.7 0 32-14.3 32-32V352c0-2.9-.9-5.4-1.6-8.1L487.1 192h8.7c9.3 0 17.2-7.8 16.1-17z"></path></svg>
+                                    <span> @Accountingsystem.Resources.List.Suppliers</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="Supp" data-parent="#accordionExample">
+                                @if (role.Contains("s-sp"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Supplier")'> <span> @Accountingsystem.Resources.SupplierIndex.SuppliersList</span></a></li>
+                                }
+                                @if (role.Contains("s-sp-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Supplier")'> <span> @Accountingsystem.Resources.SupplierCreate.CreateSupplier</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (role.Contains("s-sm"))
+                    {
+                        <li class="menu">
+                            <a href="#storeDeb" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="warehouse" class="svg-inline--fa fa-warehouse fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M504 352H136.4c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0 96H136.1c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0-192H136.6c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm106.5-139L338.4 3.7a48.15 48.15 0 0 0-36.9 0L29.5 117C11.7 124.5 0 141.9 0 161.3V504c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V256c0-17.6 14.6-32 32.6-32h382.8c18 0 32.6 14.4 32.6 32v248c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V161.3c0-19.4-11.7-36.8-29.5-44.3z"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.StorageDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="storeDeb" data-parent="#accordionExample">
+                                @if (role.Contains("s-sm-st"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Store")'> <span>@Accountingsystem.Resources.List.StoresList</span></a></li>
+                                }
+                                @if (role.Contains("s-sm-pr"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Product")'> <span>@Accountingsystem.Resources.List.ProductsAndServicesList</span></a></li>
+                                }   @if (role.Contains("s-sm-pr-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Product")'> <span>@Accountingsystem.Resources.ProductCreate.CreateItem</span></a></li>
+                                }
+                                @if (store > 1 && role.Contains("s-sm-ts-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "InvTreansMaster")'> <span>@Accountingsystem.Resources.List.TranseferFromStoreToStore</span></a></li>
+                                }
+                                @if (role.Contains("s-sm-rp"))
+                                {
+                                    <li><a href='@Url.Action("GetAllReportsOfStore", "Reports")'> <span>@Accountingsystem.Resources.List.StorageReports</span></a></li>
+
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (role.Contains("s-hr"))
+                    {
+                        <li class="menu">
+                            <a href="#employeesDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.HumanResourcesDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="employeesDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-hr"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Employee")'> <span>@Accountingsystem.Resources.List.StaffMenu</span></a></li>
+                                }
+                                @if (role.Contains("s-hr-em-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Employee")'> <span>@Accountingsystem.Resources.EmployeeCreate.CreateEmployee</span></a></li>
+                                }
+                                @*<li><a href='@Url.Action("Index", "SpentReciptOrder")'> <span>قائمة طلبات السلف</span></a></li>*@
+                                @if (role.Contains("s-hr-rp"))
+                                {
+                                    <li><a href='@Url.Action("GetAllReportsForEmployee", "Reports")'> <span>@Accountingsystem.Resources.List.StaffReports</span></a></li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                    @if (Attendingandleaving == true)
+                    {
+                        <li class="menu">
+                            <a href="#employeesAttend" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <span> @Accountingsystem.Resources.Atttendace.AttendingAndLeavings </span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="employeesAttend" data-parent="#accordionExample">
+                                <li><a href='@Url.Action("ChooseDateAndShift","AttendingAndLeaving")'> <span> @Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create </span></a></li>
+
+
+
+                            </ul>
+                            <ul class="collapse submenu list-unstyled" id="employeesAttend" data-parent="#accordionExample">
+                                <li><a href='@Url.Action("Index","ShiftCoding")'> <span> @Accountingsystem.Resources.Atttendace.ShiftCoding </span></a></li>
+
+
+
+                            </ul>
+                            <ul class="collapse submenu list-unstyled" id="employeesAttend" data-parent="#accordionExample">
+                                <li><a href='@Url.Action("Index","RewardsAndPenaltiesCoding")'> <span> @Accountingsystem.Resources.Atttendace.RewardsOrPenalties </span></a></li>
+
+
+
+                            </ul>
+                        </li>
+                    }
+                    @if (role.Contains("s-aut"))
+                    {
+                        <li class="menu">
+                            <a href="#employeesRol" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <span> @Accountingsystem.Resources.EmployeeIndex.UserPermissions </span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="employeesRol" data-parent="#accordionExample">
+                                <li><a href='@Url.Action("Index", "SystemRole")'> <span> @Accountingsystem.Resources.EmployeeIndex.UserPermissions </span></a></li>
+
+
+
+                            </ul>
+                        </li>
+                    }
+                    @if (asset == true && role.Contains("s-st"))
+                    {
+                        <li class="menu">
+                            <a href="#assetsDeb" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>*@
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="car" class="svg-inline--fa fa-car fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M499.99 176h-59.87l-16.64-41.6C406.38 91.63 365.57 64 319.5 64h-127c-46.06 0-86.88 27.63-103.99 70.4L71.87 176H12.01C4.2 176-1.53 183.34.37 190.91l6 24C7.7 220.25 12.5 224 18.01 224h20.07C24.65 235.73 16 252.78 16 272v48c0 16.12 6.16 30.67 16 41.93V416c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32v-32h256v32c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32v-54.07c9.84-11.25 16-25.8 16-41.93v-48c0-19.22-8.65-36.27-22.07-48H494c5.51 0 10.31-3.75 11.64-9.09l6-24c1.89-7.57-3.84-14.91-11.65-14.91zm-352.06-17.83c7.29-18.22 24.94-30.17 44.57-30.17h127c19.63 0 37.28 11.95 44.57 30.17L384 208H128l19.93-49.83zM96 319.8c-19.2 0-32-12.76-32-31.9S76.8 256 96 256s48 28.71 48 47.85-28.8 15.95-48 15.95zm320 0c-19.2 0-48 3.19-48-15.95S396.8 256 416 256s32 12.76 32 31.9-12.8 31.9-32 31.9z"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.Assets</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="assetsDeb" data-parent="#accordionExample">
+                                @if (role.Contains("s-st-st"))
+                                {
+                                    <li><a href='@Url.Action("Index", "FixedAsset")'><span> @Accountingsystem.Resources.FixedAssetIndex.AssetsList</span></a></li>
+                                }   @if (role.Contains("s-st-st-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "FixedAsset")'><span> @Accountingsystem.Resources.FixedAssetCreate.CreateFixedAsset</span></a></li>
+                                }
+                                @if (role.Contains("s-st-pr-cr"))
+                                {
+                                    <li><a href='@Url.Action("CreateAssPurchaseInv", "PurchaseInvoice")'><span>@Accountingsystem.Resources.List.PurchasesAssetInvoice</span></a></li>
+                                }
+                                @if (role.Contains("s-st-rp"))
+                                {
+                                    <li><a href='@Url.Action("GetAllReportAsset", "Reports")'><span>@Accountingsystem.Resources.List.FixedAssetReports</span></a></li>
+
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (subscript == true && role.Contains("s-sb"))
+                    {
+                        <li class="menu">
+                            <a href="#subscriptionDeb" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+                                    <span>@Accountingsystem.Resources.List.SubscriptionsSection</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="subscriptionDeb" data-parent="#accordionExample">
+                                @if (role.Contains("s-sb-sb"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Subscription")'><span>@Accountingsystem.Resources.List.SubscriptionsList</span></a></li>
+
+                                }
+                                @if (role.Contains("s-sb-sb-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Subscription")'><span>@Accountingsystem.Resources.List.CreateSubscription</span></a></li>
+                                }
+                                @if (role.Contains("s-sb-tb-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Subscription_Type")'><span>@Accountingsystem.Resources.List.SubscriptionsTypes</span></a></li>
+                                }
+                                @if (role.Contains("s-sb-tr-cr"))
+                                {
+                                    <li><a href='@Url.Action("AddNewTranfer", "TransferToMaintenance")'><span> @Accountingsystem.Resources.List.TransferToProject</span></a></li>
+                                }
+                                @if (role.Contains("s-sb-em-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "EmployeeTeam")'> <span>@Accountingsystem.Resources.List.StaffTeams</span></a></li>
+                                }
+                                @if (role.Contains("s-sb-rp-q"))
+                                {
+
+                                    <li><a href='@Url.Action("GetAllReports", "Subscription")'> <span>@Accountingsystem.Resources.List.SubscriptionsReports</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (project == true && role.Contains("s-pg"))
+                    {
+                        <li class="menu">
+                            <a href="#projectsDeb" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-command"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.ProjectsDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="projectsDeb" data-parent="#accordionExample">
+                                @if (role.Contains("s-pg-pg"))
+                                {
+                                    <li><a href='@Url.Action("Index", "Project")'><span>@Accountingsystem.Resources.List.ProjectsList</span></a></li>
+                                }
+                                @if (role.Contains("s-pg-pg-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "Project")'><span>@Accountingsystem.Resources.validate.CreateProject</span></a></li>
+                                }
+                                @if (role.Contains("s-pg-iv-cr"))
+                                {
+                                    <li><a href='@Url.Action("CreateProjectInvs", "Project", new { project_Id = 0 })'><span>@Accountingsystem.Resources.List.ProjectsInvoice</span></a></li>
+                                }
+                                @if (role.Contains("s-pg-ct-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "ProjectPayment")'><span>@Accountingsystem.Resources.List.ProjectPayment</span></a></li>
+                                }
+                                @if (role.Contains("s-pg-sp-cr"))
+                                {
+                                    <li><a href='@Url.Action("addnewTransToProj", "TransferToProjectMaster")'> <span>@Accountingsystem.Resources.List.TransferToProject</span></a> </li>
+                                }
+                                @if (role.Contains("s-pg-ps-cr"))
+                                {
+                                    <li><a href='@Url.Action("CreateForTFPS", "TransferToProjectMaster")'><span>@Accountingsystem.Resources.List.TransferTostore</span></a></li>
+                                }   @if (role.Contains("s-sb-em-cr"))
+                                {
+                                    <li><a href='@Url.Action("Create", "EmployeeTeam")'> <span>@Accountingsystem.Resources.List.StaffTeams</span></a></li>
+                                }
+                                @if (role.Contains("s-pg-rp"))
+                                {
+                                    <li><a href='@Url.Action("GetAllReportsForProjects", "Reports")'> <span>@Accountingsystem.Resources.List.ProjectsReports </span> </a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (Maintenance == true && role.Contains("s-ms"))
+                    {
+                        <li class="menu">
+                            <a href="#dashboardDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="box-open" class="svg-inline--fa fa-box-open fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9zm212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1zM53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64 69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9z"></path></svg>
+                                    <span>@Accountingsystem.Resources.MaintenanceOrder.Maintenance</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+
+                            <ul class="collapse submenu list-unstyled" id="dashboardDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-ms-ms-cr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Create", "MaintenanceOrderOperational")'> @Accountingsystem.Resources.MaintenanceOrder.Create </a>
+                                    </li>
+                                }
+                            </ul>
+                            <ul class="collapse submenu list-unstyled" id="dashboardDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-ms-ms"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "MaintenanceOrderOperational")'> @Accountingsystem.Resources.MaintenanceOrder.Index</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (commissions == true && role.Contains("s-cm"))
+                    {
+                        <li class="menu">
+                            <a href="#commissionsDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.Commissions</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="commissionsDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-cm-pa"))
+                                {
+                                    <li><a href='@Url.Action("Index", "AdminExternalEmployee")'> <span>@Accountingsystem.Resources.List.CommissionsIndex</span></a></li>
+                                }  @if (role.Contains("s-cm-pd"))
+                                {
+                                    <li><a href='@Url.Action("IndexOfAllPayment", "AdminExternalEmployee")'> <span>@Accountingsystem.Resources.List.CommissionPaymentsList</span></a></li>
+                                }  @if (role.Contains("s-cm-sl"))
+                                {
+                                    <li><a href='@Url.Action("IndexOfAllSales", "AdminExternalEmployee")'> <span>@Accountingsystem.Resources.List.CommissionsSales</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (Report == true && role.Contains("s-rp"))
+                    {
+                        <li class="menu">
+                            <a href="#reportDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                    <span>@Accountingsystem.Resources.List.ReportsDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="reportDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-rp-cm"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("GetAllReports", "Reports")'>@Accountingsystem.Resources.List.PublicReports</a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-rp-ps"))
+                                {
+
+                                    <li>
+                                        <a href='@Url.Action("IndexPendingPurchSection", "AllPendingDocuments")'>@Accountingsystem.Resources.List.ApproveDocument</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (role.Contains("s-sv"))
+                    {
+                        <li class="menu">
+                            <a href="#configDep" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.ServicesDepartment</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="configDep" data-parent="#accordionExample">
+                                @if (role.Contains("s-sv-tx"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "Tax")'>@Accountingsystem.Resources.List.Taxes</a>
+                                    </li>
+                                }
+                                @if (subledger > 0 && role.Contains("s-sv-sl"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "SubLedger")'>@Accountingsystem.Resources.List.CostCenters</a>
+                                    </li>
+
+                                    <li>
+                                        <a href='@Url.Action("GetTreeJson", "SubLedger")'>@Accountingsystem.Resources.List.CostCenterTree</a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-sv-bk"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "Bank")'>@Accountingsystem.Resources.List.Banks</a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-sv-tr"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "Treasury")'>@Accountingsystem.Resources.List.Treasury</a>
+                                    </li>
+                                }
+                                @if (role.Contains("s-sv-pm"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "PaymentMethod")'>@Accountingsystem.Resources.List.PaymentMethods</a>
+                                    </li>
+                                }
+                                @if (ChartOfAccount == true && role.Contains("s-sv-tc"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("Index", "ChartOfAccounting")'>@Accountingsystem.Resources.List.ChartOfAccounting</a>
+                                    </li>
+                                }
+                                @if (ChartOfAccount == true && role.Contains("s-sv-tc-rp"))
+                                {
+                                    <li>
+                                        <a href='@Url.Action("GetTreeJson", "ChartOfAccounting")'>@Accountingsystem.Resources.List.Graphics</a>
+                                    </li>
+                                }
+
+                                <li><a href='@Url.Action("Index", "Company")'>@Accountingsystem.Resources.List.CompanyData</a></li>
+
+                            </ul>
+                        </li>
+                    }
+                    @if (usermangername == "ByanatySuperAdmin@mydataitc.com")
+                    {
+                        <li class="menu">
+                            <a href="#package" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <div class="">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="box-open" class="svg-inline--fa fa-box-open fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9zm212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1zM53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64 69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9z"></path></svg>
+                                    <span>@Accountingsystem.Resources.List.PackagesAndSubscriptions</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </a>
+                            <ul class="collapse submenu list-unstyled" id="package" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "Package")'> @Accountingsystem.Resources.List.Packages </a>
+                                </li>
+                            </ul>
+                            <ul class="collapse submenu list-unstyled" id="package" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "Client")'> @Accountingsystem.Resources.List.Subscripers</a>
+                                </li>
+                            </ul>
+                            <ul class="collapse submenu list-unstyled" id="package" data-parent="#accordionExample">
+                                <li>
+                                    <a href='@Url.Action("Index", "InvoicePrintSetting")'>الطباعات</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+
+                </ul>
+                <!-- <div class="shadow-bottom"></div> -->
+
+            </nav>
+        </div>
+        <!--  END SIDEBAR  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+                <div class="row layout-top-spacing">
+                    @RenderBody()
+                </div>
+            </div>
+            @*<div class="footer-wrapper">
+            <div class="footer-section f-section-1">
+                <p class="">حقوق النشر ©  @DateTime.Now.Year <a target="_blank" href="https://sutumatic.com">صتم  </a>كل الحقوق محفوظة.</p>
+            </div>
+            <div class="footer-section f-section-2">
+                <p class="">بياناتي</p>
+            </div>
+        </div>*@
+        </div>
+        <script src="@Url.Content("~/ContentRTL/assets/js/libs/jquery-3.1.1.min.js")"></script>
+        <script src="@Url.Content("~/ContentRTL/bootstrap/js/popper.min.js")"></script>
+        <script src="@Url.Content("~/ContentRTL/bootstrap/js/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/ContentRTL/plugins/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+        <script src="@Url.Content("~/ContentRTL/assets/js/app.js")"></script>
+        <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+        @*<script>
+                $(document).on('submit', 'form', function () {
+                    var buttons = $(this).find('[type="submit"]');
+                    if ($(this).valid()) {
+                        buttons.each(function (btn) {
+                            $(buttons[btn]).prop('disabled', true);
+                        });
+                    } else {
+                        buttons.each(function (btn) {
+                            $(buttons[btn]).prop('disabled', false);
+                        });
+                    }
+                })
+            </script>*@
+        <script>
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>
+        <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+        @RenderSection("scripts", required: false)
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.OrderDetailsVM>
+@{
+    int count = 1;
+}
+
+
+<table id="default-ordering" class="table">
+
+    <thead>
+
+        <tr>
+
+
+
+            <th>
+
+                @Html.DisplayName("#")
+
+            </th>
+
+            <th>
+
+                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.ProductOrService)
+
+            </th>
+
+            <th>
+
+                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Quantity)
+
+            </th>
+
+            <th>
+
+                @Html.DisplayName(Accountingsystem.Resources.CachierCreate.Date)
+
+            </th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                 <td>
+                     
+                    @count
+                     @{ 
+                         count++;
+                     }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Math.Round(item.Quantity, 2, MidpointRounding.AwayFromZero)       
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.ReversdeOrderDate)
+
+                </td>
+                
+            </tr>
+           
+        }
+
+    </tbody>
+
+
+</table>
+

@@ -1,0 +1,203 @@
+﻿@model Accountingsystem.ViewModel.ContactVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>انشاء جهات اتصال جديدة</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.Contact_Id, new { htmlAttributes = new { @class = "textfield" } })
+
+        <div class="container">
+
+          
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Contact_Company, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Contact_Company, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Contact_Company, "شركة التابعة لي جهة الاتصال", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Contact_Email, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Contact_Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Contact_Email" style="margin-left: 60px;">لبريد الالكتروني لجهة الاتصال</label>            
+                                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Contact_Name, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Contact_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Contact_Name, "اسم جهة الاتصال", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div id="CuStomerDropDownList"></div>
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            <input type="button" value="اضفة عميل جديد" class="btn btn-dialog" style="margin-top: -90px;">                           
+                            <div id="partialDialogDiv"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="إنشاء" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+
+
+
+<a class="btn btn-default" href="@Url.Action("Index")">
+    <p>
+        العودة الى القائمة
+    </p>
+</a>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $.ajaxSetup({ cache: false });
+    $("#CuStomerDropDownList").load('@(Url.Action("GetCustomerDropdownList", "Contact"))');
+
+        $(document).ready(function () {
+            $('.btn-dialog').on('click', function () {
+                $("#partialDialogDiv").dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'اضف عميل جديد',
+                    modal: true,
+                    height: 650,
+                    width: 1000,
+                    draggable: false,
+                    open: function () {
+                        $(this).load('@Url.Action("PartialDialog", "Contact")');
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    },
+                    buttons: [
+                    {
+                        text: "OK",
+                        "class": 'btn btn-primary',
+                        click: function () {
+                            // OK button click event
+
+                            $("#partialDialogDiv").dialog("close");
+                            $("#CuStomerDropDownList").load('@(Url.Action("GetCustomerDropdownList", "Contact"))');
+
+
+
+                        }
+                    },
+                    {
+                        text: "Cancel",
+                        "class": 'btn btn-default',
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                    ],
+                });
+                $("#advancedSearchDialog").dialog('open');
+                return false;
+            });
+        });
+</script>
+
+<script>
+
+    function addCustomer() {
+
+        var CustomerId =  $("#Customer_Id").val();
+        var CustomerName =  $("#Customer_Name").val();
+        var CustomerCode =  $("#Customer_Code").val();
+        var CustomerAddress =  $("#Customer_Address").val();
+        var CustomerPhone =  $("#Customer_Phone").val();
+        var CustomerMail =  $("#Customer_Mail").val();
+        var ProvinceId =  $("#SelectedProvinceId").val();
+        var CountryId =  $("#SelectedCountryId").val();
+        var CityId =  $("#SelectedCityId").val();
+        var CustomerFax =  $("#Customer_Fax").val();
+        var BranchId =  $("#Branch_Id").val();
+        var CustomerMobile =  $("#Customer_Mobile").val();
+        var PurchasePrice =  $("#Purchase_Price").val();
+        var PaymentPolicy =  $("#Payment_Policy_Id").val();
+        var CustomerWebsite =  $("#Customer_Website").val();
+        var Files1= $("#Files").val();
+        var DataForCustomer;
+        DataForCustomer = {
+            Customer_Id:CustomerId,
+            Customer_Name:CustomerName,
+            Customer_Code:CustomerCode,
+            Customer_Address:CustomerAddress,
+            Customer_Phone:CustomerPhone,
+            Customer_Mail:CustomerMail,
+            SelectedProvinceId:ProvinceId,
+            SelectedCountryId:CountryId,
+            SelectedCityId:CityId,
+            Customer_Fax:CustomerFax,
+            Branch_Id:BranchId,
+            Customer_Mobile:CustomerMobile,
+            Purchase_Price:PurchasePrice,
+            Payment_Policy_Id:PaymentPolicy,
+            Customer_Website:CustomerWebsite,
+            Files:Files1
+        };
+
+        $.ajax(
+         {
+            url: "@Url.Action("AddNewCustomerPartial", "Contact")",
+             data: JSON.stringify(DataForCustomer),
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'POST',
+             success: function (data) {
+                 alert(data);
+
+             },
+             error: function () { alert('error'); }
+         });
+    };
+
+
+
+</script>
+}

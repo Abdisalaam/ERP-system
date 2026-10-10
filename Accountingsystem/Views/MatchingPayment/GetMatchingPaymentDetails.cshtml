@@ -1,0 +1,118 @@
+﻿@model Accountingsystem.ViewModel.PaymentVM
+
+<div>
+    <h4>الدفع</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("رقم الدفع")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("العملة")
+        </dt>
+        @{var cur = Accountingsystem.Models.Currency.GetCurrencyById(Model.Pay_Currency_ID); }
+        <dd>
+            @Html.DisplayFor(model => model.Pay_Currency_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("الشركة")
+            
+            @*@Html.DisplayNameFor(model => model.PayComp_ID)*@
+        </dt>
+        @{var thiscom = Accountingsystem.Models.Company.GetCompanyById(Model.PayComp_ID); }
+        <dd>
+            @*@Html.DisplayFor(model => model.PayComp_ID)*@
+            <h>@thiscom.Comp_Name</h>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay_Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exchange_Rate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exchange_Rate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayBank_Account)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayBank_Account)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay_BU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_BU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmountAfMat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmountAfMat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pay_TotalCheck)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pay_TotalCheck)
+        </dd>
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

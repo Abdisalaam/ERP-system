@@ -1,0 +1,263 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ProjectLossAndProfitVM
+
+@{
+    Layout = null;
+    var dateto = "الي" + Convert.ToDateTime(Model.To_Date).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.From_Date).ToString("yyyy/MM/dd ");
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>تقرير ارباح وخسائر مشروع</title>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+
+
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        تقرير ارباح وخسائر مشروع / Project Profits and Losses Report
+
+    </div>
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        @Model.subledger.SubLed_Name
+
+    </div>
+
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        @datefrom      @dateto
+
+    </div>
+    <table class="table" style="text-align:right;direction:rtl;">
+        <tr>
+
+            <th style="text-align:center;"width="50px">
+                الرقم 
+                <br />
+                No
+            </th>
+
+            <th style="text-align:center;">
+                 المشروع 
+                <br />
+                Project
+            </th>
+
+            <th style="text-align:center;">
+                رقم العميل 
+                <br />
+                Customer NO
+            </th>
+            <th style="text-align:center;">
+                 العميل 
+                <br />
+                Customer
+
+            </th>
+
+            <th style="text-align:center;">
+                ايراد المشروع
+                <br />
+                Project Income
+            </th>
+
+            <th style="text-align:center;">
+                مصروف المشروع  
+                <br />
+                Project Expenses
+            </th>
+            <th style="text-align:center;">
+                صافى الربح او الخسارة 
+                <br />
+                Profits or Losess
+            </th>
+
+
+
+
+        </tr>
+
+
+
+        <tr>
+
+            <td width="50px">
+           
+                @Model.Project_Code
+            </td>
+            <td>
+                @Model.subledger.SubLed_Name
+            </td>
+            <td>
+                @Model.Custmer_Code
+            </td>
+            <td>
+
+
+                @Model.Custmer_Name
+            </td>
+            @if (Model.Revenue < 0)
+            {
+                <td>
+
+                    <h>(</h> @Math.Round(Model.Revenue * -1, 2, MidpointRounding.AwayFromZero) <h>)</h>
+                </td>
+            }
+            else
+            {
+                <td>
+
+                    @Math.Round(Model.Revenue, 2, MidpointRounding.AwayFromZero)
+                </td>
+            }
+            @if (Model.Expences < 0)
+            {
+                <td>
+
+                    <h>(</h> @Math.Round(Model.Expences * -1, 2, MidpointRounding.AwayFromZero) <h>)</h>
+                </td>
+            }
+            else
+            {
+                <td>
+
+                    @Math.Round(Model.Expences, 2, MidpointRounding.AwayFromZero)
+                </td>
+            }
+            @if (Model.ProfitOrLoss < 0)
+            {
+                <td>
+
+                    <h>(</h> @Math.Round(Model.ProfitOrLoss * -1, 2, MidpointRounding.AwayFromZero) <h>)</h>
+                </td>
+            }
+            else
+            {
+
+                <td>
+
+                    @Math.Round(Model.ProfitOrLoss, 2, MidpointRounding.AwayFromZero)
+                </td>
+            }
+
+
+
+
+
+
+        </tr>
+
+
+    </table>
+
+
+
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+
+
+</html>

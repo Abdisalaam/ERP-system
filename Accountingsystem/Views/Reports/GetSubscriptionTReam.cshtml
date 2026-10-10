@@ -1,0 +1,229 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubscriptionTeamVM
+
+@{
+    Layout = null;
+    var count = 1;
+    var dateto = "الي" + Convert.ToDateTime(Model.EndDate).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.startDate).ToString("yyyy/MM/dd ");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير فرق الموظفين</title>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير اشتراكات لفرقة / Subscribtion Team Report
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Model.SupTeamName
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <div class="container">
+
+
+
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr>
+              
+                    <th>
+                        الرقم 
+                        <br />
+                        NO
+                    </th>
+                    <th>
+                      التاريخ 
+                        <br />
+                        Date
+                    </th>
+                    <th>
+                        تاريخ الانتهاء
+                        <br />
+                        End Date
+                    </th>
+
+                    <th>
+                         العميل
+                        <br />
+                        Customer
+                    </th>
+                    <th>
+                        جوال العميل
+                        <br />
+                        Phone
+                    </th>
+
+                    <th>
+                        صافى الاشتراك
+                        <br />
+                        Net
+                    </th>
+                    <th>
+                         الدفع
+                        <br />
+                        Payment
+                    </th>
+                    <th>
+                      الحالة
+                        <br />
+                        Status
+                    </th>
+
+
+
+                </tr>
+                </thead>
+                @foreach (var item in Model.Subscrib)
+                {
+
+                    <tr>
+                   
+
+                        <td>
+                            @item.Subscrip_Code
+                        </td>
+
+                        <td>
+                            @Convert.ToDateTime(item.StartTime).ToString("yyyy/MM/dd ")
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.DeadLine).ToString("yyyy/MM/dd ")
+                        </td>
+                        <td>
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Name
+                        </td>
+                        <td>
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Phone
+                        </td>
+                        <td>
+                            @Math.Round(item.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @item.Sub_Pay_State
+                        </td>
+                        <td>
+                            @item.SubType_State
+                        </td>
+
+                      
+                    </tr>
+
+                }
+        </table>
+    </div>
+    <footer style="margin-top:50%;"></footer>
+</body>
+</html>

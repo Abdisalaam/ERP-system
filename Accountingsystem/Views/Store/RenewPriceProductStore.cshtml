@@ -1,0 +1,445 @@
+﻿@model Accountingsystem.ViewModel.StorePriceRenew
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.StoreCreate.EditProductPriceForStore;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+@{
+
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    @*<div class="header-container">
+            <header class="header navbar navbar-expand-sm">
+                <ul class="navbar-item flex-row text-center">
+
+                    <li class="nav-item theme-text">
+
+                    </li>
+
+                </ul>
+                <ul class="navbar-item flex-row ml-md-auto">
+
+                    <li class="nav-item dropdown user-profile-dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                        </a>
+                        <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                            <div class="">
+
+
+                                <div class="dropdown-item">
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        @if (package.Number_store > 0)
+                                        {
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.CreateStore</a>
+                                                </div>
+                                            </li>
+                                        }
+
+                                        <li>
+
+                                            <div class="dropdown-item">
+                                                <a class="BTN-style" href=" @Url.Action( "IndexNotActive" )"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.StoreNotActive</a>
+
+
+
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                            <div class="dropdown-item">
+                                                <a class="BTN-style" href=" @Url.Action( "Index" , "SettlementOfStores")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.AdjustmentsList</a>
+
+
+
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.ReceiptIndex.CreateSalesCatchReceipt</a>
+
+
+
+                                                </div>
+                                            </li>
+                                            <li>
+
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.ReceiptIndex.CreateSalesCatchReceipt</a>
+
+
+
+                                                </div>
+                                            </li>
+
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </li>
+                </ul>
+
+            </header>
+        </div>*@
+    <div class="text-center">
+        @Accountingsystem.Resources.StoreCreate.EditProductPriceForStore
+    </div>
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.percentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.percentage, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="table-responsive mb-4 mt-4">
+        <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Accountingsystem.Resources.InvoiceMasterIndex.Number
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.ProductDetails.Barcode
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.ProductDetails.Item
+
+                    </th>
+
+                    <th>
+                        @Accountingsystem.Resources.ProductDetails.Category
+
+                    </th>
+                    <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Quantity</th>
+                    <th>@Accountingsystem.Resources.ProductCreate.AverageItemCost</th>
+                    <th>@Accountingsystem.Resources.ProductCreate.lastpurchaseprice </th>
+                    <th>@Accountingsystem.Resources.ProductCreate.lastSaleprice </th>
+                    <th>@Accountingsystem.Resources.ProductCreate.EstimatedCost</th>
+
+                    <th>
+                        @Accountingsystem.Resources.ProductDetails.SellingPrice
+
+                    </th>
+
+                    <th>
+                        @Accountingsystem.Resources.StoreCreate.NewPrice
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.TaxCreate.TaxPercentage
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.validate.PriceWithTax
+
+                    </th>
+
+                    <th>
+                        <input type="checkbox" name="select-all" id="select-all" />
+                    </th>
+                    <th hidden>
+
+                    </th>
+                    <th hidden>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListProduct)
+                {
+                <tr>
+                    <td hidden>@item.batchId</td>
+                    <td>@item.count</td>
+                    <td hidden>
+                        @Html.HiddenFor(modelItem => item.taxPercentage, htmlAttributes: new { @class = "taxPercentage" })
+                    </td>
+
+
+                    <td>@Html.EditorFor(model => item.ProductCode)</td>
+                    <td>@item.ProductName</td>
+                    <td>
+                        @*@Html.DropDownListFor(model => item.CategoryId, Model.CatList, Accountingsystem.Resources.ProductCreate.SelectClassification)*@
+                        <select class="Cat">
+                            <option value=0>@Accountingsystem.Resources.ProductCreate.SelectClassification</option>
+                            @foreach (var a in Model.CatList)
+                            {
+                                if (a.Cat_ID == item.CategoryId)
+                                {
+                                    <option value=@a.Cat_ID selected>@a.Cat_Descrip </option>
+                                }
+                                else
+                                {
+                                    <option value=@a.Cat_ID> @a.Cat_Descrip </option>
+                                }
+                            }
+                        </select>
+
+                        @*@Html.DropDownListFor(model => item.CategoryId, new SelectList(item.CatList, "Cat_ID", "Cat_Descrip", item.CategoryId), "Please select an order template")*@
+                    </td>
+                    <td>@Math.Round(item.batch.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+
+                    @if (item.batch.Product_Quantity > 0)
+                    {
+                        <td>@Math.Round(item.batch.Batch_Cost / item.batch.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>@Math.Round(Accountingsystem.Models.Store.LastPricePurchase(item.batch.Store_ID.Value, item.batch.Product_ID), 2, MidpointRounding.AwayFromZero)</td>
+                    <td>@Math.Round(Accountingsystem.Models.Store.LastPriceSale(item.batch.Store_ID.Value, item.batch.Product_ID), 2, MidpointRounding.AwayFromZero)</td>
+                    <td>@Math.Round(item.batch.Product.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                    <td>@Math.Round(item.SalesPriceCommon, 2, MidpointRounding.AwayFromZero)</td>
+                    <td>@Html.EditorFor(model => item.SalesPrice, new { htmlAttributes = new { onchange = "OnChangeSalesPrice(this)", @class = "SalesPrice" } }) </td>
+                    <td id="taxPercentage">@item.taxPercentage</td>
+                    <td>@Html.EditorFor(model => item.SalesPriceWithTax, new { htmlAttributes = new { onchange = "OnChangeSalesWithTax(this)", @class = "SalesPriceWithTax" } }) </td>
+                    <td>@Html.EditorFor(model => item.IsActive)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" id="createOfferbtn" onclick="fun()" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterIndex.Edit <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 5000,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+
+
+
+    <script>
+
+        function fun() {
+
+
+            $("#createOfferSpinner").show();
+            $('#createOfferbtn').prop('disabled', true);
+            var orderArr = [];
+            orderArr.length = 0;
+            debugger
+            $.each($("#default-ordering tbody tr"), function () {
+                orderArr.push({
+
+                    batchId: $(this).find('td:eq(0)').html(),
+                    ProductCode: $(this).find('td:eq(3)').find('input').val(),
+                    Cat_ID: $(this).find('td:eq(5)').find('.Cat').val(),
+                    SalesPrice: $(this).find('td:eq(12)').find('input').val(),
+                    IsActive: $(this).find('td:eq(15)').find('input').prop('checked')
+                });
+
+            });
+
+
+
+            var xz = 22;
+            var datao = JSON.stringify(orderArr);
+
+            var data = { 'btachQan': datao, 'hh': xz };
+            var data = JSON.stringify(data);
+
+            console.log(data);
+             $.ajax(
+                 {
+
+                     url: '@Url.Action("RenewPriceProductStoreqtg", "Store")',
+                     data: data,
+                     contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+                     type: 'POST',
+
+
+            }).done(function (result) {
+
+                setTimeout(function () {
+
+                    window.location = result;
+
+                }, 5000);
+            });
+
+        };
+
+    </script>
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+    <script>
+        function OnChangeSalesPrice(obj) {
+            debugger
+            var Price = $(obj).val();
+ 
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var category = $(obj).parents('tr').find('.Cat').val();
+            var priceWithTax = (parseFloat(TaxPercentage) / 100) * parseFloat(Price) + parseFloat(Price);
+
+
+            $(obj).parents('tr').find('.SalesPriceWithTax').val(priceWithTax);
+
+        }
+
+    </script>
+    <script>
+        function OnChangeSalesWithTax(obj) {
+            debugger
+            var PriceWithTax = $(obj).val();
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var price = parseFloat(PriceWithTax) * (100 / (parseFloat(TaxPercentage) + 100)) ;
+
+
+            $(obj).parents('tr').find('.SalesPrice').val(price);
+
+        }
+
+    </script>
+
+}

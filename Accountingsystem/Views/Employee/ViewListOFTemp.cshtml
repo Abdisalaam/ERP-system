@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Accountingsystem.Models.Sales_Setting_SliceTemp>
+<table class="table">
+   
+    <tr>
+       
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.SliceName)
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @Html.HiddenFor(modelItem => item.Sales_SettingsId)
+        <td>
+            @Html.DisplayFor(modelItem => item.Slice_Name)
+        </td>
+    
+        <td>
+           
+        </td>
+    </tr>
+}
+
+</table>

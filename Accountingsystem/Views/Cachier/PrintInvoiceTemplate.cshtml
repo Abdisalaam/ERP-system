@@ -1,0 +1,220 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.OrderDetailsVM>
+@{
+    var _Company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+    decimal totalQuantity = 0;
+    decimal totalSingelUnitPrice = 0;
+    decimal subTotalBeforeTax = 0;
+    decimal subtotal = 0;
+    decimal taxtotal = 0;
+    decimal totalDiscount = 0;
+    decimal totalExtraTax = 0;
+    decimal totalNet = 0;
+}
+<div class="ticket" style="break-inside: avoid; text-align: center;">
+    <p class="centered" style="text-align: center;">
+        <h3>@Accountingsystem.Resources.MasterPOSInvoice.InvoiceTitleEng <span> / </span> <span>@Accountingsystem.Resources.MasterPOSInvoice.InvoiceTitle </span></h3>
+        <hr />
+    </p>
+    @if (Model.FirstOrDefault().CompanyLogo != null)
+    {
+        <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.FirstOrDefault().CompanyLogo)" alt="Sutumatic" style="width:200px; height:100px;" />
+    }
+    <p class="centered" style="text-align: center;">
+
+        @Model.FirstOrDefault().CompanyName
+        <br>@Model.FirstOrDefault().CompanyAdress
+        <br>@Model.FirstOrDefault().CompanyPhone
+
+    </p>
+    <p>
+        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.CompanyTaxNumberEng) : <span> @Model.FirstOrDefault().CompanyTaxNymber</span> <span> : @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.CompanyTaxNumber)</span>
+    </p>
+
+    <p>
+        @DateTime.Now
+    </p>
+
+    <p class="centered" style="text-align: center;">
+
+        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.ContactUs) : <span>@Model.FirstOrDefault().CompanyPhone</span>
+        <hr />
+    </p>
+
+    @{
+        if (!string.IsNullOrEmpty(Model.FirstOrDefault().CustomerName))
+        {
+            <div>
+                <p>
+                    @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerName) : <span> @Model.FirstOrDefault().CustomerName</span>
+                </p>
+
+                <p>
+                    @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerPhone) : <span> @Model.FirstOrDefault().CustomerPhone</span>
+                </p>
+
+
+            </div>
+            if (!string.IsNullOrEmpty(Model.FirstOrDefault().CustomerTaxNumber))
+            {
+                <p>
+                    @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerTaxNumber) : <span> @Model.FirstOrDefault().CustomerTaxNumber</span>
+                </p>
+            }
+        }
+    }
+    <p class="centered" style="text-align: center;">
+        <hr />
+
+        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.InvoiceNumberEng) : <span> @Model.FirstOrDefault().OrderNumber</span> <span>:  @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.InvoiceNumber)</span>
+        <hr />
+    </p>
+
+
+    <div class="row layout-top-spacing">
+
+        @foreach (var detail in Model)
+        {
+
+            <div class="row" style="text-align: center;">
+                <div class="col-sm-12">
+                    @detail.ProductName
+                </div>
+            </div>
+
+            <table style="text-align: center; width:100%;">
+                <thead>
+                    <tr>
+                        <th class="quantity"> @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.QuantityProduct)</th>
+                        <th class="price"> @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.PriceProduct)</th>
+                        <th class="price"> @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalProductAmount)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="quantity">
+                            @Math.Round(detail.Quantity, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td class="price">@Math.Round(detail.ProductPrice, 2, MidpointRounding.AwayFromZero)</td>
+                        <td class="price"> @Math.Round(detail.SubTotalProduct, 2, MidpointRounding.AwayFromZero)</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            subTotalBeforeTax += detail.SubTotalProductBeforeTax;
+            subtotal += detail.SubTotalProduct;
+            taxtotal += detail.ProductTaxAmount;
+            totalQuantity += detail.Quantity;
+            totalSingelUnitPrice += detail.ProductPrice;
+            totalDiscount += detail.DiscountAmount;
+            totalExtraTax += detail.ExtraTaxAmount;
+            totalNet += detail.SubTotalOrder;
+
+        }
+
+
+        <hr />
+        <div class="row" style="text-align: center;">
+            <div class="col-sm-12">
+                <div class=''>
+                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                        <div class="media-body details-form-control mb-4">
+                            <div class="d-xl-flex d-block justify-content-between">
+                                <div class="">
+                                    @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalAllProductAmount) : <span> @Math.Round(subTotalBeforeTax, 2, MidpointRounding.AwayFromZero)</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (totalDiscount > 0)
+            {
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.DiscointInvoiceAmount) : <span> @Math.Round(totalDiscount, 2, MidpointRounding.AwayFromZero)</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (taxtotal > 0)
+            {
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalProductTax) :
+                                        <span>
+                                            @Math.Round(taxtotal, 2, MidpointRounding.AwayFromZero)
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            @if (totalExtraTax > 0)
+            {
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalExtraTaxes) :
+                                        <span>
+                                            @Math.Round(totalExtraTax, 2, MidpointRounding.AwayFromZero)
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-12">
+                <div class=''>
+                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                        <div class="media-body details-form-control mb-4">
+                            <div class="d-xl-flex d-block justify-content-between">
+                                <div class="">
+                                    @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.NetOfInvoice) :
+                                    <span>
+                                        @Math.Round(totalNet, 2, MidpointRounding.AwayFromZero)
+                                    </span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.FirstOrDefault().QRNumber != null)
+{
+    <br />
+    <br />
+    <img src="data:image/jpg;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeQRcode(Model.FirstOrDefault().QRNumber.Value, Request.Url.ToString()))" alt="Sutumatic" style="width:100%; height:200px" />
+}

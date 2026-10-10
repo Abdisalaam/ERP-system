@@ -1,0 +1,108 @@
+﻿@model Accountingsystem.ViewModel.AdditionalOrderDetailVM
+
+
+@using (Html.BeginForm("AddNewCustomerPartial", "Cachier", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model=> model.OrderDetailId)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group  text-center">
+                                    @Html.Label(Accountingsystem.Resources.CachierCreate.SelectAdditionalDetail)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedAdditionalDetail, Model.AdditionalDetailList, Accountingsystem.Resources.CachierCreate.SelectAdditionalDetail, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedAdditionalDetail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addAdditionalOrderDetail();' class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.CachierCreate.AddAdditionalDetailToItem  <div id="additionalDetailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#additionalDetailSpinner").hide();
+            $("#SelectedAdditionalDetail").chosen();
+            $("#SelectedAdditionalDetail_chosen").addClass("form-control Dropdownlist-select");
+        });
+
+    </script>
+    <script>
+      
+        $('#SelectedAdditionalDetail').on('change', function () {
+            $("#SelectedAdditionalDetail_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedAdditionalDetail_chosen span').css('background', '#ffffff');
+            $('#SelectedAdditionalDetail_chosen b').css('background', '#ffffff');
+        });
+
+    </script>
+    <script>
+        function addAdditionalOrderDetail() {
+        var orderDetailId = @Model.OrderDetailId;
+            var selectedAdditionalDetailId = $("#SelectedAdditionalDetail").val();
+        if (SelectedAdditionalDetail == "" || SelectedAdditionalDetail == null || SelectedAdditionalDetail < 1) {
+
+            if (SelectedAdditionalDetail < 1) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.SliceIsRequiredMessage",
+                    pos: 'top-center'
+                });
+                $("#SelectedAdditionalDetail").addClass("addRequiredFieldToInput");
+                $("#SelectedAdditionalDetail_chosen").addClass("addRequiredFieldToInput");
+                $('#SelectedAdditionalDetail_chosen span').css('background', 'red');
+                $('#SelectedAdditionalDetail_chosen b').css('background', 'red');
+                $('#SelectedAdditionalDetail_chosen').trigger('focus');
+            }
+          
+        }
+        else {
+            $("#additionalDetailSpinner").show();
+            $('#additionalDetailModal').modal('toggle');       
+
+            var parameters = { 'selectedAdditionalDetailId': selectedAdditionalDetailId, 'orderDetailId': orderDetailId };
+            var data = JSON.stringify(parameters);
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewAdditional", "Cachier")",
+                data: data,
+                contentType: 'application/json',
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CachierCreate.AdditionalDetailHasbeenAdded",
+                        pos: 'top-center'
+                    });
+                    $("#additionalDetailSpinner").hide();
+
+                    $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + data);
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.ErrorMessage",
+                        pos: 'top-center'
+                    });
+                    $("#additionalDetailSpinner").hide();
+                }
+         });
+        }
+    };
+    </script>
+
+}

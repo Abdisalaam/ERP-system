@@ -1,0 +1,207 @@
+﻿@model Accountingsystem.ViewModel.SubLedgerVM
+
+@{
+    ViewBag.Title = "CreateOpenBalance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>رصيد افتتاحى لمركز التكلفة</h2>
+
+@using (Html.BeginForm("CreateOpenBalance", "SubLedger", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+  
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.SubLed_Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SubLed_Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.SubLed_Name, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubLed_Name, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubLed_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.OpenBalance_Code, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.OpenBalance_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OpenBalance_Code, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Account_Id, Model.AccountList, "الحساب", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Account_Id, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Account_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.SubLed_Type, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubLed_Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubLed_Type, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.SubLed_Desc, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubLed_Desc, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubLed_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.SubLed_Date, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubLed_Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubLed_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.SubledgerBalanceDebit, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubledgerBalanceDebit, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubledgerBalanceDebit, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            @Html.EditorFor(model => model.SubledgerBalanceCredit, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.SubledgerBalanceCredit, "", new { @class = "text-danger" })
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.SubledgerBalanceCredit, htmlAttributes: new { @class = "control-label " })
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label " })
+
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="انشاء المركز" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+    $('#SubLed_Date').datetimepicker({ format: 'DD/MM/YYYY' });
+    </script>
+}

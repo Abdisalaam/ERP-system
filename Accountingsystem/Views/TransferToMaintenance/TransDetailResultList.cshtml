@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransferToMaintenanceDetailsTemp>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("الكميه")
+        </th>
+
+        <th>
+            @Html.DisplayName("اجمالي التكلفه")
+        </th>
+
+        <th>
+            @Html.DisplayName("رقم الصنف")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.Details_Id)
+    @Html.HiddenFor(modelItem => item.TransferToMaintenanceTempMaster_Id)
+    <tr>
+        <td>
+
+            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+            @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+        <td>
+            @{var Pro = Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Name;
+                <h>@Pro</h> }
+        </td>
+
+    </tr>
+}
+
+</table>

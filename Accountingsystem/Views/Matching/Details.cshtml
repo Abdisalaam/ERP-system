@@ -1,0 +1,214 @@
+﻿@model Accountingsystem.Models.Matching
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>التفاصيل</h2>
+
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+
+            <tr>
+
+                <td id="Match_Id">
+                    @Html.DisplayFor(model => model.Match_Id)
+                </td>
+
+                <th class="col-md-1">
+                    @Html.DisplayName("رقم المطابقة")
+                </th>
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Matching_Code)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("كود المطابقة")
+                </th>
+
+             
+            </tr>
+            <tr>
+
+
+
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Date)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("تاريخ الحركه")
+                </th>
+
+
+
+                <td class="col-md-1">
+                    @{var currency = Accountingsystem.Models.Currency.FindCurrencyById(Convert.ToInt32(Model.Match_currency)).Currency_Type;
+                        <h>@currency</h> }
+                </td>   
+              
+                <th class="col-md-2">
+                    @Html.DisplayName("العمله")
+                </th>
+            </tr>
+            <tr>
+
+                <td>
+                    @{var compname = Accountingsystem.Models.Company.GetCompanyById(Model.Comp_ID).Comp_Name;
+                        <h>@compname</h> }
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("اسم الشركه")
+                </th>
+
+
+                <td class="col-md-1">
+                    @{var Receipt = Accountingsystem.Models.Receipt.FindReceiptByID(Model.ReceiptRec_ID).Rec_Number;
+                        <h>@Receipt</h> }
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("كود الايصال")
+                </th>
+
+            
+            </tr>
+            <tr>
+
+
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Tota_Amount)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("قيمه الخصم")
+                </th>
+
+
+
+                <td class="col-md-1">
+                    @{var invoice = Accountingsystem.Models.InvoiceMaster.GetInvoiceDetailsById(Model.InvoiceMasterMaster_Id).Serial_Number;
+                        <h>@invoice</h> }
+                </td>              
+                <th class="col-md-2">
+                    @Html.DisplayName("رقم الفاتوره")
+                </th>
+            </tr>
+            <tr>
+
+
+                <td class="col-md-1">
+                    @{var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Name;
+                        <h>@customer</h> }
+                </td>
+           
+                <th class="col-md-2">
+                    @Html.DisplayName("اسم العميل")
+                </th>
+
+
+
+
+                <td id="Match_state">
+                    @Html.DisplayFor(model => model.Match_state)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("حاله الحركه")
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div class="modal-footer">
+    <div class="col-md-offset-2 col-md-10">
+        <input id="changeState" type="button" value="Post" class="btn btn-primary" />
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        updateButtonText();
+
+
+        function updateButtonText() {
+            var Match_state = $.trim($("#Match_state").text());
+            if (Match_state == "Void") {
+                $("#changeState").hide();
+                return;
+            }
+
+            else if (Match_state == "Pending")
+                $("#changeState").val("Post");
+            else if (Match_state == "Post")
+                $("#changeState").val("Void");
+        }
+
+        function UpdateMatchingStateText() {
+            var Match_state = $.trim($("#Match_state").text());
+            if (Match_state == "Pending")
+                $("#Match_state").text("Post");
+            else if (Match_state == "Post")
+                $("#Match_state").text("Void");
+        }
+
+
+
+
+        function UpdateMatchingState(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+              
+                url: '@Url.Action("Edit", "Matching")',
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+
+
+        $("#changeState").click(function (e) {
+
+            e.preventDefault();
+            var data = JSON.stringify({
+                Match_Id: $.trim($("#Match_Id").text()),
+                Match_state: $("#changeState").val()
+            });
+
+            $.when(UpdateMatchingState(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+            updateButtonText();
+            UpdateMatchingStateText();
+        })
+
+
+    </script>
+}
+
+
+
+
+<div align="left">
+    <a class="btn btn-primary" href='@Url.Action("Index")'>
+        <p>
+
+            العودة الى القائم
+        </p>
+    </a>
+
+</div>
+
+

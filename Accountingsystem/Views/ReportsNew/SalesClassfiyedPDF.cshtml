@@ -1,0 +1,303 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ClassifySalesInvoiceVM
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+}
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير المبيعات</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.List.FirstOrDefault().company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.List.FirstOrDefault().company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.List.FirstOrDefault().company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير تصنيف المبيعات / Category Of Sales Report
+
+        </div>
+
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <br />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">رقم العميل<br />Customer NO</th>
+                <th style="text-align:center">العميل<br />Customer</th>
+                <th style="text-align:center" width="150px">رقم الفاتورة<br />Invoice NO</th>
+                <th style="text-align:center" width="100px">التاريخ<br />Date</th>
+                <th style="text-align:center">الكمية<br />QY</th>
+                <th style="text-align:center">الفرع<br />Branch</th>
+                <th style="text-align:center">طريقة الدفع<br />PaymentMethod</th>
+
+                <th style="text-align:center">القيمة<br />Amount</th>
+                <th style="text-align:center">الضريبة<br />Tax</th>
+                <th style="text-align:center">قيمة المردود<br />Recall Amount</th>
+                <th style="text-align:center">مبيعات التصنيف<br />Category Sales</th>
+                <th style="text-align:center">تكلفة التصنيف<br />Category Cost</th>
+
+
+
+            </tr>
+        </thead>
+
+
+        @{
+            decimal Total = 0;
+            decimal AmountClassfiy = 0;
+            decimal CostClassfy = 0;
+            int a = 1;
+        }
+        @foreach (var item in Model.List)
+        {
+
+        <tr>
+
+            <td>
+                @item.CustomerCode
+            </td>
+            <td>
+
+                @item.CustomerName
+            </td>
+            <td width="150px">
+
+                @item.InvoiceCode
+            </td>
+            <td width="100px">
+                @Convert.ToDateTime(item.InvoiceDate).ToString("yyyy/MM/dd ")
+                @*@item.InvoiceDate*@
+            </td>
+
+            <td>
+                @Math.Round(item.quantity, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+                @item.branchName
+            </td>
+            <td>
+                @item.paymentmethodName
+            </td>
+            <td>
+
+                @Math.Round(item.invoiceTotal - item.totaltax, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+
+                @Math.Round( item.totaltax, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+
+                @Math.Round(item.RecallInvoicetotal, 2, MidpointRounding.AwayFromZero)
+            </td>
+
+            <td>
+
+                @Math.Round(item.TotalClassFiyAmount, 2, MidpointRounding.AwayFromZero)
+            </td>
+            @if (item.detail != null)
+            {
+                <td>
+
+                    @Math.Round(item.detail.Select(z => z.TotalCost).Sum(), 2, MidpointRounding.AwayFromZero)
+                </td>
+            }
+            <td></td>
+            @{
+                Total += (item.invoiceTotal - item.totaltax);
+                AmountClassfiy += item.TotalClassFiyAmount;
+                if (item.detail != null)
+                {
+                    CostClassfy += item.detail.Select(z => z.TotalCost).Sum();
+                }
+                totarecall += item.RecallInvoicetotal;
+                a += 1;
+            }
+        </tr>
+
+        }
+    </table>
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">اجمالى الفواتير<br />Total Invoice</th>
+                <th style="text-align:center">اجمالى المردودات<br />Total Recall</th>
+                <th style="text-align:center">اجمالى التصنيف<br />Total Category Sales</th>
+                <th style="text-align:center">تكلفة التصنيف<br />Total Category Cost</th>
+               
+            </tr>
+            </thead>
+        <tbody>
+            <tr>
+
+                <td style="text-align:center">
+                    @Math.Round(Total, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="text-align:center">
+                    @Math.Round(totarecall, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="text-align:center">
+                    @Math.Round(AmountClassfiy, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+                <td style="text-align:center">
+                    @Math.Round(CostClassfy, 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+            </tbody>
+    </table>
+</body>
+</html>

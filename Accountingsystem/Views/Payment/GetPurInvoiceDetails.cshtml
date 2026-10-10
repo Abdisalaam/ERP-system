@@ -1,0 +1,227 @@
+﻿@model Accountingsystem.ViewModel.MatchingPurInvoiceDetailVM
+@{
+    var supplier = Accountingsystem.Models.Supplier.GetSupplierById(Model.Supplier_Id);
+    var store = Accountingsystem.Models.Store.GetStoreById(Model.Store_ID);
+}
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.PaymentCreate.PurchasesBillDetails;
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Serial_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceDate)
+                                        </div>
+                                        <div>
+                                            @Model.Invoice_Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.DueDate)
+                                        </div>
+                                        <div>
+                                            @Model.Due_Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Store)
+                                        </div>
+                                        <div>
+                                            @store.Store_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SupplierCreate.Supplier)
+                                        </div>
+                                        <div>
+                                            @supplier.Supp_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.TotalTaxes)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PrintReports.Net)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Total_Cost, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.ResidualValue)
+                                        </div>
+                                        <div id="totalAfterMat">
+                                            @Math.Round(Model.TotalAmountAfMat, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            @if (Model.RecallList.Count > 0)
+            {<div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                            فواتير المردود
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-4">
+                        <thead>
+                            <tr>
+                                <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceNumber</th>
+
+                                <th>@Accountingsystem.Resources.InvoiceMasterDetails.TotalAmount</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var detail in Model.RecallList)
+                            {
+                                <tr>
+                                    <td>@detail.Recall_MPurch_Serial</td>
+
+
+                                    <td>@Math.Round(detail.Inv_TotalCost, 2, MidpointRounding.AwayFromZero)</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            }
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+
+        var remaining = @Model.TotalAmountAfMat;
+
+            $("#Remaining").html(remaining);
+
+            $("#reminingShow").html(remaining);
+
+
+    });
+
+</script>

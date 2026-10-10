@@ -1,0 +1,462 @@
+﻿@model Accountingsystem.Models.Payment
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.PaymentDetails.SpentReceiptDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    @Html.HiddenFor(model => model.Pay_ID)
+    <div class="statbox widget box box-shadow">
+        
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                   @Accountingsystem.Resources.PaymentDetails.SpentReceiptDetails
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Pay_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Barcode)
+                                        </div>
+                                        <div>
+
+                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeQRcodePayment(Model.Pay_ID, Request.Url.ToString()))" alt="Image" style="width:100px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptValue)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Pay_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentDetails.SupplierName)
+                                        </div>
+                                        <div>
+                                            @{ var Sup = Accountingsystem.Models.Supplier.GetSupplierById(Model.Supplier_Id); }
+                                            <h>@Sup.Supp_Name</h>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SupplierCreate.SupplierNumber)
+                                        </div>
+                                        <div>
+                                            @Sup.Supp_Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptDate)
+                                        </div>
+                                        <div>
+                                            @Model.Pay_Date.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.PaymentMethod)
+                                        </div>
+                                        <div>
+                                            @{var Chart = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.PayBank_Account).Account_Name; }
+                                            <h>@Chart</h>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptCase)
+                                        </div>
+                                        <div id="Pay_State">
+                                            @Html.DisplayFor(model => model.Pay_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="text-center">
+                            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptDescription)
+                        </div>
+
+
+                        @Html.TextAreaFor(model => model.Rec_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            @if (Model.PaymentFileDetails.Any())
+            {
+
+                <div class="table-responsive">
+                    <table class="table mb-4">
+                        <thead>
+
+                            <tr>
+
+
+                                <th>@Accountingsystem.Resources.validate.Number</th>
+                                <th>@Accountingsystem.Resources.validate.Name</th>
+                                <th>@Accountingsystem.Resources.validate.Type</th>
+                                <th>@Accountingsystem.Resources.validate.Size</th>
+                                <th></th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var countfile = 0; }
+                            @foreach (var file in Model.PaymentFileDetails)
+                            {
+                                countfile += 1;
+
+                                <tr>
+                                    <td>@countfile</td>
+                                    <td>@file.FileName</td>
+                                    <td>@file.ProImg</td>
+                                    <td>@file.ContentLength</td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("ReturnPayFile", new { fileId = file.Id })" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب"))
+                                        {
+                                            <a href='@Url.Action("deleteFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+
+
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+
+
+
+
+                    </table>
+
+
+
+
+                </div>
+            }
+                <div class="row layout-top-spacing">
+                    @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+                    {
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Create")'>
+                                    @Accountingsystem.Resources.MasterPOSInvoice.New
+                                    <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <input id="changeState" type="button" value="Post" class="btn btn-block btn-outline-info mb-lg-2" />
+                              
+
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintPayment", new { controller = "Reports", id = Model.Pay_ID })'>
+                                @Accountingsystem.Resources.ReceiptDetails.PrintEmail
+                                <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                            <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintPaymentWhite", new { controller = "Reports", id = Model.Pay_ID })'>
+                                @Accountingsystem.Resources.ReceiptDetails.Print
+                                <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                            @if (Model.Pay_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+                                <a id="deletebtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Delete", new { id = Model.Pay_ID })">
+                                    @Accountingsystem.Resources.ReceiptDetails.Delete
+                                    <span id="deletebtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+                            @if (Model.Pay_State != Accountingsystem.Models.TransactionState.Pending@*&& (User.IsInRole("عميل") || User.IsInRole("مالك النظام"))*@)
+{
+
+                        <a id="deletebtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.Pay_ID })">
+                            @Accountingsystem.Resources.ExpenseDetails.Delete
+                            <span id="deletebtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @if (Model.Pay_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+                                <a id="CustomerDetail" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Details", new { controller = "Supplier", id = Model.Supplier_Id })'>
+                                    @Accountingsystem.Resources.SupplierDetails.SupplierDetailss
+                                    <span id="CustomerDetailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="Editbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action( "Update", new { id = Model.Pay_ID })">
+                                    @Accountingsystem.Resources.ReceiptDetails.Edit
+                                    <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a id="glbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Pay_Number })'>
+                                    @Accountingsystem.Resources.ReceiptDetails.ReceiptConstraint
+                                    <span id="glbtnSpinner" style="display:none;" class="spinner-border text-danger mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            }
+                            @if (Request.IsAuthenticated @*&& !User.IsInRole("بائع")*@)
+                            {
+                                <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                                    @Accountingsystem.Resources.ReceiptDetails.BackToList
+                                    <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+    </div>
+    <div>
+
+
+
+
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#CustomerDetail").click(function (e) {
+            $("#CustomerDetailSpinner").show();
+        });
+        $("#deletebtn").click(function (e) {
+            $("#deletebtnSpinner").show();
+        });
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#glbtn").click(function (e) {
+            $("#glbtnSpinner").show();
+        });
+        $("#printEmailbtn").click(function (e) {
+            $("#printEmailbtnSpinner").show();
+        });
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+    <script type="text/javascript">
+        updateButtonText();
+
+
+        function updateButtonText() {
+            var Pay_State = '@Model.Pay_State';
+            if (Pay_State == "Void") {
+                $("#changeState").hide();
+                return;
+            }
+            else if (Pay_State == "Pending")
+                $("#changeState").val("Post");
+            else if (Pay_State == "Post")
+                $("#changeState").val("Void");
+        }
+        function updatePaymentStateText() {
+            var Pay_State ='@Model.Pay_State';
+            if (Pay_State == "Pending")
+                $("#Pay_State").text("Post");
+            else if (Pay_State == "Post")
+                $("#Pay_State").text("Void");
+        }
+
+
+
+        function UpdatePayment(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+
+                 url: '@Url.Action("Edit", "Payment")',
+                data: data,
+                success: function (result) {
+                    Snackbar.show({
+                        text: result,
+                        pos: 'top-center'
+
+                    });
+                    setTimeout(function () {
+
+                        location.reload();
+
+                    }, 5000);
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+
+        $("#changeState").click(function (e) {
+            this.disabled = true;
+            e.preventDefault();
+
+            var data = JSON.stringify({
+                Pay_ID: '@Model.Pay_ID',
+                Pay_State: $("#changeState").val()
+            });
+
+            $.when(UpdatePayment(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+
+            updateButtonText();
+            updatePaymentStateText();
+
+        })
+
+
+    </script>
+}
+
+
+<div>
+</div>

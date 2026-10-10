@@ -1,0 +1,313 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.ReportsVM.SalaryReportForBankVM>
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalSalary = 0;
+    decimal totalbasic = 0;
+    decimal totalother = 0;
+    decimal totalReduce = 0;
+    decimal totalresid = 0;
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>تقرير رواتب واجور</title>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير رواتب واجور/ Salary and wages Report
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+             @Model.FirstOrDefault().SalaryDate.Year / @Model.FirstOrDefault().SalaryDate.Month  لشهر
+
+        </div>
+
+
+
+    </div>
+    <hr />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th>
+
+                    الموظف
+                    <br />
+                    Employee
+                </th>
+                <th>
+
+                    رقم الهوية
+                    <br />
+                    Passport NO
+                </th>
+                <th>
+
+                    رقم الحساب
+                    <br />
+                    Account NO
+                </th>
+
+
+
+
+                <th>
+                    ملاحظات
+                    <br />
+                    Notes
+                </th>
+                <th>
+                    العنوان
+                    <br />
+                    Address
+
+                </th>
+                <th>
+                    @Html.DisplayName("اجمالى الراتب")
+                    <br />
+                    Total Salary
+                </th>
+                <th>
+                    @Html.DisplayName("الاساسي")
+                    <br />
+                    Basic Salary
+                </th>
+                <th>
+                    @Html.DisplayName("بدل سكن")
+                    <br />
+                    Residence
+                </th>
+                <th>
+                    @Html.DisplayName("بدلات اخري")
+                    <br />
+                    Other Allowance
+                </th>
+                <th>
+                    @Html.DisplayName("خصومات")
+                    <br />
+                    Discount
+                </th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                totalbasic += item.basicSalary;
+                totalother += item.increaseSalary;
+                totalReduce += item.decraseSalary;
+                totalresid += item.ResidentSalary;
+                totalSalary += item.TotalSalary;
+                <tr>
+                    <td>
+                        @item.emp.Emp_Name
+                    </td>
+                    <td>
+                        @item.emp.Passport_number
+                    </td>
+
+                    <td>
+                        @item.emp.AccountNum
+                    </td>
+
+
+                    <td>
+                        @item.Notes
+                    </td>
+
+                    <td>
+                        @item.emp.Emp_Address
+                    </td>
+                    <td>
+                        @Math.Round(item.TotalSalary, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+                        @Math.Round(item.basicSalary, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td>
+                        @Math.Round(item.ResidentSalary, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td>
+                        @Math.Round(item.increaseSalary, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td>
+                        @Math.Round(item.decraseSalary, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+
+
+
+
+
+
+
+                </tr>
+
+            }
+        </tbody>
+        <thead>
+            <tr>
+                <th>
+
+               الاجمالي
+                    <br />
+                    Total
+                </th>
+                <th>
+
+
+                </th>
+                <th>
+
+                </th>
+                <th></th>
+                <th></th>
+                <td>
+                    @Math.Round(totalSalary, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @Math.Round(totalbasic, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td>
+                    @Math.Round(totalresid, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td>
+                    @Math.Round(totalother, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td>
+                    @Math.Round(totalReduce, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+
+            </tr>
+        </thead>
+
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+@*<footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Balance Due : @Model.Total</h>
+    </footer>*@
+
+</html>
+

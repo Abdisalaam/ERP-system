@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Accountingsystem.Models.Accounts>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>صفحة الحسابات الفرعية</h2>
+
+
+<table data-sortable="" class="table" data-sortable-initialized="true" id="sasa">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Balance)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Desc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Balance)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+        $.ajaxSetup({ cache: false });
+
+                    $(document).ready(function () {
+                        $('#sasa').DataTable();
+                    });
+    </script>
+}

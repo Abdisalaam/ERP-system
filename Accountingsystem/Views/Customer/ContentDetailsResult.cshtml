@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Accountingsystem.Models.ContentPersonDetailsTemp>
+
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table  class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactName)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactEmail)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactJob)
+                    </th>
+
+                    <th></th>
+                </tr>
+                </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelItem => item.ContentPerson_ID)
+                    @Html.HiddenFor(modelItem => item.CustomerTemp_Id)
+
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content_Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content_Mail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content_Job)
+                    </td>
+                    
+                    <td>
+                        <a href='javascript:;' onclick="@("DeleteTemp('"+item.ContentPerson_ID+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreateNewCustomer.Delete-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+        </div>
+</div>

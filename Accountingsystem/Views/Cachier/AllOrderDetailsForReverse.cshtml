@@ -1,0 +1,211 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.OrderDetailsVM>
+@{
+    decimal totalQuantity = 0;
+    decimal totalSingelUnitPrice = 0;
+    decimal subTotalBeforeTax = 0;
+    decimal subtotal = 0;
+    decimal taxtotal = 0;
+    decimal totalDiscount = 0;
+    decimal totalExtraTax = 0;
+    decimal totalNet = 0;
+
+}
+
+<div class="widget-content searchable-container list">
+
+    <div class="searchable-items list">
+        @{
+
+            if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="items">
+                        <div class="item-content">
+                            <div class="item-content text-center">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                                        <text class="user-name text-center" style="vertical-align: middle;">
+                                            @item.ProductName
+
+                                            <span>
+                                                <a href='javascript:;' onclick="@("AddOrderDetailsToTemp('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder-minus"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="9" y1="14" x2="15" y2="14"></line></svg></a>
+                                            </span>
+                                        </text>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-email">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.Quantity, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)
+
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.SubTotalProductBeforeTax, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.DiscountAmount, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.ProductTaxAmount, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.SubTotalProduct, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    subTotalBeforeTax += item.SubTotalProductBeforeTax;
+                    subtotal += item.SubTotalProduct;
+                    taxtotal += item.ProductTaxAmount;
+                    totalQuantity += item.Quantity;
+                    totalSingelUnitPrice += item.ProductPrice;
+                    totalDiscount += item.DiscountAmount;
+                    totalExtraTax += item.ExtraTaxAmount;
+                    totalNet += item.SubTotalOrder;
+                }
+
+
+            }
+            else
+            {
+                <div class="items">
+
+                    <div class="item-content">
+                        <div class="item-content text-center">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <text class="user-name text-center" style="vertical-align: middle;">@Html.DisplayName("Cart is empty")</text>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            }
+
+
+        }
+        <div class="items">
+
+            <div class="item-content">
+
+
+
+                <div class="item-content text-center">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                            <text class="user-name text-center" style="vertical-align: middle;">
+                                @Accountingsystem.Resources.CachierCreate.Summary
+                            </text>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-email">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(totalQuantity, 2, MidpointRounding.AwayFromZero)
+
+
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(totalSingelUnitPrice, 2, MidpointRounding.AwayFromZero)
+
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(subTotalBeforeTax, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(totalDiscount, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(taxtotal, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(subtotal, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+@if (totalExtraTax > 0)
+{
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="form-group">
+            @Html.Label(Model.FirstOrDefault().ExtraTaxName)
+            <div class="input-group">
+                <input class="form-control mb-4" type="text" value="@Math.Round(totalExtraTax, 2, MidpointRounding.AwayFromZero)" id="subTotalTaxesInput" disabled />
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group">
+        @Html.Label(Accountingsystem.Resources.InvoiceMasterDetails.Net)
+        <div class="input-group">
+            <input class="form-control mb-4" type="text" value="@Math.Round(subtotal+totalExtraTax, 2, MidpointRounding.AwayFromZero)" id="subTotalInput" disabled />
+
+        </div>
+
+    </div>
+
+</div>

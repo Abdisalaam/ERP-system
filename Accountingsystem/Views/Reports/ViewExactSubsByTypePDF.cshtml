@@ -1,0 +1,317 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubscriptionReportVM.AllSubscriptionVM
+
+@{
+    Layout = null;
+    var dateto = "الي" + Convert.ToDateTime(Model.EndDate).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.StartDate).ToString("yyyy/MM/dd ");
+    int count = 0;
+    decimal Total = 0;
+    decimal totalAllTax = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير اشتراك معين</title>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+
+
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        تقرير معلومات الاشتراكات / Subscribtion Information Report
+
+    </div>
+    @if (Model.subtype_ID > 0)
+    {
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Accountingsystem.Models.Subscription_Type.GetallSubscription_TypeById(Model.subtype_ID.Value).Subscrip_Name
+
+        </div>
+    }
+    @if (Model.Subledger_Id > 0)
+    {
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Accountingsystem.Models.SubLedger.getDetail(Model.Subledger_Id).SubLed_Name
+
+        </div>
+    }
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="col-lg-6">
+                    <table class="table" style="text-align:right;direction:rtl;">
+                        <tr>
+
+                            <th class="col-md-4" style="text-align:center; ">
+                                اسم العميل
+                                <br />
+                                ClientName
+                            </th>
+                            <th class="col-md-4" style="text-align:center; ">
+                                الرقم المميز
+                                <br />
+                                The Identification Number
+                            </th>
+                            <th class="col-md-4" style="text-align:center; ">
+                                رقم السجل التجاري
+                                <br />
+                                Commercial Registration Number
+                            </th>
+                            <th class="col-md-4" style="text-align:center; ">
+                                رقم الفاتورة
+                                <br />
+                                Invoice Number
+                            </th>
+                            <th class="col-md-4" style="text-align:center; ">
+                                تاريخ اصدار الفاتورة
+                                <br />
+                                Invoice Issuance Number
+                            </th>
+
+                            <th class="col-md-4" style="text-align:center; ">
+                                اجمالى الفاتورة شامل ضريبة القيمة المضافة
+                                <br />
+                                ÷Invoice Total VAT Inclusive
+                            </th>
+
+
+
+
+                            <th class="col-md-4" style="text-align:center; ">
+                                وصف الخدمة
+                                <br />
+                                services Description
+                            </th>
+
+
+                            <th class="col-md-4" style="text-align:center; ">
+                                ملاحظات
+                                <br />
+                                Notes
+                            </th>
+
+
+                          
+                        </tr>
+                    
+                        <tbody>
+                            @foreach (var item in Model.Sublist)
+                            {
+
+                                count = count + 1;
+                                var discount = (decimal)(item.Estimate_Amount * (item.Discount.Value / 100));
+                                decimal totalAfterdiscount = item.Estimate_Amount - discount;
+                                decimal totaltax = 0;
+                                if (item.Tax_ID > 0)
+                                {
+                                    var thistax = Accountingsystem.Models.Tax.GetTaxesbyId(item.Tax_ID);
+
+                                    totaltax = (decimal)totalAfterdiscount * (thistax.Tax_Percentage / 100);
+
+                                }
+                                else
+                                {
+                                    totaltax = 0;
+                                }
+
+                                var customer = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value);
+
+
+                                <tr>
+
+
+                                    <td class="col-md-4" style="text-align:center;">
+                                        @customer.Customer_Name
+                                    </td>
+                                    <td class="col-md-4" style="text-align:center;">
+                                        @customer.Customer_TaxNumber
+                                    </td>
+
+                                    <td class="col-md-4" style="text-align:center;">
+                                        @customer.CommercialRegistrationNo
+                                    </td>
+
+
+
+
+                                    <td class="col-md-4" style="text-align:center;">
+
+                                        @item.Subscrip_Code
+                                    </td>
+
+                                    <td class="col-md-4" style="text-align:center;">
+
+                                        @Convert.ToDateTime(item.Sub_Date).ToString("yyyy/MM/dd ")
+                                    </td>
+                                    <td class="col-md-4" style="text-align:center;">
+
+                                        @Math.Round(item.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                    <td class="col-md-4" style="text-align:center;">
+
+                                        @Accountingsystem.Models.Subscription_Type.GetSuptypetById(item.Sub_Type_ID).Subscrip_Name
+                                    </td>
+
+                                    <td class="col-md-4" style="text-align:center;"></td>
+
+
+
+                                    
+                                </tr>
+                                Total += item.AmountAfterTax;
+                                totalAllTax += totaltax;
+
+                            }
+                            <tr>
+                                <th class="col-md-4" style="text-align:center; ">
+                                    الاجمالي
+                                    <br />
+                                    Total
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+                                    @Math.Round(Total, 2, MidpointRounding.AwayFromZero)
+                                </th>
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+
+                                <th class="col-md-4" style="text-align:center; ">
+
+                                </th>
+
+
+
+                                @*<th class="col-md-4" style="text-align:center; ">
+                    @Math.Round(totalAllTax, 2, MidpointRounding.AwayFromZero)
+                </th>*@
+
+                            </tr>
+
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <footer style="margin-top:25%;">
+            <hr />
+
+        </footer>
+    </body>
+</html>

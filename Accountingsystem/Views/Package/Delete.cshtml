@@ -1,0 +1,235 @@
+﻿@model Accountingsystem.Models.Package
+
+@{
+    /**/
+
+    ViewBag.Title = "Delete";
+}
+
+<h2 class="HEADTITLE-STYLE">حذف الباقة</h2>
+
+<h3>هل تريد حذف هذه الباقة؟</h3>
+
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+            <tr>
+
+
+
+
+
+                <th>
+                    @Html.DisplayName("اسم الباقة")
+                </th>
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Package_Name)
+                </td>
+
+
+                <th>
+                    @Html.DisplayName("مدة الباقة بالايام")
+                </th>
+                <td class="col-md-2">
+
+                    <h>@Model.Package_duration</h>
+                </td>
+            </tr>
+            <tr>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("عدد الافرع المتاحة")
+                </th>
+                <td class="col-md-2">
+
+                    <h>@Model.Number_Branch</h>
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("عدد نقاط البيع المتاحة")
+                </th>
+                <td class="col-md-2">
+
+                    <h>@Model.Number_POS</h>
+                </td>
+            </tr>
+            <tr>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("عدد مراكز التكلفة المتاحة")
+                </th>
+                <td class="col-md-2">
+
+                    <h>@Model.Number_subLedgger</h>
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("عدد المخازن المتاحة")
+                </th>
+                <td class="col-md-2">
+
+                    <h>@Model.Number_store</h>
+                </td>
+            </tr>
+            <tr>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("عدد المستخدمين")
+                </th>
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Number_User)
+                </td>
+
+
+                <th class="col-md-2">
+                    @Html.DisplayName("الاشتراكات")
+                </th>
+                <td class="col-md-2">
+                    @if (Model.Subscribtion == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+
+
+                </td>
+            </tr>
+            <tr>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("الاصول")
+                </th>
+                <td class="col-md-2">
+                    @if (Model.Asset == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+
+
+                </td>
+
+
+                <th class="col-md-2">
+                    @Html.DisplayName("المشاريع")
+                </th>
+                <td class="col-md-2">
+                    @if (Model.Project == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+
+
+                </td>
+            <tr>
+                <th class="col-md-2">
+                    @Html.DisplayName("قيود الاقفال")
+                </th>
+                <td class="col-md-2">
+                    @if (Model.OffGL == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+
+
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("الموارد البشرية")
+                </th>
+                <td class="col-md-2">
+                    @if (Model.HR == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+
+
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayName("عدد الموظفيين")
+                </th>
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Number_Employee)
+                </td>
+                <th>
+                    @Html.DisplayName("المصروفات")
+                </th>
+                <td>
+                @if (Model.Expenses == false)
+                {
+
+                    <h>غير متوفر بهذه الباقة</h>
+
+                }
+                else
+                {
+
+                    <h>متوفر</h>
+                }
+                    </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayName("تعدد للضرائب")
+                </th>
+                <td>
+                    @if (Model.ExtraTaxes == true)
+                    {
+
+                        <h>متوفر</h>
+
+                    }
+                    else
+                    {
+
+
+                        <h>غير متوفر بهذه الباقة</h>
+                    }
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="حذف" class="btn BTN-style final-BTN" />
+
+    </div>
+    <div class="form-actions no-color">
+
+        @Html.ActionLink("الرجوع الى القائمة", "Index")
+    </div>
+}
+

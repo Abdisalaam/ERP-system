@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Accountingsystem.Models.Customer>
+
+@{
+    ViewBag.Title = "IndexStopedSup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerNumber)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerCase)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerName)
+        </th>
+
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerPhoneNumber)
+        </th>
+
+
+
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CustomerPhone)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerBalance)
+        </th>
+
+
+        <th class="col-md-5">
+            @Html.Display("Image")
+        </th>
+        <th class="col-md-4"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Customer_Code)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Customer_State)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Customer_Name)
+            </td>
+
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Customer_Phone)
+            </td>
+
+
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Customer_Mobile)
+            </td>
+
+            <td class="col-md-2">
+                @*@Html.DisplayFor(modelItem => item.Customer_Balance)*@
+                @Math.Round(item.Customer_Balance.Value,2, MidpointRounding.AwayFromZero)
+            </td>
+
+        </tr>
+    }
+
+</table>
+<a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+
+    @Accountingsystem.Resources.CustomerCreate.BackToList;
+
+</a>

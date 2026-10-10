@@ -1,0 +1,56 @@
+﻿@model Accountingsystem.Models.TransactionBatch
+
+<div>
+    <h4>TransactionBatch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("رقم الحركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Batch_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم الحركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OperationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("رقم الحركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OperationId)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ الحركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("وصف الحركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("رقم المستخدم")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+    </dl>
+</div>

@@ -1,0 +1,125 @@
+﻿@model Accountingsystem.Models.Subscription
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Subscription</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("رقم الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("كود الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Code)
+        </dd>
+        <dt>
+            @Html.DisplayName("نوع الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Type)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("وصف الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Description)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("تاريخ الانتهاء")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeadLine)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ البدء")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt>
+            @Html.DisplayName("تاريخ الايقاف")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_DateEnd)
+        </dd>
+        <dt>
+            @Html.DisplayName("قيمه الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estimate_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم العميل")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+        <dd>
+            @Html.Display("حاله العميل")
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.SubType_State)
+        </dd>
+        <dt>
+            @Html.DisplayName("حاله الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_State)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم الشركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Comp)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("نشاط الشركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_BU)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

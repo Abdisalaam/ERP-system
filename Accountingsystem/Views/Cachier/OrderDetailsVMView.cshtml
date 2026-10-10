@@ -1,0 +1,235 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.OrderDetailsVM>
+@{
+    decimal totalQuantity = 0;
+    decimal totalSingelUnitPrice = 0;
+    decimal subTotalBeforeTax = 0;
+    decimal subtotal = 0;
+    decimal taxtotal = 0;
+    decimal totalDiscount = 0;
+    decimal totalExtraTax = 0;
+    decimal totalNet = 0;
+}
+
+<div class="widget-content searchable-container list">
+    <div class="text">
+        <h4 class="text-center">@Html.DisplayName(Accountingsystem.Resources.CachierCreate.Cart) <span id="totalQTYForCart">(@totalQuantity)</span></h4>
+    </div>
+    <br />
+    <div class="searchable-items list">
+        @{
+
+            if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="items">
+                        <div class="item-content">
+                            <div class="item-content text-center">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                                        <text class="user-name text-center" style="vertical-align: middle;">
+                                            @item.ProductName
+                                            <span>  @item.AdditionalDetail </span>
+
+                                            <span>
+                                                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                            </span>
+                                        </text>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-email">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.Quantity, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.SubTotalProductBeforeTax, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        @*<span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                                <text>
+                                                    @Math.Round(item.DiscountAmount, 2, MidpointRounding.AwayFromZero)
+                                                </text>
+                                            </span>*@
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.ProductTaxAmount, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <text>
+                                                @Math.Round(item.SubTotalProduct, 2, MidpointRounding.AwayFromZero)
+                                            </text>
+                                        </span>
+                                        <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            @*<a href='javascript:;' onclick="@("DeleteTemp('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="modal" data-target="additionalDetailModal" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>*@
+
+                                            <button id="addAdditionalDeatailBTN" onclick="@("prepareAdditionalDetail('"+item.Id+"')")" class="btn btn-success" type="button" data-toggle="modal" data-target="#additionalDetailModal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="2" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            </button>
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    subTotalBeforeTax += item.SubTotalProductBeforeTax;
+                    subtotal += item.SubTotalProduct;
+                    taxtotal += item.ProductTaxAmount;
+                    totalQuantity += item.Quantity;
+                    totalSingelUnitPrice += item.ProductPrice;
+                    totalDiscount += item.DiscountAmount;
+                    totalExtraTax += item.ExtraTaxAmount;
+                    totalNet += item.SubTotalOrder;
+                }
+
+
+            }
+            else
+            {
+                <div class="items">
+
+                    <div class="item-content">
+                        <div class="item-content text-center">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <text class="user-name text-center" style="vertical-align: middle;">@Html.DisplayName(Accountingsystem.Resources.CachierCreate.Cartisempty)</text>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            }
+
+
+        }
+        <div class="items">
+
+            <div class="item-content">
+
+
+
+                <div class="item-content text-center">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                            <text class="user-name text-center" style="vertical-align: middle;">
+                                @Accountingsystem.Resources.CachierCreate.Summary
+                            </text>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-email">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(totalQuantity, 2, MidpointRounding.AwayFromZero)
+
+
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(totalSingelUnitPrice, 2, MidpointRounding.AwayFromZero)
+
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(subTotalBeforeTax, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                            @*<span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <text>
+                                        @Math.Round(totalDiscount, 2, MidpointRounding.AwayFromZero)
+                                    </text>
+                                </span>*@
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(taxtotal, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                            <span class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                <text>
+                                    @Math.Round(subtotal, 2, MidpointRounding.AwayFromZero)
+                                </text>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+        function prepareAdditionalDetail(e) {
+            var itemId = e;
+            $("#addAdditinalDetailPartialDialogDiv").load('@(Url.Action("AdditionalOrderDetailPartialView", "Cachier"))?orderDetailId=' + itemId);
+            $("#additionalDetailModal").dialog('open');
+        }
+</script>
+
+
+<script>
+        @*function AddAdditionalDetailToOrderDetail(e) {
+            var id = e;
+        $.ajax({
+            url: '@Url.Action("DeleteInvoiceDetails", "Cachier")',
+            type: 'POST',
+            data: { orderDetailId: id }
+        }).done(function (result) {
+            $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+            //$("#totalOfInvoiceRow").animate({ scrollTop: $('#totalOfInvoiceRow').prop("scrollHeight") }, 1000);
+            //var elmnt = document.getElementById("totalOfInvoiceRow");
+            //elmnt.scrollIntoView();
+            var currentCartItemsCount = parseInt($("#OrderCartCountId").text());
+            var cartItemsCount = currentCartItemsCount - parseInt(result);
+            $("#OrderCartCountId").text(cartItemsCount);
+            $("#OrderCartCountSmall").text(cartItemsCount);
+
+        });
+    }*@
+</script>
+<script>
+
+    @*$("#totalQTYForCart").text(@totalQuantity);
+    $("#OrderCartCountId").text(@totalQuantity);
+    $("#OrderCartCountSmall").text(totalQuantity);*@
+
+
+
+    $("#TotalExtraTaxAmount").val(@Math.Round(totalExtraTax, 2, MidpointRounding.AwayFromZero));
+    $("#totalOfAllDetilas").val(@Math.Round(totalNet, 2, MidpointRounding.AwayFromZero));
+</script>

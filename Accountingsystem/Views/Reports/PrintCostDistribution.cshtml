@@ -1,0 +1,282 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.CostDistributionPrintVM
+
+@{
+    Layout = null;
+    int counter = 1;
+    decimal quantity = 0;
+    decimal costbefor = 0;
+    decimal increaseCost = 0;
+    decimal costafter = 0;
+    decimal CostOneAfter = 0;
+    decimal CostOneBefore = 0;
+}
+<!DOCTYPE html>
+
+
+<html>
+
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <title>توزيع تكاليف الاستيراد</title>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+
+        td {
+            height: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in Model.company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">العنوان: &nbsp&nbsp @Model.company.Comp_Address  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>
+
+                    @*<tr>
+                            <td style="text-align:right; padding-top:20px">
+                                @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                                &nbsp&nbsp  : تاريخ الفاتورة
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                        </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div style="text-align: center;">
+
+        <text style="text-align: center;  font-size:30px;">توزيع تكاليف الاستيراد</text>
+
+    </div>
+    <br />
+
+    <table class="table" style="text-align:right;">
+        <tr>
+            <td style="text-align:right;border-bottom:hidden;  padding-top:0px">
+                @Model.Cost_Distr_Code
+            </td>
+            <th style="text-align:right;border-bottom:hidden; padding-top:0px">
+                رقم توزيع التكلفة
+            </th>
+          
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.purchase.Serial_Number
+                </td>
+            
+            <th style="text-align:right;border-bottom:hidden; padding-top:0px">
+                رقم الفاتورة
+            </th>
+
+        </tr>
+
+        <tr>
+            <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                @Model.subLedger.SubLed_Name
+            </td>
+            <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                مركز التكلفة
+            </th>
+            <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                @Model.supplier.Supp_Name
+            </td>
+            <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+              المورد
+            </th>
+        </tr>
+
+
+        
+
+    </table>
+
+
+
+    @*<p style="text-align:left;color:black;font-size:medium;">
+            Dear,
+        </p>
+        <p style="text-align:left;color:black;font-size:medium;">
+            With reference to your inquiry , we pleased to give you our best prices for the required products as follows :
+        </p>*@
+
+    <table class="table" style="text-align:right;" dir="rtl">
+        <thead>
+            <tr>
+                <th>رقم الصنف</th>
+                <th>اسم الصنف</th>
+                <th>الكمية</th>
+                <th>اجمالي التكلفة قبل التوزيع</th>
+                <th> تكلفة الوحدة قبل التوزيع</th>
+                <th>قيمة مبلغ التوزيع</th>
+                <th>اجمالي التكلفة بعد التوزيع</th>
+                <th>تكلفة الوحدة بعد التوزيع</th>
+                <th>نسبة الارتفاع فى التكلفة</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.detail)
+            {
+                <tr>
+                    <td> @detail.product.Prod_Code</td>
+                    <td> @detail.product.Prod_Name</td>
+                    <td> @Math.Round(detail.quantity, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.Costbefor, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.CostOneBefor, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.IncreasingCost, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.CostAfter, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.CostOneAfter, 2, MidpointRounding.AwayFromZero)</td>
+                    <td> @Math.Round(detail.Percenatge * 100, 2, MidpointRounding.AwayFromZero) %</td>
+
+                    @{
+                        quantity += detail.quantity;
+                        costbefor += detail.Costbefor;
+                        increaseCost += detail.IncreasingCost;
+                        costafter += detail.CostAfter;
+
+                    }
+
+
+
+
+
+
+                </tr>
+            }
+            <tr>
+                <td> الاجمالي</td>
+                <td> </td>
+                <td> @Math.Round(quantity, 2, MidpointRounding.AwayFromZero)</td>
+                <td> @Math.Round(costbefor, 2, MidpointRounding.AwayFromZero)</td>
+                <td></td>
+                <td> @Math.Round(increaseCost, 2, MidpointRounding.AwayFromZero)</td>
+
+                <td> @Math.Round(costafter, 2, MidpointRounding.AwayFromZero)</td>
+                <td></td>
+                <td>  </td>
+
+
+
+
+
+
+
+
+            </tr>
+        </tbody>
+    </table>
+    <div>
+     
+    
+
+    </div>
+
+
+
+</body>
+</html>
+
+
+

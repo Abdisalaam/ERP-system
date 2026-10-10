@@ -1,0 +1,399 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.catchreciptPrintVM
+@{
+    Layout = null;
+ 
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    @*<link href="~/Content/css/Report.css" rel="stylesheet" />*@
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <title>سند قبض </title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(company.CompanyPhotoDetails.FirstOrDefault().ProImg )" alt="Image" style="width:300px " height="100" />
+
+
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-120px">
+                <br />
+                <table style="text-align:right;" data-sortable="" width="1100">
+
+
+                    <tr>
+                        <td style="text-align:right;font-weight:900">@Model.company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+              
+                    @if (Model.company.Comp_Field != null && Model.company.Comp_Field != "")
+                    {
+                        <tr>
+                            <td style="text-align:right;">@Model.company.Comp_Field</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    }
+                    <tr>
+                        <td style="text-align:right;"> @company.Comp_Address  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    @if (Model.company.CRN != null && Model.company.CRN != "")
+                    {
+                        <tr>
+                            <td style="text-align:right;">@Model.company.CRN</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    }
+                    <tr>
+                        <td style="text-align:right;">@company.Comp_phone  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@company.Comp_Email  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>
+
+                    @*<tr>
+                            <td style="text-align:right; padding-top:20px">
+                                @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                                &nbsp&nbsp  : تاريخ عرض السعر
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                        </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div style="text-align:center; font-size:x-large">
+            <h2> سند قبض | Receipt Voucher </h2>
+        </div>
+
+        <br />
+        <br />
+        <table style="text-align:right;" align="right" width="500" border="1">
+            <tr>
+                <td>
+                    @Model.Recepit_Code
+                </td>
+                <th>
+                    رقم سند القبض
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    سند قبض 
+                </td>
+                <th>
+                    نوع سند القبض
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Convert.ToDateTime(Model.Receipt_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <th>
+                    تاريخ السند
+                </th>
+            </tr>
+
+        </table>
+        <br /> <br /> <br /> <br /> <br /> <br /> <br />
+
+        <table align="right" width="500" height="90" border="1">
+            <tr style="background-color:gray;">
+                <td style="text-align:right; ">
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp المبلغ المستلم
+                    <br />
+                    <h1 style="margin-left:100px">
+                        @String.Format("{0:n}", Math.Round(Model.Amount, 2, MidpointRounding.AwayFromZero))
+                    </h1>
+                    <div style="margin-left:100px">
+                        @Accountingsystem.Models.Currency.GetCurrencyById(1).Currency_Type
+
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+        <br /><br /> <br /><br />        <br /><br /> <br /><br />
+        <table class="table table-bordered" style="text-align:center;" data-sortable="" width="900" border="1">
+            <tr style="background-color:gray;">
+
+                @*<th style="text-align:center; ">
+                        المتبقى &nbsp&nbsp&nbsp&nbsp
+                    </th>*@
+                <th style="text-align:center; ">
+                    المبلغ المستلم &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+
+
+                <th style="text-align:center; ">
+                   الاسم &nbsp&nbsp&nbsp&nbsp
+                </th>
+             
+            </tr>
+
+            <tr>
+                @*<td>
+                        @Math.Round(Model.AmountStill, 2, MidpointRounding.AwayFromZero)
+                    </td>*@
+                <td>
+                    @String.Format("{0:n}", Math.Round(Model.Amount, 2, MidpointRounding.AwayFromZero))
+                </td>
+                <td>
+                    @Model.Customer_Name
+                </td>
+            
+            </tr>
+
+
+        </table>
+        <br />
+        <div style="text-align:right;color:black;font-size:x-large;margin-bottom:50px;">
+
+
+        </div>
+        <br />
+        <table style="text-align:right;" align="right" width="500" border="1">
+            <tr>
+                <td>
+                    @Model.Description
+                </td>
+                <th>
+                    الوصف
+                </th>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td>
+                    @Model.AccountDeptitId
+                </td>
+                <th>
+                    طريقة الدفع
+                </th>
+            </tr>
+        </table>
+
+
+    </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+
+    <table class="table table-bordered" style="text-align:center;" data-sortable="" width="900" border="1">
+        <tr style="background-color:gray;">
+
+            @*<th style="text-align:center; ">
+                    المتبقى &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+            <th style="text-align:center; ">
+                المدير &nbsp&nbsp&nbsp&nbsp
+            </th>
+
+
+
+            <th style="text-align:center; ">
+                المحاسب  &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center; ">
+                توقيع المستلم &nbsp&nbsp&nbsp&nbsp
+            </th>
+        </tr>
+
+        <tr>
+            @*<td>
+                    @Math.Round(Model.AmountStill, 2, MidpointRounding.AwayFromZero)
+                </td>*@
+            <td>
+                -------------------------------
+            </td>
+            <td>
+                ---------------------------------
+            </td>
+            <td>
+                ---------------------------------
+            </td>
+        </tr>
+
+
+    </table>
+
+    @*<div style="text-align:left">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp : توقيع المستلم
+
+        </div>
+        <div style="padding-top:2%;">
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                    <span style="float:right">
+
+                        الختم
+                    </span>
+                    <span style="float:initial">
+
+                        --------------------------: الختم
+                    </span>
+
+                    <span style="float:left">
+
+                       المستلم
+                    </span>
+
+                </div>
+            </div>
+
+            <div style="padding-top:10%;">
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <span style="float:right">
+
+                        -------------------------: المحاسب
+                    </span>
+
+                    <span style="float:left">
+
+                        -------------------------: امين الخزينة
+                    </span>
+
+                </div>
+            </div>*@
+    <footer style="margin-top:85%;"></footer>
+</body>
+</html>
+
+
+
+
+

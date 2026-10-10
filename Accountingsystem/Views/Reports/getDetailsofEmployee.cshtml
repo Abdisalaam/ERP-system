@@ -1,0 +1,183 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.CustomerTransactionGettingDateVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsgetDetailsofEmployee.EmployeeReport;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+@using (Html.BeginForm("getDetailsofEmployee", "Reports", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ReportsgetDetailsofEmployee.EmployeeReport)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsgetDetailsofEmployee.ReportStartDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ReportsgetDetailsofEmployee.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index","Employee")'>
+                        @Accountingsystem.Resources.ReportsgetDetailsofEmployee.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+
+        }
+    }
+
+    <script type="text/javascript">
+        var currentDate = new Date();
+        var _StartDate = flatpickr(document.getElementById('Date'), {
+            defaultDate: currentDate
+        });
+     
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+        $('#catchReceiptCreateForm').submit(function () {
+            $("#createExpensesSpinner").show();
+        });
+    </script>
+}

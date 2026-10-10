@@ -1,0 +1,247 @@
+﻿@model Accountingsystem.ViewModel.ProductVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ProductEditForPending.ItemEdit;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Accountingsystem.Resources.ProductEditForPending.ItemEdit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.HiddenFor(model => model.Prod_ID)
+    @Html.HiddenFor(model => model.Prod_Code)
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Prod_Code, new { htmlAttributes = new { @class = "textfield", @disabled = "disable" } })
+                    @Html.ValidationMessageFor(model => model.Prod_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_Code, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.EditorFor(model => model.Prod_Name, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Prod_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_Name, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Prod_Descrip, new { htmlAttributes = new { @class = "textfield" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_Descrip, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.DropDownListFor(model => model.SelectedCategory_ID, Model.CategoryList, Accountingsystem.Resources.ProductEditForPending.ClassificationInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.ProductEditForPending.Classification)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Prod_Mark, new { htmlAttributes = new { @class = "textfield" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_Mark, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.EditorFor(model => model.Bar_Code, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Bar_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Bar_Code, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>*@
+    </div>
+
+
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Sale_Price, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Sale_Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sale_Price, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.EditorFor(model => model.Demand_Limit, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Demand_Limit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Demand_Limit, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.DropDownListFor(model => model.SelectedMeasuringUnit_ID, Model.MeasruingUnitList, Accountingsystem.Resources.ProductEditForPending.MeasruingUnitInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.ProductEditForPending.MeasruingUnit)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.EnumDropDownListFor(model => model.Prod_Type, htmlAttributes: new { @class = "Dropdownlist-select" })
+                    @Html.ValidationMessageFor(model => model.Prod_Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_Type, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Prod_cost_Price, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Prod_cost_Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prod_cost_Price, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        @*<div class="col-md-5">
+                <div class="col-md-6">
+                    <div class="textfieldcont">
+                        @Html.CheckBoxFor(model => model.Prod_Stored, new { htmlAttributes = new { @class = "textfield" } })
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Prod_Stored, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>*@
+        <div class="col-md-5">
+            <div class="col-md-6">
+
+                <div class="Dropdownlist">
+                    @Html.DropDownListFor(model => model.SelectedTaxId, Model.MyTaxList, Accountingsystem.Resources.ProductEditForPending.SelectTax, htmlAttributes: new { @class = "Dropdownlist-select" })
+                    @Html.ValidationMessageFor(model => model.SelectedTaxId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SelectedTaxId, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <a class="btn btn-primary" href='@Url.Action("Index")'>
+        @Accountingsystem.Resources.ProductEditForPending.BackToList
+    </a>
+        <input type="submit" value=@Accountingsystem.Resources.ProductEditForPending.Edit class="btn btn-primary" />
+   
+   
+   
+}
+

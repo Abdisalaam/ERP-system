@@ -1,0 +1,409 @@
+﻿@model Accountingsystem.Models.Employee
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeDelete.DeleteEmployee;
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.EmployeeDelete.DeleteEmployee</h2>
+
+
+<div>
+
+    <hr />
+    <div>
+
+        <hr />
+        <div class="widget">
+            <div class="table-responsive">
+                <table data-sortable="" class="table" data-sortable-initialized="true">
+                    <tr>
+                        @Html.HiddenFor(model => model.Emp_Id)
+                        <th id="Rec_ID">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeeNumber)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Code)
+                        </td>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeeName)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Name)
+                        </td>
+
+
+                    </tr>
+
+                    <tr>
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.Address)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Address)
+                        </td>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.Email)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Mail)
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeePhone)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Phone)
+                        </td>
+
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeeBirhDate)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_DOB)
+                        </td>
+
+
+                    </tr>
+
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.JobTitle)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Emp_Title)
+                        </td>
+
+
+                        <th id="Rec_state">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeeCostCenter)
+
+                        </th>
+                        @{ var Subledger = Accountingsystem.Models.SubLedger.getDetail(Model.Subldger_Id.Value);
+
+                        }
+
+                        <td class="col-md-2">
+                            @Subledger.SubLed_Name  @Subledger.SubLed_Code
+                        </td>
+                    </tr>
+                    @*<tr>
+                            <th id="Rec_state">
+                                @Html.DisplayName("سلفيات الموظف")
+
+                            </th>
+                            @{ var Account = Accountingsystem.Models.Accounts.getAccountByCode(Model.Emp_Code).Account_Balance;
+
+                            }
+
+                            <td class="col-md-2">
+                                @Math.Round(Account.Value,2,MidpointRounding.AwayFromZero)
+                            </td>
+
+                        </tr>*@
+
+
+
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.ResidenceNumber)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Residency_number)
+                        </td>
+
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.PassportNumber)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Passport_number)
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.PassportStartDate)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Start_Date_Passp)
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.PassportExpiryDate)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.End_Date_Passp)
+                        </td>
+
+                        <th id="Rec_ID">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.ResidenceStartDate)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Start_Date_Residency)
+                        </td>
+
+
+                    </tr>
+
+                    <tr>
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.ResidenceEndDate)
+
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.End_Date_Residency)
+                        </td>
+
+
+
+                    </tr>
+
+                    <tr>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.TotalEmployeeSalary)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @*@Html.DisplayFor(model => model.Total_Salary)*@
+                            @Math.Round(Model.Total_Salary.Value, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.EmployeePhoto)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @*@Html.DisplayFor(model => model.Total_Salary)*@
+                            @if (Model.Emp_Image != null)
+                            {
+                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.Emp_Image)" alt="Image" style="width: 100px" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.RecentYearVacations)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @*@Html.DisplayFor(model => model.Total_Salary)*@
+                            @Model.Vacations_Number
+                        </td>
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.PreviousYearsVacations)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @*@Html.DisplayFor(model => model.Total_Salary)*@
+                            @Model.Vacation_Pervious
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDelete.TotalDueVacations)
+
+                        </th>
+
+                        <td class="col-md-2">
+                            @*@Html.DisplayFor(model => model.Total_Salary)*@
+                            @Model.TotalVacation
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.AccountName</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.Amount</th>
+                </tr>
+                @foreach (var detail in Model.Salary_Components)
+                {
+                    <tr>
+                        <td>@detail.Account_Name</td>
+                        <td>
+
+                            @Math.Round(detail.Account_Amount, 2)
+                        </td>
+                    </tr>
+                }
+        </table>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.FileNumber</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.FileName</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.FileExtension</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.ContentLength</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @{
+                    if (Model.EmployeeFileDetails.Any())
+                    {
+                        foreach (var file in Model.EmployeeFileDetails)
+                        {
+                            <tr>
+                                <td>@file.Id</td>
+                                <td>@file.FileName</td>
+                                <td>@file.ProImg</td>
+                                <td>@file.ContentLength</td>
+                                <td>
+                                    <a class="btn BTN-style" href='@Url.Action("ReturnEmpFile",  new { fileId = file.Id  })'>
+
+                                        @Accountingsystem.Resources.EmployeeDelete.Download
+
+                                    </a>
+
+                                    @*@Html.ActionLink("Review", "ReturnEmpFile", new { fileId = file.Id  } )*@
+                                </td>
+                                <td>
+                                    <a class="btn BTN-style" href='@Url.Action("RemoveFile",  new { Fileid = file.Id  })'>
+
+                                        @Accountingsystem.Resources.EmployeeDelete.Delete
+
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+        @*<table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+
+                        <th>يتحكم فى تقليل الاسعار</th>
+                        <th>يتحكم فى زيادة الاسعار</th>
+                        <th>البيع تحت اقل شريحة</th>
+                        <th>محصل</th>
+                        <th>بائع</th>
+                        <th>متحكم فى الشرائح</th>
+                    </tr>
+                    @{var slaice = Accountingsystem.Models.Sales_Settings.getallSalesSetingForEmployee(Model.Emp_Id);
+                        if (slaice.FirstOrDefault() == null)
+                        { }
+                        else
+                        {
+                            foreach (var slicePiece in slaice)
+                            {
+                                <tr>
+
+
+                                    <td>@slicePiece.Can_Decrease_Price</td>
+                                    <td>@slicePiece.Can_Increase_Price</td>
+                                    <td>@slicePiece.Can_Sell_InLow</td>
+                                    <td>@slicePiece.Collector</td>
+                                    <td>@slicePiece.SalesMan</td>
+                                    <td>@slicePiece.Cant_Controle</td>
+                                </tr>
+                            }
+                        }
+                    }
+
+
+                </tbody>
+            </table>*@
+        @*<table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+
+                        <th>اسم الشريحة</th>
+
+                    </tr>
+                    @{
+                        try
+                        {
+                            var slicess = Accountingsystem.Models.Sales_Settings.Getslicess(Model.Emp_Id);
+                            if (slicess.FirstOrDefault() == null)
+                            {
+                                <tr></tr> }
+                            else
+                            {
+                                foreach (var slicePieces in slicess)
+                                {
+                                    <tr>
+
+
+                                        <td>@slicePieces.Slice_Name</td>
+
+                                    </tr>
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            <tr></tr> }
+
+
+
+                    }
+
+
+                </tbody>
+            </table>*@
+
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="submit" value="حذف" class="btn BTN-style final-BTN" />
+        <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+
+            @Accountingsystem.Resources.EmployeeDelete.BackToList
+
+        </a>
+       
+    }
+</div>

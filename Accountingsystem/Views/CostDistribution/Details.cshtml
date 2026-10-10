@@ -1,0 +1,256 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.CostDistributionPrintVM
+
+
+@{
+    /**/
+    HttpCookie cookie = Request.Cookies["Language"];
+
+    ViewBag.Title = Accountingsystem.Resources.CostDistributionDetails.PurchaseInvoiceDetails;
+
+    decimal quantity = 0;
+    decimal costbefor = 0;
+    decimal increaseCost = 0;
+    decimal costafter = 0;
+    decimal CostOneAfter = 0;
+    decimal CostOneBefore = 0;
+
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.CostDistributionDetails.PurchaseInvoiceDetails
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CostDistributionDetails.DistributionNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Cost_Distr_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CostDistributionDetails.InvoiceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.purchase.Serial_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CostDistributionDetails.CostCenter)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.subLedger.SubLed_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table mb-4">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.ItemNumber</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.ItemName</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.Quantity</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.TotalCostBeforeDistribution</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.UnitCostBeforeDistribution</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.ValueOfDistributionAmount</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.TotalCostAfterDistribution</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.UnitCostAfterDistribution</th>
+                        <th>@Accountingsystem.Resources.CostDistributionDetails.IncreaseInCostRate</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.detail)
+                    {
+                        <tr>
+                            <td> @detail.product.Prod_Code</td>
+                            <td> @detail.product.Prod_Name</td>
+                            <td> @Math.Round(detail.quantity, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.Costbefor, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.CostOneBefor, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.IncreasingCost, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.CostAfter, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.CostOneAfter, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(detail.Percenatge * 100, 2, MidpointRounding.AwayFromZero) %</td>
+
+                            @{
+                                quantity += detail.quantity;
+                                costbefor += detail.Costbefor;
+                                increaseCost += detail.IncreasingCost;
+                                costafter += detail.CostAfter;
+
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+
+        <div class="row layout-top-spacing">
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <a id="PrintEmail" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintCostDistribution", new { controller = "Reports", id = Model.id })' target="_blank">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.PrintEmail
+                        <span id="PrintEmailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="PurDetail" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Details", new { controller = "PurchaseInvoice", id = Model.purchase.Master_Id })' target="_blank">
+                        @Accountingsystem.Resources.CostDistributionDetails.PurchaseInvoiceDetails
+                        <span id="PurSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+
+                    @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع")*@)
+                    {
+                    <a id="CustomerReport" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("getDetailsofSupplier", new { controller = "Reports", id = Model.supplier.Supp_Id })'>
+                        @Accountingsystem.Resources.CostDistributionDetails.SupplierReport
+                        <span id="CustomerReportSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+
+
+                    }
+
+
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+
+
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+
+
+        $("#PrintEmail").click(function (e) {
+            $("#PrintEmailSpinner").show();
+        });
+
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+
+
+
+        $("#CustomerReport").click(function (e) {
+            $("#CustomerReportSpinner").show();
+        });
+        $("#PurDetail").click(function (e) {
+            $("#PurSpinner").show();
+        });
+
+    </script>
+}

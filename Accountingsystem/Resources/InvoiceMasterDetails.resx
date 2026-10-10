@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllowableDiscount" xml:space="preserve">
+    <value>Allowable Discount</value>
+  </data>
+  <data name="AllowableDiscountValue" xml:space="preserve">
+    <value>Allowable Discount Value</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="BaptismNumber" xml:space="preserve">
+    <value>Baptism No</value>
+  </data>
+  <data name="Before" xml:space="preserve">
+    <value>Before</value>
+  </data>
+  <data name="BranchName" xml:space="preserve">
+    <value>Branch</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="CopyInvoice" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
+  <data name="CreateFutureSalesInvoice" xml:space="preserve">
+    <value>Create Invoice</value>
+  </data>
+  <data name="Createnew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="CustomerDetail" xml:space="preserve">
+    <value>Customer Detail</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="CustomerNumber" xml:space="preserve">
+    <value>Customer No</value>
+  </data>
+  <data name="CustomerReport" xml:space="preserve">
+    <value>Customer Report</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Discount%</value>
+  </data>
+  <data name="DiscountPercentage" xml:space="preserve">
+    <value>Select Discount%</value>
+  </data>
+  <data name="DiscountValue" xml:space="preserve">
+    <value>Discount Value</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="ErrorProductsDontMatch" xml:space="preserve">
+    <value>Inventory Quantity Are Not Equal</value>
+  </data>
+  <data name="InvoiceCase" xml:space="preserve">
+    <value>Case</value>
+  </data>
+  <data name="InvoiceCouldNotBeVoid" xml:space="preserve">
+    <value>There Is A Returne Receipt Connected To This Invoice</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value> Date</value>
+  </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>Invoice Details</value>
+  </data>
+  <data name="InvoiceHasBeenIncluded" xml:space="preserve">
+    <value>Under closing records. this invoice has been included. The change will not be saved</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>Invoice No</value>
+  </data>
+  <data name="InvoicePaymentPeriod" xml:space="preserve">
+    <value>Invoice Payment Period</value>
+  </data>
+  <data name="InvoiceValueAfterAllowableDiscount" xml:space="preserve">
+    <value>Invoice Value After Allowable Discount</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="ItemNumber" xml:space="preserve">
+    <value>Item No</value>
+  </data>
+  <data name="ItemPrice" xml:space="preserve">
+    <value>Item Price</value>
+  </data>
+  <data name="ItsDoneWorking" xml:space="preserve">
+    <value>Its Been Done</value>
+  </data>
+  <data name="Net" xml:space="preserve">
+    <value>Net</value>
+  </data>
+  <data name="NotEnoughProductInTheInventory" xml:space="preserve">
+    <value>Not Enough Quantity Of Item</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="OfferPriceNumber" xml:space="preserve">
+    <value>Quotations No</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PaidValue" xml:space="preserve">
+    <value>Paid Value</value>
+  </data>
+  <data name="PayNow" xml:space="preserve">
+    <value>Pay Now</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="PrintEmail" xml:space="preserve">
+    <value>Print Email</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductOrService" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ReceiptConstraint" xml:space="preserve">
+    <value>Receipt Entery</value>
+  </data>
+  <data name="RecieptSupplyOrReceiveGoods" xml:space="preserve">
+    <value>Reciept Supply\Receive Goods</value>
+  </data>
+  <data name="RecordHasBeenSuccessfullyMade" xml:space="preserve">
+    <value>Invoice Record Has Been Successfully Made</value>
+  </data>
+  <data name="RemainingValueOfInvoiceValue" xml:space="preserve">
+    <value>Remaining Value Of Invoice Value</value>
+  </data>
+  <data name="RevenueAccountNumber" xml:space="preserve">
+    <value>Revenue Account</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="SelectProduct" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="SelectProductAdded" xml:space="preserve">
+    <value>Select Item</value>
+  </data>
+  <data name="SelectTax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="SentCustomerEmail" xml:space="preserve">
+    <value>Sent Customer Email</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Supplement" xml:space="preserve">
+    <value>Supplement</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Net</value>
+  </data>
+  <data name="TotalAfterDiscount" xml:space="preserve">
+    <value>Total After Discount</value>
+  </data>
+  <data name="TotalAfterTaxes" xml:space="preserve">
+    <value>Total After Taxes</value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+  <data name="TotalDiscount" xml:space="preserve">
+    <value>Total Discount</value>
+  </data>
+  <data name="TotalInvoice" xml:space="preserve">
+    <value>Total Invoice</value>
+  </data>
+  <data name="TotalTax" xml:space="preserve">
+    <value>Total Tax</value>
+  </data>
+  <data name="TotalTaxes" xml:space="preserve">
+    <value>Total Taxes</value>
+  </data>
+  <data name="ValueBeforeDiscount" xml:space="preserve">
+    <value>Value Before Discount</value>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>Void</value>
+  </data>
+  <data name="VoidMessage" xml:space="preserve">
+    <value>Under Closing This Invoice Has Been Included.The Change Will Not Be Saved</value>
+  </data>
+  <data name="WaitingMSGAndTryAgain" xml:space="preserve">
+    <value>Please wait first and then try to post again.</value>
+  </data>
+  <data name="WithoutTax" xml:space="preserve">
+    <value>Without Tax</value>
+  </data>
+</root>

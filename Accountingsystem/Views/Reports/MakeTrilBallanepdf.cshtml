@@ -1,0 +1,250 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.TrialBalncePostVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+  
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+   
+</style>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ميزان المراجعة</title>
+    @*<link href="~/Content/css/bootstrap-4.0.0.css" rel="stylesheet" />
+    <link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+
+</head>
+
+<body>
+    <header>
+        <div style="width:50Px; margin-left:15px; margin-top:1%">
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br /><br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+    </header>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+   
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+            @{
+                var fromdate = Convert.ToDateTime(Model.Start_Date);
+                var ToDate = Convert.ToDateTime(Model.End_Date);
+
+            }
+            @if (fromdate.Year != 1995 && ToDate.Year != 2200)
+            {
+                <h style="text-align:right;margin-left:55%;color:black;font-size:large;">From Date: @Model.Start_Date</h><br />
+                <h style="text-align:right;margin-left:66%;color:black;font-size:large;">To Date: @Model.End_Date</h>
+            }
+            </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            ميزان المراجعة
+        </div>
+
+    </div>
+    <hr />
+    <table class="table table-border" style="width:1000px;direction:rtl" border="1" >
+    
+            <tr >
+                <th colspan="1" style="color:black;background-color:gray;">اسم الحساب</th>
+
+
+
+
+                <th colspan="2" style="color:black;background-color:gray;"> الحساب الافتتاحى</th>
+
+                <th colspan="2" style="color:black;background-color:gray;">الحساب  للحركات</th>
+
+
+                <th colspan="2" style="color:black;background-color:gray;">الحساب  صافى الحركة</th>
+
+
+                <th colspan="2" style="color:black;background-color:gray;">الحساب  الختامى</th>
+
+                <th colspan="2" style="color:black;background-color:gray;">صافى الحركات فى الحساب الختامى </th>
+
+            </tr>
+
+            <tr>
+                <th style="color:black;background-color:gray;">البيان </th>
+
+
+                <th style="color:black;background-color:gray;">دائن</th>
+                <th style="color:black;background-color:gray;"> مدين</th>
+
+                <th style="color:black;background-color:gray;">دائن</th>
+                <th style="color:black;background-color:gray;"> مدين</th>
+
+                <th style="color:black;background-color:gray;">دائن</th>
+                <th style="color:black;background-color:gray;"> مدين</th>
+
+
+                <th style="color:black;background-color:gray;">دائن</th>
+                <th style="color:black;background-color:gray;"> مدين</th>
+
+
+                <th style="color:black;background-color:gray;">دائن</th>
+                <th style="color:black;background-color:gray;"> مدين</th>
+            </tr>
+
+
+           
+        <tbody>
+            @foreach (var item in Model.ballanceAttrribute)
+            {
+
+                <tr style="break-inside:avoid; page-break-inside:avoid; text-align:center;">
+                    <td rowspan="1">
+                        @item.Account_Name  
+                    </td>
+
+                    <td rowspan="1">
+                        @Math.Round(item.startBallanceCredit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.startBallanceCredit*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.startBallanceDebit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.startBallanceDebit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.MovmentBallanceCredit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.MovmentBallanceCredit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.MovmentBallanceDebit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.MovmentBallanceDebit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.pureCredit, 2, MidpointRounding.AwayFromZero)
+                        @*@item.pureCredit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.puredepit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.puredepit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.EndCredit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.EndCredit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.Enddepit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.Enddepit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.pureFinalCredit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.pureFinalCredit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1">
+                        @Math.Round(item.pureFinaldepit, 2, MidpointRounding.AwayFromZero) 
+                        @*@item.pureFinaldepit  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                </tr>
+            }
+
+
+
+
+
+
+
+
+
+
+
+            @{
+
+                <tr style="break-inside:avoid; page-break-inside:avoid;text-align:center;">
+
+                    <td rowspan="1" style="color:black">
+                        المجموع  &nbsp&nbsp&nbsp&nbsp
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.startBallanceCreditSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.startBallanceCreditSUM  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.startBallanceDebitSUM, 2, MidpointRounding.AwayFromZero)
+                        @*@Model.startBallanceDebitSUM &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.MovmentBallanceCreditSUM, 2, MidpointRounding.AwayFromZero)
+                        @*@Model.MovmentBallanceCreditSUM  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.MovmentBallanceDebitSUM, 2, MidpointRounding.AwayFromZero)
+                        @*@Model.MovmentBallanceDebitSUM  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.pureCreditSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.pureCreditSUM &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.puredepitSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.puredepitSUM &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.EndCreditSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.EndCreditSUM  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.EnddepitSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.EnddepitSUM   &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.PureEndCreditSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.PureEndCreditSUM  &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                    <td rowspan="1" style="color:black">
+                        @Math.Round(Model.PureEnddepitSUM, 2, MidpointRounding.AwayFromZero) 
+                        @*@Model.PureEnddepitSUM   &nbsp&nbsp&nbsp&nbsp*@
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+    @*<footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Balance Due : @Model.Total</h>
+    </footer>*@
+
+</html>

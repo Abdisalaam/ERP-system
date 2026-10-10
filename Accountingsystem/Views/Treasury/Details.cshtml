@@ -1,0 +1,178 @@
+﻿@model Accountingsystem.Models.Treasury
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.TreasuryDetails.TreasuryData;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.Trea_Id)
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.TreasuryDetails.TreasuryData
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TreasuryDetails.TreasuryName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Trea_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TreasuryDetails.TreasuryNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Trea_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TreasuryDetails.TreasuryDescription)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Trea_Desc)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                        @if (Model.Emp_Id > 0)
+                        {
+
+                     
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TreasuryDetails.Employee)
+                                                </div>
+                                                <div>
+                                                    @Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value).Emp_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="EditTax" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Edit", new { id = Model.Trea_Id })'>
+                        @Accountingsystem.Resources.TreasuryDetails.Edit
+                        <span id="EditTaxSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات")*@)
+{
+                <a id="ChangeTaxCase" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("getListofLedger", "ReportsNew",new {code=Model.Trea_Code })'>
+                    @Accountingsystem.Resources.TreasuryDetails.TreasuryReport
+                    <span id="ChangeTaxCaseSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                </a>
+
+            }
+                    <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("DeleteTrans", new { id = Model.Trea_Id })">
+                        @if (Model.IsActive != false)
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToNotActive
+                        }
+                        else
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToActive
+                        }
+                        <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.TreasuryDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $("#EditTax").click(function (e) {
+            $("#EditTaxSpinner").show();
+        });      
+        $("#ChangeTaxCase").click(function (e) {
+            $("#ChangeTaxCaseSpinner").show();
+        });    
+        
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+    </script>
+}
+

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.PurchaseSectionPendingVM>
+
+@{
+    ViewBag.Title = "IndexPendingPurchSection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+                      <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.PurchaseInvoiceIndex.NotActivatedBills</h2>
+
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceIndex.Number)
+        </th>
+    
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceIndex.Description)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceIndex.TotalValueAfterTax)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        @Html.HiddenFor(modelItem => item.MasterID)
+        <td>
+            @Html.DisplayFor(modelItem => item.Serial)
+        </td>
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.TotalAmount)*@
+            @Math.Round(item.TotalAmount, 2)
+        </td>
+        <td>
+            @if (item.Serial.StartsWith("PUR"))
+            {
+
+
+            <a href="@Url.Action( "Details","PurchaseInvoice", new { id = item.MasterID })" class="BTN-style">
+                @Accountingsystem.Resources.PurchaseInvoiceIndex.Details;
+            </a>
+            }
+            else if (item.Serial.StartsWith("REVP"))
+            {
+            <a href="@Url.Action( "Details","RecalPurchInvoiceMaster", new { id = item.MasterID })" class="BTN-style">
+                @Accountingsystem.Resources.PurchaseInvoiceIndex.Details;
+            </a>
+            }
+            else if (item.Serial.StartsWith("PAY"))
+            { <a href="@Url.Action( "Details","Payment", new { id = item.MasterID })" class="BTN-style">
+                    @Accountingsystem.Resources.PurchaseInvoiceIndex.Details;
+                </a>
+            }
+
+
+        </td>
+    </tr>
+    }
+
+</table>

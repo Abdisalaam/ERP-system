@@ -1,0 +1,237 @@
+﻿@model Accountingsystem.ViewModel.CustomerVM
+
+@{
+    ViewBag.Title = "Create";
+
+}
+@using (Html.BeginForm("AddNewCustomerPartial", "Contacts", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <h2>انشاء عميل جديد</h2>
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.Customer_Code)
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Name, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Address, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Address, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Phone, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Phone, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Mail, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Mail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Mail, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedProvinceId, Model.MyProvinceList, "اختر المحافظة", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedProvinceId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedProvinceId, "المحافظة", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCountryId, Model.MyCountryList, "اختر الدولة", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedCountryId, "الدول", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCityId, Model.MyCitiesList, "اختر المدينة", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCityId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedCityId, "المدينة", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Fax, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Fax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Fax, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Branch_Id, Model.BranchList, "اختر الفرع", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Branch_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Branch_Id, "الفرع", htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Mobile, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Mobile, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Mobile, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Purchase_Price, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Purchase_Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Purchase_Price, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.Payment_Policy_Id, Model.MyPaymentPolicy, "اختر سياسة الدفع", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Payment_Policy_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Payment_Policy_Id, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Customer_Website, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Customer_Website, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Customer_Website, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @*<div class="col-md-offset-2 col-md-10">
+                <input type="button" value="انشاء عميل" class="btn btn-primary" onclick="addCustomer()" />
+
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <a href='javascript:;' onclick='addCustomer();' class="btn btn-primary" style="text-decoration:none;">انشاء عميل</a>
+            </div>
+        </div>
+    </div>
+
+}

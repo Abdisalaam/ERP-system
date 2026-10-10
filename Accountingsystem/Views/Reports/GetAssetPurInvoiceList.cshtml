@@ -1,0 +1,74 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.PurInvoiceMasterAccetVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>فاتورة مشتريات اصل</title>
+</head>
+<body>
+    <img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            El Salam
+        </div>
+        <div style="text-align:left;color:black;font-size:xx-large;margin-bottom:25px;">
+            Purchas Invoice
+            <h style="text-align:right;margin-left:35%;color:black;font-size:large;">Invoice Date: @Model.Invoice_Date</h><br />
+            <h style="text-align:right;margin-left:55%;color:black;font-size:large;">Due Date: @Model.Due_Date</h>
+            @*<h style="text-align:right;margin-left:55%;color:black;font-size:large;font-style:unset">Discount: @Model.Master_Discount %</h>*@
+        </div>
+        <div style="text-align:left;color:black;font-size:x-large;">
+            Invoice Currency:
+            @Model.Invoice_Currency
+            <h style="text-align:right;margin-left:28%;color:black;font-size:x-large;">Bill To: @Model.suuplier_Name</h>
+        </div>
+            <hr />
+            <table class="table" style="text-align:center;margin-top:5%;" data-sortable="" data-sortable-initialized="true">
+                <tr>
+                    <th style="text-align:center; color:darkslategrey;">
+                        Asset_Name &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                    <th style="text-align:center; color:darkslategrey;">
+                        Product_Quantity &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                    <th style="text-align:center;">
+                        Product_Price &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                    <th style="text-align:center;">
+                        Total_Amount &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                    
+                </tr>
+                @foreach (var item in Model.MyAsset)
+                {
+                <tr>
+                    <td>
+                        @item.Asset_Name
+                    </td>
+                    <td>
+                        @Math.Round(item.Product_Price,2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+                        @item.Product_Quantity
+                    </td>
+                    <td>
+                        @Math.Round(item.Total_Amount,2, MidpointRounding.AwayFromZero)
+                    </td>
+                </tr>
+
+                }
+            </table>
+            <footer style="margin-top:25%;">
+                <hr />
+                <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Balance Due : @Model.Total_Amount</h>
+            </footer>
+      
+    </div>
+</body>
+</html>

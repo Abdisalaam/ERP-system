@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Accountingsystem.Models.Salary_Components>
+
+
+<table class="table">
+    <tr>
+        
+        
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.Account)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.Value)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.Salary_Components_Id)
+    @Html.HiddenFor(modelItem => item.Account_Id)
+    @Html.HiddenFor(modelItem => item.Employee_Id)
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Account_Name)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Account_Amount)*@
+            @Math.Round(item.Account_Amount,2, MidpointRounding.AwayFromZero)
+        </td>
+       
+        <td>
+        <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick="@("EditDetail('"+item.Salary_Components_Id+"')")" class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.EmployeeRoleList.Edit</a>
+                </div>
+        </td>
+    </tr>
+}
+
+</table>

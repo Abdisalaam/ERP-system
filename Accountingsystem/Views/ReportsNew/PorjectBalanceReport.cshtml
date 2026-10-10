@@ -1,0 +1,333 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ProjectDateVM
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+    @{
+        Layout = null;
+        decimal totalamount = 0;
+        decimal totarecall = 0;
+        decimal totaldef = 0;
+        var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+        var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+        var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+    }
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>تقرير رصيد المشاريع</title>
+
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+
+
+                    @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div class="container">
+
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                تقرير رصيد المشاريع / Projects balance Report
+
+            </div>
+
+
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                @datefrom      @dateto
+
+            </div>
+
+
+        </div>
+  
+        <table class="table" style="text-align:right;direction:rtl;">
+
+            <tr style="text-align:right;">
+
+                <th>
+                    المشروع
+                    <br />Project
+                </th>
+                <th style="text-align:center;">
+                    رقم العميل &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Customer NO
+                </th>
+                <th style="text-align:center;">
+                     العميل &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Customer
+                </th>
+                <th style="text-align:center;">
+                    الحاله  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Status
+                </th>
+                <th style="text-align:center;">
+                    قيمه المشروع  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Project Value
+                </th>
+                <th style="text-align:center;">
+                    المبالغ المستلمه سابقا  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Previously received amounts
+                </th>
+                <th style="text-align:center;">
+                    مبلغ الفواتير  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Invoice Amount
+                </th>
+                <th style="text-align:center;">
+                    المبالغ المستلمه  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    received amounts
+                </th>
+                <th style="text-align:center;">
+                    الرصيد  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Balance
+                </th>
+                <th style="text-align:center;">
+                    رصيد العميل  &nbsp&nbsp&nbsp&nbsp
+                    <br />
+                    Customer Balance
+                </th>
+            </tr>
+            @{
+                decimal ProjectAMountTotal = 0;
+                decimal PastPayedAmountTotal = 0;
+                decimal PorjectInvAMountTotal = 0;
+                decimal PayedAMountTotal = 0;
+                decimal BalanceTotal = 0;
+                decimal custmerballanceTotal = 0;
+            }
+            @foreach (var item in Model.ListProjectBalance)
+            {
+                ProjectAMountTotal = ProjectAMountTotal + item.ProjectAMount;
+                PastPayedAmountTotal = PastPayedAmountTotal + item.PastPayedAmount;
+                PorjectInvAMountTotal = PorjectInvAMountTotal + item.PorjectInvAMount;
+                PayedAMountTotal = PayedAMountTotal + item.PayedAMount;
+                BalanceTotal = BalanceTotal + item.Balance;
+                custmerballanceTotal = custmerballanceTotal + item.Customer_ballance;
+
+                <tr>
+
+                    <td>
+
+                        @item.ProjectName
+                    </td>
+                    <td>
+                        @item.CustomerCode
+                    </td>
+
+                    <td>
+
+                        @item.CustomerName
+                    </td>
+                    <td>
+                        @item.Statu
+                    </td>
+                    <td>
+                        @item.ProjectAMount
+                    </td>
+                    <td>
+                        @item.PastPayedAmount
+                    </td>
+                    <td>
+                        @item.PorjectInvAMount
+                    </td>
+                    <td>
+                        @item.PayedAMount
+                    </td>
+                    @if (item.Balance < 0)
+                    {
+                        <td>
+                            ( @(item.Balance * -1))
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @item.Balance
+                        </td>
+                    }
+
+                    @if (@Math.Round(item.Customer_ballance, 2, MidpointRounding.AwayFromZero) < 0)
+                    {
+                        <td>
+
+                            ( @Math.Round(item.Customer_ballance * -1, 2, MidpointRounding.AwayFromZero)  )
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+
+                            @Math.Round(item.Customer_ballance, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+
+                </tr>
+
+            }
+                <tr style="text-align:right;">
+
+                    <th>
+                        الاجمالي
+                        <br />Total
+                    </th>
+                    <th style="text-align:center;">
+
+                    </th>
+                    <th style="text-align:center;">
+
+                    </th>
+                    <th style="text-align:center;">
+
+                    </th>
+                    <th style="text-align:center;">
+                        @Math.Round(ProjectAMountTotal, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                    <th style="text-align:center;">
+                        @Math.Round(PastPayedAmountTotal, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                    <th style="text-align:center;">
+                        @Math.Round(PorjectInvAMountTotal, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                    <th style="text-align:center;">
+                        @Math.Round(PayedAMountTotal, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                    <th style="text-align:center;">
+                        @if (BalanceTotal < 0)
+                        {
+
+                            <p> (@Math.Round(BalanceTotal*-1, 2, MidpointRounding.AwayFromZero))</p>
+
+                        }
+                        else
+                        {
+
+                            @Math.Round(BalanceTotal, 2, MidpointRounding.AwayFromZero)
+
+                        }
+
+                    </th>
+
+                    <th style="text-align:center;">
+                        @if (custmerballanceTotal < 0)
+                        {
+                            <p> (@Math.Round(custmerballanceTotal * -1, 2, MidpointRounding.AwayFromZero))</p>
+                        }
+                        else
+                        {
+                            @Math.Round(custmerballanceTotal , 2, MidpointRounding.AwayFromZero)
+                        }
+                    </th>
+                    </tr>
+        </table>
+        
+
+    </body>
+</html>

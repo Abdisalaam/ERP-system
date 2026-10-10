@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Accountingsystem.Models.EmployeeFileDetail>
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeGetAllFiles.Files;
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.EmployeeGetAllFiles.Files</h2>
+
+
+
+
+
+
+<table class="table table-bordered table-striped" data-sortable-initialized="true" id="sasa">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetAllFiles.Size)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetAllFiles.FileName)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetAllFiles.EmployeeNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeEmp_Id)
+            </td>
+            <td>
+
+                @Html.ActionLink("تحميل", "ReturnEmpFile", new { fileId = item.Id })
+            </td>
+            @*<td>
+
+                    @Html.ActionLink("Edit File", "EditFile", new { fileId = item.Id })
+                </td>*@
+        </tr>
+    }
+
+</table>

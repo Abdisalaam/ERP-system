@@ -1,0 +1,259 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.CustomerVM>
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+ 
+    decimal totalbalance = 0;
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>تقرير عملاء الاشتراكات</title>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير عملاء الاشتراكات / Customer Subscribtion Report
+
+        </div>
+
+
+
+
+    </div>
+    <hr />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr style="text-align:right;">
+                <th>
+                   الرقم
+                    <br />
+                    NO
+                </th>
+
+                <th>
+                  العميل
+                    <br />
+                    Customer
+                </th>
+                <th>
+                الجوال
+                    <br />
+                    Phone
+                </th>
+
+                <th>
+                 الرصيد
+                    <br />
+                    Balance
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                decimal account = Accountingsystem.Models.Accounts.RefreshTheBallanceOfCustomer(item.Customer_Code);
+                if (Convert.ToDouble(Math.Round(account, 2, MidpointRounding.AwayFromZero)) > .01)
+                {
+                    <tr>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer_Code)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer_Phone)
+                        </td>
+
+
+
+                        <td>
+                            @{String custBalance = "";
+
+                                if (Math.Round(account, 2, MidpointRounding.AwayFromZero) < 0)
+                                {
+                                    custBalance = "(" + (Math.Round(account, 2, MidpointRounding.AwayFromZero) * -1).ToString() + ")";
+                                }
+                                else
+                                {
+                                    custBalance = Math.Round(account, 2, MidpointRounding.AwayFromZero).ToString();
+                                }
+
+                                @custBalance
+                            }
+
+                        </td>
+                        
+
+
+
+
+
+
+                    </tr>
+
+                    {
+                      
+                        totalbalance += account;
+
+                    }
+                }
+            }
+        </tbody>
+        <thead>
+            <tr>
+                <th>
+                   الاجمالي
+                    <br />
+                    Total
+                </th>
+                <th>
+
+                </th>
+
+                <th>
+
+                </th>
+             
+
+                <th>
+                    @{
+                        String custBalance1 = "";
+                        if (Math.Round(totalbalance, 2, MidpointRounding.AwayFromZero) < 0)
+                        {
+                            custBalance1 = "(" + (Math.Round(totalbalance, 2, MidpointRounding.AwayFromZero) * -1).ToString() + ")";
+                        }
+                        else
+                        {
+                            custBalance1 = Math.Round(totalbalance, 2, MidpointRounding.AwayFromZero).ToString();
+                        } }
+                    @custBalance1
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+    </table>
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+@*<footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Balance Due : @Model.Total</h>
+    </footer>*@
+
+</html>
+
+
+
+

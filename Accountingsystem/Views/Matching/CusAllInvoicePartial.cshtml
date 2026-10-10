@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.MasterVM>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Master_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Serial_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patch_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Invoice_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Due_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GL_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Master_Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Invoice_Currency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Tax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCompany_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCurrencyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBussinesUnitId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedStoreId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Master_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Serial_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patch_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Invoice_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Due_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GL_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Master_Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Invoice_Currency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_Tax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedCompany_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedCustomerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedCurrencyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedBussinesUnitId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedStoreId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

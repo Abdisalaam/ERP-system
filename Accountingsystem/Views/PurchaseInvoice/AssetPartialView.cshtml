@@ -1,0 +1,130 @@
+﻿@model Accountingsystem.ViewModel.FixedAssetVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.FixedAssetCreate.File)
+                            <div class="textfieldcont">
+                                @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple", @class = "textfield" })
+                                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.selectedCompany_Id, htmlAttributes: new { @class = "control-label" })
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.selectedCompany_Id, Model.myCompaney, Accountingsystem.Resources.FixedAssetCreate.SelectCompany, htmlAttributes: new { @class = "Dropdownlist-select" })
+                                @Html.ValidationMessageFor(model => model.selectedCompany_Id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedFixedAsset_TypeId, htmlAttributes: new { @class = "control-label" })
+                            <div class="textfieldcont">
+                                @Html.DropDownListFor(model => model.SelectedFixedAsset_TypeId, Model.MyFAssetType, Accountingsystem.Resources.FixedAssetCreate.SelectType, htmlAttributes: new { @class = "Dropdownlist-select" })
+                                @Html.ValidationMessageFor(model => model.SelectedFixedAsset_TypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedFixedAssetSecCategoryId, htmlAttributes: new { @class = "control-label" })
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.SelectedFixedAssetSecCategoryId, Model.MyCategoryList, Accountingsystem.Resources.FixedAssetCreate.SelectCategory, htmlAttributes: new { @class = "Dropdownlist-select" })
+                                @Html.ValidationMessageFor(model => model.SelectedFixedAssetSecCategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FAsset_Descriptions, htmlAttributes: new { @class = "control-label" })
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.FAsset_Descriptions, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.FAsset_Descriptions, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FAsset_AgeMonths, htmlAttributes: new { @class = "control-label" })
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.FAsset_AgeMonths, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.FAsset_AgeMonths, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FAsset_BUs, htmlAttributes: new { @class = "control-label" })
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.FAsset_BUs, Model.myBUnit, Accountingsystem.Resources.FixedAssetCreate.ActivityInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.selectedFAsset_Employees_ID, htmlAttributes: new { @class = "control-label" })
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.selectedFAsset_Employees_ID, Model.myEmployee, Accountingsystem.Resources.FixedAssetCreate.EmployeeInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FAsset_WorkingDates, htmlAttributes: new { @class = "control-label" })
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.FAsset_WorkingDates, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.FAsset_WorkingDates, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JunckValue, htmlAttributes: new { @class = "control-label" })
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.JunckValue, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.JunckValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <a href='javascript:;' onclick='addAsset();' class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.FixedAssetCreate.CreateItem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $('#FAsset_WorkingDates').datetimepicker({ format: 'DD/MM/YYYY' });
+    </script>
+}

@@ -1,0 +1,284 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ClassifyPurchaseInvoiceVM
+
+@{
+    /**/
+
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.ReportsNewgetdateofPurchaseclassification.PurchaseClassificationReport;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("getdateofPurchaseclassification", "ReportsNew", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ReportsNewgetdateofPurchaseclassification.PurchaseClassificationReport)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.From)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.from, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.from, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.To)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.to, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.to, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @if (package.Number_store > 1)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.Store)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.storeID, Model.storeList, Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.SelectStore, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.storeID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            }
+                            @if (package.Number_Branch > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.Branch)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.branchid, Model.branchList, Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.SelectBranch, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                            }
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.Category)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.productClassify, Model.ProductClassList, Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.SelectCategory, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.productClassify, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.Product)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.ProductID, Model.ProductList, Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.SelectProduct, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GetAllReportsPurchases","Reports")'>
+                        @Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.Back<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+            var currentStartDate = new Date();
+            var _StartDate = flatpickr(document.getElementById('from'), {
+                defaultDate: currentStartDate
+            });
+            var currentDate = new Date();
+            var _EndDate = flatpickr(document.getElementById('to'), {
+                defaultDate: currentDate
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+
+
+            $("#storeID").chosen();
+            $("#productClassify").chosen();
+            $("#branchid").chosen();
+            $("#ProductID").chosen();
+
+
+            $("#storeID_chosen").addClass("form-control Dropdownlist-select");
+            $("#productClassify_chosen").addClass("form-control Dropdownlist-select");
+            $("#branchid_chosen").addClass("form-control Dropdownlist-select");
+            $("#ProductID_chosen").addClass("form-control Dropdownlist-select");
+
+
+
+            return false;
+        });
+
+
+    </script>
+    <script type="text/javascript">
+
+
+        $(function () {
+            $("#storeID").change(function () {
+
+
+                $("#classifListID").hide();
+                $("#productListID").hide();
+                $("#BranshListID").hide();
+            });
+        });
+        $(function () {
+            $("#branchid").change(function () {
+
+
+                $("#storListID").hide();
+                $("#classifListID").hide();
+                $("#productListID").hide();
+            });
+        });
+        $(function () {
+            $("#ProductID").change(function () {
+
+                $("#storListID").hide();
+                $("#classifListID").hide();
+                $("#BranshListID").hide();
+
+            });
+        });
+        $(function () {
+            $("#productClassify").change(function () {
+
+                $("#storListID").hide();
+                $("#productListID").hide();
+                $("#BranshListID").hide();
+
+            });
+        });
+    </script>
+
+}

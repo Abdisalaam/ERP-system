@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Accountingsystem.Models.SubLedgerFileDetail1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubLedgerSubLed_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentLength)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubLedgerSubLed_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Download", "ReturncustFile", new { fileId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

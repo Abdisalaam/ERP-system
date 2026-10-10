@@ -1,0 +1,289 @@
+﻿@model Accountingsystem.ViewModel.EmployeeShiftVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.StoreCreate.EditProductPriceForStore;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+@{
+
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+            <div class="text-center">
+                @Accountingsystem.Resources.StoreCreate.EditProductPriceForStore
+            </div>
+            @Html.Label(Accountingsystem.Resources.Atttendace.ShiftCoding)
+            @Html.EditorFor(model => model.shiftCodeing.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.shiftCodeing.Name, "", new { @class = "text-danger" })
+
+            <div class="table-responsive mb-4 mt-4">
+                <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                @Accountingsystem.Resources.InvoiceMasterIndex.Number
+                            </th>
+                            <th>
+                                @Accountingsystem.Resources.EmployeeCreate.EmployeeName
+
+                            </th>
+
+
+
+                            <th>
+                                <input type="checkbox" name="select-all" id="select-all" />
+                            </th>
+                            <th hidden>
+
+                            </th>
+                            <th hidden>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EmployeeList)
+                        {
+                            <tr>
+                                <td hidden>@item.Emp.Emp_Id</td>
+                                <td>@item.Emp.Emp_Code</td>
+                                <td>@item.Emp.Emp_Name</td>
+
+
+                                <td>@Html.EditorFor(model => item.Check)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" onclick="fun()" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterIndex.Edit <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 5000,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+
+
+
+    <script>
+
+        function fun() {
+
+
+            $("#createOfferSpinner").show();
+            $('#createOfferbtn').prop('disabled', true);
+            var orderArr = [];
+            orderArr.length = 0;
+            debugger
+            $.each($("#default-ordering tbody tr"), function () {
+                orderArr.push({
+
+                    EmployeeId: $(this).find('td:eq(0)').html(),
+                  
+                    IsActive: $(this).find('td:eq(3)').find('input').prop('checked')
+                });
+
+            });
+
+
+
+            var xz = '@Model.shiftCodeing.Id';
+            var datao = JSON.stringify(orderArr);
+
+            var data = { 'btachQan': datao, 'hh': xz };
+            var data = JSON.stringify(data);
+
+            console.log(data);
+             $.ajax(
+                 {
+
+                     url: '@Url.Action("AddingEmployeeToShiftPost", "ShiftCoding")',
+                     data: data,
+                     contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+                     type: 'POST',
+
+
+            }).done(function (result) {
+
+                setTimeout(function () {
+
+                    window.location = result;
+
+                }, 5000);
+            });
+
+        };
+
+    </script>
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+    <script>
+        function OnChangeSalesPrice(obj) {
+            debugger
+            var Price = $(obj).val();
+
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var category = $(obj).parents('tr').find('.Cat').val();
+            var priceWithTax = (parseFloat(TaxPercentage) / 100) * parseFloat(Price) + parseFloat(Price);
+
+
+            $(obj).parents('tr').find('.SalesPriceWithTax').val(priceWithTax);
+
+        }
+
+    </script>
+    <script>
+        function OnChangeSalesWithTax(obj) {
+            debugger
+            var PriceWithTax = $(obj).val();
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var price = parseFloat(PriceWithTax) * (100 / (parseFloat(TaxPercentage) + 100)) ;
+
+
+            $(obj).parents('tr').find('.SalesPrice').val(price);
+
+        }
+
+    </script>
+
+}

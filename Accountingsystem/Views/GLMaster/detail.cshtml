@@ -1,0 +1,427 @@
+﻿@model Accountingsystem.Models.GLMaster
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.GLMasterDetail.ConstraintDetails;
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+
+@Html.HiddenFor(model => model.Company_Id)
+@Html.HiddenFor(model => model.Auto)
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.msg</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.GLMasterDetail.ConstraintDetails
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.GLMasterDetail.ConstraintNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.GLCode)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.GLMasterDetail.ConstraintDate)
+                                        </div>
+                                        <div>
+                                            @Model.GL_Date.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Description)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.GL_Desc)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table id="detailsTable" class="table mb-4">
+                            <thead>
+                                <tr>
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.DebitValue</th>
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.CreditValue</th>
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.AccountName</th>
+
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.AssistantAccount</th>
+
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.CostCenter</th>
+                                    <th>البند</th>
+                                    <th>@Accountingsystem.Resources.GLMasterDetail.MovementDescription</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var GL in Model.GLDetails)
+                                {
+                                <tr>
+                                    <td> @Math.Round(GL.GLDetail_Debit, 2, MidpointRounding.AwayFromZero)</td>
+                                    <td>
+                                        @Math.Round(GL.GLDetail_Credit, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                    <td>
+                                        @{
+
+
+                                            if ((GL.Asset_Id == 0 || GL.Asset_Id == null))
+                                            {
+                                                @GL.ChartOfAccounting.Account_Name
+                                            }
+                                            else if (GL.Asset_Id != 0 && GL.GLDetail_Debit.ToString() == "0.000")
+                                            {
+                                                @GL.ChartOfAccounting.Account_Name
+                                            }
+
+                                            else if (GL.Asset_Id != 0 && GL.GLDetail_Debit.ToString() != "0.000")
+                                            {
+                                               
+                                                    var thisasst = Accountingsystem.Models.FixedAsset.GetAssetByID(Convert.ToInt32(GL.Asset_Id.ToString())).FAsset_Description;
+                                                    <h>@GL.ChartOfAccounting.Account_Name </h> <span> @thisasst</span>
+                                              
+
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @GL.Account_CHild_Name
+                                    </td>
+                                    <td>
+                                        @if (GL.SubLedger_Id == 0 || GL.SubLedger_Id == null)
+                                        {
+                                            @Html.DisplayName("0")
+                                        }
+                                        else
+                                        {
+                                            var subName = Accountingsystem.Models.SubLedger.getDetail((int)GL.SubLedger_Id);
+
+                                            <h>@subName.SubLed_Name</h>
+                                            <h>@subName.SubLed_Code</h>
+
+                                        }
+                                    </td>
+                                    @if (GL.ProjectClause_Id > 0)
+                                    {
+                                        var thisProjectclause = Accountingsystem.Models.ProjectAdvanced.getClauseById(GL.ProjectClause_Id.Value);
+                                    <td>@thisProjectclause.Name</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>
+                                        @GL.Description_Detail
+                                    </td>
+                                </tr>
+
+                                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    @{
+                        decimal credit = 0;
+                        decimal debit = 0;
+                        foreach (var gls in Model.GLDetails.Where(e => e.GLMasterGLMaster_Id == Model.GLMaster_Id))
+                        {
+                            credit += gls.GLDetail_Credit;
+                            debit += gls.GLDetail_Debit;
+                        }
+
+                    }
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.GLMasterDetail.TotalDebtor)
+                                        </div>
+                                        <div>
+                                            @Math.Round(debit, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.GLMasterDetail.TotalCreditor)
+                                        </div>
+                                        <div>
+                                            @Math.Round(credit, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                </div>
+
+        </div>
+
+
+
+        @if (Model.GL_Desc == null)
+        {
+            Model.GL_Desc = "auto";
+
+        }
+        <div class="row layout-top-spacing">
+
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب"))
+                    {
+                        <a class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("FillGlForCreate")">
+                            @Accountingsystem.Resources.GLMasterDetail.CreateNewConstraint
+                        </a>
+                    }
+
+                    @{if (Model.Auto == true && (Model.GLCode == null || Model.GLCode.StartsWith("GLST") || Model.GL_Desc.Contains("افتتاحى")))
+                        {
+                            if (Model.GLState == Accountingsystem.Models.TransactionState.Post && Accountingsystem.Models.GLMaster.getALLGLMasterAll().Where(a => a.GLCode == Model.GLCode).Count() < 2 && Model.GL_Date >= company.StartFinancialDate)
+                            {
+                                <a id="makeGlVoid" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("MakePostGLVoid", new { id = Model.GLMaster_Id })">
+                                    Void
+                                    <span id="makeGlVoidSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.GLMaster_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Delete
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("FillGlForEdit", new { id = Model.GLMaster_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Edit
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+                            }
+                            <a id="Print" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GLReportAndDetails", new { controller = "Reports", id = Model.GLMaster_Id })' target="_blank">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                            </a>
+                            <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexAutoOpen")">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                        else if (Model.Auto == true && (!Model.GLCode.StartsWith("GLST") || !Model.GL_Desc.Contains("افتتاحى") || Model.GLCode.StartsWith("") || Model.GLCode.StartsWith("EmpT-")))
+                        {
+                            <a id="Print" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GLReportAndDetails", new { controller = "Reports", id = Model.GLMaster_Id })' target="_blank">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                            </a>
+                            <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.GLMaster_Id })">
+                                @Accountingsystem.Resources.ExpenseDetails.Delete
+                                <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                            <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexAuto")">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        }
+                        else if (Model.GLCode.StartsWith("TAX") && Model.GL_Date >= company.StartFinancialDate)
+                        {
+
+
+                            if (Model.GLState == Accountingsystem.Models.TransactionState.Post/* && Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*/)
+                            {
+                                <a id="makeGlVoid" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("MakePostGLVoid", new { id = Model.GLMaster_Id })">
+                                    Void
+                                    <span id="makeGlVoidSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            }
+                            <a id="Print" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GLReportAndDetails", new { controller = "Reports", id = Model.GLMaster_Id })' target="_blank">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                            </a>
+                            <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexTaxGL")">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                        else if (Model.Auto == false && Model.GL_Date >= company.StartFinancialDate)
+                        {
+
+
+
+                            if (Model.GLCode.StartsWith("GLOF"))
+                            {
+                                <a id="Print" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GLReportAndDetails", new { controller = "Reports", id = Model.GLMaster_Id })' target="_blank">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                                </a>
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.GLMaster_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Delete
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("getAllOffGL")">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                    <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            }
+                            else
+                            {
+
+                                <a id="makeGlVoid" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("MakePostGLVoid", new { id = Model.GLMaster_Id })">
+                                    Void
+                                    <span id="makeGlVoidSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.GLMaster_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Delete
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("FillGlForEdit", new { id = Model.GLMaster_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Edit
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                    <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="Print" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GLReportAndDetails", new { controller = "Reports", id = Model.GLMaster_Id })' target="_blank">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                                </a>
+
+                            }
+
+                        }
+
+
+
+
+                        //}
+
+                    }
+
+
+                    }
+
+                </div>
+            </div>
+
+           
+        </div>
+
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>      
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+        $("#makeGlVoid").click(function (e) {
+            $("#makeGlVoidSpinner").show();
+        });
+
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });      
+        $("#deleteExpensesBtn").click(function (e) {
+            $("#deleteExpensesBtnSpinner").show();
+        });
+       
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

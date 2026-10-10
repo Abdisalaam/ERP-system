@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransactionBatch>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+<h2>صفحة الحركات التى تتم فى النظام</h2>
+<table class="table-condensed table-hover" id="sasa">
+    <thead>
+        <tr>
+
+            <th class="col-md-3">
+                @Html.DisplayName("اسم الحركه")
+            </th>
+            <th class="col-md-3">
+                @Html.DisplayName("رقم الحركه")
+            </th>
+            <th class="col-md-3">
+                @Html.DisplayName("تاريخ الحركه")
+            </th>
+            <th class="col-md-3">
+                @Html.DisplayName("وصف الحركه")
+            </th>
+            <th class="col-md-3">
+                @Html.DisplayName("رقم المستخدم")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.OperationName)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.OperationId)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+    $(document).ready(function () {
+        $('#sasa').DataTable();
+    });
+    </script>
+}

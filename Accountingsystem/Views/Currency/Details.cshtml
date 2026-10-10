@@ -1,0 +1,215 @@
+﻿@model Accountingsystem.Models.Currency
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CurrencyDetails.Title;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.CurrencyDetails.Title
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CurrencyArabic)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Currency_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CurrencyEnglish)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Currency_Type)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.ShortcutArabic)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Currency_ISO)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.ShortcutEnglish)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Currency_Iso2)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CurrencyFractionArabic)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Break_Coin)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CurrencyFractionEnglish)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Break_Coin2)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CountryCurrency)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Currency_Country)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CurrencyDetails.CurrentPrice)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Current_Price)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="EditCurrency" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.Currency_Id })">
+                        @Accountingsystem.Resources.CurrencyDetails.Edit
+                        <span id="EditCurrencySpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    
+
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.CurrencyDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        $("#EditCurrency").click(function (e) {
+            $("#EditCurrencySpinner").show();
+        });      
+
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+    </script>
+}

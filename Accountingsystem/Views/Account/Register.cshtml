@@ -1,0 +1,229 @@
+﻿@model Accountingsystem.Models.RegisterViewModel
+@{
+    ViewBag.Title = Accountingsystem.Resources.AccountRegister.Register;
+    var msg = ViewBag.Message;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+@*<h2>@ViewBag.Title.</h2>*@
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.employeeid)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.AccountRegister.EmployeeRegistration)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الايميل")
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AccountRegister.Password)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                        <div class="input-group-append">
+                                            <button id="addNewCustomerBTN" class="form-control success" type="button" onclick="PasswordFunc()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AccountRegister.PasswordConfirm)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <button id="addNewCustomerBTN" class="form-control success" type="button" onclick="ConfirmFunc()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AccountRegister.Role)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Value, Model.selectrole, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.AccountRegister.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index","Employee")">
+                        @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#Value").chosen();
+
+        $("#Value_chosen").addClass("form-control Dropdownlist-select");
+        function PasswordFunc() {
+            var x = document.getElementById("Password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+    <script>
+        function ConfirmFunc() {
+            var x = document.getElementById("ConfirmPassword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+}

@@ -1,0 +1,102 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.GlMasterDetaislVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrintGlMasterDetails</title>
+</head>
+<body>
+
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+    </div>
+
+    <div style="text-align:left;color:black;font-size:xx-large;margin-bottom:25px;">
+        Gl Master
+        <h style="text-align:right;margin-left:35%;color:black;font-size:large;">Invoice Date: @Model.GL_Date</h><br />
+    </div>
+
+    <div style="text-align:left;color:black;font-size:x-large;">
+        Currensy:
+        @Model.Currency_Id
+    </div>
+    <div style="text-align:left;color:black;font-size:x-large;">
+        GlMasterCode:
+        @Model.GLCode
+    </div>
+    <hr />
+
+    <table class="table" style="text-align:center;margin-top:5%;" data-sortable="" data-sortable-initialized="true">
+        <tr>
+            <th style="text-align:center;">
+                GLDetail_Debit &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+                GLDetail_Credit &nbsp&nbsp&nbsp&nbsp
+            </th>
+        </tr>
+        @foreach (var item in Model.myDetauls)
+        {
+            <tr>
+                <td>
+                    @Math.Round(item.GLDetail_Debit,2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @Math.Round(item.GLDetail_Credit,2, MidpointRounding.AwayFromZero)
+                </td>
+
+
+            </tr>
+        }
+    </table>
+    <footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Depit  : @Math.Round(Model.totaDebit,2,MidpointRounding.AwayFromZero)</h>
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">credit  :  @Math.Round(Model.totaCredit, 2, MidpointRounding.AwayFromZero)</h>
+    </footer>
+</body>
+</html>

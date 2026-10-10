@@ -1,0 +1,208 @@
+﻿@model Accountingsystem.Models.Subscription_Type
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.Subscription_TypeDetails.Details;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        @*<div class="header-container">
+                <header class="header navbar navbar-expand-sm">
+                    <ul class="navbar-item flex-row text-center"></ul>
+                    <ul class="navbar-item flex-row ml-md-auto">
+
+
+                        <li class="nav-item dropdown user-profile-dropdown">
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list active-view"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
+                            </a>
+                            <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                                <div class="">
+
+
+                                    <div class="dropdown-item">
+
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li>
+
+                                                <div class="dropdown-item">
+                                                    <a href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.SlicesDetails.Create</a>
+                                                </div>
+                                            </li>
+
+
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </li>
+
+                    </ul>
+                </header>
+            </div>*@
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                  @Accountingsystem.Resources.Subscription_TypeDetails.Details
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.RevenueAccount)
+                                        </div>
+                                        <div>
+                                            @Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Rvenuo_ID).Account_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionPeriodInMonth)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Durationsubscription)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Description)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.Subscrip_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row layout-top-spacing">
+                @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب"))
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Create")'>
+                                @Accountingsystem.Resources.Subscription_TypeCreate.New
+                                <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                }
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="Editbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.Subscription_Type_ID })">
+                            @Accountingsystem.Resources.Subscription_TypeCreate.Edit
+                            <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.ReceiptDetails.BackToList
+                            <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+     
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+       
+
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+
+}
+

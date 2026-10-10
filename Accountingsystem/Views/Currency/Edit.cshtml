@@ -1,0 +1,311 @@
+﻿@model Accountingsystem.ViewModel.CurrencyVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CurrencyEdit.EditCurrency;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Edit", "Currency", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.CurrencyEdit.EditCurrency)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.CurrencyEnglish)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Currency_Type, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Currency_Type, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.CurrencyArabic)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Currency_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Currency_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.ShortcutArabic)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Currency_ISO, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Currency_ISO, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.ShortcutEnglish)
+                                    @Html.EditorFor(model => model.Currency_Iso2, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Currency_Iso2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.CurrencyFractionArabic)
+                                    @Html.EditorFor(model => model.Break_Coin, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Break_Coin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.CurrencyFractionEnglish)
+                                    @Html.EditorFor(model => model.Break_Coin2, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Break_Coin2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.Country)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Currency_Country, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Currency_Country, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CurrencyEdit.CurrencyPrice)
+                                    @Html.EditorFor(model => model.Current_Price, new { htmlAttributes = new { @Value = "", @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                    @Html.ValidationMessageFor(model => model.Current_Price, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.CurrencyEdit.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.CurrencyEdit.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+        }
+    }
+
+    <script>
+        $(document).ready(function () {
+          
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+            $("#createOfferSpinner").hide();
+        });
+
+
+    </script>
+    <script>
+
+        $('#Currency_Type').on('input', function () {
+            $("#Currency_Type").removeClass("addRequiredFieldToInput");
+        });
+        $('#Currency_Name,').on('input', function () {
+            $("#Currency_Name,").removeClass("addRequiredFieldToInput");
+        });
+        $('#Currency_ISO,').on('input', function () {
+            $("#Currency_ISO,").removeClass("addRequiredFieldToInput");
+        });
+        $('#Currency_Country,').on('input', function () {
+            $("#Currency_Country,").removeClass("addRequiredFieldToInput");
+        });
+    </script>
+    <script>
+        $('#offerCreateMasterForm').submit(function () {
+            $("#createOfferSpinner").show();
+            if ($('#Currency_Type').val() == "" || $('#Currency_Type').val() == null || $('#Currency_Name').val() == "" || $('#Currency_Name').val() == null || $('#Currency_ISO').val() == "" || $('#Currency_ISO').val() == null || $('#Currency_Country').val() == "" || $('#Currency_Country').val() == null ) {
+
+                $("#createOfferSpinner").hide();
+                if ($('#Currency_Type').val() == "" || $('#Currency_Type').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CurrencyEdit.CurrencyArabicNameRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Currency_Type").addClass("addRequiredFieldToInput");
+                    $('#Currency_Type').trigger('focus');
+                }
+                if ($('#Currency_Name').val() == "" || $('#Currency_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CurrencyEdit.CurrencyEnglishNameRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Currency_Name").addClass("addRequiredFieldToInput");
+                    $('#Currency_Name').trigger('focus');
+                }
+                if ($('#Currency_ISO').val() == "" || $('#Currency_ISO').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CurrencyEdit.ShortcutArabicNameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Currency_ISO").addClass("addRequiredFieldToInput");
+                    $('#Currency_ISO').trigger('focus');
+                }
+                if ($('#Currency_Country').val() == "" || $('#Currency_Country').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CurrencyEdit.CountryIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Currency_Country").addClass("addRequiredFieldToInput");
+                    $('#Currency_Country').trigger('focus');
+                }
+                event.preventDefault();
+            }
+            else {
+                $("#createOfferSpinner").show();
+            }
+
+
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "ShowDeleteData";
+    var serial = ViewBag.serial;
+    var value = ViewBag.value;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="text-center">
+      @Accountingsystem.Resources.validate.DeleteSuccessful
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+
+                    <tr>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterIndex.Number)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterIndex.Net)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            @serial
+                        </td>
+
+
+                        <td>
+
+                            @Math.Round(value, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href=" @Url.Action( "addnewSaleReciept",new {cust_Id=0 })">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.Createnew
+                        <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#Delete").click(function (e) {
+            $("#DeleteSpinner").show();
+        });
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#Edit").click(function (e) {
+            $("#EditSpinner").show();
+        });
+        $("#ReceiptConstraint").click(function (e) {
+            $("#ReceiptConstraintSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+        $("#CopyInvoice").click(function (e) {
+            $("#CopyInvoiceSpinner").show();
+        });
+
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+
+        $("#PrintEmail").click(function (e) {
+            $("#PrintEmailSpinner").show();
+        });
+
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+
+        $("#RecieptSupplyOrReceiveGoods").click(function (e) {
+            $("#RecieptSupplyOrReceiveGoodsSpinner").show();
+        });
+        $("#PayNow").click(function (e) {
+            $("#PayNowSpinner").show();
+        });
+        $("#CustomerReport").click(function (e) {
+            $("#CustomerReportSpinner").show();
+        });
+        $("#CustomerDetail").click(function (e) {
+            $("#CustomerDetailSpinner").show();
+        });
+
+    </script>
+}

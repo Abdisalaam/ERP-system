@@ -1,0 +1,271 @@
+﻿@model Accountingsystem.ViewModel.MatchingVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>خصم الايصال من الفاتورة</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Matching_Code, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Matching_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Matching_Code, "كود المطابقة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCustomerID, Model.MyCustomerList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCustomerID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedCustomerID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                       
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Comp_ID, Model.MyCompanyList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Comp_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Comp_ID" style="margin-left: 50px;">الشركة</label>
+                        </div>
+
+                    </div>
+                </div>      
+
+           
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                       
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedInvoiceMaster_Id, Model.MyInvoiseMasterList, "اختر الفاتوره", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedInvoiceMaster_Id, "", new { @class = "text-danger" })
+
+                            @*@Html.ActionLink("اعرض الفاتورة", "DetailsPartial", "InvoiceMaster", new { id = 0 }, new { @class = "invoiceDialog" })*@
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedInvoiceMaster_Id, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedReceiptId, Model.MyReceiptList, "اختر الايصال ", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedReceiptId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedReceiptId, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                       
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Match_currency, Model.myPayCurrency, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Match_currency, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Match_currency, "العملة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                       
+                    </div>
+                </div>
+
+
+             
+            </div>
+        </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="انشاء" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div id="MyInvoiceDetails"></div>
+            <div id="MyReceiptDetails"></div>
+
+            }
+
+
+
+<a class="btn btn-primary" href='@Url.Action("Index")'>
+    <p>
+
+        العودة الى القائم
+    </p>
+</a><div>
+               
+     </div>
+
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+
+                <script src="~/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+                <script src="~/Scripts/ActionDialog.js" type="text/javascript"></script>
+
+                <script type="text/javascript">
+
+                    $('#Date').datetimepicker({ format: 'DD/MM/YYYY' });
+
+
+                    $(function () {
+
+                        //showDialog(".invoice");
+                        $("#SelectedInvoiceMaster_Id").change(function () {
+                            var data = $(this).val();
+                            $("#MyInvoiceDetails").load('@(Url.Action("GetMatchingInvoiceDetails", "Matching", null, Request.Url.Scheme))?InvoiceDetailsID=' + data);
+                        });
+                        $("#SelectedReceiptId").change(function () {
+                            var data = $(this).val();
+                            $("#MyReceiptDetails").load('@(Url.Action("GetMatchingReceiptDetails", "Matching", null, Request.Url.Scheme))?receiptDetailsID=' + data);
+
+                        })
+
+                        $("#SelectedCustomerID").change(function (e) {
+
+                            var selectedText = $(this).find("option:selected").text();
+                            var selectedValue = $(this).val();
+
+                            $.ajax({
+
+                                url: '@Url.Action("GetResult", "Matching")',
+                                type: 'get',
+                                data: { CustomerId: selectedValue }
+                            }).done(function (result) {
+
+                                $("#SelectedInvoiceMaster_Id").empty();
+                                var placeholder = new Option("اختر الفاتورة", -1);
+                                $("#SelectedInvoiceMaster_Id").append(placeholder);
+
+                                for (var i = 0; i < result.length; i++) {
+                                    var item = result[i];
+                                    var p = new Option(result[i].Text, result[i].Value);
+                                    $("#SelectedInvoiceMaster_Id").append(p)
+
+                                }
+
+                            });
+
+                            $.ajax({
+                                url: '@Url.Action("GetRecipt", "Matching")',
+                                type: 'get',
+                                data: { CustomerId: selectedValue }
+                            }).done(function (res) {
+
+                                $("#SelectedReceiptId").empty();
+                                var placeholder = new Option("اختر الايصال", -1);
+                                $("#SelectedReceiptId").append(placeholder);
+
+                                for (var i = 0; i < res.length; i++) {
+                                    var item = res[i];
+                                    var p1 = new Option(res[i].Text, res[i].Value);
+                                    $("#SelectedReceiptId").append(p1)
+
+                                }
+                            });
+                        });
+                    });
+                    function showDialogg(viewId) {
+                        alert("TTT");
+
+                        $(viewId).dialog({
+                            width: 400,
+                            resizable: false,
+                            title: 'hi there',
+                            modal: true,
+                            open: function (event, ui) {
+                                $(this).load('@(Url.Action("GetMatchingInvoiceDetails", "Matching", null, Request.Url.Scheme))?InvoiceDetailsID=' + data);
+                            },
+                            buttons: {
+                                "Close": function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+                        $(viewId).dialog('open');
+
+                    }
+
+                </script>
+            }

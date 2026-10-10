@@ -1,0 +1,354 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.ReportsVM.SalaryReportForBankVM>
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeIndex.EmployeesList;
+
+    var msg = ViewBag.Message;
+
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    decimal totalSalary = 0;
+    decimal totalbasic = 0;
+    decimal totalother = 0;
+    decimal totalReduce = 0;
+    decimal totalresid = 0;
+
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+@{
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+<head>
+
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+
+                <li class="nav-item theme-text">
+
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+
+                                <ul class="nav navbar-nav navbar-right">
+
+
+
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a href=" @Url.Action( "getBankReportSalaryPDF")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.InvoiceMasterDetails.Print</a>
+
+
+
+                                        </div>
+                                    </li>
+                                   
+
+
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+
+        </header>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            @ViewBag.Message
+        </div>
+        <div class="text-center">
+            @Accountingsystem.Resources.EmployeeIndex.SalaryandwagesReport
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.EmployeeName)
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.IdentityOrResidenceNumber)
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.AccountNumber)
+                        </th>
+
+
+
+
+                        <th>
+                           @Accountingsystem.Resources.InvoiceMasterDetails.Notes
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.TotalSalary)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.BasicSalary)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.Residence)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.OtherAllowance)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.Discount)
+                        </th>
+
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        totalbasic += item.basicSalary;
+                        totalother += item.increaseSalary;
+                        totalReduce += item.decraseSalary;
+                        totalresid += item.ResidentSalary;
+                         totalSalary+= item.TotalSalary;
+
+                    <tr>
+                        <td>
+                            @item.emp.Emp_Name
+                        </td>
+                        <td>
+                            @item.emp.Passport_number
+                        </td>
+
+                        <td>
+                            @item.emp.AccountNum
+                        </td>
+
+
+                        <td>
+                            @item.Notes
+                        </td>
+
+                        <td>
+                            @item.emp.Emp_Address
+                        </td>
+                        <td>
+                            @Math.Round( item.TotalSalary,2,MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @Math.Round(item.basicSalary, 2, MidpointRounding.AwayFromZero)
+                         
+                        </td>
+                        <td>
+                            @Math.Round(item.ResidentSalary, 2, MidpointRounding.AwayFromZero)
+                          
+                        </td>
+                        <td>
+                            @Math.Round(item.increaseSalary, 2, MidpointRounding.AwayFromZero)
+                           
+                        </td>
+                        <td>
+                            @Math.Round(item.decraseSalary, 2, MidpointRounding.AwayFromZero)
+                         
+                        </td>
+
+
+
+
+
+
+
+
+                    </tr>
+                       
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.TotalAmount)
+                        </th>
+                        <th>
+
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <td>
+                            @Math.Round(totalSalary, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @Math.Round(totalbasic, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+                        <td>
+                            @Math.Round(totalresid, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+                        <td>
+                            @Math.Round(totalother, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+                        <td>
+                            @Math.Round(totalReduce, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+}
+

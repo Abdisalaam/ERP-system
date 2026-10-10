@@ -1,0 +1,270 @@
+﻿@model Accountingsystem.ViewModel.TaxesVM
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.TaxEdit.EditTaxData;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Edit", "Tax", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Tax_ID)
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.TaxEdit.EditTaxData)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TaxCreate.TaxName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Tax_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Tax_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TaxCreate.TaxType)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Tax_Type, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Tax_Type, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TaxCreate.TaxPercentage)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Tax_Percentage, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Tax_Percentage, "", new { @class = "text-danger" })
+                                    <div class="form-inline">
+                                        <div class="n-chk">
+                                            <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
+                                                @Html.EditorFor(model => model.IsProductTax, new { htmlAttributes = new { @class = "new-control-input", @type = "checkbox" } })
+                                                <span class="new-control-indicator"></span><span class="new-chk-content">@Accountingsystem.Resources.TaxCreate.PresumptiveTaxProducts</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                          
+                            @*<div class="col-md-6">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <div class="n-chk">
+                                            <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
+                                                @Html.EditorFor(model => model.IsProductTax, new { htmlAttributes = new { @class = "new-control-input", @type = "checkbox" } })
+                                                <span class="new-control-indicator"></span><span class="new-chk-content">@Accountingsystem.Resources.TaxCreate.PresumptiveTaxProducts</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                              
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.TaxCreate.Create<span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.TaxCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+            $("#SelectedChartOfAccountId").chosen();
+            $('#SelectedChartOfAccountId').trigger('chosen:updated');
+            $("#SelectedChartOfAccountId_chosen").addClass("form-control Dropdownlist-select");
+            return false;
+        });
+
+
+    </script>
+    <script>
+        $('#Tax_Name').on('input', function () {
+            $("#Tax_Name").removeClass("addRequiredFieldToInput");
+
+        });
+        $('#Tax_Type').on('input', function () {
+            $("#Tax_Type").removeClass("addRequiredFieldToInput");
+
+        });
+        $('#Tax_Percentage').on('input', function () {
+            $("#Tax_Percentage").removeClass("addRequiredFieldToInput");
+
+        });
+
+        $('#SelectedChartOfAccountId').on('change', function () {
+            $("#SelectedChartOfAccountId_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedChartOfAccountId_chosen span').css('background', '#ffffff');
+            $('#SelectedChartOfAccountId_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+
+        $('#catchReceiptCreateForm').submit(function () {
+            $('#subBut').prop('disabled', true);
+            if ( $('#Tax_Name').val() == "" || $('#Tax_Name').val() == null || $('#Tax_Type').val() == "" || $('#Tax_Type').val() == null || $('#Tax_Percentage').val() == "" || $('#Tax_Percentage').val() == null || $('#Tax_Percentage').val() <= 0) {
+                $('#subBut').prop('disabled', false);
+                $("#createExpensesSpinner").hide();
+                if ($('#Tax_Name').val() == "" || $('#Tax_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TaxCreate.TaxNameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Tax_Name").addClass("addRequiredFieldToInput");
+                    $('#Tax_Name').trigger('focus');
+                }
+
+                if ($('#Tax_Type').val() == "" || $('#Tax_Type').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TaxCreate.TaxTypeIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Tax_Type").addClass("addRequiredFieldToInput");
+                    $('#Tax_Type').trigger('focus');
+                }
+                if ($('#Tax_Percentage').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TaxCreate.TaxPrecentageIsLessThanNhill",
+                        pos: 'top-center'
+                    });
+                    $("#Tax_Percentage").addClass("addRequiredFieldToInput");
+                    $('#Tax_Percentage').trigger('focus');
+                }
+                if ($('#Tax_Percentage').val() == "" || $('#Tax_Percentage').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TaxCreate.TaxPercentageIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Tax_Percentage").addClass("addRequiredFieldToInput");
+                    $('#Tax_Percentage').trigger('focus');
+                }
+            
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+
+        });
+
+    </script>
+
+
+}

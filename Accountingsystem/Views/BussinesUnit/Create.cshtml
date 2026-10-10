@@ -1,0 +1,121 @@
+﻿@model Accountingsystem.ViewModel.BussinesUnitVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>انشاء نشاط للشركة</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+   
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+          
+            <div class="col-md-5">
+                @Html.HiddenFor(model => model.BU_Code, new { htmlAttributes = new { @class = "textfield" } })
+                @Html.ValidationMessageFor(model => model.BU_Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+      
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.BU_Name, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.BU_Name, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BU_Name, htmlAttributes: new { @class = "control-label" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.BU_Description, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.BU_Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BU_Description, htmlAttributes: new { @class = "control-label col" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.BU_Type, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.BU_Type, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                     @Html.LabelFor(model => model.BU_Type, htmlAttributes: new { @class = "control-label" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.CompanyComp_Id, Model.compList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.CompanyComp_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CompanyComp_Id, htmlAttributes: new { @class = "control-label" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+          
+           
+           
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="انشاء" class="btn btn-primary" />
+                </div>
+            </div>
+     
+            </div>
+}
+
+<a class="btn btn-primary" href='@Url.Action("Index")'>
+    <p>
+
+        العودة الى القائمة
+    </p>
+</a>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

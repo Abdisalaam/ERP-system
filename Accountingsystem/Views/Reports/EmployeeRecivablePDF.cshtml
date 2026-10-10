@@ -1,0 +1,191 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.EmployeesrecivableVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    string nully = "";
+    decimal totalDebit = 0;
+    decimal totalcredit = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ذمم الموظف</title>
+  
+</head>
+<body>
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.compnay.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.compnay.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+
+        <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+
+
+            <tr>
+                <td style="text-align:left;">@Model.compnay.Comp_Name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>رقم الضريبى :&nbsp&nbsp @Model.compnay.Tax_Number &nbsp&nbsp</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">العنوان: &nbsp&nbsp @Model.compnay.Comp_Address  </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@DateTime.Now.Day - @DateTime.Now.Month - @DateTime.Now.Year &nbsp&nbsp : تاريخ الطباعة </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.compnay.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                @*<td>@Model.EmployeeEmail &nbsp&nbsp : البريد الالكتروني </td>*@
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.compnay.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td></td>
+                <td></td>
+                <td> </td>
+            </tr>
+           
+
+
+        </table>
+
+
+        <div style="text-align:center;color:black;font-size:x-large;">
+            ذمم الموظف
+        </div>
+        <div style="text-align:center;color:black;font-size:large;">
+               @Model.EmployeeName
+        </div>
+        <br />
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="col-lg-6">
+                    <table class="table" style="width:900px;text-align:center;" border="1">
+                        <tr>
+                            <th style="background-color:lightgray;">
+                                تاريخ القيد
+                            </th>
+                            <th style="background-color:lightgray;">
+                                دائن
+                            </th>
+                            <th style="background-color:lightgray;">
+                                مدين
+                            </th>
+
+
+
+                        </tr>
+                        @foreach (var item in Model.RecivableDetails)
+                        {
+
+                            totalcredit = totalcredit + item.Credit;
+                            totalDebit = totalDebit + item.Debit;
+
+                            <tr>
+                                <td style="text-align:center;">
+                                    @Convert.ToDateTime(item.GLDate).ToString("yyyy/MM/dd ")
+                                </td>
+                                <td style="text-align:center;">
+                                    @if (item.Credit == 0)
+                                    {
+                                        @nully
+                                    }
+                                    else
+                                    {
+
+                                        @Math.Round(item.Credit, 2, MidpointRounding.AwayFromZero)
+                                    }
+
+                                </td>
+                                <td style="text-align:center;">
+                                    @if (@item.Debit == 0)
+                                    {
+                                        @nully
+                                    }
+                                    else
+                                    {
+                                        @Math.Round(item.Debit, 2, MidpointRounding.AwayFromZero)
+                                    }
+
+                                </td>
+
+
+                            </tr>
+
+                        }
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div style="text-align:right;color:black;font-size:medium;margin-bottom:35px;">
+                @Math.Round(totalcredit, 2, MidpointRounding.AwayFromZero) :اجمالي الدائن
+            </div>
+            <div style="text-align:right;color:black;font-size:medium;margin-bottom:50px;">
+                @Math.Round(totalDebit, 2, MidpointRounding.AwayFromZero)  : اجمالي المدين
+            </div>
+        </div>
+    </div>
+</body>
+</html>

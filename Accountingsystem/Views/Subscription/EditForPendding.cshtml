@@ -1,0 +1,922 @@
+﻿@model Accountingsystem.ViewModel.SubscriptionVM
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.InvoiceMasterDetails.Edit;
+    Model.Comp_Id = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("EditForPendding", "Subscription", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Comp_Id)
+    @Html.HiddenFor(model => model.Subscrip_Id)
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.InvoiceMasterDetails.Edit)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            @*<div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SubscriptionNumber)
+                                    @Html.EditorFor(model => model.Subscrip_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Subscrip_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SubscriptionInvoiceDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Sub_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Sub_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SelectTypeInformation)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedSubscrip_Type, Model.MySubTypeList, Accountingsystem.Resources.SubscriptionCreate.SelectType, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.Customer)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Customer_Id, Model.MyCusromerList, Accountingsystem.Resources.SubscriptionCreate.CustomerInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                            <button id="addNewCustomerBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Customer_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.CustomerNumber)
+                                    @Html.EditorFor(model => model.tel_customer, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.tel_customer, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.EmployeeName)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Emp_Id, Model.EmpList, Accountingsystem.Resources.SubscriptionCreate.EmployeeNameInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        @Html.ValidationMessageFor(model => model.Emp_Id, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.TeamName)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectEmp_Team, Model.MyEmpTeam, Accountingsystem.Resources.SubscriptionCreate.TeamNameInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectEmp_Team, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @if (package.Number_Branch > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SelectBranch)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subscrip_Pranch, Model.MySubscripPranch, Accountingsystem.Resources.SubscriptionCreate.SelectBranchInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SelectDepartment)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Department_Id, Model.MyDepartmentList, Accountingsystem.Resources.SubscriptionCreate.SelectDepartmentInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SelectCompanyActivity)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subscrip_BU, Model.MyBuList, Accountingsystem.Resources.SubscriptionCreate.SelectCompanyActivityInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (package.Number_subLedgger > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.SubscriptionCreate.CostCenter)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subledger_ID, Model.MySubList, Accountingsystem.Resources.SubscriptionCreate.CostCenterInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.StartingDateOfSubscription)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SubscriptionExpirationDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.SubscriptionValue)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Estimate_Amount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Estimate_Amount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.Tax)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Taxe_ID, Model.tax_List, Accountingsystem.Resources.SubscriptionCreate.TaxInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Taxe_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.AllowableDiscountValue)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.AllowDiscount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        @Html.ValidationMessageFor(model => model.AllowDiscount, "", new { @class = "text-danger" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control">$</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.Discount)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control">%</span>
+                                            </div>
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SubscriptionCreate.Total)
+                                    @Html.EditorFor(model => model.totalinPageonly, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.totalinPageonly, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes)
+                                    @Html.TextAreaFor(model => model.Subscrip_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes })
+                                    @Html.ValidationMessageFor(model => model.Subscrip_Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.SubscriptionCreate.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.SubscriptionCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="customerModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Accountingsystem.Resources.SubscriptionCreate.AddCustomer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="customerPartialDialogDiv"></div>
+                </div>
+                <div class="md-button">
+                    <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }
+            $("#createExpensesSpinner").hide();
+            var currentDate = new Date();
+            var _ExpensesDate = flatpickr(document.getElementById('Sub_Date'), {
+                defaultDate: currentDate
+            });
+            var currentDate1 = new Date();
+            var _ExpensesDate = flatpickr(document.getElementById('StartTime'), {
+                defaultDate: $("#StartTime").val()
+            });
+            var currentDate2 = new Date();
+            var _ExpensesDate = flatpickr(document.getElementById('DeadLine'), {
+                defaultDate: $("#DeadLine").val()
+            });
+            $("#SelectedSubscrip_Type").chosen();
+            $("#Customer_Id").chosen();
+            $("#Emp_Id").chosen();
+            $("#SelectEmp_Team").chosen();
+
+            $("#Taxe_ID").chosen();
+            $("#Subscrip_Pranch").chosen();
+            $("#Department_Id").chosen();
+            $("#Subscrip_BU").chosen();
+            $("#Subledger_ID").chosen();
+
+            $("#SelectedSubscrip_Type_chosen").addClass("form-control Dropdownlist-select");
+            $("#Customer_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Emp_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#SelectEmp_Team_chosen").addClass("form-control Dropdownlist-select");
+
+            $("#Taxe_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#Subscrip_Pranch_chosen").addClass("form-control Dropdownlist-select");
+            $("#Department_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Subscrip_BU_chosen").addClass("form-control Dropdownlist-select");
+            $("#Subledger_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+            });
+            $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "Subscription"))');
+            return false;
+        });
+    </script>
+    <script>
+        $('#StartTime').on('change', function (e)
+        {
+            debugger
+
+            var selectedValue = $("#StartTime").val();
+            var type = $("#SelectedSubscrip_Type").val();
+                    $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Subscription")',
+                        data: { startdate: selectedValue, TypeSub: type },
+                    type: 'get',
+                    }).done(function (result) {
+                        var _ExpensesDate = flatpickr(document.getElementById('DeadLine'), {
+                            defaultDate: result
+                        });
+                    }
+                    );
+
+              });
+
+    </script>
+    <script>
+        $('#SelectedSubscrip_Type').on('change', function (e)
+        {
+            debugger
+
+            var selectedValue = $("#StartTime").val();
+            var type = $("#SelectedSubscrip_Type").val();
+                    $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Subscription")',
+                        data: { startdate: selectedValue, TypeSub: type },
+                    type: 'get',
+                    }).done(function (result) {
+                        var _ExpensesDate = flatpickr(document.getElementById('DeadLine'), {
+                            defaultDate: result
+                        });
+                    }
+                    );
+
+              });
+
+    </script>
+
+
+    <script type="text/javascript">
+
+    $('#addNewCustomerBTN').on('click', function () {
+        $("#customerModal").dialog('open');
+        return false;
+    });
+        $("#Customer_Id").change(function () {
+            var selectedValue = $("#Customer_Id").val();
+            $.ajax({
+                url: '@Url.Action("GetPhone", "Subscription")',
+                type: 'get',
+                data: { ID: selectedValue }
+                }).done(function (result) {
+                $("#tel_customer").val(result);
+
+                });
+        });
+    </script>
+    <script>
+
+        $("#Discount").keyup(function () {
+
+            if ($('#Discount').val() == "" || $('#Discount').val() == null || $('#Discount').val() < 0 || $('#Discount').val() > 100) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.SubscriptionCreate.DiscountMandatory",
+                    pos: 'top-center'
+                });
+                $("#Discount").addClass("addRequiredFieldToInput");
+                $('#Discount').trigger('focus');
+            }
+        });
+    </script>
+    <script type="text/javascript">
+
+        $("#Department_Id").empty();
+        var departmentsOptions = new Option("@Accountingsystem.Resources.SubscriptionCreate.SelectDepartmentInformation", 0);
+        $("#Department_Id").append(departmentsOptions);
+        $('#Department_Id').trigger('chosen:updated');
+
+        $("#Subscrip_BU").empty();
+        var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.SubscriptionCreate.SelectCompanyActivityInformation", 0);
+        $("#Subscrip_BU").append(bussinesSubledgerOptions);
+        $('#Subscrip_BU').trigger('chosen:updated');
+        $("#Subscrip_Pranch").change(function (e) {
+                    var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("GetProvinces", "Expense")',
+                        type: 'get',
+                        data: { countryId: selectedValue }
+                    }).done(function (result) {
+                        $("#Department_Id").empty();
+                        var d = new Option("@Accountingsystem.Resources.SubscriptionCreate.SelectDepartmentInformation", 0);
+                        $("#Department_Id").append(d);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#Department_Id").append(p);
+                        }
+                        $('#Department_Id').trigger('chosen:updated');
+                    });
+                });
+
+        $("#Department_Id").change(function (e) {
+                    var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("GetCities", "Expense")',
+                        type: 'get',
+                        data: { provinceId: selectedValue }
+                    }).done(function (result) {
+
+                        $("#Subscrip_BU").empty();
+                         var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.SubscriptionCreate.SelectCompanyActivityInformation", 0);
+                        $("#Subscrip_BU").append(bussinesSubledgerOptions);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#Subscrip_BU").append(p);
+
+                        }
+                        $('#Subscrip_BU').trigger('chosen:updated');
+                    });
+
+
+                });
+
+    </script>
+
+
+
+    <script type="text/javascript">
+        $('#Estimate_Amount').change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var Estimated = $("#Estimate_Amount").val();
+            var taxIDs = $("#Taxe_ID").val();
+            var Discount = $("#Discount").val();
+            var AllowDiscount = $("#AllowDiscount").val();
+
+            $.ajax({
+                url: '@Url.Action("GetAmountwithTaxorNot", "Subscription")',
+                type: 'get',
+                data: { taxID: taxIDs, AMount: Estimated, Discount: Discount, AllowDis: AllowDiscount }
+            }).done(function (result) {
+
+                $("#totalinPageonly").val(result);
+            });
+        });
+
+        $('#Discount').change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var Estimated = $("#Estimate_Amount").val();
+            var taxIDs = $("#Taxe_ID").val();
+            var Discount = $("#Discount").val();
+            var AllowDiscount = $("#AllowDiscount").val();
+
+            $.ajax({
+                url: '@Url.Action("GetAmountwithTaxorNot", "Subscription")',
+                type: 'get',
+                data: { taxID: taxIDs, AMount: Estimated, Discount: Discount, AllowDis: AllowDiscount }
+            }).done(function (result) {
+
+                $("#totalinPageonly").val(result);
+            });
+        });
+
+
+        $('#AllowDiscount').change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var Estimated = $("#Estimate_Amount").val();
+            var taxIDs = $("#Taxe_ID").val();
+            var Discount = $("#Discount").val();
+            var AllowDiscount = $("#AllowDiscount").val();
+
+            $.ajax({
+                url: '@Url.Action("GetAmountwithTaxorNot", "Subscription")',
+                type: 'get',
+                data: { taxID: taxIDs, AMount: Estimated, Discount: Discount, AllowDis: AllowDiscount }
+            }).done(function (result) {
+
+                $("#totalinPageonly").val(result);
+            });
+        });
+         $('#Taxe_ID').change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+             var Estimated = $("#Estimate_Amount").val();
+             var taxIDs = $("#Taxe_ID").val();
+             var Discount = $("#Discount").val();
+             var AllowDiscount = $("#AllowDiscount").val();
+
+            $.ajax({
+                url: '@Url.Action("GetAmountwithTaxorNot", "Subscription")',
+                type: 'get',
+                data: { taxID: taxIDs, AMount: Estimated, Discount: Discount, AllowDis: AllowDiscount }
+            }).done(function (result) {
+
+                $("#totalinPageonly").val(result);
+            });
+        });
+
+
+        $("#StartTime").on('dp.change', function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var start = $(this).val();
+            var selectedValue = $("#SelectedSubscrip_Type").val();
+            var start = $("#StartTime").val();
+
+            $.ajax({
+                url: '@Url.Action("GetFinalDate", "Subscription")',
+                type: 'get',
+                data: { typeid: selectedValue, starttime: start }
+            }).done(function (result) {
+                $("#DeadLine").val(result);
+            });
+        });
+        $("#Customer_Id").change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var selectedValue = $("#Customer_Id").val();
+            $.ajax({
+                url: '@Url.Action("GetPhone", "Subscription")',
+                type: 'get',
+                data: { ID: selectedValue }
+            }).done(function (result) {
+                $("#tel_customer").val(result);
+
+            });
+        });
+        $("#SelectedSubscrip_Type").change(function (e) {
+            var selectedText = $(this).find("option:selected").text();
+            var start = $("#StartTime").val();
+            var selectedValue = $(this).val();
+            var model = '@Html.Raw(Model)';
+
+            $.ajax({
+                url: '@Url.Action("GetProjectJson", "Subscription")',
+                type: 'get',
+                data: { ID: selectedValue}
+            }).done(function (result) {
+                $("#Comp_Id").val(result["Subscrip_Company"]);
+                $("#Subscrip_BU").val(result["Subscrip_BU"]);
+                $("#Subscrip_Description").val(result["Subscrip_Description"]);
+            });
+        });
+
+    </script>
+    <script>
+        var txtA = $('#StartTime');
+        var txtB = $('#Estimate_Amount');
+        var txtResult = $('#DeadLine');
+
+        function updateSum() {
+            txtResult.html(parseInt(txtA.val()) + parseInt(txtB.val()));
+        }
+
+        $(function () {
+            updateSum();
+            txtA.change('change', updateSum);
+            txtB.bind('change', updateSum);
+        });
+    </script>
+    <script>
+        $('#Sub_Date').on('change', function (e)
+        {
+            var selectedValue = $(this).val();
+             $.ajax({
+                        url: '@Url.Action("CheckStartdate", "GLMaster")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            var currentDate = new Date();
+
+                            var _OfferDate = flatpickr(document.getElementById('Sub_Date'), {
+                                defaultDate: currentDate
+                            });
+
+                        }
+                    }
+                    );
+            $.ajax({
+                url: '@Url.Action("CheckEndDate", "Company")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {
+                    Snackbar.show({
+                        text: result,
+                        pos: 'top-center'
+                    });
+                }
+            }
+            );
+        });
+    </script>
+
+    <script>
+        $('#Discount').on('input', function () {
+            $("#Discount").removeClass("addRequiredFieldToInput");
+        });
+        $('#Sub_Date').on('input', function () {
+            $("#Sub_Date").removeClass("addRequiredFieldToInput");
+        });
+        $('#StartTime').on('input', function () {
+            $("#StartTime").removeClass("addRequiredFieldToInput");
+        });
+        $('#DeadLine').on('input', function () {
+            $("#DeadLine").removeClass("addRequiredFieldToInput");
+        });
+        $('#Estimate_Amount').on('input', function () {
+            $("#Estimate_Amount").removeClass("addRequiredFieldToInput");
+        });
+        $('#SelectedSubscrip_Type').on('change', function () {
+            $("#SelectedSubscrip_Type_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedSubscrip_Type_chosen span').css('background', '#ffffff');
+            $('#SelectedSubscrip_Type_chosen b').css('background', '#ffffff');
+        });
+        $('#Customer_Id').on('change', function () {
+            $("#Customer_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Customer_Id_chosen span').css('background', '#ffffff');
+            $('#Customer_Id_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+        $('#catchReceiptCreateForm').submit(function () {
+            $('#subBut').prop('disabled', true);
+            if ($('#SelectedSubscrip_Type').val() == "" || $('#SelectedSubscrip_Type').val() == null || $('#SelectedSubscrip_Type').val() < 1 || $('#Customer_Id').val() == null || $('#Customer_Id').val() == "" || $('#Customer_Id').val() < 1 || $('#Estimate_Amount').val() == null || $('#Estimate_Amount').val() == "" || $('#Estimate_Amount').val() <= 0 || $('#DeadLine').val() == null || $('#DeadLine').val() == "" || $('#StartTime').val() == null || $('#StartTime').val() == "" || $('#Sub_Date').val() == null || $('#Sub_Date').val() == "" || $('#Discount').val() == null || $('#Discount').val() == "" || $('#Discount').val() < 0) {
+                $('#subBut').prop('disabled', false);
+                if ($('#SelectedSubscrip_Type').val() == "" || $('#SelectedSubscrip_Type').val() == null || $('#SelectedSubscrip_Type').val() < 1) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.SelectTypeValidation",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedSubscrip_Type_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedSubscrip_Type_chosen span').css('background', 'red');
+                    $('#SelectedSubscrip_Type_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedSubscrip_Type").offset().top
+                    }, 2000);
+                }
+                if ($('#Customer_Id').val() == "" || $('#Customer_Id').val() == null || $('#Customer_Id').val() < 1) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.CustomerMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Customer_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#Customer_Id_chosen span').css('background', 'red');
+                    $('#Customer_Id_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#Customer_Id").offset().top
+                    }, 2000);
+                }
+                if ($('#Estimate_Amount').val() == "" || $('#Estimate_Amount').val() == null || $('#Estimate_Amount').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.SubscriptionValueMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Estimate_Amount").addClass("addRequiredFieldToInput");
+                    $('#Estimate_Amount').trigger('focus');
+                }
+                if ($('#Discount').val() == "" || $('#Discount').val() == null || $('#Discount').val() < 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.DiscountMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Discount").addClass("addRequiredFieldToInput");
+                    $('#Discount').trigger('focus');
+                }
+                if ($('#Sub_Date').val() == "" || $('#Sub_Date').val() == null ) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.SubscriptionInvoiceDateMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Sub_Date").addClass("addRequiredFieldToInput");
+                    $('#Sub_Date').trigger('focus');
+                }
+
+                if ($('#StartTime').val() == "" || $('#StartTime').val() == null ) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.StartingDateOfSubscriptionMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#StartTime").addClass("addRequiredFieldToInput");
+                    $('#StartTime').trigger('focus');
+                }
+
+                if ($('#DeadLine').val() == "" || $('#DeadLine').val() == null ) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SubscriptionCreate.SubscriptionExpirationDateMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#DeadLine").addClass("addRequiredFieldToInput");
+                    $('#DeadLine').trigger('focus');
+                }
+
+
+                $("#createExpensesSpinner").hide();
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+        });
+    </script>
+
+
+
+}

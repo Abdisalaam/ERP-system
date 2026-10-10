@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Accountingsystem.Models.AnotherAsset>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">قائمة الاصول الاخري</h2>
+</div>
+
+<a class="BTN-style" href="@Url.Action("Create")">
+    انشاء جديد
+</a>
+<hr/>
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+        <th>
+            @Html.DisplayName("كود الاصل")
+        </th>
+        <th>
+            @Html.DisplayName("وصف الاصل")
+        </th>
+        <th>
+            @Html.DisplayName("ثمن الاصل")
+        </th>
+        <th>
+            @Html.DisplayName("تعديل")
+        </th>
+        <th>
+            @Html.DisplayName("التفاصيل")
+        </th>
+        <th>
+            @Html.DisplayName("حذف")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnothrAsst_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnothrAsst_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnothrAsst_Price)
+            </td>
+            <td>
+          
+                <a href="@Url.Action( "Edit", new { id = item.AnothrAsst_ID })" class="BTN-style">
+                    تعديل
+                </a>
+
+            </td>
+            <td>
+              
+                <a href="@Url.Action( "Details", new { id = item.AnothrAsst_ID })" class="BTN-style">
+                    التفاصيل
+                </a>
+            </td>
+            <td>
+                @if (Request.IsAuthenticated && !User.IsInRole("محاسب") && !User.IsInRole("مدخل بيانات")&& !User.IsInRole("مساعد محاسب"))
+                {
+                    <a href="@Url.Action( "Delete", new { id = item.AnothrAsst_ID })" class="BTN-style">
+                        حذف
+                    </a>
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>

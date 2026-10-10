@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Accountingsystem.Models.EmployeeSalaryMonth>
+
+@{ 
+    int id = 0;
+    decimal totalSal = 0;
+    decimal totalLoan = 0;
+    decimal TotalNet = 0;
+}
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table id="invoiceMasterDetailList" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.EmployeeNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.Employee)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.SalaryDueDate)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.Case)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.TotalSalary)
+                    </th>
+
+                    <th>@Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.Loans)</th>
+                    <th>@Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.Net)</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+               </thead>
+            <tbody>
+                @foreach (var item in Model)
+                { totalSal += item.TotalSalary;
+                    totalLoan += item.Trims_Pay.Value;
+                    TotalNet += (item.TotalSalary - item.Trims_Pay.Value);
+
+                    @Html.HiddenFor(moelitem => item.Id)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_Name)
+                    </td>
+                    <td>
+                        @item.Date.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.TotalSalary)*@
+                        @Math.Round(item.TotalSalary, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    @{
+
+                        decimal neto = item.TotalSalary - item.Trims_Pay.Value;
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Trims_Pay)*@
+                            @Math.Round(item.Trims_Pay.Value, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+
+                            @Math.Round(neto, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+                    }
+                    <td>
+                        <a class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditOfSalaryMounth", new { id = item.Id })'>
+                            @Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.ChangeEmployeeLoans
+                        </a>
+                        @*<p>
+                @Html.ActionLink("تغير سلف الموظف", "EditOfSalaryMounth", new { id = item.Id })
+            </p>*@
+                    </td>
+                    <td>
+                        <a class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditStatusSalary", new { id = item.Id })'>
+                            @Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.ChangeSalaryCase
+                        </a>
+                        @*<p>
+                @Html.ActionLink("تغير حالة الراتب", "EditStatusSalary", new { id = item.Id })
+            </p>*@
+                    </td>
+
+                </tr>
+                }
+                    <tr>
+                        <td>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Total
+                        </td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.TotalSalary)*@
+                            @Math.Round(totalSal, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        @{
+
+                          
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.Trims_Pay)*@
+                                @Math.Round(totalLoan, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td>
+
+                                @Math.Round(TotalNet, 2, MidpointRounding.AwayFromZero)
+
+                            </td>
+                        }
+                        <td>
+                        
+                            @*<p>
+                @Html.ActionLink("تغير سلف الموظف", "EditOfSalaryMounth", new { id = item.Id })
+            </p>*@
+                        </td>
+                        <td>
+                          
+                            @*<p>
+                @Html.ActionLink("تغير حالة الراتب", "EditStatusSalary", new { id = item.Id })
+            </p>*@
+                        </td>
+
+                    </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+
+
+
+

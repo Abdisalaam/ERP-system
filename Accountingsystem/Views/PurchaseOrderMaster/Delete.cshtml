@@ -1,0 +1,475 @@
+﻿@model Accountingsystem.Models.PurchaseOrderMaster
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.PurchaseOrderMasterDelete.DeletePurchaseOrder;
+}
+
+
+
+<h2 class="HEADTITLE-STYLE"> @Accountingsystem.Resources.PurchaseOrderMasterDelete.DeletePurchaseOrder</h2>
+<div class="form-horizontal">
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+                    @Html.HiddenFor(model => model.Master_Id)
+                    @Html.HiddenFor(model => model.Supplier_Id)
+                    @Html.HiddenFor(model => model.Store_Id)
+                    @Html.HiddenFor(model => model.BU_Id)
+                    @Html.HiddenFor(model => model.Branch_Id)
+
+
+
+                    <td class="col-md-2">
+                        @*@Html.DisplayNameFor(model => model.OrderDate)*@
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.PurchaseOrderNumber)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Serial_Number)
+                    </th>
+                    <td class="col-md-2">
+                        @*@Html.DisplayNameFor(model => model.OrderDate)*@
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.PurchaseOrderDate)
+                    </td>
+                    <th class="col-md-2">
+                        @*@Html.DisplayFor(model => model.OrderDate)*@
+                        @Model.OrderDate.ToString("yyyy/MM/dd ")
+                    </th>
+                </tr>
+                <tr>
+                    <td class="col-md-2">
+                        @*@Html.DisplayNameFor(model => model.Description)*@
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Description)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Description)
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Discount)
+                        @*@Html.DisplayNameFor(model => model.Master_Discount)*@
+                    </td>
+                    <th class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Master_Discount)*@
+                        @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Currency)
+                        @*@Html.DisplayNameFor(model => model.Invoice_Currency)*@
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Invoice_Currency)
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.TotalValue)
+                        @*@Html.DisplayNameFor(model => model.Total_Amount)*@
+                    </td>
+
+                    <th class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Total_Amount)*@
+                        @Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.TotalTaxes)
+
+                    </td>
+                    <th class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Total_Tax)*@
+                        @Math.Round(Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                    </th>
+
+
+                    <td id="Rec_state">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.TotalAfterDiscount)
+
+                    </td>
+
+                    <th class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Total_Cost)*@
+                        @Math.Round(Model.Total_Cost, 2, MidpointRounding.AwayFromZero)
+                    </th>
+
+                </tr>
+                @{
+                    var thissup = "";
+                    if (Model.Supplier_Id == null || Model.Supplier_Id == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        {
+                            thissup = Accountingsystem.Models.Supplier.GetSupplierById(Convert.ToInt32(Model.Supplier_Id)).Supp_Name;
+                            @*<h>@thissup</h>*@
+                        }
+                    }
+                }
+
+
+
+                @{var thistore = Accountingsystem.Models.Store.GetStoreById(Convert.ToInt32(Model.Store_Id)); }
+                @{
+                    var thicomp = "";
+                    if (Model.Company_Id != null || Model.Company_Id != 0)
+                    {
+                        thicomp = Accountingsystem.Models.Company.GetCompanyById(Convert.ToInt32(Model.Company_Id)).Comp_Name;
+                    }
+                    else
+                    {
+                        thicomp = "";
+                    }
+                }
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Store)
+                    </td>
+                    <th class="col-md-2">
+                        <h>@thistore.Store_Name</h>
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.CompanyName)
+                    </td>
+                    <th class="col-md-2">
+                        <h>@thicomp</h>
+                    </th>
+                </tr>
+
+                @{var bussines = Accountingsystem.Models.BussinesUnit.getDetail((int)Model.Company_Id);}
+                @*@{var BRansha = Accountingsystem.Models.Branch.GetBranchById((int)Model.Branch_Id);}*@
+                @{var Empname = "";
+                    if (Model.Emp_Id == 0 || Model.Emp_Id == null)
+                    { Empname = ""; }
+                    else
+                    { Empname = Accountingsystem.Models.Employee.getEmpById((int)Model.Emp_Id).Emp_Name; }
+                }
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.SupplierName)
+                    </td>
+                    <th class="col-md-2">
+                        <h>@thissup</h>
+                    </th>
+
+                    @*<td class="col-md-2">
+                        @Html.DisplayName("الفرع")
+                    </td>@if (BRansha != null)
+                    {
+                        <th class="col-md-2">
+                            <h>@BRansha.Branch_Name</h>
+                        </th>
+                    }
+                    else
+                    {
+                        <th class="col-md-2">
+                            <h></h>
+                        </th>
+                    }*@
+
+                </tr>
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Employee)
+                    </td>
+                    <th class="col-md-2">
+                        <h>@Empname</h>
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.PaymentTermsInDays)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Payment_Policy)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseOrderMasterDelete.Reference)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Reference)
+                    </th>
+                </tr>
+
+            </table>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="حذف" class="btn BTN-style-danger final-BTN" />
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.PurchaseOrderMasterDelete.BackToList;
+                </a>
+            </div>
+        }
+    </div>
+
+</div>
+<table class="table table-bordered">
+    <tbody>
+        @{
+            if (Model.PurchaseFileOrders.Any())
+            {
+
+                <tr>
+
+
+                    <th>@Accountingsystem.Resources.EmployeeDelete.FileNumber</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.FileName</th>
+                    <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.FileType</th>
+                    <th>@Accountingsystem.Resources.EmployeeDelete.ContentLength</th>
+                    <th>Action</th>
+
+
+                </tr>
+
+                foreach (var file in Model.PurchaseFileOrders)
+                {
+                    <tr>
+                        <td>@file.Id</td>
+                        <td>@file.FileName</td>
+                        <td>@file.FileType</td>
+                        <td>@file.ContentLength</td>
+                        @*<td>@Html.ActionLink("Review", "ReturnInvoicetFile", new { fileId = file.Id })</td>*@
+                        <td>
+                            <a class="btn BTN-style" href='@Url.Action("ReturnInvoicetFile",  new { fileId = file.Id  })'>
+
+                                @Accountingsystem.Resources.PurchaseOrderMasterDelete.Download;
+
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.Item</th>
+            <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.Quantity</th>
+            <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.ItemPrice</th>
+            <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.TotalAmountBeforeTax</th>
+            <th>@Accountingsystem.Resources.PurchaseOrderMasterDelete.TotalTax</th>
+            <th>اجمالى المبلغ بعد الضريبة</th>
+        </tr>
+
+        @foreach (var detail in Model.PurchaseOrderDetails)
+        {
+            @Html.HiddenFor(model => detail.Product_ID)
+            <tr>
+                @{var thisproduct = ""; }
+                @if (detail.Product_ID != 0 || detail.Product_ID != null)
+                {
+                    thisproduct = Accountingsystem.Models.Product.GetProdectById(Convert.ToInt32(detail.Product_ID.ToString())).Prod_Name;
+                }
+                else
+                {
+                    thisproduct = "";
+                }
+                <td><h>@thisproduct</h></td>
+                <td>@detail.Product_Quantity</td>
+                <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+                <td>@Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)</td>
+                <td>@Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)</td>
+                <td>@Math.Round(detail.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@*<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PurchaseOrderMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Invoice_Currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Store_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Store_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExchangeRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExchangeRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subledger_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subledger_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BU_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BU_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emp_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emp_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payment_Policy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payment_Policy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Serial_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serial_Number)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>*@

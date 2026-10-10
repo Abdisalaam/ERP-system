@@ -1,0 +1,289 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubscriptionStopVM
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    var dateto = "الي" + Convert.ToDateTime(Model.EndDate).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.StartDate).ToString("yyyy/MM/dd ");
+    decimal Total = 0;
+    int count = 1;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        تقرير حالات الاشتراكات
+    </title>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير حالات الاشتراك / Subscribtion Status Report
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Model.SubType_State
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center; ">
+                    الرقم
+                    <br />
+                    NO
+                </th>
+                <th style="text-align:center; ">
+                    رقم الاشتراك
+                    <br />
+                    Sub NO
+                </th>
+                <th style="text-align:center; ">
+                    تاريخ البدايه
+                    <br />
+                    Start Date
+                </th>
+
+                <th style="text-align:center; ">
+                    تاريخ الانتهاء
+                    <br />
+                    End Date
+                </th>
+
+
+                <th style="text-align:center; ">
+                    العميل
+                    <br />
+                    Customer
+                </th>
+                <th style="text-align:center; ">
+                    جوال العميل
+                    <br />
+                    Phone
+                </th>
+                <th style="text-align:center; ">
+                    ايميل
+                    <br />
+                    Email
+                </th>
+                <th style="text-align:center; ">
+                    الموقع الالكتروني
+                    <br />
+                    website
+                </th>
+                <th style="text-align:center; ">
+                    الصافي
+                    <br />
+                    Net
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.StopSubscription)
+        {
+            var Cust = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id));
+            Total += item.AmountAfterTax;
+
+        <tr>
+            <td style="text-align:center;">
+                @count
+            </td>
+            <td style="text-align:center;">
+                @item.Subscrip_Code
+            </td>
+            <td style="text-align:center;">
+                @Convert.ToDateTime(item.StartTime).ToString("yyyy/MM/dd ")
+            </td>
+            <td style="text-align:center;">
+                @Convert.ToDateTime(item.DeadLine).ToString("yyyy/MM/dd ")
+            </td>
+            <td style="text-align:center;">
+
+            
+                    <h>@Cust.Customer_Name</h> 
+            </td>
+            <td style="text-align:center;">
+                @item.tel_customer
+            </td>
+            <td style="text-align:center;">
+
+
+                <h>@Cust.Customer_Mail</h>
+            </td>
+            <td style="text-align:center;">
+
+
+                <h>@Cust.Customer_Website</h>
+            </td>
+
+            <td style="text-align:center;">
+                @Math.Round(item.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+            </td>
+        </tr>
+            count++;
+        }
+        <tr>
+
+            <th style="text-align:center; ">
+                الاجمالي
+                <br />
+                Total
+            </th>
+            <th style="text-align:center; ">
+
+            </th>
+
+            <th style="text-align:center; ">
+
+            </th>
+
+
+            <th style="text-align:center; ">
+
+            </th>
+            <th style="text-align:center; ">
+
+            </th>
+            <th>
+
+            </th>
+            <th style="text-align:center; ">
+                @Math.Round(Total, 2, MidpointRounding.AwayFromZero)
+            </th>
+        </tr>
+    </table>
+
+
+
+
+
+
+
+    <footer style="margin-top:70%;"></footer>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Accountingsystem.Models.SubscriptionItemsTemp>
+@{
+    decimal dicountamount = 0;
+    decimal totalsbeforfixed = 0;
+    decimal totalsafterfixed = 0;
+    decimal total = 0;
+}
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+        <th>
+            @Html.DisplayName("المنتج")
+            @*@Html.DisplayNameFor(model => model.Product_Name)*@
+        </th>
+        <th>
+            @Html.DisplayName("السعر")
+            @*@Html.DisplayNameFor(model => model.Product_Price)*@
+        </th>
+
+
+        <th>
+            @Html.DisplayName("الكمية")
+            @*@Html.DisplayNameFor(model => model.Product_Quantity)*@
+        </th>
+
+
+        <th>
+            @Html.DisplayName("اجمالي القيمة")
+            @*@Html.DisplayNameFor(model => model.Total_Amount)*@
+        </th>
+   
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.Id)
+        @Html.HiddenFor(modelItem => item.SubTempID)
+        total = 0;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item_Name)
+            </td>
+            <td>
+               
+                @Math.Round(item.Item_price, 2, MidpointRounding.AwayFromZero)
+            </td>
+
+       
+            <td>
+                @Html.DisplayFor(modelItem => item.Item_Quantity)
+            </td>
+         @{total = item.Item_Quantity * item.Item_price; }
+            <td>
+              
+                @Math.Round(total, 2, MidpointRounding.AwayFromZero)
+            </td>
+  
+        </tr>
+    }
+
+</table>

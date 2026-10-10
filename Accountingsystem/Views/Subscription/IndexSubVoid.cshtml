@@ -1,0 +1,184 @@
+﻿@model IEnumerable<Accountingsystem.Models.Subscription>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+}
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">قائمة الاشتراكات تم الغائها</h2>
+    @*@if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات"))
+    {
+        <a class="BTN-style" href=" @Url.Action( "Create")">
+            انشاء جديد
+        </a>
+    }*@
+
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" data-sortable-initialized="true" id="sasa">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayName("الرقم")
+                        </th>
+                        <th>
+                            @Html.DisplayName("رقم الاشتراك")
+                        </th>
+
+                        <th>
+                            @Html.DisplayName("تاريخ الانتهاء")
+                        </th>
+
+                        <th>
+                            @Html.DisplayName("تاريخ البدء")
+                        </th>
+
+                        <th>
+                            @Html.DisplayName("المبلغ")
+                        </th>
+                        <th>
+                            @Html.DisplayName("الصافي بعد الضريبة")
+                        </th>
+                        <th>
+                            @Html.DisplayName("المبلغ المدفوع")
+                        </th>
+                        <th>
+                            @Html.DisplayName("حالة الدفع")
+                        </th>
+
+                        <th>
+                            @Html.DisplayName("اسم العميل")
+                        </th>
+                        <th>
+                            @Html.DisplayName("رقم العميل")
+                        </th>
+                        <th>
+                            @Html.DisplayName("تاريخ الايقاف")
+                        </th>
+
+                        <th></th>
+                        <th></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @Html.HiddenFor(modelItem => item.Payment_Method)
+                    <tr>
+
+                        <td>
+                            @count
+                            @{count = count + 1;}
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subscrip_Code)
+                        </td>
+
+
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.DeadLine)*@
+                            @item.DeadLine.ToString("yyyy/MM/dd ")
+                        </td>
+                        <td>
+                            @item.StartTime.ToString("yyyy/MM/dd ")
+                        </td>
+
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Estimate_Amount)*@
+
+                            @Math.Round(item.Estimate_Amount, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.AmountAfterTax)*@
+                            @Math.Round(item.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @Math.Round(item.Payed_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                            @*@item.Payed_Amount*@
+                        </td>
+                        @if (item.AmountAfterTax == 0)
+                        {
+                            <td>
+                                <h>مجاني</h>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sub_Pay_State)
+                            </td>
+                        }
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer_Name)
+                        </td>
+                        <td>
+                            @{
+                                if (item.Customer_Id != null || item.Customer_Id != 0)
+                                {
+                                    var CustomerCode = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Code;
+                                    <h>@CustomerCode</h>
+                                }
+
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subscrip_DateEnd)
+                        </td>
+                        <td>
+                            <a class="btn BTN-style" href='@Url.Action("DetailofSubscription","Subscription",new { id = item.Subscrip_Id })'>
+                                تفاضيل
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn BTN-style" href='@Url.Action("Printsub","Reports",new { subIDid = item.Subscrip_Id })'>
+                                طباعة اشتراك
+                            </a>
+                        </td>
+                        @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب"))
+                        {
+                            <td>
+                                <a class="btn BTN-style" href='@Url.Action("MakeSubscriptionCanceled","Subscription",new { id = item.Subscrip_Id })'>
+                                    الغاء اشتراك
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <a class="btn BTN-style" href='@Url.Action("Index","Subscription")'>
+        العودة الي قائمة الاشتراكات
+    </a>
+</div>
+<br />
+<br />
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#sasa').DataTable();
+        });
+
+    </script>
+}

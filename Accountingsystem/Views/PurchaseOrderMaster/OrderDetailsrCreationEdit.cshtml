@@ -1,0 +1,105 @@
+﻿@model Accountingsystem.ViewModel.PurchaseOrderDetailVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.InvoiceMaster_Id)
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Product_ID, Model.MyProductList, Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.SelectItem, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Product_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.ProductInformation>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_ID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Product_Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Product_Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.BillDescription>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Quantity, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Product_Tax, Model.MyProduct_TaxList, Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.SelectTax, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Product_Tax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.ProductTax>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Tax, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Product_Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Product_Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.ProductPrice>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Price, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick='AddOrder();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.PurchaseOrderMasterCreatePurchaseOrd.AddToRegulation</a>
+                </div>
+            </div>
+</div>
+        </div>
+      
+}
+

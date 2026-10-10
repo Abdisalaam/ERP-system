@@ -1,0 +1,226 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubLedgerReportVM
+
+
+
+@{
+
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = @Accountingsystem.Resources.ReportsGetAllReports.TotalCostCenterReport;
+
+    var dateto = "الي" + Convert.ToDateTime(Model.To_Date).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.From_Date).ToString("yyyy/MM/dd ");
+
+}
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("Import", "Slices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        var msg = ViewBag.Error;
+        @Html.Raw(ViewBag.Error)
+        <a href="~/Slices/Getexcel"><i class="BTN-style"> تحميل الملف</i></a>
+        <span>>>></span>
+        <input type="file" name="excelfile" />
+        <span>>>></span>
+        <input type="submit" value="Excel ادخال  شرائح السعر من" class="BTN-style" />
+
+    }*@
+@{
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+
+                <li class="nav-item theme-text">
+
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+
+                                <ul class="nav navbar-nav navbar-right">
+
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a class="BTN-style" href=" @Url.Action( "SubledgerReport")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>PDF</a>
+
+
+
+                                        </div>
+                                    </li>
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a class="BTN-style" href=" @Url.Action("SubledgerReportExcel")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>EXCEL</a>
+
+
+
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+
+        </header>
+    </div>
+
+
+
+
+
+
+
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            @ViewBag.Message
+        </div>
+        <div class="container">
+            <div class="text-center">
+                @Accountingsystem.Resources.ReportsGetAllReports.TotalCostCenterReport
+            </div>
+            <div class="text-center">
+                @Model.SubName
+            </div>
+            <div class="text-center">
+                @datefrom      @dateto
+            </div>
+           
+
+
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100% ;direction:ltr">
+                <thead>
+                    <tr>
+
+                        <th> @Accountingsystem.Resources.CustomerDetails.CustomerBalance</th>
+
+                        <th> @Accountingsystem.Resources.GLMasterDetail.CreditValue</th>
+                        <th> @Accountingsystem.Resources.GLMasterDetail.DebitValue</th>
+
+                        <th> @Accountingsystem.Resources.SubLedgerDetails.CostCenterName</th>
+                      
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Account_Sudledger)
+                    {
+                        <tr>
+                            @if (item.GLDetail_Credit > item.GLDetail_Debit)
+                            {
+                                <td>
+                                    ( @Math.Round((item.GLDetail_Debit - item.GLDetail_Credit) * -1, 2, MidpointRounding.AwayFromZero) )  &nbsp&nbsp&nbsp&nbsp
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Math.Round(item.GLDetail_Debit - item.GLDetail_Credit, 2, MidpointRounding.AwayFromZero)   &nbsp&nbsp&nbsp&nbsp
+                                </td>
+                            }
+                            <td>
+                                @Math.Round(item.GLDetail_Credit, 2, MidpointRounding.AwayFromZero)  &nbsp&nbsp&nbsp&nbsp
+                            </td>
+
+                            <td>
+                                @Math.Round(item.GLDetail_Debit, 2, MidpointRounding.AwayFromZero)  &nbsp&nbsp&nbsp&nbsp
+                            </td>
+
+                            <td>
+                                @item.Subledger_Name &nbsp&nbsp&nbsp&nbsp
+                            </td>
+                      
+                        </tr>
+
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+
+                        <th>
+                            @if (Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                            {
+
+                                <div>  @Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero)</div>
+
+                            }
+                            else
+                            {
+                                var dif_cost = Model.Difference * -1;
+                                <div> (@Math.Round(dif_cost, 2, MidpointRounding.AwayFromZero))</div>
+                            }
+                        </th>
+                        <th>@Math.Round(Model.TotalCredit, 2, MidpointRounding.AwayFromZero)</th>
+                        <th>@Math.Round(Model.TotalDepit, 2, MidpointRounding.AwayFromZero)</th>
+
+                        <th>  @Accountingsystem.Resources.validate.TotalBalance</th>
+                    </tr>
+
+
+              
+                </thead>
+              
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+   

@@ -1,0 +1,1139 @@
+﻿@model Accountingsystem.ViewModel.EmpVM
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.EmployeeEdit.EditEmployee;
+
+    Model.Company_ID = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Edit", "Employee", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Emp_Id)
+    @Html.HiddenFor(model => model.Company_ID)
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.EmployeeEdit.EditEmployee)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeNumber)
+                                    @Html.EditorFor(model => model.Emp_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Emp_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeName)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Emp_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Emp_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeePhone)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Emp_Phone, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Emp_Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.IdentityOrResidenceNumber)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Passport_number, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Passport_number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.ResidenceExpiryDate)
+                                    @Html.EditorFor(model => model.End_Date_Residency, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeAddress)
+                                    @Html.EditorFor(model => model.Emp_Address, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Emp_Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeEmail)
+                                    @Html.EditorFor(model => model.Emp_Mail, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Emp_Mail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeJob)
+                                    @Html.EditorFor(model => model.Emp_Title, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Emp_Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeeBirhDate)
+                                    @Html.EditorFor(model => model.Emp_DOB, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            @if (package.Number_Branch > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.Branch)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.BranchSubledger_Id, Model.BranchSubList, Accountingsystem.Resources.EmployeeCreate.BranchInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.Department)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.DepartSubledger_Id, Model.DepartSubList, Accountingsystem.Resources.EmployeeCreate.DepartmentInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.Activity)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.BussinesSubledger_Id, Model.BussinessList, Accountingsystem.Resources.EmployeeCreate.ActivityInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }   @if (package.Number_subLedgger > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.CostCenter)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subledger_Id, Model.SubledgerList, Accountingsystem.Resources.EmployeeCreate.CostCenterInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.ContractBeginning)
+                                    @Html.EditorFor(model => model.Contract_Begin, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Contract_Begin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EndContract)
+                                    @Html.EditorFor(model => model.Contract_End, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Contract_End, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.ActualStartDate)
+                                    @Html.EditorFor(model => model.Work_Actual_Start, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Work_Actual_Start, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.Attendence)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Type_OF_Work, EnumHelper.GetSelectList(typeof(Accountingsystem.Models.Type_of_work)), Accountingsystem.Resources.EmployeeCreate.AttendenceInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Type_OF_Work, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.SocialInsuranceNumber)
+                                    @Html.EditorFor(model => model.Social_insurance_number, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Social_insurance_number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.HealthInsuranceNumber)
+                                    @Html.EditorFor(model => model.Medical_Insurance_Number, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Medical_Insurance_Number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EndHealthInsurance)
+                                    @Html.EditorFor(model => model.End_medical_Insurance, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.End_medical_Insurance, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.Nationality)
+                                    @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.Sex)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Sex, EnumHelper.GetSelectList(typeof(Accountingsystem.Models.Sex)), Accountingsystem.Resources.EmployeeCreate.SelectSex, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.SocialStatus)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Social_status, EnumHelper.GetSelectList(typeof(Accountingsystem.Models.Social_Status)), Accountingsystem.Resources.EmployeeCreate.SocialStatusInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.Active)
+                                    @Html.CheckBoxFor(model => model.Active, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.SystemUser)
+                                    @Html.CheckBoxFor(model => model.User, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                </div>
+                            </div>*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.SelectFile)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtFiles" class="list-unstyled"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.EmployeeCreate.EmployeePhoto)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.Emp_Image, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtPhoto" class="list-unstyled"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Emp_Image, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @if (package.HR == true)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeDetails.BankName)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <label class="form-control text-danger"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeDetails.BankCode)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.BankCode, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <label class="form-control text-danger"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeDetails.AccountNumber)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.AccountNum, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <label class="form-control text-danger"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeDetails.EbanNumber)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.EbanNumb, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <label class="form-control text-danger"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="n-chk">
+                                            <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
+                                                @Html.EditorFor(model => model.Emp_Subledger, new { htmlAttributes = new { @class = "new-control-input", @type = "checkbox" } })
+                                                <span class="new-control-indicator"></span><span class="new-chk-content">@Accountingsystem.Resources.EmployeeCreate.EmployeeCostCenter</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="n-chk">
+                                            <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
+                                                @Html.EditorFor(model => model.ViewAllCustomer, new { htmlAttributes = new { @class = "new-control-input", @type = "checkbox" } })
+                                                <span class="new-control-indicator"></span><span class="new-chk-content">@Accountingsystem.Resources.validate.sellForAllCustomer</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @if (package.HR == true)
+            {
+                <div id="PurchaseInvoicesDetail"></div>
+                <div id="PurchaseInvoicesDetailList"></div>
+                <div id="prepareVacation"></div>
+                <div id="VactionList"></div>
+
+            }
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                    @if (Request.IsAuthenticated && !User.IsInRole("بائع"))
+                    {
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+
+
+}
+
+@section Scripts {
+    @{ if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script>
+
+        $('#Files').change(function () {
+
+            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+            $('#selectedtFiles').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Files').empty();
+                    $('#selectedtFiles').empty();
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' +"@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee </li > ');
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.validate.LimitOfSizeFile" + '</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.ReduceSize ",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.validate.FileName "  + fileName + '</li> ');
+                    $('#selectedtFiles').append('<li>' +"  @Accountingsystem.Resources.validate.TotalFileSize"  + this.files[i].size + ' @Accountingsystem.Resources.validate.bytee  </li> ');
+
+                }
+            }
+            $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee  </li >');
+
+    });
+        $('#Emp_Image').change(function () {
+
+            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+         $('#selectedtPhoto').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Emp_Image').empty();
+                    $('#selectedtPhoto').empty();
+                    $('#selectedtPhoto').append('<li class="addRequiredFieldToInput">' +"@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee </li > ');
+                    $('#selectedtPhoto').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.validate.LimitOfSizeFile" + '</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.ReduceSize ",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedtPhoto').append('<li>' + "@Accountingsystem.Resources.validate.FileName "  + fileName + '</li> ');
+                    $('#selectedtPhoto').append('<li>' +"  @Accountingsystem.Resources.validate.TotalFileSize"  + this.files[i].size + ' @Accountingsystem.Resources.validate.bytee  </li> ');
+
+                }
+            }
+         $('#selectedtPhoto').append('<li>' + "@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee  </li >');
+
+        });
+    </script>
+
+    <script>
+        if ($('.chosen-container').length > 0) {
+            $('.chosen-container').on('touchstart', function (e) {
+                e.stopPropagation(); e.preventDefault();
+                $(this).trigger('mousedown');
+
+            });
+        }
+        //$('#Emp_DOB').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Start_Date_Passp').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_Date_Passp').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Start_Date_Residency').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_Date_Residency').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Contract_Begin').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Contract_End').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Work_Actual_Start').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_medical_Insurance').datetimepicker({ format: 'DD/MM/YYYY' });
+        flatpickr(document.getElementById('Emp_DOB'));
+        //flatpickr(document.getElementById('Start_Date_Passp'));
+        //flatpickr(document.getElementById('End_Date_Passp'));
+        //flatpickr(document.getElementById('Start_Date_Residency'));
+        //flatpickr(document.getElementById('End_Date_Residency'));
+        flatpickr(document.getElementById('Contract_Begin'));
+        flatpickr(document.getElementById('Contract_End'));
+        flatpickr(document.getElementById('Work_Actual_Start'));
+        flatpickr(document.getElementById('End_medical_Insurance'));
+        flatpickr(document.getElementById('End_Date_Residency'));
+        $("#Sex").chosen();
+        $("#Sex_chosen").addClass("form-control Dropdownlist-select");
+
+        $("#Subledger_Id").chosen();
+        $("#Subledger_Id_chosen").addClass("form-control Dropdownlist-select");
+
+        $("#BussinesSubledger_Id").chosen();
+        $("#BussinesSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+        $("#DepartSubledger_Id").chosen();
+        $("#DepartSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+
+        $("#BranchSubledger_Id").chosen();
+        $("#BranchSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+        $("#Social_status").chosen();
+        $("#Social_status_chosen").addClass("form-control Dropdownlist-select");
+        $("#Type_OF_Work").chosen();
+        $("#Type_OF_Work_chosen").addClass("form-control Dropdownlist-select");
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        //$.ajaxSetup({ cache: false });
+        //$('#Emp_DOB').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Start_Date_Passp').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_Date_Passp').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Start_Date_Residency').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_Date_Residency').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Contract_Begin').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Contract_End').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Work_Actual_Start').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#End_medical_Insurance').datetimepicker({ format: 'DD/MM/YYYY' });
+
+     @*fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Sex");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Subledger_Id");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#BussinesSubledger_Id");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#DepartSubledger_Id");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#BranchSubledger_Id");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Social_status");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Type_OF_Work");*@
+
+
+        $(function () {
+
+            var purchaseInvoiceMasterId = @Model.Emp_Id;
+
+            $("#PurchaseInvoicesDetail").load('@(Url.Action("PrepareSalaryDetails", "Employee"))');
+
+            $("#prepareVacation").load('@(Url.Action("PrepareVacationDetails", "Employee"))');
+            $("#PurchaseInvoicesDetailList").load('@(Url.Action("GetAllTempEmpTempSalDetailsResult", "Employee"))?EmpId=' + purchaseInvoiceMasterId);
+            $("#VactionList").load('@(Url.Action("GetAllTempForEditVacation", "Employee"))?Empid=' + purchaseInvoiceMasterId);
+        });
+
+        function AddDetailToMaster() {
+
+            var EmpId = @Model.Emp_Id;
+            var Account_Id =  $("#Account_Id").val();
+            var Account_Amount =  $("#Account_Amount").val();
+
+            var PurchaseDetailsVM;
+            PurchaseDetailsVM = {
+                Employee_Id:EmpId,
+                Account_Id:Account_Id,
+                Account_Amount:Account_Amount,
+
+            };
+
+            $.ajax(
+            {
+                url: '@Url.Action("AddSalaryDetailsToMaster", "Employee")',
+                data: JSON.stringify(PurchaseDetailsVM),
+                contentType: 'application/json',
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    Snackbar.show({
+                        text: data,
+                        pos: 'top-center'
+                    });
+                    //alert(data);
+
+                    $("#PurchaseInvoicesDetailList").load('@(Url.Action("GetAllTempSalaryDetails", "Employee"))?tempPurchaseInvoiceMasterId=' + EmpId);
+
+                },
+                error: function () { alert('error'); }
+            });
+
+        };
+        function AddVacationToEmployee() {
+
+            var EmpId = @Model.Emp_Id;
+            var Vacation_TypesId = $("#Vacation_TypesId").val();
+            var DaysInyear = $("#DaysInyear").val();
+
+            var vacationVM;
+            vacationVM = {
+                Employee_Id:EmpId,
+                Vacation_TypesId: Vacation_TypesId,
+                DaysInyear: DaysInyear,
+
+            };
+
+            $.ajax(
+            {
+                url: '@Url.Action("AddVacationDetailsToMaster", "Employee")',
+                    data: JSON.stringify(vacationVM),
+                contentType: 'application/json',
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    Snackbar.show({
+                        text: data,
+                        pos: 'top-center'
+                    });
+                    //alert(data);
+
+                    $("#VactionList").load('@(Url.Action("GetAllTempVacationDetails", "Employee"))?Empid=' + EmpId);
+
+                },
+                error: function () { alert('error'); }
+            });
+
+        };
+
+
+        function DeleteTemp(e) {
+
+            var ids = e;
+            var empId=@Model.Emp_Id;
+
+            $.ajax({
+
+                url: '@Url.Action("DeleteTempDetail", "Employee")',
+                type: 'get',
+                data: {iD:ids}
+            }).done(function (result) {
+
+                Snackbar.show({
+                    text: result,
+                    pos: 'top-center'
+                });
+                $("#PurchaseInvoicesDetailList").load('@(Url.Action("GetAllTempSalaryDetails", "Employee"))?tempPurchaseInvoiceMasterId=' + empId);
+
+
+            });
+        }
+        function DeleteVacationTemp(e) {
+
+            var ids = e;
+            var empId=@Model.Emp_Id;
+
+            $.ajax({
+
+                url: '@Url.Action("DeleteTempVacation", "Employee")',
+                type: 'get',
+                data: {iD:ids}
+            }).done(function (result) {
+                Snackbar.show({
+                    text: result,
+                    pos: 'top-center'
+                });
+
+                $("#VactionList").load('@(Url.Action("GetAllTempVacationDetails", "Employee"))?Empid=' + empId);
+
+
+            });
+        }
+
+    </script>
+    <script>
+        function SaveEmp() {
+
+            var Emp_Id=@Model.Emp_Id;
+            var Emp_Code =$("#Emp_Code").val();
+            var Emp_Name =  $("#Emp_Name").val();
+            var Emp_Address = $("#Emp_Address").val();
+            var Emp_Mail =  $("#Emp_Mail").val();
+            var Emp_Phone =  $("#Emp_Phone").val();
+            var Emp_Title= $("#Emp_Title").val();
+            var Emp_DOB =$("#Emp_DOB").val();
+            var SelectedBU_Id=$("#SelectedBU_Id").val();
+            var Branch_Id =$("#Branch_Id").val();
+            var Residency_number =  $("#Residency_number").val();
+            var Passport_number = $("#Passport_number").val();
+            var Start_Date_Passp =  $("#Start_Date_Passp").val();
+            var End_Date_Passp =  $("#End_Date_Passp").val();
+            var Start_Date_Residency= $("#Start_Date_Residency").val();
+            var End_Date_Residency =$("#End_Date_Residency").val();
+            var Subledger_Id =$("#Subledger_Id").val();
+            var BussinesSubledger_Id =$("#BussinesSubledger_Id").val();
+            var DepartSubledger_Id =$("#DepartSubledger_Id").val();
+            var BranchSubledger_Id =$("#BranchSubledger_Id").val();
+            var fixed_sallary =$("#fixed_sallary").val();
+            var Emp_Subledger1=  $("#Emp_Subledger").prop('checked') ;
+            var Vacation=  $("#vacation_Number").val();
+            var CBegin=  $("#Contract_Begin").val();
+            var CEnd=  $("#Contract_End").val();
+            var WActual=  $("#Work_Actual_Start").val();
+            var TypeofW=  $("#Type_OF_Work").val();
+            var SocNumber=  $("#Social_insurance_number").val();
+            var MedNumber=  $("#Medical_Insurance_Number").val();
+            var user=  $("#User").prop('checked');
+            var activ=  $("#Active").prop('checked');
+            var se=  $("#Sex").val();
+            var socStat=  $("#Social_status").val();
+            var comp=  $("#Company_ID").val();
+            var nat=  $("#Nationality").val();
+            var endM=  $("#End_medical_Insurance").val();
+            var Files =$("#Files").val();
+
+            var empVM;
+            empVM = {
+                Emp_Id:Emp_Id,
+                Emp_Code:Emp_Code,
+                Emp_Name:Emp_Name,
+                Emp_Address:Emp_Address,
+                Emp_Mail:Emp_Mail,
+                Emp_Phone:Emp_Phone,
+                Emp_Title:Emp_Title,
+                Emp_DOB:Emp_DOB,
+                SelectedBU_Id:SelectedBU_Id,
+                Branch_Id:Branch_Id,
+                Residency_number:Residency_number,
+                Passport_number:Passport_number,
+                Start_Date_Passp:Start_Date_Passp,
+                End_Date_Passp:End_Date_Passp,
+                Start_Date_Residency:Start_Date_Residency,
+                End_Date_Residency:End_Date_Residency,
+                fixed_sallary:fixed_sallary,
+                Subledger_Id:Subledger_Id,
+                BussinesSubledger_Id:BussinesSubledger_Id,
+                DepartSubledger_Id:DepartSubledger_Id,
+                BranchSubledger_Id:BranchSubledger_Id,
+                Emp_Subledger:Emp_Subledger1,
+                vacation_Number:Vacation,
+                Contract_Begin:CBegin,
+                Contract_End:CEnd,
+                Work_Actual_Start:WActual,
+                Type_OF_Work:TypeofW,
+                Social_insurance_number:SocNumber,
+                Medical_Insurance_Number:MedNumber,
+                User:user,
+                Active:activ,
+                Sex:se,
+                Social_status:socStat,
+                Company_ID:comp,
+                Nationality:nat,
+                End_medical_Insurance:endM,
+                Files:Files
+            };
+
+            $.ajax(
+                   {
+                       url: '@Url.Action("Create", "Employee")',
+                       data: JSON.stringify(empVM),
+                       contentType: 'application/json',
+                       dataType: 'json',
+                       type: 'POST',
+                       success: function (data) {
+                           //alert(data);
+                           window.location = 'Index/'
+                       },
+                       error: function () {
+                           alert("Error!")
+                       }
+                   });
+
+    @*$("#InvoicesDetailList").load('@(Url.Action("AddInvoiceDetailsToMaster", "InvoiceMaster"))?invoiceMasterDetail=' + data);*@
+
+    };
+
+    </script>
+
+    <script>
+  
+
+   $(function () {
+
+        $("#BranchSubledger_Id").change(function (e) {
+              $("#DepartSubledger_Id").empty();
+    $("#BussinesSubledger_Id").empty();
+            var selectedText = $(this).find("option:selected").text();
+
+            var selectedValue = $(this).val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetDepartments", "Employee")',
+                type: 'get',
+                data: { departId: selectedValue }
+            }).done(function (result) {
+
+                $("#DepartSubledger_Id").empty();
+                var d = new Option("@Accountingsystem.Resources.EmployeeCreate.SelectCostCenterForBranch", 0);
+                $("#DepartSubledger_Id").append(d);
+
+
+
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#DepartSubledger_Id").append(p)
+
+                }
+                $('#DepartSubledger_Id').trigger('chosen:updated');
+                //GetAllBussiness();
+
+            });
+        });
+
+       function GetAllBussiness() {
+
+            var selectedValue = $("#DepartSubledger_Id").val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetBussiness", "Employee")',
+                type: 'get',
+                data: { bussinId: selectedValue }
+            }).done(function (result) {
+
+                $("#BussinesSubledger_Id").empty();
+                var d1 = new Option("@Accountingsystem.Resources.EmployeeCreate.ActivityInformation", 1);
+                $("#BussinesSubledger_Id").append(d1);
+
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#BussinesSubledger_Id").append(p);
+
+                }
+                $('#BussinesSubledger_Id').trigger('chosen:updated');
+            });
+        }
+
+        $("#DepartSubledger_Id").change(function (e) {
+
+            var selectedText = $(this).find("option:selected").text();
+
+            var selectedValue = $(this).val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetBussiness", "Employee")',
+                type: 'get',
+                data: { bussinId: selectedValue }
+            }).done(function (result) {
+
+                $("#BussinesSubledger_Id").empty();
+                var d1 = new Option("@Accountingsystem.Resources.EmployeeCreate.ActivityInformation", 0);
+                $("#BussinesSubledger_Id").append(d1);
+
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#BussinesSubledger_Id").append(p)
+
+                }
+                $('#BussinesSubledger_Id').trigger('chosen:updated');
+            });
+
+
+        });
+    });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-primaryy').on('click', function () {
+                $("#CreateSettings").dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: '@Accountingsystem.Resources.EmployeeCreate.EmployeeSettings',
+                    modal: true,
+                    height: 650,
+                    width: 1000,
+                    Layout:null,
+                    draggable: false,
+
+                    open: function () {
+                        var thisid=@Model.Emp_Id;
+
+
+                        $(this).load('@Url.Action("CreateSetting", "Employee")?id=' + thisid);
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    },
+
+                });
+
+                return false;
+
+            });
+        });
+    </script>
+
+    <script>
+
+
+        $('#Emp_Name').on('input', function () {
+            $("#Emp_Name").removeClass("addRequiredFieldToInput");
+        });
+
+        $('#Emp_Phone').on('input', function () {
+            $("#Emp_Phone").removeClass("addRequiredFieldToInput");
+        });
+
+        $('#Passport_number').on('input', function () {
+            $("#Passport_number").removeClass("addRequiredFieldToInput");
+        });
+
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+
+
+            if ($('#Emp_Name').val() == "" || $('#Emp_Name').val() == null || $('#Emp_Phone').val() == "" || $('#Emp_Phone').val() == null || $('#Passport_number').val() == "" || $('#Passport_number').val() == null) {
+
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createOfferSpinner").hide();
+                if ($('#Emp_Name').val() == "" || $('#Emp_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.EmployeeCreate.EnterEmployeeName",
+                        pos: 'top-center'
+                    });
+                    $("#Emp_Name").addClass("addRequiredFieldToInput");
+                    $('#Emp_Name').trigger('focus');
+                }
+                if ($('#Emp_Phone').val() == "" || $('#Emp_Phone').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.EmployeeCreate.EnterPhone",
+                        pos: 'top-center'
+                    });
+                    $("#Emp_Phone").addClass("addRequiredFieldToInput");
+                    $('#Emp_Phone').trigger('focus');
+                }
+                if ($('#Passport_number').val() == "" || $('#Passport_number').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.EmployeeCreate.EnterIdentityNumber",
+                        pos: 'top-center'
+                    });
+                    $("#Passport_number").addClass("addRequiredFieldToInput");
+                    $('#Passport_number').trigger('focus');
+                }
+
+
+
+                event.preventDefault();
+            }
+
+
+
+        });
+
+    </script>
+}

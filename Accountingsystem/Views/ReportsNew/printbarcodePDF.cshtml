@@ -1,0 +1,129 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.BarCodePrint
+
+
+
+@{
+    Layout = null;
+    decimal TaxPercentage = 0;
+    if (Model.product.Tax_Id > 0)
+    {
+
+        TaxPercentage = Accountingsystem.Models.Tax.GetTaxesbyId(Model.product.Tax_Id.Value).Tax_Percentage / 100;
+    }
+
+}
+
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+    br {
+        display: block; /* makes it have a width */
+        content: ""; /* clears default height */
+        margin-top: initial; /* change this to whatever height you want it */
+    }
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>طباعة باركود</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    <div class="container">
+
+
+
+
+
+        <hr />
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="col-lg-6">
+                    <table class="table" style="text-align:right;direction:rtl;">
+
+
+
+
+
+
+                        @for (var a = 0; a < 12; a++)
+                        {
+                            <tr>
+                                @for (var z = 0; z < 7; z++)
+                                {
+                                <td class="col-md-2" tyle="width:100px;height:90px">
+                                    @*@Html.DisplayFor(model => model.Bar_Code)*@
+                                    <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.product.Bar_Code_one)" alt="Image" style="width:160px;height:60px" />
+
+
+                                    @if (Model.name == true)
+                                    {
+                                        <p style="font-size:1px;" dir="rtl">@Model.product.Prod_Name </p>
+
+                                    }
+                                    @if (Model.Price == true)
+                                    {
+                                        <p style="font-size:1px;" dir="rtl"> السعر بدون ضريبة : @Math.Round(Model.product.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)  </p>
+
+                                    }
+                                    @if (Model.PriceWithTax == true)
+                                    {
+                                        <p style="font-size:1px;" dir="rtl"> السعر شامل الضريبة : @Math.Round(Model.product.Sale_Price.Value + (Model.product.Sale_Price.Value * TaxPercentage), 2, MidpointRounding.AwayFromZero)  </p>
+
+                                    }
+                                    @if (Model.DateOfExpire == true && Model.product.Validity != null)
+                                    {
+                                        <p style="font-size:1px;" dir="rtl"> انتهاء الصلاحية :@Convert.ToDateTime(DateTime.Today.AddDays(Model.product.Validity.Value)).ToString("yyyy/MM/dd ") </p>
+
+                                    }
+                                    @if (Model.product.Notes != null && Model.product.Notes != ""&&Model.Notes==true)
+                                    {
+                                        <p style="font-size:1px;" dir="rtl"> @Model.product.Notes</p>
+
+                                    }
+
+                                </td>
+
+
+                                }
+
+
+
+
+
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</body>
+</html>

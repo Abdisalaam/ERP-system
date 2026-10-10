@@ -1,0 +1,325 @@
+﻿@model Accountingsystem.ViewModel.SupplierVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>SupplierVM</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+      
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Code, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Code, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Name, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Name, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Phone, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Phone, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Mail, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Mail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Mail, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCountryId, Model.MyCountryList, Accountingsystem.Resources.SupplierCreate.CountryInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.SupplierCreate.Country)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedProvinceId, Model.MyProvinceList, Accountingsystem.Resources.SupplierCreate.GovernorateInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedProvinceId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.SupplierCreate.Governorate)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCityId, Model.MyCitiesList, Accountingsystem.Resources.SupplierCreate.CityInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCityId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.SupplierCreate.City)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Address, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Address, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Fax, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Fax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Fax, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Branch_Id, Model.BranchList, Accountingsystem.Resources.SupplierCreate.SelectBranch, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Branch_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.SupplierCreate.Branch)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Mobile, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Mobile, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Mobile, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Purchase_Price, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Purchase_Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.SupplierCreate.PriceSlice)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Payment_Policy_Id, Model.MyPaymentPolicy, Accountingsystem.Resources.SupplierCreate.SelectPaymentPolicy, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Payment_Policy_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Payment_Policy_Id, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Supp_Website, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Supp_Website, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Supp_Website, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+     
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick='addSupplier();' class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.SupplierCreate.CreateSupplier</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+       <script type="text/javascript">
+
+        $(function () {
+
+            $("#SelectedCountryId").change(function (e) {
+
+                var selectedText = $(this).find("option:selected").text();
+
+                var selectedValue = $(this).val();
+
+                $.ajax({
+
+                    url: '@Url.Action("GetProvinces", "Supplier")',
+                    type: 'get',
+                    data: { countryId: selectedValue }
+                }).done(function (result) {
+
+                    $("#SelectedProvinceId").empty();
+
+
+
+                    for (var i = 0; i < result.length; i++) {
+                        var item = result[i];
+                        var p = new Option(result[i].Text, result[i].Value);
+                        $("#SelectedProvinceId").append(p)
+
+                    }
+                    GetAllcity();
+
+                });
+            });
+
+            function GetAllcity() {
+
+                var selectedValue = $("#SelectedProvinceId").val();
+
+                $.ajax({
+
+                    url: '@Url.Action("GetCities", "Supplier")',
+                    type: 'get',
+                    data: { provinceId: selectedValue }
+                }).done(function (result) {
+
+                    $("#SelectedCityId").empty();
+
+                    for (var i = 0; i < result.length; i++) {
+                        var item = result[i];
+                        var p = new Option(result[i].Text, result[i].Value);
+                        $("#SelectedCityId").append(p)
+
+                    }
+
+                });
+            }
+
+            $("#SelectedProvinceId").change(function (e) {
+
+                var selectedText = $(this).find("option:selected").text();
+
+                var selectedValue = $(this).val();
+
+                $.ajax({
+
+                    url: '@Url.Action("GetCities", "Supplier")',
+                    type: 'get',
+                    data: { provinceId: selectedValue }
+                }).done(function (result) {
+
+                    $("#SelectedCityId").empty();
+
+                    for (var i = 0; i < result.length; i++) {
+                        var item = result[i];
+                        var p = new Option(result[i].Text, result[i].Value);
+                        $("#SelectedCityId").append(p)
+
+                    }
+
+                });
+
+
+            });
+        });
+
+
+</script>
+
+

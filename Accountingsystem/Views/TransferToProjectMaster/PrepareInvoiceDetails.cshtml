@@ -1,0 +1,60 @@
+﻿@model Accountingsystem.ViewModel.TransferToProjectDetailVM
+
+@Html.HiddenFor(model => model.Master_ID)
+@Html.HiddenFor(model => model.Details_Id)
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.Label(Accountingsystem.Resources.TransferToProjectMasteraddnewTransToProj.Product)
+        <div class="input-group">
+            @Html.DropDownListFor(model => model.Batch_ID, Model.BatchList, Accountingsystem.Resources.TransferToProjectMasteraddnewTransToProj.SelectProduct, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+            <div class="input-group-append">
+                <div class="input-group-append">
+                    <div class="form-control">
+                        <label class="text-danger">*</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationMessageFor(model => model.Batch_ID, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.Label(Accountingsystem.Resources.TransferToProjectMasteraddnewTransToProj.Quantity)
+        <div class="input-group">
+            @Html.EditorFor(model => model.Product_Quantity, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+            @Html.ValidationMessageFor(model => model.Product_Quantity, "", new { @class = "text-danger" })
+            <div class="input-group-append">
+                <div>
+                    <span class="form-control">$</span>
+                </div>
+                <div>
+                    <span class="form-control text-danger">*</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="form-group">
+        <a href='javascript:;' onclick='AddDetailToMaster();' class="btn btn-block btn-outline-success mb-lg-0" style="text-decoration:none;">
+            @Accountingsystem.Resources.ProjectCreate.AddToRegulation
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            <span id="addToAccountBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+        </a>
+    </div>
+</div>
+
+<script>
+    $("#Batch_ID").chosen();
+    $("#Batch_ID_chosen").addClass("form-control Dropdownlist-select");
+    $('#Product_Quantity').on('input', function () {
+        $("#Product_Quantity").removeClass("addRequiredFieldToInput");
+    });
+    $('#Batch_ID').on('change', function () {
+        $("#Batch_ID_chosen").removeClass("addRequiredFieldToInput");
+        $('#Batch_ID_chosen span').css('background', '#ffffff');
+        $('#Batch_ID_chosen b').css('background', '#ffffff');
+    });
+</script>

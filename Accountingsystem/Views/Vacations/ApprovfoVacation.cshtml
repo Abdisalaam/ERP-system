@@ -1,0 +1,482 @@
+﻿@model Accountingsystem.ViewModel.VacationsVM
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.VacationsCreate.CreateVacationEmployee;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@Html.AntiForgeryToken()
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+@using (Html.BeginForm("ApprovfoVacation", "Vacations", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.Employee_Id)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Vacation_Id)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.VacationsCreate.ApproveVacation)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.VacationsCreate.VacationStartDate)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Start_Date_Vacations, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Start_Date_Vacations, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.VacationsCreate.VacationEndDate)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.End_Date_Vacations, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.End_Date_Vacations, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.VacationsCreate.VacationType)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Vacation_Type_Id, Model.VacationTypeList, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Vacation_Type_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.VacationsCreate.VacationReason)
+                                    @Html.TextAreaFor(model => model.Reason, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = "السبب" })
+                                    @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.VacationsCreate.Notes)
+                                    @Html.TextAreaFor(model => model.MangerDescription, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = "السبب" })
+                                    @Html.ValidationMessageFor(model => model.MangerDescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    @if (Model.AttachmentByte != null)
+                    {
+                        <a href="@Url.Action("ReturnVacationFile", new { id = Model.Vacation_Id })" class="btn btn-block btn-outline-secondary mb-lg-0">
+                            @Accountingsystem.Resources.VacationsCreate.Attachments
+                        </a>
+                    }
+                    @using (Html.BeginForm("ApprovfoVacation", "Vacations", FormMethod.Post))
+                    {
+                        // Html code here
+                        <input type="submit" id="aprove" formaction="ApprovfoVacation" name="submitbutton1" value=@Accountingsystem.Resources.VacationsCreate.Approval class="btn btn-block btn-outline-primary mb-lg-0" />
+                        <input type="submit"id="refuse" formaction="RefusefoVacation" name="submitbutton2" value=@Accountingsystem.Resources.VacationsCreate.Refusal class="btn btn-block btn-outline-secondary mb-lg-0" />
+
+                    }
+                    <a id="backToListBtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("IndexOfPenddingVac")">
+                       @Accountingsystem.Resources.VacationsCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+}
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+    <script>
+
+
+        var currentDate = $("#Start_Date_Vacations").val();
+
+        var _OfferDate = flatpickr(document.getElementById('Start_Date_Vacations'), {
+            defaultDate: currentDate
+        });
+
+        var EndDate = $("#End_Date_Vacations").val();
+
+        var _OfferDate = flatpickr(document.getElementById('End_Date_Vacations'), {
+            defaultDate: EndDate
+        });
+        
+    </script>
+    <script>
+        $(document).ready(function () {
+          if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+
+
+            $("#Vacation_Type_Id").chosen();
+
+            $("#Vacation_Type_Id_chosen").addClass("form-control Dropdownlist-select");
+
+
+    });
+        $('#Attachment').change(function () {
+            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+        $('#productSelectedtFiles').empty();
+        var totalConteLength = 0;
+        for (var i = 0; i < this.files.length; i++) {
+            conteLength = this.files[i].size;
+            totalConteLength += this.files[i].size;
+            if (totalConteLength > 4000000) {
+                $('#Attachment').empty();
+                $('#productSelectedtFiles').empty();
+                $('#productSelectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.ProductCreate.TotalSizeOfSelectedFiles : " + totalConteLength + " " + " @Accountingsystem.Resources.ProductCreate.Byte " +'</li> ');
+                $('#productSelectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.ProductCreate.MaxOfFilesSize" + '.</li> ');
+                $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.ProductCreate.FileSizePopupMessage",
+                    pos: 'bottom-center'
+                });
+                return false;
+            }
+            else {
+                var fileName = this.files[i].name;
+                if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                $('#productSelectedtFiles').append('<li>' + "@Accountingsystem.Resources.ProductCreate.FileName : " + fileName + '</li> ');
+                $('#productSelectedtFiles').append('<li>' + "@Accountingsystem.Resources.ProductCreate.FileLength :  " + this.files[i].size + " "+ "@Accountingsystem.Resources.ProductCreate.Byte" +'</li> ');
+            }
+        }
+        $('#productSelectedtFiles').append('<li>' +"@Accountingsystem.Resources.ProductCreate.TotalSizeOfFiles : " + totalConteLength +  " "+ "@Accountingsystem.Resources.ProductCreate.Byte" +'</li > ');
+    });
+
+    </script>
+    @*<script>
+            $(function () {
+                $('#Start_Date_Vacations').on('dp.change', function (e) {
+
+                    debugger
+                    thadateIsSuitable();
+
+
+
+
+                });
+                $('#End_Date_Vacations').on('dp.change', function (e){
+
+                    thadateIsSuitable();
+
+                });
+
+            });
+        </script>*@
+    @*<script>
+            function thadateIsSuitable() {
+
+
+                var start = $("#Start_Date_Vacations").val();
+                var end = $("#End_Date_Vacations").val();
+                var empid = $("#Employee_Id").val();
+                debugger;
+
+            $.ajax({
+
+                url: '@Url.Action("CheckTotals", "Vacations")',
+                type: 'get',
+                data: { empid: empid, start: start, end: end }
+            }).done(function (result) {
+
+                var res = result;
+
+                if (res=="0")
+                {
+
+                    $("#subBut").show();
+                    document.getElementById("subBut").disabled = true;
+                    alert("ادخل تواريخ صحيحة")
+                }
+                else
+                {
+                    $("#subBut").show();
+
+                    document.getElementById("subBut").disabled = false;
+                }
+
+
+
+
+            });
+                }
+        </script>*@
+    <script>
+
+
+        $('#Start_Date_Vacations').on('input', function () {
+            $("#Start_Date_Vacations").removeClass("addRequiredFieldToInput");
+        });
+        $('#End_Date_Vacations').on('input', function () {
+            $("#End_Date_Vacations").removeClass("addRequiredFieldToInput");
+        });
+        $('#Vacation_Type_Id').on('input', function () {
+            $("#Vacation_Type_Id").removeClass("addRequiredFieldToInput");
+        });
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#aprove').prop('disabled', true);
+            $('#refuse').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            if ($('#Start_Date_Vacations').val() == "" || $('#Start_Date_Vacations').val() == null ||
+                $('#End_Date_Vacations').val() == "" || $('#End_Date_Vacations').val() == null ||
+                $('#Vacation_Type_Id').val() == "" || $('#Vacation_Type_Id').val() == null
+            ) {
+                $('#aprove').prop('disabled', false);
+                $('#refuse').prop('disabled', false);
+                $("#createOfferSpinner").hide();
+                if ($('#Start_Date_Vacations').val() == "" || $('#Start_Date_Vacations').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.VacationsCreate.EnterVacationStartDate",
+                        pos: 'top-center'
+                    });
+                    $("#Start_Date_Vacations").addClass("addRequiredFieldToInput");
+                    $('#Start_Date_Vacations').trigger('focus');
+                }
+                if ($('#End_Date_Vacations').val() == "" || $('#End_Date_Vacations').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.VacationsCreate.EnterVacationEndDate",
+                        pos: 'top-center'
+                    });
+                    $("#End_Date_Vacations").addClass("addRequiredFieldToInput");
+                    $('#End_Date_Vacations').trigger('focus');
+                }
+                if ($('#Vacation_Type_Id').val() == "" || $('#Vacation_Type_Id').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.VacationsCreate.VacationTypeValidation",
+                        pos: 'top-center'
+                    });
+
+                    $("#Vacation_Type_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#Vacation_Type_Id_chosen span').css('background', 'red');
+                    $('#Vacation_Type_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Vacation_Type_Id").offset().top
+                    }, 2000);
+                }
+
+                $("#createOfferSpinner").hide();
+                event.preventDefault();
+            }
+
+
+        });
+
+    </script>
+
+}
+
+

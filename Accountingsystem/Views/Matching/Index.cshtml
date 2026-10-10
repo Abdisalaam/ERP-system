@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Accountingsystem.Models.Matching>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>القائمه</h2>
+
+<p>
+    @Html.ActionLink(" انشاء مطابقة", "Create")
+</p>
+
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true"id="sasa">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">
+                            @Html.DisplayName("كود المطابقة")
+                        </th>
+                        <th class="col-md-1">
+                            @Html.DisplayName("كود الايصال")
+                        </th>
+                        <th class="col-md-1">
+                            @Html.DisplayName("كود الفاتورة")
+                        </th>
+                        <th class="col-md-1">
+                            @Html.DisplayName("تاريخ الخصم")
+                        </th>
+                      
+                        <th class="col-md-1">
+                            @Html.DisplayName("اسم الشركة")
+                        </th>
+                       
+                        <th class="col-md-1">
+                            @Html.DisplayName("قيمة الخصم")
+                        </th>
+
+
+                        <th class="col-md-1">
+                            @Html.DisplayName("اسم العميل")
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                      {
+                        <tr>
+                            <td class="col-md-1">
+                                @Html.DisplayFor(modelItem => item.Matching_Code)
+                            </td>
+                         
+                            <td class="col-md-1">
+                                @{var Receipt = Accountingsystem.Models.Receipt.FindReceiptByID(item.ReceiptRec_ID).Rec_Number;
+                                    <h>@Receipt</h> }
+                            </td>
+                           
+                            <td class="col-md-1">
+                                @{var invoice = Accountingsystem.Models.InvoiceMaster.GetInvoiceDetailsById(item.InvoiceMasterMaster_Id).Serial_Number;
+                                    <h>@invoice</h> }
+                            </td>
+                            <td class="col-md-1">
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            
+                            <td class="col-md-1">
+                                @{var company = Accountingsystem.Models.Company.GetCompanyById(item.Comp_ID).Comp_Name;
+                                    <h>@company</h> }
+                            </td>
+                         
+                            <td class="col-md-1">
+                                @Html.DisplayFor(modelItem => item.Tota_Amount)
+                            </td>
+
+
+                            <td class="col-md-1">
+                                @{var customer = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id).Customer_Name;
+                                    <h>@customer</h> }
+                            </td>
+                            <td class="col-md-1">
+                                <p>
+
+                                    @Html.ActionLink("التفاصيل", "Details", new { id = item.Match_Id })
+                                </p>
+                            </td>
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#sasa').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,208 @@
+﻿@model Accountingsystem.Models.TransferToMaintenance
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<div>
+    <h4>TransferToMaintenance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trans_Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trans_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Describtion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describtion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trans_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trans_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Store_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Store_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subledger_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subledger_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Transfer_BU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Transfer_BU)
+        </dd>
+
+    </dl>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        updateButtonText();
+
+
+        function updateButtonText() {
+            var Invoice_State = $.trim($("#Invoice_State").text());
+            if (Invoice_State == "Void") {
+                $("#changeState").hide();
+                return;
+            }
+            else if (Invoice_State == "Pending")
+                $("#changeState").val("Post");
+            else if (Invoice_State == "Post")
+                $("#changeState").val("Void");
+        }
+        function updateReceiptStateText() {
+            var Invoice_State = $.trim($("#Invoice_State").text());
+            if (Invoice_State == "Pending")
+                $("#Invoice_State").text("Post");
+            else if (Invoice_State == "Post")
+                $("#Invoice_State").text("Void");
+        }
+
+
+
+        function UpdateTransferToMaintenance(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+  
+                 url: '@Url.Action("Edit", "TransferToMaintenance")',
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!")
+
+                }
+            });
+        }
+
+        $("#changeState").click(function (e) {
+
+            e.preventDefault();
+
+            var data = JSON.stringify({
+                Master_Id: $.trim($("#Master_Id").text()),
+                Invoice_State: $("#changeState").val()
+            });
+
+            $.when(UpdateTransferToMaintenance(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+
+            updateButtonText();
+            UpdateTransferToMaintenancetateText();
+
+        })
+
+
+    </script>
+}
+<p>
+    @Html.ActionLink("العوده الي القائمه", "Index")
+</p>

@@ -1,0 +1,313 @@
+﻿@model Accountingsystem.Models.PointOfSale
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.validate.DetailPointOfSale;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var store = Accountingsystem.Models.Store.GetStoreById(Model.Store_Id);
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @Accountingsystem.Resources.PointOfSaleDetails.QuickInventorySalesCenterDetails
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PointOfSaleDetails.CenterName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.POS_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PointOfSaleDetails.Adress)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Adress)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (package.Number_store > 1)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Store)
+                                            </div>
+                                            <div>
+                                                @store.Store_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (package.Number_Branch > 0)
+                    {
+                        if (Model.BranchSubledger_Id != null)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BranchSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.BranchName)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }@if (Model.DepartSubledger_Id != null && Model.DepartSubledger_Id != 0)
+                    {
+                        var branch = Accountingsystem.Models.SubLedger.getDetail(Model.DepartSubledger_Id.Value);
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.PointOfSaleDelete.Department)
+                                            </div>
+                                            <div>
+                                                @branch.SubLed_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.BussinesSubledger_Id != null && Model.BussinesSubledger_Id != 0)
+                    {
+                        var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BussinesSubledger_Id.Value);
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.PointOfSaleCreate.Activity)
+                                            </div>
+                                            <div>
+                                                @branch.SubLed_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.EmployeeName)
+                                        </div>
+                                        <div>
+                                            @{
+                                                var employee = Accountingsystem.Models.Employee.getEmpById(Model.Employee_Id);
+                                                @employee.Emp_Name
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.BranchSubledger_Id != 0 && Model.BranchSubledger_Id != null)
+                    {
+                        var subledger = Accountingsystem.Models.SubLedger.getDetail(Model.BranchSubledger_Id.Value);
+                        if (subledger.SubLed_Type == "مركز تكلفة يدوى" || subledger.SubLed_Type == "مشروع")
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.CostCenter)
+                                                </div>
+                                                <div>
+                                                    @{if (Model.BranchSubledger_Id != null)
+                                                        {
+                                                            <span>  @subledger.SubLed_Name </span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+
+                @if (Model.POSDetailPayments.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table mb-4">
+                            <thead>
+
+                                <tr>
+                                    <th>@Accountingsystem.Resources.PointOfSaleDelete.PaymentMethod</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.POSDetailPayments)
+                                {
+                                    <tr>
+                                        <td>@detail.PaymentMethod_Name</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                <div class="row layout-top-spacing">
+                    @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات"))
+                    {
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Create")'>
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Createnew
+                                    <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="Editbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Edit", new { id = Model.POS_Id })'>
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Edit
+                                    <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <a id="deletebtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Delete", new { id = Model.POS_Id })'>
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Delete
+                                    <span id="deletebtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                                    <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <div>
+
+
+
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#deletebtn").click(function (e) {
+            $("#deletebtnSpinner").show();
+        });
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        
+
+    </script>
+}

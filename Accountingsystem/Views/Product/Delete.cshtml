@@ -1,0 +1,95 @@
+﻿@model Accountingsystem.Models.Product
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ProductDelete.Deletion;
+}
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.ProductDelete.Deletion</h2>
+
+    <h1>@Accountingsystem.Resources.ProductDelete.DeletionProductQuestion</h1>
+    <div>
+
+        <hr />
+
+        <div class="widget">
+            <div class="table-responsive">
+                <table data-sortable="" class="table" data-sortable-initialized="true">
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.Number)
+                        </th>
+                        <td id="Rec_ID">
+                            @Html.DisplayFor(model => model.Prod_ID)
+                        </td>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.ProductName)
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Prod_Name)
+                        </td>
+
+
+                    </tr>
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.ItemNumber)
+                        </th>
+                        <td id="Rec_ID">
+                            @Html.DisplayFor(model => model.Prod_Code)
+                        </td>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.ItemDescription)
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.Prod_Descrip)
+                        </td>
+
+
+                    </tr>
+                    <tr>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.CategoryNumber)
+                        </th>
+                        <td id="Rec_ID">
+                            @Html.DisplayFor(model => model.Category_ID)
+                        </td>
+
+
+                        <th class="col-md-2">
+                            @Html.DisplayName(Accountingsystem.Resources.ProductDelete.MeasruingUnitNumber)
+                        </th>
+                        <td class="col-md-2">
+                            @Html.DisplayFor(model => model.MeasuringUnit_ID)
+                        </td>
+
+
+                    </tr>
+                </table>
+                </div>
+            </div>
+
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Accountingsystem.Resources.ProductDelete.Delete class="btn BTN-style final-BTN" />
+            <a class="btn BTN-style final-BTN" href="@Url.Action("Index")">
+                @Accountingsystem.Resources.ProductDelete.BackToList
+            </a>
+        </div>
+                     
+
+
+
+                    }
+            </div>
+        </div>

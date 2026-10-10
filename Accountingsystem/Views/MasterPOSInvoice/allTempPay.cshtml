@@ -1,0 +1,101 @@
+﻿@model Accountingsystem.ViewModel.MasterPOSInvoicePaymentTempVM
+
+@{
+    ViewBag.Title = "allTempPay";
+}
+@{
+    decimal paymentAmount = 0;
+    decimal difference = 0;
+
+
+    var invoiceTotal = Accountingsystem.Models.MasterPOSInvoice.getTempById(Model.invoice_Id);
+
+}
+
+
+            <div class="statbox widget box box-shadow">
+                <div class="table-responsive">
+
+                    <table id="PaymentDetailList" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.PaymentMethod)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.Value)
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.paymentvm)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(modelItem => item.MasterPOSInvoiceTempMasterPOSInvoiceId)
+                                    <td>
+                                        @{var pay = Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(item.PaymentMethod_Id).Payment_Type;}
+                                        @pay
+                                    </td>
+                                    @{paymentAmount += item.Amount; }
+                                    <td>
+                                        @Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)
+
+                                    </td>
+
+
+
+                                    <td>
+
+
+                                        <a href='javascript:;' onclick="@("DeleteTemp('" + item.Id + "')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="حذف" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+
+                                <td>
+                                    @Accountingsystem.Resources.MasterPOSInvoice.Total
+                                </td>
+                                <td>
+
+
+                                    @Math.Round(paymentAmount, 2, MidpointRounding.AwayFromZero)
+                                </td>
+
+
+
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        @{
+                            if (invoiceTotal.Total_Amount == null)
+                            {
+                                difference = 0 - paymentAmount;
+                            }
+                            else
+                            {
+                                difference = (Math.Round(invoiceTotal.Total_Amount.Value + invoiceTotal.TotalNewTaxs.Value, 2, MidpointRounding.AwayFromZero) - Math.Round(invoiceTotal.AllowDiscount.Value, 2, MidpointRounding.AwayFromZero)) - Math.Round(paymentAmount, 2, MidpointRounding.AwayFromZero);
+                            }
+
+
+
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <script>
+        $(document).ready(function () {
+
+        var remaining = @difference;
+
+            $("#Remaining").html(remaining);
+
+            $("#reminingShow").html(remaining);
+
+
+    });
+
+            </script>

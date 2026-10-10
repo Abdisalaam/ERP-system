@@ -1,0 +1,323 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.DailyPOSEmp
+
+@{
+    Layout = null;
+    var timeFrom = TimeSpan.Parse(Model.TimeFrom);
+    var timeTo = TimeSpan.Parse(Model.TimeTo);
+    var dateto = Convert.ToDateTime(Model.End_Date).Add(timeTo) ;
+    var datefrom = Convert.ToDateTime(Model.StartDate).Add(timeFrom) ;
+
+}
+
+
+<!DOCTYPE html>
+<head>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <title>تقرير مبيعات وردية نقطة بيع </title>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            <strong> تقرير مبيعات وردية / Point Of Sales Shift Report </strong>
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            <strong> @Model.Emp_Name </strong>
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            <span> <strong> From :  @datefrom   </strong> </span>  <span> <strong>----- Till :    @dateto </strong> </span>
+
+        </div>
+
+
+    </div>
+
+    <br />
+
+    <hr />
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">رقم الفاتورة<br />Invoice NO</th>
+                <th style="text-align:center">التاريخ<br />Date</th>
+                <th style="text-align:center">قيمة الفاتورة بدون ضريبة<br />Invoice Amount withoutTax </th>
+                <th style="text-align:center">قيمة الفاتورة<br />Invoice Amount</th>
+                <th style="text-align:center">قيمة المردودات<br />Reverse Amount</th>
+                <th style="text-align:center">الصافي<br />Net</th>
+
+
+
+            </tr>
+        </thead>
+        @{var counter = 1;
+            decimal TotalAmount = 0;
+            decimal totalTax = 0;
+            decimal TotalAfterTax = 0;
+            decimal totalReverse = 0;
+            decimal totalNet = 0;
+
+        }
+        <tbody>
+            @foreach (var item in Model.OrderList)
+            {
+                var revTotal = item.ReverseOrders.Where(a => a.Invoice_State == Accountingsystem.Models.TransactionState.Post).Select(a => a.Total_Amount).ToList().Sum();
+
+            <tr>
+
+                <td align="center">
+                    @item.OrderNumber
+                </td>
+                <td align="center">
+                    @*@item.OrderDate.ToString("yyyy/MM/dd ")*@
+                    @item.OrderDate.ToString()
+                </td>
+                @{
+
+                    var totalAmount = (item.Total_Amount) - item.Total_Tax;
+                    TotalAmount += totalAmount;
+                    totalTax += item.Total_Tax;
+                    TotalAfterTax += item.Total_Amount;
+                    totalReverse += revTotal;
+                    totalNet += totalAmount - revTotal;
+
+                }
+                <td align="center">
+
+                    @Math.Round(item.Total_Amount - (item.Total_Tax), 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td align="center">
+
+                    @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td align="center">
+
+                    @Math.Round(revTotal, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td align="center">
+
+                    @Math.Round(item.Total_Amount - revTotal, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                @*<td align="center">
+            @Math.Round(item.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+
+        </td>
+        <td align="center">
+            @Math.Round(item.Total_Amount.Value, 2, MidpointRounding.AwayFromZero)
+
+        </td>*@
+            </tr>
+
+
+
+
+            }
+        </tbody>
+        <thead>
+            <tr>
+
+
+
+                <th style="text-align:center">اجمالى <br />Total </th>
+                <th style="text-align:center"></th>
+
+                <th style="text-align:center">
+                    @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+                </th>
+                <th style="text-align:center">
+                    @Math.Round(TotalAfterTax, 2, MidpointRounding.AwayFromZero)
+                </th>
+                <th style="text-align:center">
+                    @Math.Round(totalReverse, 2, MidpointRounding.AwayFromZero)
+                </th>
+                <th style="text-align:center">
+                    @Math.Round(TotalAfterTax - totalReverse, 2, MidpointRounding.AwayFromZero)
+                </th>
+                @*<th style="text-align:center">
+            @Math.Round(totalTax, 2, MidpointRounding.AwayFromZero)
+        </th>
+        <th style="text-align:center">
+            @Math.Round(TotalAfterTax, 2, MidpointRounding.AwayFromZero)
+        </th>*@
+
+
+
+
+            </tr>
+        </thead>
+    </table>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center" width="150px">طريقة الدفع<br />Payment Method</th>
+                <th style="text-align:center" width="150px">المبلغ<br />Amount</th>
+
+
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal TotalPay = 0;
+
+
+            }
+            @foreach (var item in Model.PaymentDailyList)
+            {
+                <tr>
+
+                    <td align="center">
+                        @item.paymentName
+                    </td>
+                    @if (item.paymentValue >= 0)
+                    {
+                        <td align="center">
+
+                            @Math.Round(item.paymentValue, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td align="center">
+
+                            (@Math.Round(item.paymentValue * -1, 2, MidpointRounding.AwayFromZero))
+
+                        </td>
+
+                    }
+
+
+                </tr>
+
+
+
+                TotalPay += item.paymentValue;
+            }
+        </tbody>
+        <thead>
+            <tr>
+
+                <th style="text-align:center">اجمالى <br />Total </th>
+
+
+                <th style="text-align:center">
+                    @Math.Round(TotalPay, 2, MidpointRounding.AwayFromZero)
+
+                </th>
+
+            </tr>
+        </thead>
+    </table>
+</body>

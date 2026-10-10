@@ -1,0 +1,1022 @@
+﻿@model Accountingsystem.Models.MasterQRInvoice
+
+@{
+    Layout = null;
+    decimal totals = 0;
+    int counter = 1;
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+    var customer = new Accountingsystem.Models.Customer();
+    var detaildiscount = 0;
+    if (Model.Customer_Id != null)
+    {
+        customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value);
+    }
+    var employee = Accountingsystem.Models.Employee.getEmpById(Model.Employee_Id);
+    decimal TotalAmountbeforeDisc = 0;
+    decimal discount = 0;
+    decimal AfterDiscount = 0;
+    decimal totalbeforTax = 0;
+    decimal totalaftertax = 0;
+    var branch = Accountingsystem.Models.Branch.getAddressForInvoice(Model.Branch_Id);
+    var settingword = Accountingsystem.Models.InvoiceWordPrintSetting.GetTheSetting();
+    string dateto = null;
+    string datefrom = null;
+    if (Model.StartDate != null)
+    {
+        dateto = "الي" + Convert.ToDateTime(Model.EndDate).ToString("yyyy/MM/dd ");
+        datefrom = "من" + Convert.ToDateTime(Model.StartDate).ToString("yyyy/MM/dd ");
+    }
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+
+
+        .tho {
+            text-align: left;
+            padding: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <title> فاتورة ضريبية </title>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div style="text-align: center;">
+
+            <text style="text-align: center;  font-size:30px;">فاتورة ضريبية  | Tax Invoice  </text>
+
+        </div>
+
+        <br />
+        <div class="row">
+            <div id="header" style="height:15%;width:100%;">
+
+                <div style='float:left'>
+                    <table width="500" border="1" @*style="margin-left:10%;"*@>
+                        <tr>
+                            <th style="text-align:center; padding-top:0px;width:200px">
+                                Invoice NO
+                            </th>
+                            @if (Model.Number == null)
+                            {
+                                <td style="text-align:center; padding-top:0px;width:200px">
+                                    @Model.Serial_Number     - 0 @Model.Store_ID
+                                </td>
+                            }
+                            else
+                            {
+
+                                <td style="text-align:center; padding-top:0px;width:200px">
+                                    @Model.Number     - 0 @Model.Store_ID
+                                </td>
+
+                            }
+                            <th style="text-align:center; padding-top:0px;width:200px">
+                                رقم الفاتورة
+                            </th>
+
+
+
+                        </tr>
+                        @if (settingword.BaptismNumber == true)
+                        {
+                            <tr>
+                                <th style="text-align:center; padding-top:0px">
+                                    Purchase Order NO
+                                </th>
+                                <td style="text-align:center; padding-top:0px">
+                                    @Model.ApprovalCode
+                                </td>
+                                <th style="text-align:center; padding-top:0px">
+                                    رقم التعميد
+                                </th>
+
+
+
+                            </tr>
+                        }
+                   
+
+
+                    </table>
+                    <br />
+                    <table width="500" border="1" @*style="margin-left:10%;"*@>
+                        <tr>
+                            <th style="text-align:center; padding-top:0px;width:200px">
+                                Invoice Date
+                            </th>
+                            <td style="text-align:center; padding-top:0px;width:200px">
+                                @Convert.ToDateTime(Model.Invoice_Date).ToString("dd-MM-yyyy")
+                            </td>
+                            <th style="text-align:center; padding-top:0px;width:200px">
+                                تاريخ الفاتورة
+                            </th>
+
+
+
+                        </tr>
+
+                        @if (settingword.Time == true)
+                        {
+                            <tr>
+                                <th style="text-align:center; padding-top:0px">
+                                    Time
+                                </th>
+                                <td style="text-align:center; padding-top:0px">
+                                    @Convert.ToDateTime(Model.DateOfCreate).ToString("hh:mm tt")
+                                </td>
+                                <th style="text-align:center; padding-top:0px">
+                                    الوقت
+                                </th>
+
+
+
+                            </tr>
+                        }
+                        @if (Model.Serial_Number.StartsWith("SAL-"))
+                        {
+                            <tr>
+                                <th style="text-align:center; padding-top:0px">
+                                    Due Date
+                                </th>
+                                <td style="text-align:center; padding-top:0px">
+                                    @Accountingsystem.Models.InvoiceMaster.GetInvoiceBySerial(Model.Serial_Number).Due_Date.Value.ToString("dd-MM-yyyy")
+                                </td>
+                                <th style="text-align:center; padding-top:0px">
+                                    تاريخ الاستحقاق
+                                </th>
+
+
+
+                            </tr>
+                        }
+
+                        <tr>
+                            <th style="text-align:center; padding-top:0px">
+                                Currency
+                            </th>
+                            <td style="text-align:center; padding-top:0px">
+                                SAR-الريال السعودي
+                            </td>
+                            <th style="text-align:center; padding-top:0px">
+                                العملة
+                            </th>
+
+
+
+                        </tr>
+
+
+
+
+                    </table>
+                </div>
+
+                <div style=' text-align:center; '>
+
+                    <img src="data:image/jpg;base64,@Accountingsystem.Models.TLVCls.GenerateInvoiceQRbase(Model.Id)" alt="Image" style="width:200px;" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+    <table width="1100" border="1" style="text-align:right;">
+        <tr>
+
+            <th style="text-align:center;border-right:hidden; padding-top:0px">
+                Seller
+            </th>
+
+            <td style="text-align:center;border-right:hidden;width:200px; padding-top:0px"></td>
+            <th style="text-align:center;border-right:hidden; padding-top:0px">
+                المورد
+            </th>
+            <th style="text-align:center;border-right:hidden;padding-top:0px">
+                Buyer
+            </th>
+
+            <td style="text-align:center;border-right:hidden;width:200px; padding-top:0px"></td>
+            <th style="text-align:center; padding-top:0px">
+                العميل
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Seller Name
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @employee.Emp_Name
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                اسم البائع
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Name
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @if (customer != null)
+                {
+                    @customer.Customer_Name
+                }
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الاسم
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                VAT Number
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @company.Tax_Number
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                رقم تسجيل ضريبة القيمة المضافة
+
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                VAT Number
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @if (customer != null)
+                {
+                    @customer.Customer_TaxNumber
+                }
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                رقم تسجيل ضريبة القيمة المضافة
+            </th>
+        </tr>
+
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Phone
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @branch.Branch_Phone
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الهاتف
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Phone
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @if (customer != null)
+                {
+                    @customer.Customer_Phone
+                }
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الهاتف
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Address
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @branch.Branch_Address
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                العنوان
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Address
+            </th>
+            @if (Model.Customer_Id > 0)
+            {
+                <td style="text-align:center;  padding-top:0px">
+
+                    @Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Address
+                </td>
+            }
+            else
+            {
+                <td style="text-align:center;  padding-top:0px"></td>
+
+            }
+            <th style="text-align:center; padding-top:0px">
+                العنوان
+            </th>
+        </tr>
+
+        @if (customer != null && customer.CommercialRegistrationNo != null)
+        {
+            <tr>
+
+                <th style="text-align:center; padding-top:0px">
+                    CRN Number
+                </th>
+
+                <td style="text-align:center; padding-top:0px">
+                    @company.CRN
+                </td>
+                <th style="text-align:center; padding-top:0px">
+                    رقم السجل التجاري
+
+                </th>
+                <th style="text-align:center; padding-top:0px">
+                    CRN Number
+                </th>
+
+                <td style="text-align:center;  padding-top:0px">
+                    @customer.CommercialRegistrationNo
+                </td>
+                <th style="text-align:center; padding-top:0px">
+                    رقم السجل التجاري
+                </th>
+            </tr>
+        }
+
+
+
+    </table>
+    <br />
+
+    @if (Accountingsystem.Utilites.PackageRecognize.checkLanguage(Model.Description) == true)
+    {
+
+        <div style="text-align: right;">
+            <span style="white-space: pre-line" dir="rtl" ;>@Model.Description</span>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: left;">
+            <span style="white-space: pre-line" dir="ltr" ;>@Model.Description</span>
+        </div>
+    }
+
+    <div>
+        <table class="table" border="1" style="text-align:right; direction:rtl">
+            <thead>
+                <tr style="text-align:right;">
+
+                    <th style="text-align:right">NatureOfGoodsOrServices<br />تفاصيل السلع و الخدمات</th>
+
+                    <th style="text-align:right">MeasureUnit<br />وحدة القياس</th>
+
+
+
+
+                    <th style="text-align:right">Unit Price<br />سعر الوحدة</th>
+
+                    <th style="text-align:right">Quantity <br />الكمية</th>
+                    <th style="text-align:right">Total <br />الاجمالي</th>
+                    @if (Model.Master_Discount > 0)
+                    {
+                        <th style="text-align:right">Discount Rate <br />نسبة الخصم</th>
+                        <th style="text-align:right">Discount Amount <br />مبلغ الخصم</th>
+                    }
+                    <th style="text-align:right">Taxable Amount <br />الاجمالي الخاضع للضريبة</th>
+                    <th style="text-align:right">Tax Rate <br />نسبة الضريبة</th>
+                    <th style="text-align:right">Tax Amount <br />مبلغ الضريبة</th>
+                    <th style="text-align:right">Item SubTotal(Including VAT) <br />المجموع شامل الضريبة</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                @if (Model.DetailQRInvoices.FirstOrDefault() == null)
+                {
+                    var theAmountNeed = @Math.Round(Model.TotalBeforeDiscount.Value - (Model.TotalBeforeDiscount.Value * (Model.Master_Discount / 100)), 2, MidpointRounding.AwayFromZero);
+                    var Type = Accountingsystem.Models.Subscription.GetAllSubscriptionBySerial(Model.Serial_Number, Model.Id);
+                    <tr>
+                        <td>@Type.Subscrip_Description <br />  @datefrom      @dateto</td>
+                        <td></td>
+                        <td> @Math.Round(Model.TotalBeforeDiscount.Value, 2, MidpointRounding.AwayFromZero)</td>
+
+                        <td>1</td>
+                        <td> @Math.Round(Model.TotalBeforeDiscount.Value, 2, MidpointRounding.AwayFromZero)</td>
+
+                        @if (Model.Master_Discount > 0)
+                        {
+                            <td> @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @Math.Round(Model.TotalBeforeDiscount.Value * (Model.Master_Discount / 100), 2, MidpointRounding.AwayFromZero)</td>
+                        }
+                        <td> @Math.Round(Model.TotalBeforeDiscount.Value - (Model.TotalBeforeDiscount.Value * (Model.Master_Discount / 100)), 2, MidpointRounding.AwayFromZero)</td>
+                        <td> @Math.Round((Model.TaxQRInvoices.Select(a => a.Amount).Sum() / theAmountNeed) * 100, 2, MidpointRounding.AwayFromZero)</td>
+                        <td> @Math.Round(Model.TaxQRInvoices.Select(a => a.Amount).Sum(), 2, MidpointRounding.AwayFromZero)</td>
+                        <td> @Math.Round(Model.Total_Amount - Model.AllowDiscount, 2, MidpointRounding.AwayFromZero)</td>
+                    </tr>
+
+                }
+                else
+                {
+                    foreach (var item in Model.DetailQRInvoices)
+                    {
+                        var product = Accountingsystem.Models.Product.GetProdectById(item.Product_Id);
+                        var measure = new Accountingsystem.Models.MeasuringUnit();
+                        if (product != null)
+                        {
+                            if (product.MeasuringUnit_ID != null)
+                            {
+                                measure = Accountingsystem.Models.MeasuringUnit.GetMeasruingUnitById(product.MeasuringUnit_ID.Value);
+                            }
+                        }
+
+                        <tr>
+                            @if (product != null)
+                            {
+                                <td>
+
+                                    @product.Prod_Code @product.Prod_Name
+
+                                </td>
+                                if (measure != null)
+                                {
+                                    <td>
+                                        @measure.MUnit_Descrip
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            else
+                            {
+                                <td>
+                                    @item.ProductProJ_Name
+
+
+                                </td>
+                                <td></td>
+                            }
+
+
+                            <td>
+                                @String.Format("{0:n}", Math.Round(item.Product_Price, 2, MidpointRounding.AwayFromZero))
+                            </td>
+                            <td>
+
+                                @String.Format("{0:n}", Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero))
+                            </td>
+                            <td>
+
+                                @String.Format("{0:n}", Math.Round(item.Product_Quantity * item.Product_Price, 2, MidpointRounding.AwayFromZero))
+                            </td>
+
+                            @if (Model.Master_Discount > 0)
+                            {
+                                if (item.Detail_Discount != null)
+                                {
+                                    <td>
+                                        @String.Format("{0:n}", Math.Round(item.Detail_Discount.Value, 2, MidpointRounding.AwayFromZero))
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:n}", Math.Round(item.Detail_Discount_Amount.Value, 2, MidpointRounding.AwayFromZero))
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        0
+                                    </td>
+                                    <td>
+                                        0
+                                    </td>
+                                }
+                            }
+                            <td>
+                                @String.Format("{0:n}", Math.Round(item.Total_Amount - item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero))
+                            </td>
+                            @if (item.Product_Tax > 0)
+                            {
+                                var tax = Accountingsystem.Models.Tax.GetTaxesbyId(item.Product_Tax);
+
+                                <td>
+
+                                    @tax.Tax_Percentage%
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>
+
+                                @String.Format("{0:n}", Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero))
+                            </td>
+                            <td>
+
+                                @String.Format("{0:n}", Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero))
+                            </td>
+
+
+                        </tr>
+                        if (product != null)
+                        {
+                            if (string.IsNullOrEmpty(product.Prod_Descrip))
+                            {
+
+
+
+
+
+                            }
+                            else
+                            {
+                                <tr dir="rtl">
+                                    <td style="border-top-style:hidden" colspan="7"> <span style="white-space: pre-line" dir="ltr" ;>@product.Prod_Descrip</span></td>
+                                </tr>
+                            }
+                        }
+                        counter++;
+                        totals = totals + (item.Product_Quantity * item.Product_Price);
+                        if (item.Detail_Total_Tax > 0)
+                        {
+                            totalbeforTax = totalbeforTax + (item.Total_Amount - item.Detail_Total_Tax);
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <table width="1100" border="1" style="text-align:right;">
+            @{
+                var totalstr = "الاجمالي(غير شامل ضريبة القيمة المضافة";
+                var taxable = "الاجمالي الخاضع للضريبة(غير شامل ضريبة القيمة المضافة";
+                discount = totals * (Model.Master_Discount / 100);
+            }
+            <thead>
+                @if (Model.Serial_Number == null || Model.Serial_Number.StartsWith("SUBS-"))
+                {
+                    if (settingword.TotalExcludingVat1 != null && settingword.TotalExcludingVat != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;width:300px"> @String.Format("{0:n}", Math.Round((Model.TotalBeforeDiscount.Value), 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right" width="400px">@settingword.TotalExcludingVat1</td>
+                            <td style="text-align:right" width="400px">@settingword.TotalExcludingVat </td>
+
+                        </tr>
+                    }
+                    if (Model.Master_Discount > 0 && settingword.Discount1 != null && settingword.Discount != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.TotalBeforeDiscount.Value * (Model.Master_Discount / 100), 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right"> @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)@settingword.Discount</td>
+                            <td style="text-align:right">  @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero) @settingword.Discount1</td>
+
+                        </tr>
+                    }
+                    if (settingword.TotalTaxableAmount1 != null && settingword.TotalTaxableAmount != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.TotalBeforeDiscount.Value - (Model.TotalBeforeDiscount.Value * (Model.Master_Discount / 100)), 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right">@settingword.TotalTaxableAmount1</td>
+                            <td style="text-align:right"> @settingword.TotalTaxableAmount</td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    if (settingword.TotalExcludingVat1 != null && settingword.TotalExcludingVat != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;width:300px"> @String.Format("{0:n}", Math.Round(totals, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right" width="400px">@settingword.TotalExcludingVat1</td>
+                            <td style="text-align:right" width="400px">@settingword.TotalExcludingVat </td>
+
+                        </tr>
+                    }
+                    if (Model.Master_Discount > 0 && settingword.Discount1 != null && settingword.Discount != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(discount, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right"> @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)@settingword.Discount1</td>
+                            <td style="text-align:right">  @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)@settingword.Discount</td>
+
+                        </tr>
+                    }
+                    if (settingword.TotalTaxableAmount != null && settingword.TotalTaxableAmount1 != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(totalbeforTax, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right">@settingword.TotalTaxableAmount1</td>
+                            <td style="text-align:right"> @settingword.TotalTaxableAmount</td>
+
+                        </tr>
+                    }
+                }
+
+
+                @foreach (var detailTax in Model.DetailQRInvoices.Where(a => a.Product_Tax > 0).Select(a => a.Product_Tax).Distinct())
+                {
+                    if (settingword.TotalVat1 != null && settingword.TotalVat != null)
+                    {
+                        var taxo = Accountingsystem.Models.Tax.GetTaxesbyId(detailTax);
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.DetailQRInvoices.Where(a => a.Product_Tax == detailTax).Select(a => a.Detail_Total_Tax).Sum(), 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right">@settingword.TotalVat1 </td>
+                            <td style="text-align:right">@settingword.TotalVat  @taxo.Tax_Name % @taxo.Tax_Percentage</td>
+
+                        </tr>
+                    }
+                }
+
+                @foreach (var tax in Model.TaxQRInvoices)
+                {
+                    if (settingword.TotalVat1 != null && settingword.TotalVat != null)
+                    {
+                        <tr style="text-align:right;">
+                            <td style="text-align:center"> @String.Format("{0:n}", Math.Round(tax.Amount, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right">@settingword.TotalVat1</td>
+                            <td style="text-align:right">@Accountingsystem.Models.Tax.GetTaxesbyId(Convert.ToInt32(tax.Tax_Id)).Tax_Name</td>
+                        </tr>
+                    }
+                }
+                @if (Model.AllowDiscount > 0)
+                {
+                    <tr style="text-align:right;">
+                        <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.AllowDiscount, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right">Additional Discount</td>
+                        <td style="text-align:right">خصم مسموح به</td>
+                    </tr>
+                }
+                @if (Model.Serial_Number == null || Model.Serial_Number.StartsWith("SUBS-"))
+                {
+                    var payemntvalue = Accountingsystem.Models.Subscription.GetsubByCode(Model.Serial_Number);
+                    if (settingword.ToatlAmountDue1 != null && settingword.ToatlAmountDue != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;font-weight:900"> @String.Format("{0:n}", Math.Round(Model.Total_Amount - Model.AllowDiscount, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right;font-weight:900">@settingword.ToatlAmountDue1</td>
+                            <td style="text-align:right;font-weight:900">@settingword.ToatlAmountDue</td>
+
+                        </tr>
+                    }
+                    if (settingword.ToatalAmountPaid1 != null && settingword.ToatalAmountPaid != null)
+                    {
+
+
+
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;"> @String.Format("{0:n}", Math.Round(payemntvalue, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right;">@settingword.ToatalAmountPaid1</td>
+                            <td style="text-align:right;">@settingword.ToatalAmountPaid</td>
+
+                        </tr>
+
+
+
+                    }
+                    if (settingword.ToatalRamainingAmount != null && settingword.ToatalRamainingAmount1 != null)
+                    {
+
+
+
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;"> @String.Format("{0:n}", Math.Round(Model.Total_Amount - payemntvalue, 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right;">@settingword.ToatalRamainingAmount1</td>
+                            <td style="text-align:right;">@settingword.ToatalRamainingAmount</td>
+
+                        </tr>
+
+
+
+                    }
+
+                }
+                else
+                {
+                    if (settingword.ToatlAmountDue1 != null && settingword.ToatlAmountDue != null)
+                    {
+                        <tr style="text-align:right;">
+
+
+                            <td style="text-align:center;font-weight:900"> @String.Format("{0:n}", Math.Round(((Model.Total_Amount + Model.TotalNewTaxs) - Model.AllowDiscount), 2, MidpointRounding.AwayFromZero))</td>
+                            <td style="text-align:right;font-weight:900">@settingword.ToatlAmountDue1</td>
+                            <td style="text-align:right;font-weight:900">@settingword.ToatlAmountDue</td>
+
+                        </tr>
+                    }
+                    if (Model.Serial_Number != null && Model.Serial_Number.StartsWith("SAL-"))
+                    {
+                        var payemntvalue = Accountingsystem.Models.Receipt.getAllPayForthatInvoicebyCode(Model.Serial_Number);
+                        if (settingword.ToatalAmountPaid1 != null && settingword.ToatalAmountPaid != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <td style="text-align:center"> @String.Format("{0:n}", Math.Round(payemntvalue, 2, MidpointRounding.AwayFromZero))</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid1</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid</td>
+
+                            </tr>
+                        }
+                        if (settingword.ToatalRamainingAmount1 != null && settingword.ToatalRamainingAmount != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <th style="text-align:center"> @String.Format("{0:n}", Math.Round(((Model.Total_Amount + Model.TotalNewTaxs) - Model.AllowDiscount) - payemntvalue, 2, MidpointRounding.AwayFromZero))</th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount1 </th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount </th>
+
+                            </tr>
+                        }
+
+                    }
+                    else if (Model.Serial_Number != null && Model.Serial_Number.StartsWith("POS-") && Model.QRPaymentMethods.Count() == 0)
+                    {
+                        var payemntvalue = Accountingsystem.Models.POSReceipt.getAllPayForthatInvoicebyCode(Model.Serial_Number);
+                        if (settingword.ToatalAmountPaid1 != null && settingword.ToatalAmountPaid != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <td style="text-align:center"> @Math.Round(payemntvalue, 2, MidpointRounding.AwayFromZero)</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid1</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid</td>
+
+                            </tr>
+                        }
+                        if (settingword.ToatalRamainingAmount1 != null && settingword.ToatalRamainingAmount != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <th style="text-align:center"> @Math.Round(((Model.Total_Amount + Model.TotalNewTaxs) - Model.AllowDiscount) - payemntvalue, 2, MidpointRounding.AwayFromZero)</th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount1 </th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount </th>
+
+                            </tr>
+                        }
+                    }
+                    else if (Model.Serial_Number.StartsWith("PINV-"))
+                    {
+
+
+                    }
+
+                    else
+                    {
+                        if (settingword.ToatalAmountPaid1 != null && settingword.ToatalAmountPaid != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <td style="text-align:center"> @String.Format("{0:n}", Math.Round(((Model.Total_Amount + Model.TotalNewTaxs) - Model.AllowDiscount), 2, MidpointRounding.AwayFromZero))</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid1</td>
+                                <td style="text-align:right">@settingword.ToatalAmountPaid</td>
+
+                            </tr>
+
+                        }
+
+                        foreach (var item in Model.QRPaymentMethods)
+                        {
+                            <tr>
+
+                                <td style="text-align:center"> @String.Format("{0:n}", Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero))</td>
+                                <td style="text-align:right">paymentMethod</td>
+                                <td style="text-align:right">@Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(item.PaymentMethod_Id).Payment_Type طريقة الدفع</td>
+
+
+
+                            </tr>
+
+                        }
+                        if (settingword.ToatalRamainingAmount1 != null && settingword.ToatalRamainingAmount != null)
+                        {
+                            <tr style="text-align:right;">
+
+
+                                <th style="text-align:center">0</th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount1 </th>
+                                <th style="text-align:right">@settingword.ToatalRamainingAmount </th>
+
+                            </tr>
+                        }
+
+
+                    }
+                }
+
+            </thead>
+
+        </table>
+    </div>
+    <br />
+    @if (Accountingsystem.Utilites.PackageRecognize.checkLanguage(Model.Notes) == true)
+    {
+
+        <div style="text-align: right;">
+            <span style="white-space: pre-line" dir="rtl" ;>@Model.Notes</span>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: left;">
+            <span style="white-space: pre-line" dir="ltr" ;>@Model.Notes</span>
+        </div>
+    }
+    @*<div class="row">
+            <div style="width: 50%;">
+                <table class="table" style="text-align:center">
+
+
+                    <tr>
+                        <td>
+                            @Math.Round(totals, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>الاجمالي</td>
+                    </tr>
+                  @if (Model.Master_Discount > 0)
+                    {
+                        <tr>
+
+                            <td>
+
+                                @Math.Round(Model.Masterdiscount, 2, MidpointRounding.AwayFromZero)
+
+                            </td>
+                            <td> الخصم @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)% </td>
+                        </tr>
+                    }
+                    @if (Model.totalTax > 0)
+                    {
+                        foreach (var detailTax in Model.MyDetails.Where(a => a.tax != null).Select(a => a.tax).Distinct())
+                        {
+                            <tr>
+                                <td> @Math.Round(Model.MyDetails.Where(a => a.tax == detailTax).Select(a => a.Total_Tax).Sum(), 2, MidpointRounding.AwayFromZero)</td>
+                                <td> %  @detailTax.Tax_Name @detailTax.Tax_Percentage</td>
+                            </tr>
+                        }
+                    }
+                    @foreach (var tax in Model.Taxes)
+                    {
+                        <tr>
+                            <td> @Math.Round(tax.Amount, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @tax.TaxName</td>
+                        </tr>
+                    }
+
+
+                    <tr>
+
+
+                        <td>
+                            <h5>
+                                <strong>
+                                    @Math.Round(((totalaftertax + Model.NewTaxTotal) - Model.fixed_Discount), 2, MidpointRounding.AwayFromZero)
+                                </strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>
+                                    الصافي
+                                </strong>
+                            </h5>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+
+        </div>*@
+
+    @*<div style="text-align: right;">
+            <span style="white-space: pre-line" dir="rtl" ;>@Model.</span>
+        </div>*@
+
+    @*<div class="row" style="width: 100%; clear:both; text-align:right; font-size:20px; padding-top: 20px;">
+
+            <div style="width: 50%; float:right;">
+                <div>
+                    <text> :اسم المستلم</text>
+                </div>
+                <div>
+                    <text> :التوقيع</text>
+                </div>
+                <div>
+                    <text> :التاريخ</text>
+                </div>
+            </div>
+        </div>*@
+
+    </div>
+
+
+    <footer style="margin-top:0%;"></footer>
+
+</body>
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,57 @@
+﻿@model Accountingsystem.Models.Contacts
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>هل تريد مسح جهة الالتصال؟?</h3>
+<div>
+    <h4>جهة الاتصال</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayName("اسم جهة الاتصال")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("شركة التابعة لي جهة الاتصال")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("لبريد الالكتروني لجهة الاتصال")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم العميل")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="مسح" class="btn btn-default" /> |
+            @Html.ActionLink("العودة الي القائمة", "Index")
+        </div>
+    }
+</div>

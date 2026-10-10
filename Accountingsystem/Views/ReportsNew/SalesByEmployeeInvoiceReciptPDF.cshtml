@@ -1,0 +1,211 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ClassifySalesInvoiceVM
+
+
+@{
+    Layout = null;
+    decimal totalafterfix = 0;
+    decimal totalrecall = 0;
+    decimal payment = 0;
+    decimal totalCost = 0;
+    int counter = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+}
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير مبيعات المستخدمين</title>
+
+</head>
+<body>
+
+
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير مبيعات اجل لموظف / sales For Employee that Not Payed Report
+
+        </div>
+        @if (Model.List.Count() > 1)
+        {
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                @{var a = Model.List.FirstOrDefault().employee;
+
+                    if (Model.List.FirstOrDefault().employee != 0 || Model.List.FirstOrDefault().employee != null)
+                    {
+                        var empName = Accountingsystem.Models.Employee.getEmpById(Model.List.FirstOrDefault().employee).Emp_Name;
+                        <h>@empName</h>
+                    }
+                }
+
+            </div>
+        }
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <br />
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">رقم العميل<br />Customer NO</th>
+                <th style="text-align:center">العميل<br />Customer</th>
+                <th style="text-align:center" width="150px">رقم الفاتورة<br />Invoice NO</th>
+                <th style="text-align:center" width="100px">التاريخ<br />Date</th>
+
+                <th style="text-align:center">قيمة الفاتورة<br />invoice value</th>
+
+                <th style="text-align:center">المردودات<br />Recall</th>
+                <th style="text-align:center">المدفوع<br />payment</th>
+                <th style="text-align:center">المتبقي<br />remining</th>
+
+            </tr>
+        </thead>
+
+
+
+
+        <tbody>
+            @foreach (var item in Model.List)
+            {
+                totalafterfix = totalafterfix + item.TotalClassFiyAmount;
+                totalrecall = totalrecall + item.RecallInvoicetotal;
+                payment = payment + item.PayedAmount;
+
+                counter++;
+                <tr>
+
+                    <td width="100">
+                        @item.CustomerCode
+                    </td>
+                    <td width="200">
+
+                        @item.CustomerName
+                    </td>
+                    <td width="100">
+
+                        @item.InvoiceCode
+                    </td>
+                    <td width="200">
+                        @Convert.ToDateTime(item.InvoiceDate).ToString("yyyy/MM/dd ")
+                        @*@item.InvoiceDate*@
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(item.totalafterfixed, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="width:100px">
+
+                        @Math.Round(item.RecallInvoicetotal, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="width:100px">
+
+                        @Math.Round(item.PayedAmount, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="width:100px">
+
+                        @Math.Round(item.totalafterfixed - (item.RecallInvoicetotal + item.PayedAmount), 2, MidpointRounding.AwayFromZero)
+                    </td>
+                </tr>
+
+            }
+            <tr>
+
+                <td width="100">
+             الاجمالي
+                </td>
+                <td width="200">
+
+         
+                </td>
+                <td width="100">
+
+      
+                </td>
+                <td width="200">
+                  
+                    @*@item.InvoiceDate*@
+                </td>
+
+                <td style="width:100px">
+
+                    @Math.Round(totalafterfix, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="width:100px">
+
+                    @Math.Round(totalrecall, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="width:100px">
+
+                    @Math.Round(payment, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="width:100px">
+
+                    @Math.Round(totalafterfix - (totalrecall + payment), 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+        </tbody>
+     
+    </table>
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+</html>

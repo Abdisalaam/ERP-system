@@ -1,0 +1,36 @@
+﻿@model Accountingsystem.Models.GL_Type
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>تفاصيل نوع القيد</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayName("اسم نوع القيد")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GL_Type_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("وصف نوع القيد")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GL_Type_Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.GL_Type_Id }) |
+    @Html.ActionLink("الرجوع الى القائمة", "Index")
+</p>

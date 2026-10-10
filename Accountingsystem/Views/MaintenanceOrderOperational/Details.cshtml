@@ -1,0 +1,897 @@
+﻿@model Accountingsystem.Models.MaintenanceOrderOperational
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.MaintenanceOrder.ReceivingDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id);
+    var barcode = Accountingsystem.Utilites.QRcode.MakeBarcode(Model.Order_Code);
+    decimal TotalAmountbeforeDisc = 0;
+    decimal discount = 0;
+    decimal AfterDiscount = 0;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+@Html.HiddenFor(model => model.Id)
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.MaintenanceOrder.ReceivingDetails
+
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.Order_Code)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Order_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ProductCreate.Barcode)
+                                        </div>
+
+
+                                        <div>
+
+                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(barcode)" alt="Image" style="width:100px" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.CustomerNumber)
+                                        </div>
+                                        <div>
+                                            @customer.Customer_Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.CustomerName)
+                                        </div>
+                                        <div>
+                                            @customer.Customer_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.EmployeeName)
+                                        </div>
+                                        <div>
+
+                                            @{
+                                                var employee = Accountingsystem.Models.Employee.getEmpById(Model.Emplyee_id);
+                                                @employee.Emp_Name
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.Date)
+                                        </div>
+                                        <div>
+                                            @Model.Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.Status)
+                                        </div>
+                                        <div>
+                                            @Accountingsystem.Models.MaintenanceStatus.getstatusById(Model.Status).Name
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.SerialNumber != "" && Model.SerialNumber != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.SerialNumber)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.SerialNumber)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    @if (Model.guaranteeDuration != null && Model.guaranteeDuration != 0)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.DateEndOfGuarentee)
+                                            </div>
+                                            <div>
+                                                @Model.EndGuaranteeDate.Value.ToString("dd/MM/yyyy")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    @if (Model.ExpectedAmount != null && Model.ExpectedAmount != 0)
+                    {
+
+
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.ExpectedCost)
+                                            </div>
+                                            <div>
+                                                @Math.Round( Model.ExpectedAmount.Value,2,MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.Describtion)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.Describtion, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.MaintenanceOrder.DeviceMalfunctionDescribtion)
+                            </div>
+
+                            @Html.TextAreaFor(model => model.RequiredDescribtion, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        @if (!User.IsInRole("فني"))
+        {
+
+            <div class="table-responsive">
+                <table class="table mb-4">
+                    <thead>
+                        <tr>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.Item</th>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.ItemNumber</th>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.Quantity</th>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.ItemPrice</th>
+
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.TotalTax</th>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.TotalAmount</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.MaintenanceOrderOperationalDetails)
+                        {
+                            <tr>
+                                <td> @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id).Prod_Name</td>
+                                <td> @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id).Prod_Code</td>
+
+                                <td>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                                <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+
+                                <td>@Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)</td>
+                                <td>@Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)</td>
+                                @{ TotalAmountbeforeDisc += detail.Product_Quantity * detail.Product_Price;
+                                    discount += (detail.Product_Quantity * detail.Product_Price) * (Model.Master_Discount.Value / 100);
+
+
+                                }
+                                <td>
+                                    <a href="@Url.Action("Details", "Product", new { id = detail.Product_Id })" class="btn btn-block btn-outline-primary mb-lg-0">
+                                        @Accountingsystem.Resources.ProductDetails.ItemDetails
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            {
+
+                AfterDiscount = TotalAmountbeforeDisc - discount;
+
+            }
+
+
+            <div class=''>
+                <div class="row layout-top-spacing">
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Total)
+                                        </div>
+                                        <div>
+                                            @Math.Round(TotalAmountbeforeDisc, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @if (Model.Master_Discount > 0)
+                    {
+                        <div class="col-md-12">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Accountingsystem.Resources.InvoiceMasterDetails.Discount   @Math.Round(Model.Master_Discount.Value, 2, MidpointRounding.AwayFromZero) %
+                                            </div>
+                                            <div>
+                                                @Math.Round(discount, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    @if (Model.Total_Tax > 0)
+                    {
+                        <div class="col-md-12">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.TotalTax)
+                                            </div>
+                                            <div>
+                                                @Math.Round(Model.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                    @if (Model.AllowDiscount != 0 && Model.AllowDiscount != null)
+                    {
+                        <div class="col-md-12">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.AllouwdDiscount)
+                                            </div>
+                                            <div>
+                                                @Math.Round(Model.AllowDiscount.Value, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.FinalTotal)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Total_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            if (Model.MaintenanceOrderOperationalStatus.Any())
+            {
+                <div class="row inv--product-table-section">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="">
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Employee</th>
+                                        <th>@Accountingsystem.Resources.MaintenanceOrder.Date</th>
+                                        <th>@Accountingsystem.Resources.MaintenanceOrder.Status</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var stat in Model.MaintenanceOrderOperationalStatus)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    var employeee = Accountingsystem.Models.Employee.getEmpById(stat.EmployeeId);
+                                                    @employeee.Emp_Name
+                                                }
+                                            </td>
+                                            <td>@stat.DateOfState.ToString("dd/MM/yyyy")</td>
+
+                                            <td>
+                                                @Accountingsystem.Models.MaintenanceStatus.getstatusById(stat.Status).Name
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+
+                  
+                        @*<input id="changeState" type="button" value="Post" class="btn btn-block btn-outline-info mb-lg-2" />*@
+
+                        <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href=" @Url.Action("Create")">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Createnew
+                            <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                        @if (Model.Status == 1)
+                        {
+                            <a id="Edit" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Edit", new { id = Model.Id, status = 2 })">
+                                @Accountingsystem.Resources.MaintenanceOrder.Technicalpreview
+                                <span id="EditSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                        @if (Model.Status < 3)
+                        {
+                        <a id="Edit" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Edit", new { id = Model.Id, status = 3 })">
+                            @Accountingsystem.Resources.MaintenanceOrder.Estimatetheamountofrepair
+                            <span id="EditSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        }
+                        @if (Model.Status < 4)
+                        {
+                        <a id="Edit" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("DeliverToCustomer", new { id = Model.Id,status =4 })">
+                            @Accountingsystem.Resources.MaintenanceOrder.ReadyToDeliver
+                            <span id="EditSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        }
+                        @if (Model.Status < 5)
+                        {
+                        <a id="Edit" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("DeliverToCustomer", new { id = Model.Id,status =5 })">
+                            @Accountingsystem.Resources.MaintenanceOrder.DeliverDevice
+                            <span id="EditSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        }
+                    
+
+                   
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="PrintWhite" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintMaintenanceOrderWhite", new { controller = "Reports", id = Model.Id })' target="_blank">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                        <span id="PrintWhiteSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+
+                    </a>
+                    <a id="PrintMail" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintMaintenanceOrder", new { controller = "Reports", id = Model.Id })' target="_blank">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.PrintEmail
+                        <span id="PrintMailSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <button id="PrintT" class="btn btn-block btn-outline-primary mb-lg-0 hidden-print" onclick="PrintElem()">
+                        @Accountingsystem.Resources.MasterPOSInvoice.ThermalPrinting
+                        <span id="PrintTSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+
+
+                    </button>
+                    <button id="PrintB" class="btn btn-block btn-outline-primary mb-lg-0 hidden-print layout-top-spacing" onclick="PrintBar()">
+                        @Accountingsystem.Resources.ProductDetails.PrintTempBarcode
+                        <span id="PrintBSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    @*<a id="RecieptSupplyOrReceiveGoods" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("PrintSalesDelivery", new { controller = "Reports", id = Model.Master_Id })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.RecieptSupplyOrReceiveGoods
+                            <span id="RecieptSupplyOrReceiveGoodsSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>*@
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("CreateForMain","MasterPOSInvoice", new { Main_Id = Model.Id})">
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.TransferToInvoice
+                    </a>
+                    @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("فني")*@)
+                    {
+                        <a id="CustomerReport" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Code })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.CustomerReport
+                            <span id="CustomerReportSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                        <a id="CustomerDetail" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Details", new { controller = "Customer", id = Model.Customer_Id })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.CustomerDetail
+                            <span id="CustomerDetailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    }
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<div id="contentToPrint" style="display: none;">
+    <div class="ticket" style="break-inside: avoid; text-align: center;">
+        @{
+            var Company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+        }
+        @if (Company.CompanyPhotoDetails.FirstOrDefault() != null)
+        {
+            <img src="data:image/jpg;base64,@Convert.ToBase64String(Company.CompanyPhotoDetails.FirstOrDefault().ProImg)" alt="Sutumatic" style="width:200px; height:100px;" />
+        }
+
+        <p class="centered" style="text-align: center;">
+            @Company.Comp_Name
+            @*<br><b>@Model.C.POS_Name </b>/ @Model.PointOfSale.POS_Id*@
+            <br>@Company.Comp_Address
+            <br>@Company.Comp_phone
+            <br>@Company.Tax_Number
+            <br>@Model.Order_Code
+            <br>@Model.Date.ToShortDateString()
+        </p>
+        <hr />
+        <div class="row layout-top-spacing">
+            @foreach (var detail in Model.MaintenanceOrderOperationalDetails)
+            {
+                var product = @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id);
+                <div class="row" style="text-align: center;">
+                    <div class="col-sm-12">
+                        @product.Prod_Name <span>
+
+                            @if (string.IsNullOrEmpty(product.Prod_Descrip))
+                            {
+
+                            }
+                            else
+                            {
+                                <span>#</span> @product.Prod_Descrip
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <table style="text-align: center; width:100%;">
+                    <thead>
+                        <tr>
+                            <th class="quantity">Q.</th>
+
+                            <th class="price">$$</th>
+                            <th class="price">Tax</th>
+                            <th class="price">Tot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @*<tr>
+                            //    <td>
+                            //        @Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                            //    </td>
+                            //    <td>
+                            //        @product.Prod_Name <span>
+
+                            //            @if (string.IsNullOrEmpty(product.Prod_Descrip))
+                            //            {
+
+                            //            }
+                            //            else
+                            //            {
+                            //                <span>#</span> @product.Prod_Descrip
+                            //            }
+                            //        </span>
+                            //    </td>
+                            //    <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+                            //    <td> @Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)</td>
+                            //    <td> @Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)</td>
+                            //</tr>*@
+                        <tr>
+                            <td class="quantity">
+                                @Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td class="price">@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+                            <td class="price"> @Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)</td>
+                            <td class="price"> @Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                @*<div class="col-md-4">
+                        @Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                    </div>
+                    <div class="col-md-4">
+                        @Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)
+                    </div>
+                    <div class="col-md-4">
+                        @Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                    </div>
+                    <div class="col-md-4">
+                        @Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                    </div>*@
+
+
+
+
+            }
+            <hr />
+            <div class="row" style="text-align: center;">
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalBeforeDisscountAndTax) : <span> @Math.Round(TotalAmountbeforeDisc, 2, MidpointRounding.AwayFromZero)</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Master_Discount > 0)
+                {
+                    <div class="col-sm-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalDiscountAmount) : <span> @Math.Round(TotalAmountbeforeDisc * (Model.Master_Discount.Value / 100), 2, MidpointRounding.AwayFromZero)</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.Net) :
+                                        <span>
+                                            @Math.Round(Model.Total_Amount.Value, 2, MidpointRounding.AwayFromZero) <span> @Accountingsystem.Models.Currency.GetAllcurrency().FirstOrDefault().Currency_Type </span>
+
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+<div id="BarcodeToPrint" style="display: none; width:100%; height:400px; max-height:400px; page-break-after:always;">
+    <div class="ticket" style="text-align: center;">
+
+        <div class="row layout-top-spacing">
+
+            
+            <div class="row" style="text-align: center; padding-top:10px;">
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        <img src="data:image/png;base64,@Convert.ToBase64String(barcode)" alt="Image" style="width: 100%; height:200px;" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+    <script>
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#Delete").click(function (e) {
+            $("#DeleteSpinner").show();
+        });
+        $("#Edit").click(function (e) {
+            $("#EditSpinner").show();
+        });
+        $("#ReceiptConstraint").click(function (e) {
+            $("#ReceiptConstraintSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+        $("#CopyInvoice").click(function (e) {
+            $("#CopyInvoiceSpinner").show();
+        });
+
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+
+
+
+        $("#RecieptSupplyOrReceiveGoods").click(function (e) {
+            $("#RecieptSupplyOrReceiveGoodsSpinner").show();
+        });
+        $("#PayNow").click(function (e) {
+            $("#PayNowSpinner").show();
+        });
+        $("#CustomerReport").click(function (e) {
+            $("#CustomerReportSpinner").show();
+        });
+        $("#CustomerDetail").click(function (e) {
+            $("#CustomerDetailSpinner").show();
+        });
+        $("#PrintWhite").click(function (e) {
+            $("#PrintWhiteSpinner").show();
+        });
+        $("#PrintMail").click(function (e) {
+            $("#PrintMailSpinner").show();
+        });
+        $("#PrintT").click(function (e) {
+            $("#PrintTSpinner").show();
+        });
+        $("#PrintB").click(function (e) {
+            $("#PrintBSpinner").show();
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function PrintBar() {
+
+            var divContents = document.getElementById("BarcodeToPrint").innerHTML;
+            var height = $("#BarcodeToPrint").height();
+            document.body.style.height = height;
+            var myWindow = window.open('', 'BarcodeToPrint', 'height=400,width=600');
+            myWindow.document.write('<html><head>');
+            myWindow.document.write('</head><body>');
+            myWindow.document.write(divContents);
+            myWindow.document.write('</body></html>');
+            myWindow.document.close(); // necessary for IE >= 10
+
+            myWindow.onload = function () { // necessary if the div contain images
+
+                myWindow.focus(); // necessary for IE >= 10
+                myWindow.print();
+                myWindow.close();
+            };
+        }
+
+    </script>
+
+    <script>
+        function PrintElem() {
+          
+            var divContents = document.getElementById("contentToPrint").innerHTML;
+            var height = $("#contentToPrint").height();
+            document.body.style.height = height;
+            var myWindow = window.open('', 'contentToPrint', 'height=400,width=600');
+            myWindow.document.write('<html><head>');
+           
+
+            myWindow.document.write('</head><body>');
+
+          
+            myWindow.document.write(divContents);
+            myWindow.document.write('</body></html>');
+            myWindow.document.close(); // necessary for IE >= 10
+
+            myWindow.onload = function () { // necessary if the div contain images
+
+                myWindow.focus(); // necessary for IE >= 10
+                myWindow.print();
+                myWindow.close();
+            };
+        }
+    </script>
+}
+
+
+

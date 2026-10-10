@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Accountingsystem.Models.InventoryTransfer_Detail>
+
+
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+     
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.TotalAmounts)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterCreateOffer.ItemName)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterCreate.MovementNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.TransferDetail_Id)
+    @Html.HiddenFor(modelItem => item.InventoryTransfer_Id)
+    <tr>
+        
+        <td>
+    
+            @Math.Round(item.Product_Qty, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+        <td>
+            @{var Prod = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Name;
+                <h>@Prod</h> }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Batch_ID)
+        </td>
+
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("AddDetailToMasterss('"+item.TransferDetail_Id+"')")" class="btn BTN-style" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterDetails.Edit</a>
+            </div>
+
+        </td>
+    
+    </tr>
+}
+
+</table>

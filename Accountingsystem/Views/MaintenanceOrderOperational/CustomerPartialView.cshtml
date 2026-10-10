@@ -1,0 +1,387 @@
+﻿@model Accountingsystem.ViewModel.CustomerVM
+
+@using (Html.BeginForm("AddNewCustomerPartial", "MaintenanceOrderOperational", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerNumber)
+                                    @Html.EditorFor(model => model.Customer_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerPhone)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.Customer_Phone, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger">*</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Customer_Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerAddress)
+                                    @Html.EditorFor(model => model.Customer_Address, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.Website)
+                                    @Html.EditorFor(model => model.Customer_Website, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Website, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerEmail)
+                                    @Html.EditorFor(model => model.Customer_Mail, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Mail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.Country)
+                                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.Governorate)
+                                    @Html.EditorFor(model => model.Province, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.City)
+                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerFax)
+                                    @Html.EditorFor(model => model.Customer_Fax, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Fax, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerPhoneNumber)
+                                    @Html.EditorFor(model => model.Customer_Mobile, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Customer_Mobile, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.SelectBranch)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.CustomerBranch_Id, Model.BranchList, Accountingsystem.Resources.CustomerCreate.SelectBranch, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.CustomerBranch_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.SliceInformation)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.CustomerSelectSlice_Id, Model.SlicesList, Accountingsystem.Resources.CustomerCreate.SliceInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <span class="text-danger">*</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.CustomerSelectSlice_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Payment_Policy_Id, Model.MyPaymentPolicy, Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Payment_Policy_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.Attachments)
+                                    <label class="custom-file-container__custom-file form-control mb-4">
+                                        @Html.TextBoxFor(model => model.customerFiles, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.CustomerCreate.SeletFolder</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul class="list-unstyled" id="customerselectedtFiles"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.customerFiles, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerTaxNumber)
+                                    @Html.EditorFor(model => model.customer_TaxNumber, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.customer_TaxNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addCustomer();' class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.CustomerCreate.CreateCustomer  <div id="customerPartialSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#customerPartialSpinner").hide();
+
+            $("#CustomerBranch_Id").chosen();
+            $("#Payment_Policy_Id").chosen();
+            $("#CustomerSelectSlice_Id").chosen();
+
+            $("#CustomerBranch_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Payment_Policy_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#CustomerSelectSlice_Id_chosen").addClass("form-control Dropdownlist-select");
+
+        });
+        $('#customerFiles').change(function () {
+            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+            $('#customerselectedtFiles').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#customerFiles').empty();
+                    $('#customerselectedtFiles').empty();
+                    $('#customerselectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.TotalSizeOfSelectedFiles : " + totalConteLength + " " + " @Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Byte " +'</li> ');
+                    $('#customerselectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.MaxOfFilesSize" + '.</li> ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.FileSizePopupMessage",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#customerselectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileName : " + fileName + '</li> ');
+                    $('#customerselectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileLength :  " + this.files[i].size + " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li> ');
+
+
+                }
+            }
+            $('#customerselectedtFiles').append('<li>' +"@Accountingsystem.Resources.CustomerCreate.TotalSizeOfFiles : " + totalConteLength +  " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li > ');
+        });
+    </script>
+    <script>
+        $('#Customer_Name').on('input', function () {
+            $("#Customer_Name").removeClass("addRequiredFieldToInput");
+        });
+
+        $('#Customer_Phone').on('input', function () {
+            $("#Customer_Phone").removeClass("addRequiredFieldToInput");
+        });
+        $('#CustomerSelectSlice_Id').on('change', function () {
+            $("#CustomerSelectSlice_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#CustomerSelectSlice_Id_chosen span').css('background', '#ffffff');
+            $('#CustomerSelectSlice_Id_chosen b').css('background', '#ffffff');
+        });
+
+    </script>
+    <script>
+    function addCustomer() {
+
+        var CustomerId = $("#Customer_Id").val();
+        var CustomerName = $("#Customer_Name").val();
+        var CustomerCode = $("#Customer_Code").val();
+        var CustomerAddress = $("#Customer_Address").val();
+        var CustomerPhone = $("#Customer_Phone").val();
+        var CustomerMail = $("#Customer_Mail").val();
+        var ProvinceId = $("#SelectedProvinceId").val();
+        var CountryId = $("#SelectedCountryId").val();
+        var CityId = $("#SelectedCityId").val();
+        var CustomerFax = $("#Customer_Fax").val();
+        var BranchId = $("#CustomerBranch_Id").val();
+        var CustomerMobile = $("#Customer_Mobile").val();
+        var PurchasePrice = $("#Purchase_Price").val();
+        var PaymentPolicy = $("#Payment_Policy_Id").val();
+        var CustomerWebsite = $("#Customer_Website").val();
+        var CustomerSelectSlice_Id = $("#CustomerSelectSlice_Id").val();
+        var Files = $("#customerFiles").val();
+        if (CustomerName == "" || CustomerName == null || CustomerPhone == "" || CustomerPhone == null || CustomerSelectSlice_Id < 1) {
+
+            if (CustomerSelectSlice_Id < 1) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.SliceIsRequiredMessage",
+                    pos: 'top-center'
+                });
+                $("#CustomerSelectSlice_Id").addClass("addRequiredFieldToInput");
+                $("#CustomerSelectSlice_Id_chosen").addClass("addRequiredFieldToInput");
+                $('#CustomerSelectSlice_Id_chosen span').css('background', 'red');
+                $('#CustomerSelectSlice_Id_chosen b').css('background', 'red');
+                $('#CustomerSelectSlice_Id_chosen').trigger('focus');
+
+            }
+            if (CustomerName == "" || CustomerName == null) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.CustomerNameIsRequiredMessage",
+                    pos: 'top-center'
+                });
+                $("#Customer_Name").addClass("addRequiredFieldToInput");
+                $('#Customer_Name').trigger('focus');
+            }
+            if (CustomerPhone == "" || CustomerPhone == null) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.CustomerPhoneIsRequired",
+                    pos: 'top-center'
+                });
+                $("#Customer_Phone").addClass("addRequiredFieldToInput");
+                $('#Customer_Phone').trigger('focus');
+            }
+        }
+        else {
+            //$("#customerPartialSpinner").show();
+            $('#customerModal').modal('toggle');
+        var DataForCustomer;
+        DataForCustomer = {
+            Custcomer_Id:CustomerId,
+            Customer_Name:CustomerName,
+            Customer_Code:CustomerCode,
+            Customer_Address:CustomerAddress,
+            Customer_Phone:CustomerPhone,
+            Customer_Mail:CustomerMail,
+            SelectedProvinceId:ProvinceId,
+            SelectedCountryId:CountryId,
+            SelectedCityId:CityId,
+            Customer_Fax:CustomerFax,
+            Branch_Id:BranchId,
+            Customer_Mobile:CustomerMobile,
+            Purchase_Price:PurchasePrice,
+            Payment_Policy_Id:PaymentPolicy,
+            Customer_Website:CustomerWebsite,
+            CustomerSelectSlice_Id: CustomerSelectSlice_Id,
+            customerFiles:Files
+        };
+            var formData = new FormData();
+            var file = document.getElementById('customerFiles');
+            formData.append("Custcomer_Id", DataForCustomer.Custcomer_Id);
+            formData.append("Customer_Name", DataForCustomer.Customer_Name);
+            formData.append("Customer_Code", DataForCustomer.Customer_Code);
+            formData.append("Customer_Address", DataForCustomer.Customer_Address);
+            formData.append("Customer_Phone", DataForCustomer.Customer_Phone);
+            formData.append("Customer_Mail", DataForCustomer.Customer_Mail);
+            formData.append("SelectedProvinceId", DataForCustomer.SelectedProvinceId);
+            formData.append("SelectedCountryId", DataForCustomer.SelectedCountryId);
+            formData.append("SelectedCityId", DataForCustomer.SelectedCityId);
+            formData.append("Customer_Fax", DataForCustomer.Customer_Fax);
+            formData.append("CustomerBranch_Id", DataForCustomer.CustomerBranch_Id);
+            formData.append("Customer_Mobile", DataForCustomer.Customer_Mobile);
+            formData.append("Purchase_Price", DataForCustomer.Purchase_Price);
+            formData.append("Payment_Policy_Id", DataForCustomer.Payment_Policy_Id);
+            formData.append("Customer_Website", DataForCustomer.Customer_Website);
+            formData.append("CustomerSelectSlice_Id", DataForCustomer.CustomerSelectSlice_Id);
+            formData.append("customerFiles", DataForCustomer.customerFiles);
+            for (i = 0; i < file.files.length; i++) {
+                //Appending each file to FormData object
+                formData.append(file.files[i].name, file.files[i]);
+            }
+
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewCustomerPartial", "MaintenanceOrderOperational")",
+                data: formData,
+                type: "post",
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CustomerCreate.CustomerHasBeenAdded" + "  "  + data,
+                        pos: 'top-center'
+                    });
+                    $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "InvoiceMaster"))');
+                    $("#customerPartialSpinner").hide();
+                    $.ajax({
+
+                        url: '@Url.Action("GetCustomerDropdownList", "MaintenanceOrderOperational")',
+                        type: 'get'
+                    }).done(function (result) {
+
+                        $("#Customer_Id").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+
+                            $("#Customer_Id").append(p);
+                            $("#Customer_Id option:last").attr("selected", "selected");
+
+                        }
+                        $('#Customer_Id').trigger('chosen:updated');
+                        $("#Customer_Id_chosen").removeClass("addRequiredFieldToInput");
+                        $('#Customer_Id_chosen span').css('background', '#ffffff');
+                        $('#Customer_Id_chosen b').css('background', '#ffffff');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+
+                    });
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.ErrorMessage",
+                        pos: 'top-center'
+                    });
+                    $("#customerPartialSpinner").hide();
+                }
+         });
+        }
+    };
+    </script>
+
+
+}
+

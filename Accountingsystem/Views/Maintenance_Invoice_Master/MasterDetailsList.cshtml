@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Accountingsystem.Models.Maintenance_Invoice_Detail_Temp>
+
+
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayName("قيمة تكلفة الاشتراك")
+        </th>
+        <th>
+            @Html.DisplayName("اسم الاشتراك")
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+           @Math.Round(item.Subscription_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscription_Name)
+        </td>
+
+
+    </tr>
+}
+
+</table>

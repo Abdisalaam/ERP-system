@@ -1,0 +1,63 @@
+﻿@model Accountingsystem.ViewModel.ContentPersonDetailsVM
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+    
+
+
+
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactJobInformation)
+                @Html.EditorFor(model => model.Content_Job, Accountingsystem.Resources.InvoiceMasterAddNewInvoice.OfferPrice, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactName)
+                @Html.EditorFor(model => model.Content_Name, Accountingsystem.Resources.InvoiceMasterAddNewInvoice.OfferPrice, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactNumber)
+                @Html.EditorFor(model => model.Content_Number, Accountingsystem.Resources.InvoiceMasterAddNewInvoice.OfferPrice, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.CustomerCreateNewCustomer.ContactEmail)
+                @Html.EditorFor(model => model.Content_Mail, Accountingsystem.Resources.InvoiceMasterAddNewInvoice.OfferPrice, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+            </div>
+        </div>
+        
+
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href='javascript:;' onclick='AddCustomer();' class="btn btn-outline-info mb-2" style="text-decoration:none;">@Accountingsystem.Resources.CustomerCreateNewCustomer.AddContact</a>
+        </div>
+    </div>
+</div>
+    }
+

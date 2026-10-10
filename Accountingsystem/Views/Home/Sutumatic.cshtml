@@ -1,0 +1,746 @@
+﻿@using Accountingsystem.Resources
+
+
+@{
+    ViewBag.Title = "Sutumatic";
+    Layout = null;
+}
+<link href="~/Content/css/StyleSutumatic.css" rel="stylesheet" />
+<head>
+    <meta charset="utf-8">
+    <title>SUTUM ICT Consulting</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <!-- Favicons -->
+    <link href="~/Template/AssetSutumatic//img/SUTICON-01.png" rel="icon">
+    <link href="~/Template/AssetSutumatic//img/Sutum-Touch-Icon-01.png" rel="SUTUM-touch-icon">
+    <!--Google Map-->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="~/Template/AssetSutumatic//lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="~/Template/AssetSutumatic/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Template/AssetSutumatic//lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="~/Template/AssetSutumatic//lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/Template/AssetSutumatic//lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.0.0/dist/css/ionicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Template/AssetSutumatic//vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Template/AssetSutumatic//vendor/daterangepicker/daterangepicker.css">
+    <link href="~/Template/AssetSutumatic//lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Template/AssetSutumatic//lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+    <!-- Map Stylesheet File -->
+    <link href="~/Template/AssetSutumatic//css/Map.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="~/Template/AssetSutumatic//css/style.css" rel="stylesheet">
+    <link href="~/Template/AssetSutumatic//css/WhollyShopcss.css" rel="stylesheet" />
+</head>
+
+
+
+<body>
+    <!--==========================
+      Header
+    ============================-->
+    <header id="header">
+        <button type="button" id="mobile-nav-toggle">
+            <i class="fas fa-bars">
+            </i>
+        </button>
+        <div class="container-fluid">
+            <div id="logo" class="pull-left  wow slideInLeft">
+                <h1><a href="#intro" class="scrollto">
+                  <img alt="Sutum Logo" src="~/Content/Images/SVG/Sutum Logo.svg" class="Logo">
+                
+                </a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+            </div>
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li>
+                        <a href='@Url.Action("Create", "RegisterCustomer")'>
+                            @*@login.Registerasanewuser*@
+                        </a>
+                    </li>
+                    <li><a href="~/account/MainLogin"><i class="fas fa-sign-in-alt"></i>تسجيل الدخول</a></li>
+
+
+                </ul>
+
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </header><!-- #header -->
+
+
+
+    <section class="bodysection" style="overflow-x:auto;width:100%">
+
+
+
+
+        <header id="headers" class="nav-bar-3">
+            <div class="container-fluid">
+                <nav id="nav-menu-container-3">
+                    <ul class="nav-menu">
+
+                        <li class="main-sutumatic-logo">
+                            @*<img class="SUTUMATIC-LOGO-NAV" src="~/Assets/img/Sutumatic/Asset 1.png" />*@
+                            <img class="SUTUMATIC-LOGO-NAV" src="~/Content/Images/Sutumatic/Asset 1.png" />
+                        </li>
+
+                    </ul>
+                </nav><!-- #nav-menu-container -->
+            </div>
+        </header>
+
+        <!--==========================
+          Intro Section
+        ============================-->
+        <section id="intro">
+            <div class="intro-container">
+                <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+                    <ol class="carousel-indicators"></ol>
+
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="carousel-item active">
+                            <div class="carousel-background">
+                                @*<img src="~/Assets/img/intro-carousel/carsouel intro2.jpg" alt="">*@
+                                <img src="~/Content/Images/intro-carousel/carsouel intro2.jpg" alt="" />
+                            </div>
+                            <div class="carousel-container">
+                                <div class="carousel-content">
+                                    <h2 dir="auto"></h2>
+                                    <p> </p>
+                                    <a href="#SUTUMATIC-INTRO" class="btn-get-started scrollto"> @HomeSutumatic.SUTUMATICCARSOUEL3</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-background">
+                                @*<img src="~/Assets/img/intro-carousel/carsouel intro.jpg" alt="">*@
+                                <img src="~/Content/Images/intro-carousel/carsouel intro.jpg" alt="" />
+                            </div>
+                            <div class="carousel-container">
+                                <div class="carousel-content">
+                                    <h2>2019</h2>
+                                    <h2> @HomeSutumatic.SUTUMATICCARSOUEL4</h2>
+                                    <p dir="auto"> </p>
+                                    @*<p dir="auto"> @HomeSutumatic.SUTUMATICCARSOUEL5</p>*@
+                                    @*<a href="#PRICEPLAN" class="btn-get-started scrollto"> @HomeSutumatic.SUTUMATICCARSOUEL6</a>
+        <a href="#PRICEPLAN" class="btn-get-started scrollto"> @HomeSutumatic.SUTUMATICCARSOUEL7</a>*@
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon fas fa-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">السابق</span>
+                    </a>
+
+                    <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon fas fa-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">التالى</span>
+                    </a>
+
+                </div>
+            </div>
+        </section><!-- #intro -->
+        <!--==========================
+          Featured Services Section
+        ============================-->
+        <!--==========================
+          About Us Section
+        >============================-->
+        <section id="about">
+            <div class="container" id="sasa">
+                <header id="SUTUMATIC-INTRO" class="section-header">
+                    @*<h3><img class="SUTUMATIC-LOGO" src="~/Assets/img/Sutumatic/Asset 1.png" /></h3>*@
+
+                    <h3> <img class="SUTUMATIC-LOGO" src="~/Content/Images/Sutumatic/Asset 1.png" /></h3>
+                    @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                    {
+
+                        HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                        if (cookie == null)
+                        {
+                            <p dir="auto" class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO
+                            </p>
+                            <p class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO1
+                            </p>
+                            <p class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO2
+                            </p>
+                            <p class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO3
+                            </p>
+                            <p class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO4
+                            </p>
+                            <p class="about-P" style="text-align:right;">
+                                @HomeSutumatic.SUTUMATICLOGO5
+                            </p>
+                        }
+                    }
+                    @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                    {
+                        HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                        if (cookie != null && cookie.Value != null)
+                        {
+                            <p dir="auto" class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO
+                            </p>
+                            <p class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO1
+                            </p>
+                            <p class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO2
+                            </p>
+                            <p class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO3
+                            </p>
+                            <p class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO4
+                            </p>
+                            <p class="about-P" style="text-align:left;">
+                                @HomeSutumatic.SUTUMATICLOGO5
+                            </p>
+                        }
+                    }
+
+                </header>
+
+
+            </div>
+        </section>
+
+        <section class="tabs-section">
+            <div class="container">
+                <header class="section-header">
+                    <h3>@HomeSutumatic.ADVAHEADER</h3>
+                </header>
+                <!-- Classic tabs -->
+                <div class="classic-tabs mx-2">
+
+                    <ul class="nav nav-tabs nav-justified md-tabs clearfix" id="myTabJust" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="Asset-tab-just" data-toggle="tab" href="#Asset-just" role="tab" aria-controls="Asset-just" aria-selected="true"> @HomeSutumatic.TABNAME1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sales-tab-just" data-toggle="tab" href="#sales-just" role="tab" aria-controls="sales-just" aria-selected="false">@HomeSutumatic.TABNAME2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Purchases-tab-just" data-toggle="tab" href="#Purchases-just" role="tab" aria-controls="Purchases-just" aria-selected="false">@HomeSutumatic.TABNAME3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Stores-tab-just" data-toggle="tab" href="#Stores-just" role="tab" aria-controls="Stores-just" aria-selected="false">@HomeSutumatic.TABNAME4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Accounts-tab-just" data-toggle="tab" href="#Accounts-just" role="tab" aria-controls="Accounts-just" aria-selected="false">@HomeSutumatic.TABNAME5</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link HR-link" id="HR-tab-just" data-toggle="tab" href="#HR-just" role="tab" aria-controls="HR-just" aria-selected="false">@HomeSutumatic.TABNAME6</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Subscriptions-tab-just" data-toggle="tab" href="#Subscriptions-just" role="tab" aria-controls="Subscriptions-just" aria-selected="false">@HomeSutumatic.TABNAME7</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Projects-tab-just" data-toggle="tab" href="#Projects-just" role="tab" aria-controls="Projects-just" aria-selected="false">@HomeSutumatic.TABNAME8</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Reports-tab-just" data-toggle="tab" href="#Reports-just" role="tab" aria-controls="Reports-just" aria-selected="false">@HomeSutumatic.TABNAME9</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Services-tab-just" data-toggle="tab" href="#Services-just" role="tab" aria-controls="Services-just" aria-selected="false">@HomeSutumatic.TABNAME10</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content card pt-5" id="myTabContentJust">
+                        <div class="tab-pane fade show active" id="Asset-just" role="tabpanel" aria-labelledby="Asset-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAa1</bdi></p><br />
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAa2</bdi></p><br />
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAa3</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAa1</bdi></p><br />
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAa2</bdi></p><br />
+                                        <p @*dir=auto*@ class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAa3</bdi></p>
+                                    }
+                                }
+
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Assets20.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Assets20.jpg" />
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sales-just" role="tabpanel" aria-labelledby="sales-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAb8</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAb8</bdi></p>
+                                    }
+                                }
+
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/sales.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/sales.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Purchases-just" role="tabpanel" aria-labelledby="Purchases-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAc8</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAc8</bdi></p>
+                                    }
+                                }
+
+
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Purchases.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Purchases.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Stores-just" role="tabpanel" aria-labelledby="Stores-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAd8</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAd8</bdi></p>
+                                    }
+                                }
+
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Warehouses.jpeg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Warehouses.jpeg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Accounts-just" role="tabpanel" aria-labelledby="Accounts-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAe7</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAe7</bdi></p>
+                                    }
+                                }
+
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Accounts.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Accounts.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="HR-just" role="tabpanel" aria-labelledby="HR-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAf7</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAf7</bdi></p>
+                                    }
+                                }
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/HR.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/HR.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Subscriptions-just" role="tabpanel" aria-labelledby="Subscriptions-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAg6</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAg6</bdi></p>
+                                    }
+                                }
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Subscriptions.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Subscriptions.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Projects-just" role="tabpanel" aria-labelledby="Projects-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAh1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAh2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAh3</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAh1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAh2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAh3</bdi></p>
+                                    }
+                                }
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Projects.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Projects.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Reports-just" role="tabpanel" aria-labelledby="Reports-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAi1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAi2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAi3</bdi></p>
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAi1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAi2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAi3</bdi></p>
+                                    }
+                                }
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/reports.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/reports.jpg" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Services-just" role="tabpanel" aria-labelledby="Services-tab-just">
+                            <div class="PARA-LEFT col-lg-9">
+                                @if (HttpContext.Current.Request.Cookies["Language"] == null)
+                                {
+
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie == null)
+                                    {
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj8</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj9</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj10</bdi></p><br />
+                                        <p class="tab-para" style="text-align:right;"><bdi>@HomeSutumatic.TABPARAj11</bdi></p><br />
+                                    }
+                                }
+                                @if (HttpContext.Current.Request.Cookies["Language"] != null)
+                                {
+                                    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj1</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj2</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj3</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj4</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj5</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj6</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj7</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj8</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj9</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj10</bdi></p><br />
+                                        <p class="tab-para" style="text-align:left;"><bdi>@HomeSutumatic.TABPARAj11</bdi></p><br />
+                                    }
+                                }
+                            </div>
+                            <div class="Tabs-img col-lg-3">
+                                @*<img class="Tab-PIC" src="~/Assets/img/Sutumatic/Services.jpg" />*@
+                                <img class="Tab-PIC" src="~/Content/Images/Sutumatic/Services.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Classic tabs -->
+
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+    <!--==========================
+      Footer
+    ============================-->
+
+
+    <a href="#" class="back-to-top"><i class="fas fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <!--Variables-->
+
+    <script src="~/Template/AssetSutumatic//lib/jquery/jquery.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/jquery/jquery-migrate.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/easing/easing.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/superfish/hoverIntent.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/superfish/superfish.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/wow/wow.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/waypoints/waypoints.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/counterup/counterup.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/lightbox/js/lightbox.min.js"></script>
+    <script src="~/Template/AssetSutumatic//lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Template/AssetSutumatic//vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/Template/AssetSutumatic//vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="https://unpkg.com/ionicons@4.0.0/dist/ionicons.js"></script>
+    <script src="~/Template/AssetSutumatic//vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+    <script src="~/Template/AssetSutumatic//js/map-custom.js"></script>
+    <!--===============================================================================================-->
+    <!-- Contact Form JavaScript File -->
+    <script src="~/Template/AssetSutumatic//contactform/contactform.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <script src="~/Template/AssetSutumatic//js/main.js"></script>
+    <script src="~/Scripts/Plugins.js"></script>
+    @*@RenderSection("scripts", false);*@
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,418 @@
+﻿@model Accountingsystem.Models.CatchReceipt
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CatchReceiptDetails.CatchReceiptDetail;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.CatchReceipt_Id)
+    @Html.HiddenFor(model => model.AccountCredit_Id)
+    @Html.HiddenFor(model => model.AccountDebit_Id)
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <div class="text-center">
+                        @Accountingsystem.Resources.CatchReceiptDetails.CatchReceiptDetail
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.CatchReceiptNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CatchReceipt_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.Date)
+                                        </div>
+                                        <div>
+                                            @Model.CatchReceipt_date.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.ReceiptCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CatchReceipt_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.AccountCreditor)
+                                        </div>
+                                        <div>
+                                            @{ var accountcredit = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Convert.ToInt32(Model.AccountCredit_Id.ToString())).Account_Name; }
+                                            @accountcredit
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @{
+                        if (Model.Child_AccountCredit_Id > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.SubAccount)
+                                                </div>
+                                                <div>
+                                                    @if (Model.AccountCredit_Id == 45 || Model.AccountCredit_Id == 37 || Model.AccountCredit_Id == 111)
+                                                    {
+                                                        var thischild = Accountingsystem.Models.Accounts.findAccountbyID(Convert.ToInt32(Model.Child_AccountCredit_Id.ToString())).Account_Name;
+                                                        @thischild
+                                                    }
+                                                    else if (Model.Child_AccountCredit_Id == 0 || Model.Child_AccountCredit_Id == null)
+                                                    {
+                                                        <h></h>
+                                                    }
+                                                    else
+                                                    {
+                                                        var thischild = Accountingsystem.Models.Accounts.findAccountbyID(Convert.ToInt32(Model.Child_AccountCredit_Id.ToString())).Account_Name;
+                                                        @thischild
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.PaymentMethod)
+                                        </div>
+                                        <div>
+                                            @{ var accountcredit2 = Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(Convert.ToInt32(Model.AccountDebit_Id.ToString())).Payment_Type; }
+                                            @accountcredit2
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.Value)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.CatchReceipt_Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.Supplement)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Reference)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.CatchReceiptDetails.Description)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.CatchReceipt_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="layout-top-spacing">
+                @{ if (Model.CatchReceiptFileDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileNumber</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileName</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileLength</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileExtension</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var file in Model.CatchReceiptFileDetails)
+                                    {
+                                        <tr>
+                                            <td>@file.Id</td>
+                                            <td>@file.FileName</td>
+                                            <td>@file.ContentLength</td>
+                                            <td>@file.File_Extention</td>
+                                            <td>
+                                                <a href='@Url.Action("ReturnsupFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row layout-top-spacing">
+                <div class="col-md-4">
+                    <div class="form-group">
+                    
+
+                            @if (Model.CatchReceipt_State == Accountingsystem.Models.TransactionState.Post)
+                            {
+                                <input id="changeState" type="button" value="Void" class="btn btn-block btn-outline-info mb-lg-0">
+
+                            }
+
+                            @if (Model.CatchReceipt_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+                                <input id="changeState" type="button" value="Post" class="btn btn-block btn-outline-info mb-lg-0">
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("Delete", new { id = Model.CatchReceipt_Id })">
+                                    @Accountingsystem.Resources.CatchReceiptDetails.Delete
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                                <a id="editExpensesBtn" href="@Url.Action("Edit", new { id = Model.CatchReceipt_Id })" class="btn btn-block btn-outline-info mb-lg-0">
+                                    @Accountingsystem.Resources.CatchReceiptDetails.Edit
+                                    <span id="editExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+                            @if (Model.CatchReceipt_State != Accountingsystem.Models.TransactionState.Pending @*&& (User.IsInRole("عميل") || User.IsInRole("مالك النظام"))*@)
+                            {
+
+                                <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActive", new { id = Model.CatchReceipt_Id })">
+                                    @Accountingsystem.Resources.ExpenseDetails.Delete
+                                    <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                      
+                            <a id="detailsByCode" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.CatchReceipt_Code })' class="btn btn-block btn-outline-info mb-lg-0">
+                                @Accountingsystem.Resources.CatchReceiptDetails.ReceiptConstraint
+                                <span id="detailsByCodeBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        
+                            }
+
+
+
+                        
+                       
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="expenseCreateBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action( "Create",new {child=0,type=""})">
+                            @Accountingsystem.Resources.CatchReceiptDetails.CreateCatchReceipt
+                            <span id="expenseCreateBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="printExpenseBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintcatchRecipt", new { controller = "Reports", id = Model.CatchReceipt_Id})' target="_blank">
+                            @Accountingsystem.Resources.CatchReceiptDetails.Print
+                            <span id="printExpenseBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="printExpenseBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("PrintcatchReciptEmail", new { controller = "Reports", id = Model.CatchReceipt_Id})' target="_blank">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.PrintEmail
+                            <span id="printExpenseBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.CatchReceiptDetails.BackToList
+                            <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+            $("#expenseCreateBtn").click(function (e) {
+                $("#expenseCreateBtnSpinner").show();
+            });
+            $("#detailsByCode").click(function (e) {
+                $("#detailsByCodeBtnSpinner").show();
+            }); 
+            $("#editExpensesBtn").click(function (e) {
+                $("#editExpensesBtnSpinner").show();
+            });
+            $("#deleteExpensesBtn").click(function (e) {
+                $("#deleteExpensesBtnSpinner").show();
+            });
+            $("#printExpenseBtn").click(function (e) {
+                $("#printExpenseBtnSpinner").show();
+            });
+              });
+            function updateInvoiceState(data) {
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Action("Update", "CatchReceipt")',
+                    data: data,
+                    success: function (result) {
+                        Snackbar.show({
+                            text: result,
+                            pos: 'top-center'
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    },
+                    error: function () {
+                        alert(data);
+                        alert("Error!")
+                    }
+                });
+            }
+
+        $("#changeState").click(function (e) {
+            this.disabled = true;
+            e.preventDefault();
+            var data = JSON.stringify({
+                CatchReceipt_Id: @Model.CatchReceipt_Id,
+                CatchReceipt_State: $("#changeState").val()
+            });
+            $.when(updateInvoiceState(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+
+        });
+
+
+
+
+    </script>
+}

@@ -1,0 +1,132 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.ReportsGetAllReportsOfStore.StoresReports;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        @Accountingsystem.Resources.ReportsGetAllReportsOfStore.StoresReports
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="row col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("MakeWareHouseGet")'>
+                            @Accountingsystem.Resources.ReportsGetAllReportsOfStore.StoresCostReports
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesReturnReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("getDetailOfStore","ReportsNew")'>
+                            @Accountingsystem.Resources.ReportsGetAllReportsOfStore.ReportOfStoreQuantitiesAtCost
+                            <span id="salesReturnReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("CardOfProductQuanity","ReportsNew")'>
+                            @Accountingsystem.Resources.ReportsGetAllReportsOfStore.ItemCardQuantity
+                            <span id="salesClassificationReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("CardOfStore","ReportsNew")'>
+                            @Accountingsystem.Resources.ReportsGetAllReportsOfStore.ItemCardInStock
+                            <span id="salesClassificationoReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesClassificationoReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("StoreCardAll","ReportsNew")'>
+                            @Accountingsystem.Resources.ReportsNewCardOfStore.ReportCardOfItems
+                            <span id="salesClassificationoReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@*<h2 class="HEADTITLE-STYLE">تقارير المخازن</h2>
+
+    <a class="btn BTN-style" href='@Url.Action("MakeWareHouseGet")'>
+        تقارير تكاليف المخازن
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("getDetailOfStore","ReportsNew")'>
+        تقرير كميات المخزن بالتكلفة
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("CardOfProductQuanity","ReportsNew")'>
+        كارت الصنف بالكمية
+    </a>
+
+    <a class="btn BTN-style" href='@Url.Action("CardOfStore","ReportsNew")'>
+        كارت الصنف فى المخزن
+    </a>*@
+@section Scripts {
+
+
+    <script type="text/javascript">
+
+        $("#salesReportBtn").click(function (e) {
+            $("#salesReportBtnSpinner").show();
+        });
+        $("#salesReturnReportBtn").click(function (e) {
+            $("#salesReturnReportBtnSpinner").show();
+        });
+        $("#salesClassificationReportBtn").click(function (e) {
+            $("#salesClassificationReportBtnSpinner").show();
+        });
+        $("#salesClassificationoReportBtn").click(function (e) {
+            $("#salesClassificationoReportBtnSpinner").show();
+        });
+    </script>
+}
+
+

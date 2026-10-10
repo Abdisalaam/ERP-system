@@ -1,0 +1,218 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.AllSalseInvoicesWithOutTaxVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>فواتير المبيعات لفرع معين</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+        @{
+            var fromdate = Convert.ToDateTime(Model.startDate);
+            var ToDate = Convert.ToDateTime(Model.EndDate);
+
+        }
+        @if (fromdate.Year != 1995 && ToDate.Year != 2200)
+        {
+            <div style="text-align:right;">
+                <h style="text-align:right;color:black;font-size:large;"> @Model.startDate : من</h><br />
+                <h style="text-align:right;color:black;font-size:large;"> @Model.EndDate : الى</h>
+            </div>
+        }
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            فواتير المبيعات لفرع :
+            @Accountingsystem.Models.SubLedger.getDetail(Model.branchId).SubLed_Name
+        </div>
+
+    </div>
+
+
+
+    <table class="table table-bordered" style="text-align:center;margin-top:0%;" data-sortable="" width="1000" border="1">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center;">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                رقم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                تاريخ الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                تاريخ الاستحقاق
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                رقم الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                اجمالي الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                قيمة الضريبة
+            </th>
+            <th class="col-md-4" style="text-align:center;">
+                اجمالي بعد الضريبة
+            </th>
+
+        </tr>
+        @foreach (var item in Model.SalesInvoiceMasterWithOut)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id).Customer_Name
+
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id).Customer_Code
+
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Convert.ToDateTime(item.Invoice_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Convert.ToDateTime(item.Due_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Serial_Number
+                </td>
+                @{
+                    var TotalbeforTax = item.Total_Amount - item.Total_Tax;
+
+                    <td class="col-md-4" style="text-align:center">
+
+                        @Math.Round(TotalbeforTax, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                }
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+
+        }
+        @foreach (var item in Model.SalesReciptWithOut)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @if (item.Customer_Id == null || item.Customer_Id == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Name
+                    }
+
+
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @if (item.Customer_Id == null || item.Customer_Id == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Code
+                    }
+
+
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Convert.ToDateTime(item.Invoice_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td class="col-md-4" style="text-align:center"></td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Serial_Number
+                </td>
+                @{
+                    var TotalbeforTax = item.Total_Amount - item.Total_Tax;
+
+                    <td class="col-md-4" style="text-align:center">
+
+                        @Math.Round(TotalbeforTax, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                }
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+
+        }
+    </table>
+    <footer style="margin-top:95%;">
+        <div style="text-align:right;color:black;font-size:large;">
+            <h style="text-align:right;color:black;font-size:large;">اجمالي الفواتير @Math.Round(Model.totalBeforeTax, 2, MidpointRounding.AwayFromZero) </h>
+            <br />
+
+            <h style="text-align:right;color:black;font-size:large;">اجمالى الضرائب @Math.Round(Model.totalTax, 2, MidpointRounding.AwayFromZero)</h>
+            <br />
+
+
+            <h style="text-align:right;color:black;font-size:large;"> اجمالي الفواتير بعد الضرائب @Math.Round(Model.totalAfterTax, 2, MidpointRounding.AwayFromZero)</h>
+
+            <br />
+
+        </div>
+    </footer>
+</body>
+</html>

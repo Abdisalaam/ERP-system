@@ -1,0 +1,864 @@
+﻿@model Accountingsystem.Models.Employee
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeDetails.EmployeeDetailss;
+    //  Accountingsystem.Models.Employee.deleteAllSalGl();
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    HttpCookie cookie = Request.Cookies["Language"];
+    var totalday = 0;
+    var totaldayremind = 0;
+    decimal totalsal = 0;
+    decimal increase = 0;
+    decimal decrease = 0;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <div class="text-center">
+                  @Accountingsystem.Resources.EmployeeDetails.EmployeeDetailss
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.EmployeeNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Emp_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.EmployeeName)
+                                        </div>
+                                        <div>
+                                            @Model.Emp_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.EmployeePhone)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Emp_Phone)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.IdentityOrResidenceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Passport_number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.ResidenceExpiryDate)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.End_Date_Residency)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.Address)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Emp_Address)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.Email)
+                                        </div>
+                                        <div>
+                                            <a style="color:dodgerblue" href="mailto:@Model.Emp_Mail">@Model.Emp_Mail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.JobTitle)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Emp_Title)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.EmployeeBirhDate)
+                                        </div>
+                                        <div>
+                                            @Model.Emp_DOB
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (package.Number_Branch > 0)
+                    {
+
+                        if (Model.BranchSubledger_Id != null && Model.BranchSubledger_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BranchSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.BranchName)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (Model.DepartSubledger_Id != null && Model.DepartSubledger_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.DepartSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Department)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        if (Model.BussinesSubledger_Id != null && Model.BussinesSubledger_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BussinesSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Activity)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.ActualStartDate)
+                                        </div>
+                                        <div>
+                                            @Model.Work_Actual_Start
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.ContractBeginning)
+                                        </div>
+                                        <div>
+                                            @Model.Contract_Begin
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.EndContract)
+                                        </div>
+                                        <div>
+                                            @Model.Contract_End
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.AttendenceType)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Type_OF_Work)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.SocialInsuranceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Social_insurance_number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.HealthInsuranceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Medical_Insurance_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.EndHealthInsurance)
+                                        </div>
+                                        <div>
+                                            @Model.End_medical_Insurance
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.Nationality)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Nationality)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.Sex)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Sex)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.SocialStatus)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Social_status)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.Active)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Active)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.SystemUser)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.User)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.validate.sellForAllCustomer)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.ViewAllCustomer)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeCreate.EmployeePhoto)
+                                        </div>
+                                        <div>
+                                            @if (Model.Emp_Image != null)
+                                            {
+                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.Emp_Image)" alt="Image" style="width: 100px" />
+                                                <a href='@Url.Action("RemoveImage", new { Emp_Id = Model.Emp_Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (package.HR == true)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.BankName)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.BankName)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.BankCode)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.BankCode)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.AccountNumber)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.AccountNum)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.EmployeeDetails.EbanNumber)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.EbanNumb)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                </div>
+            </div>
+
+
+            <div class="layout-top-spacing">
+            @if (package.HR == true)
+            {
+               
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.EmployeeDelete.AccountName</th>
+                                        <th>@Accountingsystem.Resources.EmployeeDelete.Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var detail in Model.Salary_Components)
+                                    {
+                                        var salaCop = Accountingsystem.Models.TypeOfDetailSalary.getDetailOfTypeSalaryById(detail.Account_Id);
+                                        if (salaCop == null || salaCop.Sal_Type == Accountingsystem.Models.SalaryTypeValue.يزيد_من_قيمة_اجمالى_الراتب)
+                                        {
+                                            increase += detail.Account_Amount;
+                                        }
+                                        else
+                                        {
+                                            decrease += detail.Account_Amount;
+                                        }
+                                    
+                                        <tr>
+                                            <td>@detail.Account_Name</td>
+                                            <td>
+
+                                                @Math.Round(detail.Account_Amount, 2,MidpointRounding.AwayFromZero)
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>الاجمالي</td>
+                                        <td>
+
+                                            @Math.Round(increase-decrease, 2,MidpointRounding.AwayFromZero)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                
+            </div>
+
+            <div class="layout-top-spacing">
+               @if (package.HR == true)
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.EmployeeDetails.Vacation</th>
+                                        <th>@Accountingsystem.Resources.EmployeeDetails.DaysNumber</th>
+                                        <th>@Accountingsystem.Resources.EmployeeDetails.VacationResidual</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var detail in Model.EmpVacations)
+                                    {
+                                        totalday += detail.DaysInyear;
+                                        totaldayremind += detail.TotalAfterAbsent;
+                                        <tr>
+                                            <td>@detail.Vacation_Types.Vacation_Type</td>
+                                            <td>
+
+                                                @detail.DaysInyear
+                                            </td>
+                                            <td>
+
+                                                @detail.TotalAfterAbsent
+                                            </td>
+                                        </tr>
+
+                                    }
+                                    <tr>
+                                        <td>@Accountingsystem.Resources.EmployeeDetails.Net</td>
+                                        <td>
+
+                                            @totalday
+                                        </td>
+                                        <td>
+
+                                            @totaldayremind
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                
+            </div>
+
+            <div class="layout-top-spacing">
+                @{ if (Model.EmployeeFileDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileNumber</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileName</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileLength</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileExtension</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var file in Model.EmployeeFileDetails)
+                                    {
+                                        <tr>
+                                            <td>@file.Id</td>
+                                            <td>@file.FileName</td>
+                                            <td>@file.ContentLength</td>
+                                            <td>@file.ProImg</td>
+                                            <td>
+                                                <a href="@Url.Action( "ReturnEmpFile", new { fileId = file.Id })" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                                </a>
+
+                                            </td>
+                                            <td>
+
+                                                <a href='@Url.Action("RemoveFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+            <div class="row layout-top-spacing">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+                        {
+
+
+
+
+
+
+                            <a id="editExpensesBtn" href="@Url.Action("Edit", new { id = Model.Emp_Id })" class="btn btn-block btn-outline-info mb-lg-0">
+                                @Accountingsystem.Resources.CatchReceiptDetails.Edit
+                                <span id="editExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                            @*<a id="deleteBtn"href=" @Url.Action("Delete", new { id = Model.Emp_Id })" class="btn btn-block btn-outline-info mb-lg-0">
+                                @Accountingsystem.Resources.CatchReceiptDetails.Delete
+                                <span id="deleteBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>*@
+
+
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Request.IsAuthenticated @*&& !User.IsInRole("بائع") && !User.IsInRole("مدخل بيانات")*@)
+                        {
+                            if (package.Attendingandleaving == true)
+                            {
+                              <a id="reportBtn" href='@Url.Action("GetEmployeePenalties", new { controller = "AttendingAndLeaving", EmpId = Model.Emp_Id })' class="btn btn-block btn-outline-primary mb-lg-0">
+                           @Accountingsystem.Resources.Atttendace.AttendingAndLeavingDetails
+                                <span id="reportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                            }
+                            <a id="reportBtn" href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = Model.Emp_Code })' class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.EmployeeDetails.EmployeeReport
+                                <span id="reportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                            <a id="vacBtn" href='@Url.Action("Create", new { controller = "Vacations", id = Model.Emp_Id })' class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.EmployeeDetails.CreateEmployeeVacation
+                                <span id="vacBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+
+
+
+
+                        }
+                        @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب") && !User.IsInRole("بائع")*@ && Model.Active == false)
+                        {
+                            <a id="reportBtn" href=" @Url.Action("ChangeValueOfEmployeeActiveOrNot", new { id = Model.Emp_Id })" class="btn btn-block btn-outline-primary mb-lg-0">
+
+                                @Accountingsystem.Resources.EmployeeIndexOfNotActiVeEmployee.ConvertActiveEmployee
+                                <span id="reportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        }
+                        @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب") && !User.IsInRole("بائع")*@ && Model.Active == true)
+                        {
+                            <a id="reportBtn" href=" @Url.Action("ChangeValueOfEmployeeActiveOrNot", new { id = Model.Emp_Id })" class="btn btn-block btn-outline-primary mb-lg-0">
+
+                                @Accountingsystem.Resources.EmployeeIndex.ConvertInactiveEmployee
+                                <span id="reportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        }
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Model.Active == true)
+                        {
+                            <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                @Accountingsystem.Resources.CatchReceiptDetails.BackToList
+                                <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("indexOfNotActiVeEmployee")'>
+                                @Accountingsystem.Resources.CatchReceiptDetails.BackToList
+                                <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+    <script>
+
+        $("#deleteBtn").click(function (e) {
+            $("#deleteBtnSpinner").show();
+        });
+        $("#editComBtn").click(function (e) {
+            $("#editcomBtnSpinner").show();
+        });
+        $("#reportBtn").click(function (e) {
+            $("#reportBtnSpinner").show();
+        });
+        $("#vacBtn").click(function (e) {
+            $("#vacBtnSpinner").show();
+        });
+     
+
+
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+
+
+    </script>
+}

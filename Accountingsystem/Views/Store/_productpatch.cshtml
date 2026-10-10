@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Accountingsystem.Models.ProductBatches>
+
+<br />
+
+<div class="text-center">
+    @Accountingsystem.Resources.ProductCreate.ItemsData
+</div>
+
+<br />
+
+<div class="table-responsive">
+    <table class="table mb-4">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.ItemNumber)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Item)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.ProductCreate.AverageCost)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Total)
+                </th>
+                <th>@Accountingsystem.Resources.ProductCreate.SellingPrice</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @*@Html.HiddenFor(modelItem => item.Product_ID)*@
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Product.Prod_Code)*@
+                    @{ if (item.Product_ID == 0 || item.Product_ID == null)
+                        {
+
+                        }
+                        else
+                        {
+                            var productCode = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Code;
+                            <h>@productCode</h>
+                        }
+                    }
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Product.Prod_Name)*@
+                    @{ if (item.Product_ID == 0 || item.Product_ID == null)
+                        {
+
+                        }
+                        else
+                        {
+                            var productName = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Name;
+                            <h>@productName</h>
+
+                        }
+
+                    }
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Product_Quantity)*@
+                    @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Product_Cost)*@
+                    @Math.Round(item.Product_Cost, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @Math.Round(item.Batch_Cost, 2, MidpointRounding.AwayFromZero)
+                    @*@Html.DisplayFor(modelItem => item.Batch_Cost)*@
+                </td>
+                <td>
+                    @Math.Round(item.SalesPrice.Value, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

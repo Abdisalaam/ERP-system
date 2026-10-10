@@ -1,0 +1,64 @@
+﻿@model Accountingsystem.ViewModel.SlicesProductVM
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SlicesProduct_Id)
+    @Html.HiddenFor(model => model.Product_ID)
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-5">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Slice_Price, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Slice_Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <span class="required-mark col-md-1">*</span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SlicesCreate.Price>
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.SlicesCreate.Price)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-5">
+                <div class="Dropdownlist">
+                    @Html.DropDownListFor(model => model.SlicesSlice_Id, Model.MySliceList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                    @Html.ValidationMessageFor(model => model.SlicesSlice_Id, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <span class="required-mark col-md-1">*</span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SlicesCreate.SliceNameInformation>
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.SlicesCreate.SliceName)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href='javascript:;' onclick='AddSliceProduct();' class="btn BTN-style" style="text-decoration:none;">@Accountingsystem.Resources.ReversePOSInvoiceDetails.AddToRegulation</a>
+        </div>
+    </div>
+</div>
+}
+
+

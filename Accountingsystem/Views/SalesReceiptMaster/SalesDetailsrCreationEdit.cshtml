@@ -1,0 +1,103 @@
+﻿@model Accountingsystem.ViewModel.SalesReceiptDetailsVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+     
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Details_Id)
+        @Html.HiddenFor(model => model.Master_Id)
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.Batch_ID, Model.BatchList, "اختر الصنف", htmlAttributes: new { @class = "textfield" })
+                            @Html.ValidationMessageFor(model => model.Batch_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اختر المنتج المراد اضافتها">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Batch_ID, "اختر الصنف", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Product_Quantity, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Product_Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="الكمية">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Quantity, "الكمية", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.Product_Tax, Model.ProducttaxList, "اختر الضريبة", htmlAttributes: new { @class = "textfield" })
+                            @Html.ValidationMessageFor(model => model.Product_Tax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="الضريبة">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Tax, "الضريبة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Product_Price, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Product_Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="السعر">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Price, "سعر الصنف", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick='AddOrder();' class="btn BTN-style final-BTN" style="text-decoration:none;">اضف الى الائحة</a>
+            </div>
+        </div>
+</div>
+        
+}
+

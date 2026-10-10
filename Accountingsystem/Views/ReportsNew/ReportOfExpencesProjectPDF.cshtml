@@ -1,0 +1,412 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ProjectExpenceVM
+
+@{
+    Layout = null;
+    var dateto = "الي" + Convert.ToDateTime(Model.To_Date).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.From_Date).ToString("yyyy/MM/dd ");
+    var startbalance = Math.Round(Model.startCredit +Model.startDepit, 2, MidpointRounding.AwayFromZero);
+    decimal balance = startbalance;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <title>تقرير مصروفات مشروع</title>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+
+
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        تقرير مصروفات مشروع / Project Expences Report
+
+    </div>
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        @Model.subledger.SubLed_Name
+
+    </div>
+
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        @datefrom      @dateto
+
+    </div>
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr style="text-align:right;">
+
+                <th style="text-align:center;font-size:xx-small"></th>
+                <th style="text-align:center;font-size:xx-small">الدائن<br />Credit</th>
+
+                <th style="text-align:center;font-size:xx-small">المدين<br />Depit</th>
+
+
+
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+            <tr>
+
+                <td style="text-align:center;font-size:5px">رصيد اول المدة | Opening balance </td>
+                <td style="text-align:center;font-size:5px">(@Math.Round(Model.startCredit * -1, 2, MidpointRounding.AwayFromZero))</td>
+                <td style="text-align:center;font-size:5px"> @Math.Round(Model.startDepit, 2, MidpointRounding.AwayFromZero)</td>
+
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+            <tr>
+
+                <td style="text-align:center;font-size:5px">الفترة المحددة | Specified Period </td>
+                <td style="text-align:center;font-size:5px">(@Math.Round(Model.DetailList.Where(a => a.Amount < 0).Select(a => a.Amount).Sum() * -1, 2, MidpointRounding.AwayFromZero))</td>
+                <td style="text-align:center;font-size:5px">@Math.Round(Model.DetailList.Where(a => a.Amount > 0).Select(a => a.Amount).Sum(), 2, MidpointRounding.AwayFromZero)</td>
+
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+            <tr>
+
+                <th style="text-align:center;">الاجمالي<br />Total</th>
+                <th style="text-align:center;font-size:5px">(@Math.Round((Model.DetailList.Where(a => a.Amount < 0).Select(a => a.Amount).Sum() + Model.startCredit) * -1, 2, MidpointRounding.AwayFromZero) )</th>
+                <th style="text-align:center;font-size:5px"> @Math.Round(Model.DetailList.Where(a => a.Amount > 0).Select(a => a.Amount).Sum() + Model.startDepit, 2, MidpointRounding.AwayFromZero) </th>
+
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+
+        </tbody>
+
+
+    </table>
+    <br />
+    <br />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <tr>
+
+
+
+
+            <th style="text-align:center;">
+                الرقم
+                <br />
+                NO
+            </th>
+
+            <th style="text-align:center;">
+                التاريخ
+                <br />
+                Date
+            </th>
+            <th style="text-align:center;">
+                النوع
+                <br />
+                Type
+
+
+            </th>
+
+            <th style="text-align:center;">
+                الوصف
+                <br />
+                Describtion
+            </th>
+
+            <th style="text-align:center;" width="200px">
+                القيمة
+                <br />
+                Amount
+
+            </th>
+
+            <th style="text-align:center;" width="200px">
+                الرصيد
+                <br />
+                balance
+
+            </th>
+
+
+
+        </tr>
+        @{
+            decimal TotalAmount = 0;
+            decimal count = 1;
+
+        }
+        <tr>
+
+
+
+            <td width="100px">
+                رصيد اول المدة | Opening balance
+            </td>
+            <td width="150px">
+
+                @*@item.GLdate*@
+            </td>
+            <td width="100px">
+              
+            </td>
+            <td></td>
+
+            <td></td>
+
+
+            <td width="200px" align="center">
+                @if (startbalance >= 0)
+                {
+                    @Math.Round(startbalance, 2, MidpointRounding.AwayFromZero)
+                }
+                else
+                {
+                    <p>( @Math.Round(startbalance * -1, 2, MidpointRounding.AwayFromZero) )</p>
+                }
+
+            </td>
+
+
+
+        </tr>
+        @foreach (var item in Model.DetailList.OrderBy(a => a.GLdate))
+        {
+            <tr>
+
+
+
+                <td width="100px">
+                    @item.serialCode
+                </td>
+                <td width="150px">
+                    @Convert.ToDateTime(item.GLdate).ToString("yyyy/MM/dd ")
+                    @*@item.GLdate*@
+                </td>
+                <td width="100px">
+                    @item.GL_Type
+                </td>
+                <td>
+
+
+                    @item.Description
+                </td>
+
+                @{
+                    TotalAmount += item.Amount;
+                    balance += item.Amount;
+                    count++;
+
+                }
+
+
+                <td width="200px" align="center">
+                    @if (item.Amount >= 0)
+                    {
+                        @Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p>( @Math.Round(item.Amount * -1, 2, MidpointRounding.AwayFromZero) )</p>
+                    }
+
+                </td>
+                <td width="200px" align="center">
+                    @if (balance >= 0)
+                    {
+                        @Math.Round(balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p>( @Math.Round(balance * -1, 2, MidpointRounding.AwayFromZero) )</p>
+                    }
+
+                </td>
+
+
+            </tr>
+        }
+        <tr>
+
+
+
+
+            <th style="text-align:center;">
+                الاجمالي
+                <br />
+                Total
+            </th>
+
+            <th style="text-align:center;">
+               
+            </th>
+            <th style="text-align:center;">
+              
+
+            </th>
+
+            <th style="text-align:center;">
+                
+            </th>
+
+            <th style="text-align:center;" width="200px">
+           
+                @if (TotalAmount >= 0)
+                {
+                    @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+                }
+                else
+                {
+                    <p>(@Math.Round(TotalAmount * -1, 2, MidpointRounding.AwayFromZero))</p>
+                }
+            </th>
+
+            <th style="text-align:center;" width="200px">
+               
+
+            </th>
+
+
+
+        </tr>
+
+        
+    </table>
+
+
+
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+
+
+</html>

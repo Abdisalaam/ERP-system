@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectAccountReport;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectAccountReport
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="employeeBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("PrintPorjectInvoiceSalesForEmployee","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectSalesReportSpecificEmployee
+                            <span id="employeeBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("PrintPorjectInvoiceSales","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectsSalesReport
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="projectAnalisysBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("PrintPorjectBalance","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectsBalancesAnalysisReport
+                            <span id="projectAnalisysBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="projectExpensesBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("ReportOfExpencesProject","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectExpencesReport
+                            <span id="projectExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="losAndProfitBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("ReportOfProjectProfit","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectProfitAndLossReport
+                            <span id="losAndProfitBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="prAccountRepportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("ReportOfCatchReciptProject","ReportsNew")">
+                            @Accountingsystem.Resources.ReportsGetAllReportsForProjects.ProjectsReport
+                            <span id="prAccountRepportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $("#prAccountRepportBtn").click(function (e) {
+            $("#prAccountRepportBtnSpinner").show();
+        });
+        $("#losAndProfitBtn").click(function (e) {
+            $("#losAndProfitBtnSpinner").show();
+        });
+        $("#projectExpensesBtn").click(function (e) {
+            $("#projectExpensesBtnSpinner").show();
+        });
+
+        $("#projectAnalisysBtn").click(function (e) {
+            $("#projectAnalisysBtnSpinner").show();
+        });
+
+        $("#salesReportBtn").click(function (e) {
+            $("#salesReportBtnSpinner").show();
+        });
+        $("#employeeBtn").click(function (e) {
+            $("#employeeBtnSpinner").show();
+        });      
+    </script>
+}

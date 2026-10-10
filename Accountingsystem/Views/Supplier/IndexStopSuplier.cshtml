@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Accountingsystem.Models.Supplier>
+
+@{
+    ViewBag.Title = "IndexStopSuplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.DeletedSuppliersList</h2>
+    <table class="table">
+        <tr>
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierNumber)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierCase)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierName)
+            </th>
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.NumberOfSupplier)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierPhone)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierBalance)
+            </th>
+
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.Supp_Id)
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supp_Code)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supplier_state)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supp_Name)
+                </td>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supp_Phone)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supp_Mobile)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.Supp_Balance)
+                </td>
+                <td class="col-md-2">
+                    
+                    <a class="btn BTN-style final-BTN" href="@Url.Action("ReturnSupplierToList", new { id = item.Supp_Id })">@Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.SupplierRetrieval</a>
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    <div class="BODY-MARGIN">
+        <a class="BTN-style" href="@Url.Action("Index")">
+            @Accountingsystem.Resources.SupplierIndexnonActiveSuppliers.BackToList;
+        </a>
+    </div>
+</div>

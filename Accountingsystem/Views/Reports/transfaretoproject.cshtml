@@ -1,0 +1,280 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.TransfareProjectStoreVM
+
+@{
+    Layout = null;
+    decimal total = 0;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <title> سند تحويل </title>
+</head>
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+  
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in Model.company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">العنوان: &nbsp&nbsp @Model.company.Comp_Address  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>
+
+                    @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ الفاتورة
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div style="text-align:center; font-size:medium">
+            @if (Model.TransCOde.StartsWith("TTPRO"))
+            {
+                <h> سند تحويل الاصناف من المخزن الي مشروع </h>
+            }
+            else
+            {
+                <h>  سند تحويل اصناف من مشروع الي مخزن </h>
+            }
+        </div>
+
+
+        <br />
+        <table class="table" style="text-align:right;" dir="rtl">
+            <tr>
+                <th style="text-align:center;">
+                    رقم السند &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    وصف السند &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    المشروع &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    المخزن &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    الحساب &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    تاريخ السند &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Model.TransCOde
+                </td>
+                <td>
+                    @Model.Description
+                </td>
+
+                <td>
+                    @Model.ProjectID
+                </td>
+
+                <td>
+                    @Model.storeName
+                </td>
+                <td>
+                    @Model.AccountID
+                </td>
+                <td>
+                    @Model.transDate
+                </td>
+            </tr>
+
+
+        </table>
+        <hr />
+        <br />
+        <table class="table" style="text-align:right;" dir="rtl">
+            <tr>
+                <th style="text-align:center;">
+                    رقم المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                @*<th style="text-align:center;">
+                    وحدة القياس  &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    النموذج  &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+
+                <th style="text-align:center;">
+                    الكمية &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center;">
+                    سعر تكلفه الوحده &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    الاجمالى &nbsp&nbsp&nbsp&nbsp
+                </th>
+            </tr>
+            @if (Model.Status == Accountingsystem.Models.TransactionState.Pending)
+            {
+                <tbody>
+                    @foreach (var detail in Model.Details)
+                    {
+                    <tr>
+                        <td>@Accountingsystem.Models.Product.GetProdectById(detail.ProductID).Prod_Code</td>
+                        <td>@Accountingsystem.Models.Product.GetProdectById(detail.ProductID).Prod_Name</td>
+
+                        <td>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+
+                        <td>@Math.Round(detail.TotalCost, 2, MidpointRounding.AwayFromZero)</td>
+                        @{total += detail.TotalCost;}
+                     
+
+                    </tr>
+                    }
+                </tbody>
+            }
+            else
+            {
+
+
+                <tbody>
+                    @foreach (var detail in Accountingsystem.Models.ProductBatches.getAllProductByCode(Model.TransCOde))
+                    {
+                        var product = Accountingsystem.Models.Product.GetProdectById(detail.Product_Id);
+                        <tr>
+                            <td>@product.Prod_Name</td>
+                            <td>@product.Prod_Code</td>
+
+                            <td>@Math.Round(detail.TotalCost.Value / detail.Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                            <td>@Math.Round(detail.Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                            <td>@Math.Round(detail.TotalCost.Value, 2, MidpointRounding.AwayFromZero)</td>
+                            @{total += detail.TotalCost.Value;}
+                       
+
+                        </tr>
+                    }
+                </tbody>
+
+            }
+        </table>
+        <footer style="margin-top:10%;">
+            <div style="text-align:right;color:black;font-size:large;">
+
+
+                <h style="text-align:right;color:black;font-size:large;">الاجمالى  @Math.Round(total, 2, MidpointRounding.AwayFromZero) </h>
+
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+
+

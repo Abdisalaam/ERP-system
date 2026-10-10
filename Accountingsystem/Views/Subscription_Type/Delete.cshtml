@@ -1,0 +1,92 @@
+﻿@model Accountingsystem.Models.Subscription_Type
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.Subscription_TypeCreate.DeleteTheSubscription;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.Subscription_TypeCreate.DeleteTheSubscription</h2>
+
+<h3>@Accountingsystem.Resources.Subscription_TypeCreate.DoYouWantToDelete</h3>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.DescriptionOfSubscription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.SubscriptionPeriodInMonth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Durationsubscription)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.CompanyActivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_BU)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.Subscription_TypeCreate.RevenueAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rvenuo_ID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.Subscription_TypeCreate.BackToList
+                </a>
+                <input type="submit" value=@Accountingsystem.Resources.Subscription_TypeCreate.Delete class="btn BTN-style-danger final-BTN" />
+            </div>
+        </div>
+    }
+    <hr />
+</div>

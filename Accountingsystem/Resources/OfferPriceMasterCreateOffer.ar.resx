@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountRevenueIsRequiredMessage" xml:space="preserve">
+    <value>حساب الايراد الزامي</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>النشاط</value>
+  </data>
+  <data name="ActivityInformation" xml:space="preserve">
+    <value>اختر النشاط</value>
+  </data>
+  <data name="AddCustomer" xml:space="preserve">
+    <value>إضافة عميل</value>
+  </data>
+  <data name="AddExtraTaxes" xml:space="preserve">
+    <value>أختر ضريبة إضافية</value>
+  </data>
+  <data name="AddNewCustomer" xml:space="preserve">
+    <value>اضافة عميل جديد</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>اضف صنف</value>
+  </data>
+  <data name="AddProductsToTheListMessage" xml:space="preserve">
+    <value>اضف منتجات الى عرض السعر</value>
+  </data>
+  <data name="AddToRegulation" xml:space="preserve">
+    <value>اضافة +</value>
+  </data>
+  <data name="AlouwedDiscountCorrectAmountMessage" xml:space="preserve">
+    <value>ادخل قيمة صحيحة للخصم المسموح به</value>
+  </data>
+  <data name="AlouwedDiscountIsRequiredMessage" xml:space="preserve">
+    <value>الخصم المسموح به الزامي</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>القائمة</value>
+  </data>
+  <data name="BaptismNumber" xml:space="preserve">
+    <value>رقم التعميد</value>
+  </data>
+  <data name="BaptismNumberInformation" xml:space="preserve">
+    <value>اختر رقم التعميد</value>
+  </data>
+  <data name="BranchCenterOrMainDepartmentInformation" xml:space="preserve">
+    <value>القسم</value>
+  </data>
+  <data name="BranchOrDepartment" xml:space="preserve">
+    <value>الفرع أو الأقسام</value>
+  </data>
+  <data name="Byte" xml:space="preserve">
+    <value>بايت</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>الغاء</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>مركز التكلفة</value>
+  </data>
+  <data name="CostCenterForBranchInformation" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>انشاء</value>
+  </data>
+  <data name="CreatePriceOffer" xml:space="preserve">
+    <value>إنشاء عرض أسعار</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>العميل</value>
+  </data>
+  <data name="CustomerInformation" xml:space="preserve">
+    <value>اختر العميل</value>
+  </data>
+  <data name="CustomerIsRequiredMessage" xml:space="preserve">
+    <value>العميل الزامي</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>الأقسام</value>
+  </data>
+  <data name="DiscountAllowedOnBill" xml:space="preserve">
+    <value>خصم مسموح به</value>
+  </data>
+  <data name="DiscountPercentage" xml:space="preserve">
+    <value>%الخصم</value>
+  </data>
+  <data name="DiscountPercentageInformation" xml:space="preserve">
+    <value>%اختر الخصم</value>
+  </data>
+  <data name="DiscountPrecentageCorrectAmountMessage" xml:space="preserve">
+    <value>ادخل قيمة صحيحة للخصم النسبي</value>
+  </data>
+  <data name="DiscountPrecentageIsRequiredMessage" xml:space="preserve">
+    <value>الخصم النسبي الزامي</value>
+  </data>
+  <data name="DiscountValidation" xml:space="preserve">
+    <value>الخصم يجب ان يكون رقم</value>
+  </data>
+  <data name="DropDownListActivity" xml:space="preserve">
+    <value>اختر النشاط</value>
+  </data>
+  <data name="DropDownListBranchCenter" xml:space="preserve">
+    <value>اختر مركز الفرع</value>
+  </data>
+  <data name="DropDownListBranchCenterOrMainDepartment" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="DropDownListCostCenter" xml:space="preserve">
+    <value>اختر مركز التكلفة</value>
+  </data>
+  <data name="DropDownListCustomer" xml:space="preserve">
+    <value>اختر العميل</value>
+  </data>
+  <data name="DropDownListEmployee" xml:space="preserve">
+    <value>الموظف</value>
+  </data>
+  <data name="DurationOfOffer" xml:space="preserve">
+    <value>المدة بالايام</value>
+  </data>
+  <data name="DurationOfOfferInformation" xml:space="preserve">
+    <value>المدة</value>
+  </data>
+  <data name="EmployeeInformation" xml:space="preserve">
+    <value>اختر الموظف</value>
+  </data>
+  <data name="EmployeeIsRequiredMessage" xml:space="preserve">
+    <value>الموظف الزامي</value>
+  </data>
+  <data name="EmployeeNumber" xml:space="preserve">
+    <value> الموظف</value>
+  </data>
+  <data name="EmployeeNumberValidation" xml:space="preserve">
+    <value>من فضلك ادخل الموظف</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="EndDateInformation" xml:space="preserve">
+    <value>تاريخ الانتهاء </value>
+  </data>
+  <data name="EndDateIsRequiredMessage" xml:space="preserve">
+    <value>تاريخ الانتهاء الزامي</value>
+  </data>
+  <data name="ExtraTaxes" xml:space="preserve">
+    <value>ضرائب إضافية</value>
+  </data>
+  <data name="FileExtension" xml:space="preserve">
+    <value>نوع الملف</value>
+  </data>
+  <data name="FileLength" xml:space="preserve">
+    <value>حجم الملف</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>اسم الملف</value>
+  </data>
+  <data name="FileNumber" xml:space="preserve">
+    <value>رقم الملف</value>
+  </data>
+  <data name="FileSizePopupMessage" xml:space="preserve">
+    <value>إجمالي حجم الملفات اكبر من المسموح به. الرجاء تصغير الحجم و اعادة المحاولة</value>
+  </data>
+  <data name="InvoiceDescription" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="InvoiceDescriptionInformation" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>اسم الصنف</value>
+  </data>
+  <data name="ItemNumber" xml:space="preserve">
+    <value>رقم الصنف</value>
+  </data>
+  <data name="ItemPrice" xml:space="preserve">
+    <value>سعر الصنف</value>
+  </data>
+  <data name="ItsBeenAddedMessage" xml:space="preserve">
+    <value>تم اضافة</value>
+  </data>
+  <data name="MaxOfFilesSize" xml:space="preserve">
+    <value>لا يجب ان يتعدي إجمالي حجم الملفات 4000000 بايت</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="NotesInformation" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="OfferDescription" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="OfferDescriptionInformation" xml:space="preserve">
+    <value>وصف</value>
+  </data>
+  <data name="OfferDurationIsRequiredMessage" xml:space="preserve">
+    <value>الفترة الزمنية الزامية الزامي</value>
+  </data>
+  <data name="OfferPriceDate" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="OfferPriceDateInformation" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="OfferPriceNumber" xml:space="preserve">
+    <value>رقم العرض</value>
+  </data>
+  <data name="OfferPriceNumberInformation" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="PriceInformation" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="ProductOrService" xml:space="preserve">
+    <value>الأصناف</value>
+  </data>
+  <data name="ProductOrServiceInformation" xml:space="preserve">
+    <value>اختر الصنف</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="QuantityInformation" xml:space="preserve">
+    <value>اختر الكمية</value>
+  </data>
+  <data name="RevenueAccount" xml:space="preserve">
+    <value>حساب الايراد</value>
+  </data>
+  <data name="RevenueAccountInformation" xml:space="preserve">
+    <value>اختر حساب الايراد</value>
+  </data>
+  <data name="RevenueAccountValidation" xml:space="preserve">
+    <value>حساب الايراد مطلوب</value>
+  </data>
+  <data name="SelectActivity" xml:space="preserve">
+    <value>النشاط</value>
+  </data>
+  <data name="SelectCostCenter" xml:space="preserve">
+    <value>مركز التكلفة</value>
+  </data>
+  <data name="SelectCustomer" xml:space="preserve">
+    <value>العميل</value>
+  </data>
+  <data name="StartDateIsRequiredMessage" xml:space="preserve">
+    <value>تاريخ البدء الزامي</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>المخزن</value>
+  </data>
+  <data name="StoreIsRequiredMessage" xml:space="preserve">
+    <value>المخزن الزامي</value>
+  </data>
+  <data name="StoreNumber" xml:space="preserve">
+    <value>رقم المخزن</value>
+  </data>
+  <data name="StoreNumberInformation" xml:space="preserve">
+    <value>اختر المخزن</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>الضريبة</value>
+  </data>
+  <data name="TaxInformation" xml:space="preserve">
+    <value>اختر الضريبة </value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>الاجمالى</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>التكلفة التقديرية</value>
+  </data>
+  <data name="TotalDiscountAmount" xml:space="preserve">
+    <value>اجمالى الخصم</value>
+  </data>
+  <data name="TotalFinal" xml:space="preserve">
+    <value>الصافي</value>
+  </data>
+  <data name="TotalInvoice" xml:space="preserve">
+    <value>اجمالي الفاتورة</value>
+  </data>
+  <data name="TotalSizeOfFiles" xml:space="preserve">
+    <value>إجمالي حجم الملفات</value>
+  </data>
+  <data name="TotalTax" xml:space="preserve">
+    <value>اجمالى الضريبة</value>
+  </data>
+  <data name="TotalTaxes" xml:space="preserve">
+    <value>اجمالي الضرائب</value>
+  </data>
+  <data name="TotalTaxexOfExtraTaxes" xml:space="preserve">
+    <value>اجمالى الضرائب المضافة</value>
+  </data>
+  <data name="ToTheListMessage" xml:space="preserve">
+    <value>اللائحة</value>
+  </data>
+  <data name="TotalSizeOfSelectedFiles" xml:space="preserve">
+    <value>إجمالي حجم الملفات التي تم اختيارها</value>
+  </data>
+  <data name="OfferNotCreatedControllerMessage" xml:space="preserve">
+    <value>لم يتم إنشاء العرض. الرجاء إعادة المحاولة</value>
+  </data>
+  <data name="OfferDataNotCorrectControllerMessage" xml:space="preserve">
+    <value>هناك خطأ في البيانات. الرجاء التاكد من صحتها</value>
+  </data>
+  <data name="OfferTechErrorControllerMessage" xml:space="preserve">
+    <value>حدث خلل فني. الرجاء اعادة المحاولة</value>
+  </data>
+  <data name="ProductExisitInListModelMessage" xml:space="preserve">
+    <value>هذا المنتج موجود بالفعل فى القائمة لا يمكن اضافته مرة اخرى</value>
+  </data>
+  <data name="ProductIsAddedToListModelMessage" xml:space="preserve">
+    <value>تمت الاضافة بنجاح</value>
+  </data>
+  <data name="ProductIsNotFoundModelMessage" xml:space="preserve">
+    <value>لم يتم العثور علي المنتج</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>تمت الإضافة</value>
+  </data>
+  <data name="OfferCodeExisit" xml:space="preserve">
+    <value>هذا الكود موجود علي النظام</value>
+  </data>
+</root>

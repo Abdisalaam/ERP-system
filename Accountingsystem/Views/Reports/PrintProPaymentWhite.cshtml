@@ -1,0 +1,173 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.ProjectPaymentPrintVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>سند صرف مشروع</title>
+
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="90" />*@
+    @*<div style="width:50Px; margin-left:15px; margin-top:1%">
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br /><br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>*@
+ 
+    <div class="container">
+
+        @*<div style="text-align:left;color:black;font-size:large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>*@
+        <div style="text-align:right;color:black;font-size:large;margin-bottom:50px;">
+            @Model.ProjectPay_Code: رقم السند
+        </div>
+        <div style="text-align:center;color:black;font-size:large;">
+            سند صرف مشروع &nbsp&nbsp : &nbsp&nbsp&nbsp&nbsp @Model.projectName
+        </div>
+
+        <br />
+
+
+
+        <table class="table table-bordered" style="text-align:center;margin-top:0%;" data-sortable="" width="900" border="1" dir="rtl">
+            <tr style="background-color:gray;">
+                <th style="text-align:center; ">
+                    التاريخ &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+
+
+
+                <th style="text-align:center; ">
+                    حساب المصروف &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                @if (Model.Supplier_Id != 0 && Model.Supplier_Id != null)
+                {
+                    <th style="text-align:center; ">
+                        المورد  &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                }
+
+
+                @if (Model.Revenue_Name != null && Model.Revenue_Name != "")
+                {
+                    <th style="text-align:center; ">
+                        طريقة الدفع     &nbsp&nbsp&nbsp&nbsp
+                    </th>
+                }
+
+
+                <th style="text-align:center; ">
+                    المبلغ &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+
+                <th style="text-align:center; ">
+                    قيمة الضريبة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    الصافي  &nbsp&nbsp&nbsp&nbsp
+                </th>
+            </tr>
+
+            <tr>
+
+                <td>
+                    @Model.Date
+                </td>
+
+                <td>
+                    @Model.Expense_Name
+                </td>
+                @if (Model.Supplier_Id != 0 && Model.Supplier_Id != null)
+                {
+                    <td>
+                        @Model.Supplier_Name
+
+
+                    </td>
+                }
+                @if (Model.Revenue_Name != null && Model.Revenue_Name != "")
+                {
+                    <td>
+
+                        @Model.Revenue_Name
+                    </td>
+                }
+
+
+                <td>
+                    @Math.Round(Model.Pay_Amount - Model.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+
+
+                @if (Model.Total_Tax != null)
+                {
+                    <td>
+                        @Math.Round((decimal)Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+                else
+                {
+                    <td>0</td>
+                }
+
+                <td>
+                    @Math.Round(Model.Pay_Amount, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+            </tr>
+
+
+        </table>
+        <br />
+
+
+    </div>
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:50px;">
+        وذلك مقابل
+        / @Model.Description
+    </div>
+    <footer style="margin-top:50%;"></footer>
+</body>
+
+</html>

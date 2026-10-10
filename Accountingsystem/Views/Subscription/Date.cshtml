@@ -1,0 +1,63 @@
+﻿@model Accountingsystem.ViewModel.SubscriptionVM
+
+@{
+    ViewBag.Title = "Date";
+}
+
+<h2>Date</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.Subscrip_Id)
+
+        @Html.HiddenFor(model => model.SelectedSubscrip_Type)
+        @Html.HiddenFor(model => model.StartTime)
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+        
+
+
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+  
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

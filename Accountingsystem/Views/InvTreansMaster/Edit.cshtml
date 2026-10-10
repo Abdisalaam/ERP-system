@@ -1,0 +1,226 @@
+﻿@model Accountingsystem.ViewModel.InventoryTransfer_HdVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.InvTreansMasterEditForPending.EditTransferFromStoreToStore;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Accountingsystem.Resources.InvTreansMasterEditForPending.EditTransferFromStoreToStore</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.TransferHd_Id)
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+                        <div class="Dropdownlist">
+                            @Html.EditorFor(model => model.InvTransfere_Notes, new { htmlAttributes = new { @class = "Dropdownlist-select" } })
+                            @Html.ValidationMessageFor(model => model.InvTransfere_Notes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterEditForPending.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row">
+                @*<div class="col-md-5">
+                    <div class="col-md-6">
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Total_Cost, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Total_Cost, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Total_Cost, "التكلفة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>*@
+
+                 <div class="col-md-5">
+                     <div class="col-md-6">
+
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Inv_Code, new { htmlAttributes = new { @class = "textfield" } })
+                    @Html.ValidationMessageFor(model => model.Inv_Code, "", new { @class = "text-danger" })
+                </div>
+             </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.InvTreansMasterEditForPending.Code)
+                </div>
+                </div>
+             </div>
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCompanyId, Model.MyCompanyList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCompanyId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterEditForPending.Company)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedSourceStore_Id, Model.MySoursStoreList, Accountingsystem.Resources.InvTreansMasterEditForPending.StoreTransferredFromItInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedSourceStore_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterEditForPending.StoreTransferredFromIt)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedDestStore_Id, Model.MyDestStoreList, Accountingsystem.Resources.InvTreansMasterEditForPending.TransferredStoreInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedDestStore_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterEditForPending.TransferredStore)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <a href='javascript:;' onclick='getLists();' class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.InvTreansMasterEditForPending.Details</a>
+
+
+                @*<a href='javascript:;' onclick='getLists();' class="btn btn-primary" style="text-decoration:none;">التفاصيل</a>*@
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<div id="InventoryHdList"></div>
+
+<div id="InventoryDetailsPartial"></div>
+
+
+<div id="InventoryH_dDetailsList2222"></div>
+
+
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+    $('#Date').datetimepicker({ format: 'DD/MM/YYYY' });
+    function getLists()
+    {
+        var inv=$("#TransferHd_Id").val();
+        alert(inv)
+
+        $("#InventoryHdList").load('@(Url.Action("GetAllInventoryeDetailresult", "InvTreansMaster"))?TemptH_dDetailes='+ inv);
+    }
+    function AddInf() {
+        var inventory=@Model.TransferHd_Id;
+        alert(inventory);
+
+        $("#InventoryDetailsPartial").load('@(Url.Action("PrepareTransDetails", "InvTreansMaster"))?serial='+ inventory);
+    };
+    function AddDetailToMaster1() {
+        var InventoryTransfer_Id=@Model.TransferHd_Id;
+        var TransferDetail_Id =  $("#TransferDetail_Id").val();
+        var Product_Qty =  $("#Product_Qty").val();
+        var TransHd_Id = parseFloat($("#TransHd_Id").val());
+        var Detail_TotalCoct =  $("#Detail_TotalCoct").val();
+        var Product_ID =  $("#Product_ID").val();
+        var Batch_ID =  $("#Batch_ID").val();
+        var Detail;
+        Detail = {
+            TransferDetail_Id:TransferDetail_Id,
+            Product_Qty:Product_Qty,
+            TransHd_Id:TransHd_Id,
+            Detail_TotalCoct:Detail_TotalCoct,
+            Product_ID:Product_ID,
+            Batch_ID:Batch_ID,
+            InventoryTransfer_Id:InventoryTransfer_Id,
+        };
+        $.ajax(
+                    {
+                        url: '@Url.Action("AddInventoryDetailsToMaster", "InvTreansMaster")',
+                        data: JSON.stringify(Detail),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (data) {
+                           
+                            $("#InventoryH_dDetailsList2222").load('@(Url.Action("GetAllTempInventoryDetails", "InvTreansMaster"))?tempInventoryH_dId=' + InventoryTransfer_Id);
+                        },
+                    });
+
+    };
+
+</script>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

@@ -1,0 +1,642 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.MRGL
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+@*<link href="~/Content/css/Report.css" rel="stylesheet" />*@
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    var count = 1;
+    decimal totalAmount = 0;
+    ViewBag.Title = "تقرير الضرائب التفصيلي";
+
+    decimal Balance = Model.AmountBefor;
+
+    var dateto = "الي" + Convert.ToDateTime(Model.Todate).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.FromDate).ToString("yyyy/MM/dd ");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير حساب </title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    @*<div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+          
+
+
+            </table>
+        </div>
+    </div>*@
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير حساب / Account Report
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Model.Account.Account_Name
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+    <hr />
+    <div class="row">
+
+
+
+
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center">التاريخ<br />Date</th>
+                    <th style="text-align:center;font-size:xx-small">الرقم<br />No</th>
+                    @if (Model.Account.ChartOfAccountings.Count != 0)
+                    {
+                        <th style="text-align:center;font-size:xx-small">الحساب<br />Account</th>
+                    }
+                    <th style="text-align:center;font-size:xx-small">الاسم<br />Name</th>
+
+                    <th style="text-align:center;font-size:xx-small">القيمة<br />Amount</th>
+
+                    <th style="text-align:right">الرصيد<br />Balance</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+                <tr>
+                    <td style="text-align:center;font-size:10px">
+                        رصيد قبل المدة
+                    </td>
+                    <td style="text-align:left;font-size:5px"></td>
+                    @if (Model.Account.ChartOfAccountings.Count != 0)
+                    {
+                        <td style="text-align:left;font-size:5px"></td>
+                    }
+                    <td style="text-align:left;font-size:5px"></td>
+                    <td style="text-align:left;font-size:5px"></td>
+
+
+
+                    <td>
+                        @if (Model.AmountBefor < 0)
+                        {
+                            var a = "(" + Math.Round(Model.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+
+
+
+
+
+
+
+
+                </tr>
+                @foreach (var item in Model.details.OrderBy(a => a.date))
+                {
+                    Balance += item.Amount;
+                    totalAmount += item.Amount;
+                    <tr>
+                        <td style="text-align:center;font-size:xx-small;width:150px;">
+                            <h6>
+                                @item.date.ToString("yyyy/MM/dd ")
+                            </h6>
+                        </td>
+                        @*<td>
+                                @count
+
+
+                            </td>*@
+                        <td style="text-align:center;font-size:xx-small;">
+                            @Html.DisplayFor(modelItem => item.DocumentNumber)
+                        </td>
+                        @if (Model.Account.ChartOfAccountings.Count != 0)
+                        {
+                            <td style="text-align:center;font-size:xx-small;">
+                                @Html.DisplayFor(modelItem => item.ChartAccount.Account_Name)
+                            </td>
+                        }
+                        <td style="text-align:right;">
+                            @Html.DisplayFor(modelItem => item.AccountName)
+                        </td>
+
+
+                        <td>
+                            @if (item.Amount < 0)
+                            {
+                                var a = "(" + Math.Round(item.Amount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (Balance < 0)
+                            {
+                                var taxvalue = "(" + Math.Round(Balance * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @taxvalue
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Balance, 2, MidpointRounding.AwayFromZero)
+                            }
+                        </td>
+
+
+                    </tr>
+                    if (item.Description != "" && item.Description != null)
+                    {
+                        <tr dir="rtl">
+                            <td style="border-top-style:hidden" colspan="7"><p style="text-align:justify">&nbsp&nbsp&nbsp @item.Description</p></td>
+                        </tr>
+
+                    }
+                }
+
+            </tbody>
+
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center">الاجمالي<br />Total</th>
+                    @if (Model.Account.ChartOfAccountings.Count != 0)
+                    {
+                        <th style="text-align:right"></th>
+                    }
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right">
+                        @if (totalAmount < 0)
+                        {
+                            var a = "(" + Math.Round(totalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(totalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+                    </th>
+
+
+                </tr>
+
+            </thead>
+        </table>
+    </div>
+    <br />
+    @{
+        decimal SUMAmount = 0;
+        decimal Sumbefore = 0;
+
+    }
+    <div class="text-center">
+        <h3 class="text-center">@Html.Label(Accountingsystem.Resources.validate.Summary)</h3>
+    </div>
+    @if (Model.Account.ChartOfAccountings.Count() > 0)
+    {
+
+
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%;direction:rtl;">
+                <thead>
+                    <tr style="text-align:right;">
+
+
+
+                        <th>الحساب<br />Account</th>
+                        <th>الاسم<br />Name</th>
+                        <th>رصبد قبل المدة<br />Amount before Period</th>
+                        <th>رصيد الفترة<br />Amount Of Period</th>
+
+                        <th>الرصيد<br />Balance</th>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var Account in Model.details.Select(a => a.ChartAccount.Account_Id).Distinct())
+                    {
+                        var AccountStatistic = Accountingsystem.Models.ReportsNew.getStatisticOAccount(Account, Model.FromDate, Model.Todate);
+                        var totalaAmount = AccountStatistic.details.Select(a => a.Amount).Sum();
+                        SUMAmount += totalaAmount;
+                        Sumbefore += AccountStatistic.AmountBefor;
+
+
+                        <tr>
+
+                            <td>
+                                @AccountStatistic.Account.Account_Code
+                            </td>
+                            <td>
+                                @AccountStatistic.Account.Account_Name
+                            </td>
+                            <td>
+                                @if (AccountStatistic.AmountBefor < 0)
+                                {
+                                    var a = "(" + Math.Round(AccountStatistic.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                    <h>
+                                        @a
+                                    </h>
+                                }
+                                else
+                                {
+                                    @Math.Round(AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                                }
+
+                            </td>
+
+                            <td>
+                                @if (totalaAmount < 0)
+                                {
+                                    var a = "(" + Math.Round(totalaAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                    <h>
+                                        @a
+                                    </h>
+                                }
+                                else
+                                {
+                                    @Math.Round(totalaAmount, 2, MidpointRounding.AwayFromZero)
+                                }
+
+                            </td>
+
+                            <td>
+                                @if (totalaAmount + AccountStatistic.AmountBefor < 0)
+                                {
+                                    var a = "(" + Math.Round((totalaAmount + AccountStatistic.AmountBefor) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                    <h>
+                                        @a
+                                    </h>
+                                }
+                                else
+                                {
+                                    @Math.Round(totalaAmount + AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                                }
+
+                            </td>
+
+
+
+
+
+                        </tr>
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+
+
+
+                        <th>
+                            الاجمالي
+
+
+                        </th>
+                        <th>
+
+
+
+                        </th>
+                        <th>
+                            @if (Sumbefore < 0)
+                            {
+                                var a = "(" + Math.Round(Sumbefore * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Sumbefore, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th>
+                            @if (SUMAmount < 0)
+                            {
+                                var a = "(" + Math.Round(SUMAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(SUMAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th>
+                            @if (SUMAmount + Sumbefore < 0)
+                            {
+                                var a = "(" + Math.Round((SUMAmount + Sumbefore) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(SUMAmount + Sumbefore, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+
+
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    }
+    else
+    {
+
+
+        if (Model.Account.ChartOfAccountings.Count() > 0)
+        {
+
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%" dir="rtl">
+                <thead>
+                    <tr>
+
+
+
+                        <th>@Accountingsystem.Resources.GLMasterDetail.ConstraintNumber</th>
+                        <th>@Accountingsystem.Resources.ChartOfAccountingCreate.AccountName</th>
+                        <th>@Accountingsystem.Resources.validate.AmountbeforePeriod</th>
+                        <th>@Accountingsystem.Resources.validate.AmountOfPeriod</th>
+
+                        <th>@Accountingsystem.Resources.validate.Balance</th>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @{
+                        var AccountStatistic = Accountingsystem.Models.ReportsNew.getStatisticOAccount(Model.accountId, Model.FromDate, Model.Todate);
+                        var totalaAmount = AccountStatistic.details.Select(a => a.Amount).Sum();
+                        SUMAmount += totalaAmount;
+                        Sumbefore += AccountStatistic.AmountBefor;
+                    }
+
+                    <tr style="text-align:center;">
+                         
+                        <td>
+                            @AccountStatistic.Account.Account_Code
+                        </td>
+                        <td>
+                            @AccountStatistic.Account.Account_Name
+                        </td>
+                        <td>
+                            @if (AccountStatistic.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round(AccountStatistic.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (totalaAmount < 0)
+                            {
+                                var a = "(" + Math.Round(totalaAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(totalaAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (totalaAmount + AccountStatistic.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round((totalaAmount + AccountStatistic.AmountBefor) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(totalaAmount + AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+
+
+
+
+                    </tr>
+
+                </tbody>
+                <thead>
+                    <tr>
+
+
+
+                        <th>
+                            @Accountingsystem.Resources.validate.TotalBalance
+
+
+                        </th>
+                        <th>
+
+
+
+                        </th>
+                        <th>
+                            @if (Sumbefore < 0)
+                            {
+                                var a = "(" + Math.Round(Sumbefore * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Sumbefore, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th>
+                            @if (SUMAmount < 0)
+                            {
+                                var a = "(" + Math.Round(SUMAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(SUMAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th>
+                            @if (SUMAmount + Sumbefore < 0)
+                            {
+                                var a = "(" + Math.Round((SUMAmount + Sumbefore) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(SUMAmount + Sumbefore, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+
+
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+                            }
+
+                        }
+    <footer style="margin-top:50%;"></footer>
+</body>
+</html>
+
+
+

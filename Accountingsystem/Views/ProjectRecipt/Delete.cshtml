@@ -1,0 +1,226 @@
+﻿@model Accountingsystem.Models.ProjectRecipt
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ProjectReciptDelete.DeleteProjectCatchReceipt;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("Delete", "ProjectRecipt", FormMethod.Post, new { @id = "offerDeleteMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing" }))
+{
+    <form id="offerDeleteMasterForm">
+        <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                            <div class="text-center"><label>@ViewBag.Message</label></div>
+                            @Accountingsystem.Resources.ProjectReciptDelete.DeleteProjectCatchReceipt
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-content widget-content-area">
+                    <div class=''>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayFor(model => model.ProjectRect_ID)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.ProjectRect_ID)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.ProjectNumber)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.ProjectCode)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.CatchReceiptNumber)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.ReciptCode)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.CatchReceiptDate)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Recipt_Date)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.ProjectStartDate)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Project_start)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.ProjectEndDate)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Project_End)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.ProjectValue)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Project_Amount)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.PaidAmount)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Pay_Amount)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.Customer)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Customer_Name)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.ProjectReciptDelete.CatchReceiptDescription)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Recipt_Description)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="deleteOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ProjectReciptDelete.Delete <span id="submitBTNSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.ProjectReciptDelete.BackToList<span id="backTolistBTNSpinner" style="display:none;" class="spinner-border text-dark  mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+}
+
+
+@section Scripts {
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#submitBTNSpinner").hide();
+
+        });
+
+        $("#offerDeleteMasterForm").submit(function (e) {
+
+            $("#submitBTNSpinner").show();
+            //document.getElementById("mySpinner").style.display = "inline";
+        });
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBTNSpinner").show();
+
+            //document.getElementById("mySpinner").style.display = "inline";
+        });
+    </script>
+
+
+}
+

@@ -1,0 +1,203 @@
+﻿@model Accountingsystem.ViewModel.Sales_SettingsVM
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="text-align:right">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Employee_ID, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-5">
+                   
+                        <div>
+                            @Html.DropDownListFor(model => model.sliceID, Model.SlicesList, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.sliceID, "", new { @class = "text-danger" })
+                        </div>
+                        <div  style="margin-top:-50px;margin-left:-10px;">
+                            @Html.Label(Accountingsystem.Resources.EmployeeCreate.Slices)
+                        </div>
+                  
+                </div>
+                <div class="col-md-6">
+                    <a href='javascript:;' onclick='addSlice();' class="btn BTN-style final-BTN">@Accountingsystem.Resources.EmployeeCreate.AddSlice</a>
+                    <a href='javascript:;' onclick='addAllSlice();' class="btn BTN-style final-BTN">@Accountingsystem.Resources.EmployeeCreate.AddAllSlices</a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="row">
+
+        <div class="col-md-3">
+            <div class="textfieldcont">
+                @Html.CheckBoxFor(model => model.Can_Sell_InLow, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.EmployeeCreate.SoldUnderLowestPrice)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="textfieldcont">
+                 @Html.CheckBoxFor(model => model.SalesMan, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.EmployeeCreate.Vendor)
+            </div>
+        </div>
+</div>
+            <div class="row">
+              
+                    <div class="col-md-3">
+                        <div class="textfieldcont">
+                            @Html.CheckBoxFor(model => model.Collector, new { htmlAttributes = new { @class = "form-control" } })
+                          
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.EmployeeCreate.Collector)
+                        </div>
+                    </div>
+
+            
+               
+
+                    <div class="col-md-3">
+                        <div class="textfieldcont">
+                             @Html.CheckBoxFor(model => model.Cant_Controle, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.EmployeeCreate.NotControllingPrices)
+                        </div>
+                    </div>
+               
+
+
+                        </div>
+            <div class="row">
+                          
+                                <div class="col-md-3">
+                                    <div class="textfieldcont">
+                                        @Html.CheckBoxFor(model => model.Can_Increase_Price, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.SalePriceCanBeIncreased)
+                                    </div>
+                                </div>
+
+                           
+                          
+
+                                <div class="col-md-3">
+                                    <div class="textfieldcont">
+                                         @Html.CheckBoxFor(model => model.Can_Decrease_Price, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                        </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.EmployeeCreate.PricesCanBeReduced)
+                                    </div>
+                                </div>
+                            </div>
+        </div>
+        </div>
+        <div id="ListOFTemp"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick='Create();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.EmployeeCreate.Create</a>
+            </div>
+        </div>
+   
+}
+<script>
+    $.ajaxSetup({ cache: false });
+    function addSlice() {
+        var id = $("#sliceID").val();
+        alert(id);
+        $.ajax(
+         {
+            url: "@Url.Action("AddSliceTotemp", "Employee")",
+             data: { id: id },
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'get',
+             success: function (data) {
+                 alert(data);
+                 $("#ListOFTemp").load('@(Url.Action("ViewListOFTemp", "Employee"))');
+             },
+             error: function () { alert('error'); }
+         });
+    };
+    function addAllSlice() {
+     
+        $.ajax(
+         {
+             url: "@Url.Action("AddAllSlices", "Employee")",
+            data: { },
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'get',
+        success: function (data) {
+            alert(data);
+            $("#ListOFTemp").load('@(Url.Action("ViewListOFTemp", "Employee"))');
+        },
+        error: function () { alert('error'); }
+    });
+    };
+    function Create() {
+        var employID = $("#Employee_ID").val();
+        var salesMen = $("#SalesMan").prop('checked');
+        var Collectors = $("#Collector").prop('checked');
+        var Cant_Controles = $("#Cant_Controle").prop('checked');
+        var Can_Increase_Price = $("#Can_Increase_Price").prop('checked');
+        var Can_Decrease_Price = $("#Can_Decrease_Price").prop('checked');
+        var Can_Sell_InLow = $("#Can_Sell_InLow").prop('checked');
+      
+        var Svm;
+        Svm = {
+            Employee_ID: employID,
+            SalesMan: salesMen,
+            Collector: Collectors,
+            Cant_Controle: Cant_Controles,
+            Can_Increase_Price: Can_Increase_Price,
+            Can_Decrease_Price: Can_Decrease_Price,
+            Can_Sell_InLow: Can_Sell_InLow
+            }
+        $.ajax(
+         {
+             url: "@Url.Action("CreateSetting", "Employee")",
+             data: JSON.stringify(Svm),
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            alert(data);
+         
+        },
+        error: function () { alert('error'); }
+    });
+    };
+</script>

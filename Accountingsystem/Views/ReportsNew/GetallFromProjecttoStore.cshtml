@@ -1,0 +1,180 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.ReportsNewVM.TransfareFromTOProjectVM>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalamount = 0;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير تحويل من مشروع الي مخزن</title>
+</head>
+<body>
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        <header>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </header>
+
+        @if (Model.FirstOrDefault().company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.FirstOrDefault().company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+
+        <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+
+
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_Name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>رقم الضريبى :&nbsp&nbsp @Model.FirstOrDefault().company.Tax_Number &nbsp&nbsp</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">العنوان: &nbsp&nbsp @Model.FirstOrDefault().company.Comp_Address  </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@DateTime.Now.Day - @DateTime.Now.Month - @DateTime.Now.Year &nbsp&nbsp : تاريخ الطباعة </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                @*<td>@Model.EmployeeEmail &nbsp&nbsp : البريد الالكتروني </td>*@
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td></td>
+                <td></td>
+                <td> </td>
+            </tr>
+
+
+
+        </table>
+        <br />
+        <div style="text-align:center; font-size:x-large">
+            <h>تقرير تحويل من مشروع الي مخزن</h>
+        </div>
+        <table class="table" style="width:1000px;text-align:center;" border="1">
+            <tr style="background-color:gray;">
+
+                <th>رقم التحويل </th>
+                <th style="text-align:center;">
+                    الى مشروع &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    من مخزن &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    التكلفه  &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+            </tr>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>
+
+                        @item.TransCOde
+                    </td>
+                    <td>
+                        @item.projectName
+                    </td>
+
+                    <td>
+
+                        @item.StoreName
+                    </td>
+                    <td>
+                       
+                        @Math.Round(item.Cost, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+
+                </tr>
+                totalamount = totalamount + item.Cost;
+            }
+        </table>
+        <table class="table" style="width:1000px;text-align:center;" border="1">
+           
+        
+                <tr>
+
+                    <td style="width:675px">
+
+                      الاجمالي
+                    </td>
+                    <td style="width:150px">
+                   
+                        @Math.Round(totalamount, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+
+
+                </tr>
+          
+        </table>
+</body>
+</html>

@@ -1,0 +1,168 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.AllPurchaseInvoicesWithTaxVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>فواتير المشتريات الضريبية</title>
+    <link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+        @{
+            var fromdate = Convert.ToDateTime(Model.startDate);
+            var ToDate = Convert.ToDateTime(Model.EndDate);
+
+        }
+        @if (fromdate.Year != 1995 && ToDate.Year != 2200)
+        {
+            <div style="text-align:right;">
+                <h style="text-align:right;color:black;font-size:large;"> @Model.startDate : من</h><br />
+                <h style="text-align:right;color:black;font-size:large;"> @Model.EndDate : الى</h>
+            </div>
+        }
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            فواتير المشتريات الضريبية
+        </div>
+
+    </div>
+    <hr />
+
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1000">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                تاريخ الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                تاريخ الاستحقاق
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                رقم الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اجمالي الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                قيمة الضريبة
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اجمالي بعد الضريبة
+            </th>
+
+        </tr>
+        @foreach (var item in Model.PurchaseMasterWithTax)
+        {
+
+            <tr>
+                @{
+                    decimal totalBeforeTax = 0;
+                    decimal totalTax = 0;
+                    decimal totalAfterTax = 0;
+                }
+                <td class="col-md-4" style="text-align:center">
+                    @Accountingsystem.Models.Supplier.GetSupplierById(item.Supplier_Id).Supp_Name
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Convert.ToDateTime(item.Invoice_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Convert.ToDateTime(item.Due_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Serial_Number
+                </td>
+                @{var totalWithDisc = item.Total_Amount - (item.Total_Amount * (item.Master_Discount / 100));}
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(totalWithDisc, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Cost, 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+
+        }
+    </table>
+    <footer style="margin-top:80%;">
+
+
+        <div style="text-align:right;color:black;font-size:large;">
+            <h style="text-align:right;color:black;font-size:large;">اجمالي الفواتير @Math.Round(Model.totalBeforeTax, 2, MidpointRounding.AwayFromZero) </h>
+            <br />
+    
+            <h style="text-align:right;color:black;font-size:large;">اجمالى الضرائب @Math.Round(Model.totalTax, 2, MidpointRounding.AwayFromZero)</h>
+            <br />
+
+
+            <h style="text-align:right;color:black;font-size:large;"> اجمالي الفواتير بعد الضرائب @Math.Round(Model.totalAfterTax, 2, MidpointRounding.AwayFromZero)</h>
+
+            <br />
+        
+        </div>
+    </footer>
+    @*<table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1000">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اجمالي الفواتير
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اجمالى الضرائب
+            </th>
+            <th class="col-md-4" style="text-align:center; color:darkslategrey;">
+                اجمالي الفواتير بعد الضرائب
+            </th>
+
+        </tr>
+
+        <tr>
+            <td class="col-md-4" style="text-align:center; color:darkslategrey;">
+
+                @Math.Round(Model.totalBeforeTax, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td class="col-md-4" style="text-align:center; color:darkslategrey;">
+                @Math.Round(Model.totalTax, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td class="col-md-4" style="text-align:center; color:darkslategrey;">
+                @Math.Round(Model.totalAfterTax, 2, MidpointRounding.AwayFromZero)
+            </td>
+        </tr>
+
+    </table>*@
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿@model Accountingsystem.Models.ReverseSalesInvoiceMaster
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>@Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.Delete</h2>
+
+<h3>@Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.DeleteReturnes</h3>
+<div>
+    <h4>ReverseSalesInvoiceMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.InvoiceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.NumberOfInvoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serial_Number)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.InvoiceDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.InvoiceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Due_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.ConstraintDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GL_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.DiscountValue)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Master_Discount)*@
+            @Math.Round(Model.Master_Discount.Value,2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.Currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.CustomerNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.TotalValue)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Total_Amount)*@
+            @Math.Round(Model.Total_Amount, 2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.CompanyNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.TaxValue)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Total_Tax)*@
+            @Math.Round(Model.Total_Tax, 2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.TotalCost)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Total_Cost)*@
+            @Math.Round(Model.Total_Cost, 2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.StoreNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Store_ID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.Delete class="btn btn-default" /> |
+            @Html.ActionLink(Accountingsystem.Resources.ReverseSalesInvoiceMasterDelete.BackToList, "Index")
+        </div>
+    }
+</div>

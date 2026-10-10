@@ -1,0 +1,389 @@
+﻿@model Accountingsystem.ViewModel.ExtrenlaEmployeeOfTheMonthVM
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.AdminExterNalEmployee.EmployeeOfTheMonth;
+    int count = 1;
+    int saleCount = 1;
+}
+
+<head>
+    @{
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("GetEmployeeOfTheMonth", "AdminExternalEmployee", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.EmployeeOfTheMonth)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.StartDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.EndDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                     <div class="widget-content widget-content-area br-6">
+        
+                                         <div class="text-center">
+          
+                                             @Accountingsystem.Resources.AdminExterNalEmployee.TitleIndex
+       
+                                         </div>
+       
+                                         <div class="text-center">
+            
+                                             <label>@ViewBag.Message</label>
+        
+                                         </div>
+      
+                                         <div class="table-responsive mb-4 mt-4">
+           
+                                             <table id="default-ordering" class="table table-hover non-hover" style="width:100%">               
+                                                 <thead>                   
+                                                     <tr>                      
+                                                         <th>                      
+                                                             @Html.DisplayName("#")                      
+                                                         </th>                      
+                                                         <th>                      
+                                                             @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.Name)                      
+                                                         </th>                      
+                                                         <th>                      
+                                                             @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.RegistrationDate)                      
+                                                         </th>                      
+                                                         <th>                      
+                                                             @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.ParentName)                      
+                                                         </th>                      
+                                                         <th>                      
+                                                             @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalSalesAmount)                      
+                                                         </th>                      
+                                                         <th>                      
+                                                             @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalSalesCount)                      
+                                                         </th>                      
+                                                         <th>
+                                                         </th>                   
+                                                     </tr>               
+                                                 </thead>               
+                                                 <tbody>
+                                                     @foreach (var item in Model.ExtrnalSalesEmployees)
+                                                     {
+                                                         <tr>
+                                                             <td>
+                                                                 @count
+                                                                 @{count = count + 1;}
+                                                             </td>
+                                                             <td>
+                                                                 @item.Name
+                                                             </td>
+                                                             <td>
+                                                                 @item.RegistedDate.ToString("yyyy/MM/dd ")
+                                                             </td>
+                                                             @{
+                                                                 if (item.ParentID != item.Id)
+                                                                 {
+                                                                     var childName = "";
+                                                                     foreach (var child in Model.ExtrnalSalesEmployees)
+                                                                     {
+                                                                         if (child.Id == item.ParentID)
+                                                                         {
+                                                                             childName = child.Name;
+                                                                         }
+                                                                     }
+                                                                     <td>
+                                                                         @childName
+                                                                     </td>
+
+                                                                 }
+
+                                                                 else
+                                                                 {
+                                                                     <td>
+                                                                         @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.HasNoParent)
+                                                                     </td>
+
+                                                                 }
+
+
+                                                             }
+
+                                                             <td>
+                                                                 @Math.Round(item.TotalAmountBalance, 2, MidpointRounding.AwayFromZero)
+                                                             </td>
+                                                             <td>
+                                                                 @item.TotalCustommersCount
+                                                             </td>
+                                                             <td>
+                                                                 <div class="btn-group">
+                                                                     <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                                     </button>
+                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                                                         <a href="@Url.Action( "Details", new { id = item.Id})" class="dropdown-item">
+                                                                             @Accountingsystem.Resources.OfferPriceMasterIndex.Details
+                                                                         </a>
+                                                                         <a href="@Url.Action( "Edit", new { id = item.Id})" class="dropdown-item">
+                                                                             @Accountingsystem.Resources.OfferPriceMasterIndex.Edit
+                                                                         </a>
+                                                                     </div>
+                                                                 </div>
+                                                             </td>
+                                                         </tr>
+                                                     }
+                                                 </tbody>           
+                                             </table>       
+                                         </div>   
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.Back<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }           
+            var currentDate = new Date();
+            var priorDate = new Date().setDate(currentDate.getDate() - 30)
+            var _StartDate = flatpickr(document.getElementById('StartDate'), {
+                defaultDate: priorDate
+            });
+            var _EndDate = flatpickr(document.getElementById('EndDate'), {
+                defaultDate: currentDate
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });  
+            return false;
+        });
+    </script>
+    <script>
+        $('#StartDate').on('input', function () {
+            $("#StartDate").removeClass("addRequiredFieldToInput");           
+        });
+        $('#EndDate').on('input', function () {
+            $("#EndDate").removeClass("addRequiredFieldToInput");
+        });
+    </script>
+    <script>
+
+            $('#catchReceiptCreateForm').submit(function () {
+                if ($('#StartDate').val() == "" || $('#StartDate').val() == null || $('#EndDate').val() == "" || $('#EndDate').val() == null) {
+                    $("#createExpensesSpinner").hide();
+                    if ($('#StartDate').val() == "" || $('#StartDate').val() == null ) {
+                          Snackbar.show({
+                            text: "@Accountingsystem.Resources.OfferPriceMasterCreateOffer.StartDateIsRequiredMessage",
+                            pos: 'top-center'
+                        });
+                        $("#StartDate").addClass("addRequiredFieldToInput");
+                        $('#StartDate').trigger('focus');
+                    }
+                    if ($('#EndDate').val() == "" || $('#EndDate').val() == null ) {
+                          Snackbar.show({
+                            text: "@Accountingsystem.Resources.OfferPriceMasterCreateOffer.EndDateIsRequiredMessage",
+                            pos: 'top-center'
+                        });
+                        $("#EndDate").addClass("addRequiredFieldToInput");
+                        $('#EndDate').trigger('focus');
+                    }
+                  
+                    event.preventDefault();
+                }
+                else {
+                    $("#createExpensesSpinner").show();
+                }
+            });
+        </script>
+
+
+}

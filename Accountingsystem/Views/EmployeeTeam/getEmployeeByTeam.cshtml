@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Accountingsystem.Models.Employee>
+
+<div class="form-horizontal">
+   
+    
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+                <tr>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeCode)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeEmail)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeePhone)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeJob)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeBirthDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Mail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_DOB)
+                        </td>
+
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team_Name)
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+
+    
+  
+</div>

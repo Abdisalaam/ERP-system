@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Accountingsystem.Models.Contacts>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>جهة الاتصال</h2>
+
+<p>
+    @Html.ActionLink("انشاء جهة اتصال جديدة", "Create")
+</p>
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+            <tr>
+
+                <th class="col-md-3">
+                    @Html.DisplayName("اسم جهة الاتصال")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("الشركة التابعة لي جهة الاتصال")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("البريد الالكتروني لي جهة الاتصال")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("اسم العميل")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.Contact_Name)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.Contact_Company)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.Contact_Email)
+                    </td>
+                    @{var thisCust = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id.ToString())); }
+                    <td class="col-md-3">
+                        @Html.HiddenFor(modelItem => item.Customer_Id)
+                        <h>@thisCust.Customer_Name</h>
+                    </td>
+                    <td class="col-md-1">
+                        <p>
+                            @Html.ActionLink("تعديل", "Edit", new { id = item.Contact_Id })
+                        </p>
+                    </td>
+                    <td class="col-md-1">
+                        <p>
+                            @Html.ActionLink("تفاصيل", "Details", new { id = item.Contact_Id })
+                        </p>
+                    </td>
+                    <td class="col-md-1">
+                        <p>
+                            @Html.ActionLink("مسح", "Delete", new { id = item.Contact_Id })
+                        </p>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model Accountingsystem.ViewModel.PaymentMethodVM
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+              
+            <div class="row">
+                <div>
+                    <div>
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Bank_Account_Id, Model.MyChartOfAccountList , "اختر البنك", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Bank_Account_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div>
+                        <div class="saber">
+                            <label class="control-label" for="Bank_Account_Id" style=" margin-left: 30px;">حساب البنك</label>                      
+                              </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+}
+

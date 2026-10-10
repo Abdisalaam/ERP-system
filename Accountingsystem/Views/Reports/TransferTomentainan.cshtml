@@ -1,0 +1,314 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.PrintTransferToMentainansVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <title> سند تحويل </title>
+</head>
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+   
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in Model.company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">العنوان: &nbsp&nbsp @Model.company.Comp_Address  </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>
+
+                    @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ الفاتورة
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        @*<div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>*@
+        <div style="text-align:center; font-size:xx-large">
+            <h>فاتورة تحويل الى صيانة</h>
+        </div>
+
+
+        <div style="text-align:right;color:black;font-size:x-large;">
+
+            <h>       المخزن:  @Model.StoreName</h>
+        </div>
+        <br />
+        <table class="table" style="text-align:right;" dir="rtl">
+            <tr>
+                <th style="text-align:center; ">
+                    رقم السند &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    التاريخ &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    حساب المصروف &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    الوصف &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+            </tr>
+
+            <tr>
+                <td style="text-align:center;">
+                    @Model.Trans_Code
+                </td>
+
+                <td style="text-align:center;">
+
+                    @Convert.ToDateTime(Model.Trans_Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td>
+                    @Model.ExpenseAccountName
+                </td>
+                <td style="text-align:center;">
+                    @Model.describtion
+                </td>
+
+
+
+            </tr>
+
+
+        </table>
+        <hr />
+        <br />
+        <table class="table" style="text-align:right;" dir="rtl">
+            <tr>
+                <th style="text-align:center;">
+                    رقم المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    وحدة القياس  &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    النموذج  &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center;">
+                    الكمية &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center;">
+                    سعر تكلفه الوحده &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    الاجمالى &nbsp&nbsp&nbsp&nbsp
+                </th>
+            </tr>
+            @foreach (var item in Model.MyDetails)
+            {
+                <tr>
+                    @{
+                        var pro = Accountingsystem.Models.Product.GetProdectById(item.ProductProd_ID);
+                        var measure = "";
+                    }
+                    <td style="text-align:center;">
+                        @pro.Prod_Code
+                    </td>
+
+                    <td style="text-align:center;">
+                        @{
+                            if (string.IsNullOrEmpty(pro.Prod_Descrip))
+                            {
+                                @pro.Prod_Name
+                            }
+                            else
+                            {
+                                @pro.Prod_Descrip
+                            }
+                        }
+
+
+                    </td>
+                    <td style="text-align:center;">
+                        @{ if (pro.MeasuringUnit_ID != null && pro.MeasuringUnit_ID != 0)
+                            {
+
+                                measure = Accountingsystem.Models.MeasuringUnit.GetMeasruingUnitById(pro.MeasuringUnit_ID.Value).MUnit_Descrip;
+                            }
+                        }
+                        @measure
+                    </td>
+                    <td style="text-align:center;">
+                        @pro.Prod_Mark
+
+                    </td>
+
+                    <td style="text-align:center;">
+                        @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="text-align:center;">
+
+                        @Math.Round(item.Detail_Total_Cost / item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td style="text-align:center;">
+                        @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+        <footer style="margin-top:10%;">
+
+            <div style="text-align:right;color:black;font-size:large;">
+                <h style="text-align:right;color:black;font-size:large;">الاجمالى @Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero) </h>
+
+
+            </div>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @*<footer style="margin-top:0%;">
+            <hr />
+            <p>
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;">الاجمالى قبل الخصم  @Model.totalBeforeDiscount </h>
+            </p><p>
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;">قيمه الخصم  @Model.Masterdiscount</h>
+            </p>
+            <h style="text-align:right;margin-left:65%;color:black;font-size:medium;"> @Model.totalAfterdiscount الاجمالى بعد الخصم</h>
+
+            <h style="text-align:right;margin-left:65%;color:black;font-size:medium;">قيمه الضريبه  @Model.totalTax</h>
+            @{decimal total = Model.totalAfterdiscount + Model.totalTax;
+                decimal invoice = 0;
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;">الاجمالى بعد الضريبه   @total</h>
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;">الخصم المسموح به @Model.Fixed_Discount</h>
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;"> الاجمالى  بعد الخصم المسموح @Model.TotalAfterFixed</h>
+
+
+                <h style="text-align:right;margin-left:65%;color:black;font-size:medium;"> المتبقى من قيمة الفاتورة @invoice  </h>
+            }
+
+        </footer>*@
+    </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+﻿@model Accountingsystem.Models.EmployeeSalaryMonth
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.TypeOfDetailSalaryCreate.SalaryDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    decimal totalSal = 0;
+    decimal totalpenality = 0;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <div class="text-center">
+                        @Accountingsystem.Resources.TypeOfDetailSalaryCreate.SalaryDetails
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+
+
+
+            <div class="layout-top-spacing">
+
+                <div class="table-responsive">
+                    <table class="table mb-4">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.TypeOfDetailSalaryCreate.SalaryName)
+                                </th>
+
+                                <th></th>
+
+
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.TypeOfDetailSalaryCreate.Value)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.EmpSal_Detail)
+                            {
+                                <tr>
+                                    @{
+                                        var name = Accountingsystem.Models.TypeOfDetailSalary.getDetailOfTypeSalaryById(item.Account_Id).SalaryDetail_Name;
+                                        totalSal += item.AcountValue;
+                                        <td>
+                                            <h>@name</h>
+                                        </td>
+
+                                    }
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        @*@Html.DisplayFor(modelItem => item.AcountValue)*@
+                                        @Math.Round(item.AcountValue, 2, MidpointRounding.AwayFromZero)
+
+                                    </td>
+
+
+                                </tr>
+                            }
+                            @if (Model.RewardsAndPenalties != null)
+                            {
+                                foreach (var item in Model.RewardsAndPenalties)
+                                {
+                                    totalpenality += item.NumberOfHour * Model.HourValueForEmployee.Value;
+                                <tr>
+                                 
+                                    <td>
+                                        @item.RewardsAndPenaltiesCoding.Name
+                                       
+
+                                    </td>
+                                    <td>
+                                        @item.AttendingAndLeaving.Date.Value.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>
+                                        @Math.Round(item.NumberOfHour*Model.HourValueForEmployee.Value, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+
+                                </tr>
+                                            }
+                                        }
+                            <tr>
+                                <td>@Accountingsystem.Resources.TypeOfDetailSalaryCreate.Total</td>
+                                <td></td>
+                                <td>
+
+                                    @Math.Round(totalSal-totalpenality, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#deletebtn").click(function (e) {
+            $("#deletebtnSpinner").show();
+        });
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#glbtn").click(function (e) {
+            $("#glbtnSpinner").show();
+        });
+        $("#printEmailbtn").click(function (e) {
+            $("#printEmailbtnSpinner").show();
+        });
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+}
+

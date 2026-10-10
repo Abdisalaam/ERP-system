@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransfareFromPorjectToStoretemp>
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+        <table id="transferProductsDetailList" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.ProductNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.TotalCost)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelItem => item.Id)
+                    @Html.HiddenFor(modelItem => item.Batch_ID)
+                <tr>
+                    <td>
+                        @{var Prod = Accountingsystem.Models.Product.GetProdectById(item.ProductID).Prod_Name;
+                            <h>@Prod</h> }
+                    </td>
+                    <td>
+                        @{var code = Accountingsystem.Models.Product.GetProdectById(item.ProductID).Prod_Code;
+                            <h>@code</h> }
+                    </td>
+
+                    <td>
+                        @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                        @Math.Round(item.Product_Price.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                        @Math.Round(item.Total_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td>
+                        <div class="col-md-offset-2 col-md-10">
+                            <a href='javascript:;' onclick="@("DeleteTemp('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.TransferToProjectMasterCreateForTFPS.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                        </div>
+                      
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

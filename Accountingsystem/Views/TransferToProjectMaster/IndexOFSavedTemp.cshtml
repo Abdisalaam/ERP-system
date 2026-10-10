@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransfareFromPorjectToStoretemp>
+
+@{
+    ViewBag.Title = "IndexOFSavedTemp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تحويل من مشروع الى مخزن</h2>
+
+<p>
+    @Html.ActionLink("انشاء جديد", "CreateForTFPS")
+</p>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayName("الكميه")
+        </th>
+        <th>
+            @Html.DisplayName("سعر الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("اجمالي التكلفه")
+        </th>
+
+        <th>
+            @Html.DisplayName("اسم الصنف")
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Quantity)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+            @Math.Round(item.Product_Price.Value, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+            @Math.Round(item.Total_Amount.Value,2, MidpointRounding.AwayFromZero)
+        </td>
+ 
+   
+        <td>
+      
+          @{  var prod = Accountingsystem.Models.Product.GetProdectById(item.ProductID).Prod_Name;
+            <h>@prod</h>
+              }
+        </td>
+     
+        <td>
+            <p>
+                @Html.ActionLink("التفاصيل", "UpdateDetails", new { id = item.Id })
+            </p>
+            </td>
+        <td>
+            @if (item.State == Accountingsystem.Models.TransactionState.Pending)
+            {
+                <p>
+                    @Html.ActionLink("حذف", "DeleteTemps", new { id = item.Id })
+                </p>
+            }
+           
+        </td>
+    </tr>
+}
+
+</table>

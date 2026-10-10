@@ -1,0 +1,106 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.DailyPOSEmp
+
+@{
+    Layout = null;
+    var timeFrom = TimeSpan.Parse(Model.TimeFrom);
+    var timeTo = TimeSpan.Parse(Model.TimeTo);
+    var dateto = Convert.ToDateTime(Model.End_Date).Add(timeTo);
+    var datefrom = Convert.ToDateTime(Model.StartDate).Add(timeFrom);
+    decimal TotalPay = 0;
+    decimal totalReverse = 0;
+
+
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/Content/PrintPOS.css" rel="stylesheet" />
+    <title>تقرير مبيعات وردية نقطة بيع </title>
+
+</head>
+<body style="height: 600px !important;">
+    @foreach (var _order in Model.OrderList)
+    {
+        var revTotal = _order.ReverseOrders.Where(a => a.Invoice_State == Accountingsystem.Models.TransactionState.Post).Select(a => a.Total_Amount).ToList().Sum();
+        totalReverse += revTotal;
+    }
+    <center>
+        <div class="ticket" style="font-size:smaller;">
+
+            <p class="centered">
+
+                <span style="font-size:16px;"><strong> تقرير مبيعات وردية / Sales Shift Report</strong></span>
+                <br />
+                <br />
+                <span style="font-size:16px"><strong> @Model.Emp_Name</strong></span>
+                <br />
+                <br />
+                <span style="font-size:16px"><strong>  From :  @datefrom </strong></span>
+                <br />
+                <br />
+                <span style="font-size:16px"> <strong> Till :  @dateto </strong></span>
+
+            </p>
+
+            <br />
+            <br />
+            <br />
+
+            <table style="height: 500px !important;">
+                <thead>
+                    <tr>
+
+                        <th class="description" style="font-size:14px"><strong> Amount | المبلغ  </strong>  </th>
+                        <th class="description" style="font-size:14px;">Method | طريقة الدفع </th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.PaymentDailyList)
+                    {
+                        <tr style="border-top:hidden; text-align:center">
+
+                            @*<th class="description" style="font-size:14px">  @Math.Round(detail.ProductPrice + detail.ProductTaxAmount, 2, MidpointRounding.AwayFromZero)</th>*@
+
+
+                            @if (item.paymentValue >= 0)
+                            {
+                                <th class="description" style="font-size:14px"> @Math.Round(item.paymentValue, 2, MidpointRounding.AwayFromZero)</th>
+                            }
+
+                            else
+                            {
+                                <th class="description" style="font-size:14px"> (@Math.Round(item.paymentValue * -1, 2, MidpointRounding.AwayFromZero))</th>
+                            }
+                            <th class="description" style="font-size:14px">@item.paymentName</th>
+
+
+                        </tr>
+
+                        TotalPay += item.paymentValue;
+
+                    }
+
+                    <tr style="text-align:center">
+                        <th class="description" style="font-size:14px"> @Math.Round(totalReverse, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px">اجمالي المردودات</th>
+                    </tr>
+                    <tr style="text-align:center">
+                        <th class="description" style="font-size:14px"> @Math.Round(TotalPay, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px">اجمالى</th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </center>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print(); window.onfocus = function () { window.close(); }
+        }
+    </script>
+</body>

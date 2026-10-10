@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = Accountingsystem.Resources.ExternalEmployee.EmailHasbeenSendedTitle;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_ExternalEmployeeLayout.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_ExternalEmployeeLayoutAR.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_ExternalEmployeeLayoutAR.cshtml";
+
+
+
+        }
+    }
+
+</head>
+<div class="row" style="padding-top:20%;">
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing text-center">
+                <h4>@Accountingsystem.Resources.ExternalEmployee.ConfirmEmailToCompleetRegistration</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+

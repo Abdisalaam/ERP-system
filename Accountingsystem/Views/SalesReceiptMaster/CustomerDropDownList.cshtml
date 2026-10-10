@@ -1,0 +1,24 @@
+﻿@model Accountingsystem.ViewModel.SalesReceiptMasterVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-5">
+        <div class="Dropdownlist">
+            @Html.DropDownListFor(model => model.Customer_Id, Model.MyCustomerList, "حدد العميل", htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+            @Html.ValidationMessageFor(model => model.Customer_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <span class="required-mark col-md-1"></span>
+    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اختر العميل المراد اضافتها">
+        <i class="fas fa-question-circle"></i>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group"> 
+            @Html.LabelFor(model => model.Customer_Id, "العميل", htmlAttributes: new { @class = "control-label" })
+
+        </div>
+    </div>
+}
+

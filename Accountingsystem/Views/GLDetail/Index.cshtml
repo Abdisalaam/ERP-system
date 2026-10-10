@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Accountingsystem.Models.GLDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>تفاصيل القيود اليومية</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayName("قيمة مدينة")
+        </th>
+        <th>
+            @Html.DisplayName("قيمة دائنة")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الحساب")
+        </th>
+        <th>
+            @Html.DisplayName("المجال")
+        </th>
+        <th>
+            @Html.DisplayName("رقم القيد")
+        </th>
+        <th>
+            @Html.DisplayName("رقم مركز التكلفة")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الاصل")
+        </th>
+
+        <th>
+            @Html.DisplayName("وصف الحركة")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.GLDetail_Debit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GLDetail_Credit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bu_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GLMasterGLMaster_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubLedger_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asset_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description_Detail)
+            </td>
+
+            <td></td>
+        </tr>
+    }
+
+</table>

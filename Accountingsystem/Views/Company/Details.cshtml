@@ -1,0 +1,543 @@
+﻿@model Accountingsystem.Models.Company
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CompanyDetails.Details;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <div class="text-center">
+                        @Accountingsystem.Resources.CompanyDetails.Details
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Comp_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyName)
+                                        </div>
+                                        <div>
+                                            @Model.Comp_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyAddress)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Comp_Address)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyIndex.crn)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CRN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.Country)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Country)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.Governorate)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Province)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyPhone)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Comp_phone)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.City)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.City)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyEmail)
+                                        </div>
+                                        <div>
+                                            <a style="color:dodgerblue" href="mailto:@Model.Comp_Email">@Model.Comp_Email</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyTaxNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Tax_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyFax)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Comp_Fax)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.CompanyField)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Comp_Field)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.FinancialPeriodStartDate)
+                                        </div>
+                                        <div>
+                                            @Model.StartFinancialDate.Value.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.FinancialPeriodEndDate)
+                                        </div>
+                                        <div>
+                                            @Model.EndFinancialDate.Value.ToString("yyyy/MM/dd ")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDetails.UnifiedNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.ImageHeader != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.validate.FrontPage)
+                                            </div>
+                                            <div>
+                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.ImageHeader)" alt="Image" style="width:100px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.ImageFooter != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.validate.EndPage)
+                                            </div>
+                                            <div>
+                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.ImageFooter)" alt="Image" style="width:100px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.ImageWaterMark != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.validate.ImageWaterMark)
+                                            </div>
+                                            <div>
+                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.ImageWaterMark)" alt="Image" style="width:100px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+
+            <div class="layout-top-spacing">
+                @{ if (Model.CompanyFileDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileNumber</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileName</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileLength</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileExtension</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var file in Model.CompanyFileDetails)
+                                    {
+                                    <tr>
+                                        <td>@file.Id</td>
+                                        <td>@file.FileName</td>
+                                        <td>@file.ContentLength</td>
+                                        <td>@file.File_Extention</td>
+                                        <td>
+                                            <a href='@Url.Action("ReturnproFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            <a href='@Url.Action("DeleteFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+            <div class="layout-top-spacing">
+                @{ if (Model.CompanyPhotoDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileNumber</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileName</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileLength</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileExtension</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var file in Model.CompanyPhotoDetails)
+                                    {
+                                    <tr>
+                                      
+                                        <td>@file.Id</td>
+                                        <td>@file.FileName</td>
+                                        <td>@file.ContentLength</td>
+                                        <td>@file.File_Extention</td>
+                                        <td>
+                                            <a href="@Url.Action( "ReturnproPhoto", new { fileId = file.Id })" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                            </a>
+
+                                        </td>
+                                        <td>
+
+                                            <a href='@Url.Action("DeletePhoto", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+            <div class="row layout-top-spacing">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+                        {
+
+
+
+
+
+
+                            <a id="editExpensesBtn" href="@Url.Action("Edit", new { id = Model.Comp_Id })" class="btn btn-block btn-outline-info mb-lg-0">
+                                @Accountingsystem.Resources.CatchReceiptDetails.Edit
+                                <span id="editExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Request.IsAuthenticated@*&& !User.IsInRole("بائع") && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@ /**/
+                                                                                                                                                                                        /**/
+                                                                                                                                                                                        /**/
+                                                                                                                                                                                        && package.OffGL == true)
+                                    {
+
+
+
+
+
+
+                                        <a id="editComBtn" href='@Url.Action("makeOffGL", "GLMaster")' class="btn btn-block btn-outline-primary mb-lg-0">
+                                            @Accountingsystem.Resources.CompanyDetails.CreateClosingConstaint
+                                            <span id="editcomBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                        </a>
+
+
+
+
+                                    }
+                        @if (Request.IsAuthenticated) { 
+                        <a id="editComBtn" href='@Url.Action("EditAdmin", "Employee")' class="btn btn-block btn-outline-primary mb-lg-0">
+                            @Accountingsystem.Resources.EmployeeEdit.EditEmployee
+                            <span id="editcomBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.CatchReceiptDetails.BackToList
+                            <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+    <script>
+
+        $("#editExpensesBtn").click(function (e) {
+            $("#editExpensesBtnSpinner").show();
+        });
+        $("#editComBtn").click(function (e) {
+            $("#editcomBtnSpinner").show();
+        });
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+       
+
+    </script>
+}

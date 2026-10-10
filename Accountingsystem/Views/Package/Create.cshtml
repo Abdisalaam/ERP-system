@@ -1,0 +1,807 @@
+﻿@model Accountingsystem.ViewModel.PackageVM
+
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("Create", "Package", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label("انشاء باقة")</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("اسم الباقة")
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Package_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("مدة الباقة")
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.Package_duration, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد الافرع")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_Branch, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد مراكز البيع")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_POS, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد المخازن")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_store, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد مراكز التكلفة")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_subLedgger, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد الموظفيين")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_Employee, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Number_Employee, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد المستخدميين")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Number_User, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Number_User, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد فواتير المبيعات  ")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.NumberOfInvoice, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NumberOfInvoice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("عدد فواتير المردودات  ")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.NumberOfReverse, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.NumberOfReverse, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("رمز بدء فواتير المبيعات")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.StartOfInvoice, new { htmlAttributes = new { @class = "form-control mb-4", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.StartOfInvoice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("رمز بدء المردودات")
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.StartOfInReverse, new { htmlAttributes = new { @class = "form-control mb-4", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.StartOfInReverse, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الاصول")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Asset, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("المشاريع")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Project, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("قيد الاقفال")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.OffGL, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الموارد البشرية")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.HR, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الاشتركات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Subscribtion, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("المصروفات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Expences, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("اكثر من ضريبة بالفاتورة")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.ExtraTaxes, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الصنف المجمع")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.ProductCompound, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الحسابات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Accounting, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("المورديين")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Suppliers, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("شجرة الحسابات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.ChartOfAccount, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("التقارير و مستندات تحت الاعتماد")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.ReportsAndPending, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الصيانة")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Maintenance, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("المشتريات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Purchase, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("المبيعات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Sales, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الكاشير")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Casher, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("العمولات")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Commission, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("حضور وانصراف")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Attendingandleaving, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("طباعة مخصصة")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.PrintSpecial, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("الخياطة الرجالي")
+                                    <div class="input-group">
+                                        @Html.CheckBoxFor(model => model.Sewing, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("اسم النموذج عربي")
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.SewingArab, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("اسم النموذج eng")
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.SewingEng, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.VacationsCreate.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+
+@section Scripts {
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+    <script>
+
+
+        $('#Package_Name').on('input', function () {
+            $("#Package_Name").removeClass("addRequiredFieldToInput");
+        });
+        $('#Package_duration').on('input', function () {
+            $("#Package_duration").removeClass("addRequiredFieldToInput");
+        });
+        $('#Number_Branch').on('input', function () {
+            $("#Number_Branch").removeClass("addRequiredFieldToInput");
+        });
+
+        $('#Number_POS').on('input', function () {
+            $("#Number_POS").removeClass("addRequiredFieldToInput");
+        });
+        $('#Number_store').on('input', function () {
+            $("#Number_store").removeClass("addRequiredFieldToInput");
+        });
+        $('#Number_subLedgger').on('input', function () {
+            $("#Number_subLedgger").removeClass("addRequiredFieldToInput");
+        });
+
+
+        $('#Number_User').on('input', function () {
+            $("#Number_User").removeClass("addRequiredFieldToInput");
+        });
+        $('#Number_Employee').on('input', function () {
+            $("#Number_Employee").removeClass("addRequiredFieldToInput");
+        });
+
+
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            if ($('#Package_Name').val() == "" || $('#Package_Name').val() == null ||
+                $('#Package_duration').val() == "" || $('#Package_duration').val() == null ||
+                $('#Number_Branch').val() == "" || $('#Number_Branch').val() == null ||
+                $('#Number_POS').val() == "" || $('#Number_POS').val() == null ||
+                $('#Number_store').val() == "" || $('#Number_store').val() == null ||
+                $('#Number_subLedgger').val() == "" || $('#Number_subLedgger').val() == null ||
+                $('#Number_User').val() == "" || $('#Number_User').val() == null ||
+                $('#Number_Employee').val() == "" || $('#Number_Employee').val() == null
+
+            ) {
+                $('#createOfferbtn').prop('disabled', false);
+
+                $("#createOfferSpinner").hide();
+                if ($('#Package_Name').val() == "" || $('#Package_Name').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل اسم الباقة",
+                        pos: 'top-center'
+                    });
+                    $("#Package_Name").addClass("addRequiredFieldToInput");
+                    $('#Package_Name').trigger('focus');
+                }
+                if ($('#Package_duration').val() == "" || $('#Package_duration').val() == null) {
+                    Snackbar.show({
+                        text: "مدة الباقة",
+                        pos: 'top-center'
+                    });
+                    $("#Package_duration").addClass("addRequiredFieldToInput");
+                    $('#Package_duration').trigger('focus');
+                }
+                if ($('#Number_Branch').val() == "" || $('#Number_Branch').val() == null) {
+                    Snackbar.show({
+                        text: "عدد الافرع",
+                        pos: 'top-center'
+                    });
+                    $("#Number_Branch").addClass("addRequiredFieldToInput");
+                    $('#Number_Branch').trigger('focus');
+                }
+                if ($('#Number_POS').val() == "" || $('#Number_POS').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل عدد مراكز البيع",
+                        pos: 'top-center'
+                    });
+                    $("#Number_POS").addClass("addRequiredFieldToInput");
+                    $('#Number_POS').trigger('focus');
+                }
+                if ($('#Number_store').val() == "" || $('#Number_store').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل عدد المخازن",
+                        pos: 'top-center'
+                    });
+                    $("#Number_store").addClass("addRequiredFieldToInput");
+                    $('#Number_store').trigger('focus');
+                }
+                if ($('#Number_subLedgger').val() == "" || $('#Number_subLedgger').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل عدد مراكز التكلفة",
+                        pos: 'top-center'
+                    });
+                    $("#Number_subLedgger").addClass("addRequiredFieldToInput");
+                    $('#Number_subLedgger').trigger('focus');
+                }
+                if ($('#Number_User').val() == "" || $('#Number_User').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل عدد المستخدميين",
+                        pos: 'top-center'
+                    });
+                    $("#Number_User").addClass("addRequiredFieldToInput");
+                    $('#Number_User').trigger('focus');
+                }
+                if ($('#Number_Employee').val() == "" || $('#Number_Employee').val() == null) {
+                    Snackbar.show({
+                        text: "ادخل عدد الموظفيين",
+                        pos: 'top-center'
+                    });
+                    $("#Number_Employee").addClass("addRequiredFieldToInput");
+                    $('#Number_Employee').trigger('focus');
+                }
+
+
+                $("#createOfferSpinner").hide();
+                event.preventDefault();
+            }
+
+
+        });
+
+    </script>
+}

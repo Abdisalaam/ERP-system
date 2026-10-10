@@ -1,0 +1,222 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ProjectDetailsVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.ProjectAccountReport;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+</head>
+@using (Html.BeginForm("ReportOfCatchReciptProject", "ReportsNew", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.ProjectAccountReport)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.From)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.From_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.From_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.To)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.To_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.To_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.Project)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.ProjectId, Model.ProjectList, Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.ProjectInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.ToReport <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GetAllReportsForProjects","Reports")'>
+                        @Accountingsystem.Resources.ReportsNewReportOfCatchReciptProject.Back<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+            var currentDate = new Date();
+            var _StartDate = flatpickr(document.getElementById('From_Date'), {
+                defaultDate: currentDate
+            });
+            var currentDate = new Date();
+            var _EndDate = flatpickr(document.getElementById('To_Date'), {
+                defaultDate: currentDate
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+
+
+            $("#ProjectId").chosen();
+
+            $("#ProjectId_chosen").addClass("form-control Dropdownlist-select");
+
+
+            return false;
+        });
+
+
+    </script>
+    <script>
+        $('#ProjectId').on('change', function () {
+            $("#ProjectId_chosen").removeClass("addRequiredFieldToInput");
+            $('#ProjectId_chosen span').css('background', '#ffffff');
+            $('#ProjectId_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+        $('#catchReceiptCreateForm').submit(function () {
+
+            if ($('#ProjectId').val() == "" || $('#ProjectId').val() == null || $('#ProjectId').val() < 1) {
+
+                $("#createExpensesSpinner").hide();
+                Snackbar.show({
+                        text: "@Accountingsystem.Resources.ReportsNewReportOfProjectProfit.ProjectIsRequired",
+                        pos: 'top-center'
+                    });
+                $("#ProjectId_chosen").addClass("addRequiredFieldToInput");
+                $('#ProjectId_chosen span').css('background', 'red');
+                $('#ProjectId_chosen b').css('background', 'red');
+
+                $('html, body').animate({
+                    scrollTop: $("#ProjectId").offset().top
+                }, 2000);
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+        });
+
+    </script>
+
+
+}

@@ -1,0 +1,35 @@
+﻿@model Accountingsystem.ViewModel.InventoryTransfer_DetailVM
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal"> 
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Product_ID, Model.MyProductList,Accountingsystem.Resources.OfferPriceMasterCreateOffer.ProductOrServiceInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Product_ID, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.ItemName)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+}

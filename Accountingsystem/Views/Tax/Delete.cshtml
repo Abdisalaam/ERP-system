@@ -1,0 +1,152 @@
+﻿@model Accountingsystem.Models.Tax
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.TaxDelete.ChangeActivation;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Delete", "Tax", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+
+            <h3 class="text-center"></h3>
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                                @Accountingsystem.Resources.TaxDelete.DeletionTaxQuestion
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-content widget-content-area">
+                    <div class=''>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TaxDelete.TaxName)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Tax_Name)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TaxDelete.TaxType)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Tax_Type)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TaxDelete.TaxNumber)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Tax_Code)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TaxDelete.TaxPercentage)
+                                                </div>
+                                                <div>
+                                                    @Math.Round(Model.Tax_Percentage, 2, MidpointRounding.AwayFromZero)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row layout-top-spacing">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.TaxDelete.Save<span id="subButSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                            <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                @Accountingsystem.Resources.TaxDelete.BackToList
+                                <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+@section scripts{
+
+    <script>
+        $("#subBut").click(function (e) {
+            $("#subButSpinner").show();
+        });      
+
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });    
+    </script>
+}
+

@@ -1,0 +1,161 @@
+﻿@model Accountingsystem.Models.PurInvoiceMaster
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PurInvoiceMaster</h4>
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.InvoiceNumber)
+                    </th>
+                    <td id="Master_Id" hidden="hidden">
+                        @Html.DisplayFor(model => model.Master_Id)
+                    </td>
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Serial_Number)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.Description)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Description)
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.InvoiceDate)
+                    </th>
+                    <td class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Invoice_Date)*@
+                        @Model.Invoice_Date.ToString("yyyy/MM/dd ")
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.DueDate)
+                    </th>
+                    <td class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Due_Date)*@
+                        @Model.Due_Date.Value.ToShortDateString()
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.Discount)
+                    </th>
+
+                    <td class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Master_Discount)*@
+                        @Math.Round(Model.Master_Discount, 2)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.Currency)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Invoice_Currency)
+                    </td>
+                    <th id="Rec_state">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.TotalInvoiceAfterTaxes)
+                    </th>
+
+                    <td class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Total_Cost)*@
+                        @Math.Round(Model.Total_Cost ,2)
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.CompanyName)
+                    </th>
+
+                    <td class="col-md-2">
+
+                        @Accountingsystem.Models.Company.GetCompanyById(Model.Company_Id).Comp_Name
+
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.TotalTaxes)
+                    </th>
+                    <td class="col-md-2">
+                        @*@Html.DisplayFor(model => model.Total_Tax)*@
+                        @Math.Round(Model.Total_Tax, 2)
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.Store)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.HiddenFor(model => model.Store_ID)
+                        @Html.DisplayFor(model => model.Store_Name)
+                    </td>
+
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.Supplier)
+                    </th>
+                    <td class="col-md-2">
+                        @Accountingsystem.Models.Supplier.GetSupplierById(Model.Supplier_Id).Supp_Name
+
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.PaidValue)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Payed_Amount)
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.InvoiceCase)
+                    </th>
+                    <td id="Invoice_State">
+                        @Html.DisplayFor(model => model.Invoice_State)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceDetails.ResidualValue)
+                    </th>
+                    <td>
+                        @*@Html.DisplayFor(model => model.TotalAmountAfMat)*@
+                        @Math.Round(Model.TotalAmountAfMat, 2)
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value=@Accountingsystem.Resources.PurchaseInvoiceDetails.Delete class="btn BTN-style final-BTN" /> |
+        <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+            @Accountingsystem.Resources.PurchaseInvoiceDetails.BackToList;
+        </a>
+    </div>
+    }
+</div>

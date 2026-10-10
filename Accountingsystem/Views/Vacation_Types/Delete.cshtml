@@ -1,0 +1,82 @@
+﻿@model Accountingsystem.Models.Vacation_Types
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.VacationTypesIndex.DeleteVacationType;
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.VacationTypesIndex.DeleteVacationType</h2>
+
+<h3>@Accountingsystem.Resources.VacationTypesIndex.VacationDeleteQuestion</h3>
+<div>
+    
+    <hr />
+    <table data-sortable="" class="table" data-sortable-initialized="true">
+
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesCreate.VacationTypeInformation)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Vacation_Type)
+            </td>
+
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesIndex.CarriedOver)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.TransferToNewYear)
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesIndex.DaysAvailableVacationDeduction)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.PenalityDay)
+            </td>
+
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesIndex.DaysDeductionExceedVacation)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.PenalityDayAfter)
+            </td>
+
+        </tr>
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesIndex.DeductionAvailableVacationPercentage)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.penalityPercentage)
+            </td>
+
+
+            <th class="col-md-2">
+                @Html.DisplayName(Accountingsystem.Resources.VacationTypesIndex.DeductionExceedVacationPercentage)
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.PenalityDayAfter)
+            </td>
+
+        </tr>
+
+
+    </table>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value=@Accountingsystem.Resources.VacationTypesIndex.Delete class="btn BTN-style final-BTN" /> |
+        <a class="btn BTN-style final-BTN" href="@Url.Action("Index")">@Accountingsystem.Resources.VacationTypesIndex.BackToList</a>
+    </div>
+    }
+</div>

@@ -1,0 +1,409 @@
+﻿@model Accountingsystem.Models.SubscriptionInvoice
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SubscriptionDetailOFSubInv.CatchReceiptDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var Paymethod = Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(Model.Payment_Method).Payment_Type;
+      DateTime? operationDate = new DateTime();
+    if (Model.QRNumber > 0)
+    {
+        operationDate = Accountingsystem.Models.MasterQRInvoice.GetMasterQRInvoiceById(Model.QRNumber.Value).DateOfCreate;
+    }
+
+    
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.Inv_ID)
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.CatchReceiptDetails)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.CatchReceiptNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Serial_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.CatchReceiptDate)
+                                        </div>
+                                        <div>
+                                            @Model.InvoiceDate.Value.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (operationDate != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.validate.OperationDate)
+                                            </div>
+                                            <div>
+                                                @operationDate.Value.ToString(" HH:mm:ss  dd/MM/yyyy")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @{
+                        if (Model.Customer_Id != null || Model.Customer_Id != 0)
+                        {
+                            var CustomerCode = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Code;
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.CustomerNumber)
+                                                </div>
+                                                <div>
+                                                    @CustomerCode
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.CustomeName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.SubscriptionPrice)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Estimate_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.ValuePaid)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Pay_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.PaymentMethod)
+                                        </div>
+                                        <div>
+                                            @Paymethod
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.SubscriptionDescription)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_Description)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailOFSubInv.SubscriptionNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ProjectDetails.StartingDate)
+                                        </div>
+                                        <div>
+                                            @Model.StartTime.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionExpirationDate)
+                                        </div>
+                                        <div>
+                                            @Model.DeadLine.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    @if (Model.SubscriptionInvoiceFiles.Any())
+                    {
+                        <div class="row inv--product-table-section">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="">
+                                            <tr>
+                                                <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileNumber</th>
+                                                <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileName</th>
+                                                <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileExtension</th>
+                                                <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileLength</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var file in Model.SubscriptionInvoiceFiles)
+                                            {
+                                                <tr>
+                                                    <td>@file.Id</td>
+                                                    <td>@file.FileName</td>
+                                                    <td>@file.ContentLength</td>
+                                                    <td>@file.ProImg</td>
+                                                    <td>
+
+                                                        <a href='@Url.Action("ReturnRecFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                                        </a>
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row layout-top-spacing">
+            <div class="col-md-6">
+                <div class="form-group">
+
+
+                    @if (Request.IsAuthenticated )
+                    {
+                        if (Model.Transaction_State != Accountingsystem.Models.TransactionState.Void)
+                        {
+
+                            <a id="createSubscriptionReceiptBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Voidtheinvoice","Subscription",new { id = Model.Inv_ID })'>
+                                @Accountingsystem.Resources.SubscriptionDetailOFSubInv.Void
+                                <span id="createSubscriptionReceiptBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                            <a id="constraintBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Serial_Number })'>
+                                @Accountingsystem.Resources.SubscriptionDetailOFSubInv.CatchConstraint
+                                <span id="constraintBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        }
+                    }
+                    @if (User.IsInRole("عميل") || User.IsInRole("مالك النظام"))
+                    {
+                        <a id="deleteBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("DeleteInvoiceSub", new { id = Model.Inv_ID })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Delete
+                            <span id="deleteBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @if (Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Mail != null && Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Mail != "")
+                    {
+                        <a id="SentCustomerEmail" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("SendEmailSubRecipt", new { controller = "Reports", id = Model.Inv_ID })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.SentCustomerEmail
+                            <span id="SentCustomerEmailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                    @{
+                        var companyPrint = Accountingsystem.Models.InvoicePrintSetting.getCompanyPrint(1);
+                    }
+                    @if (companyPrint.PrintLogo == "DetailSpecial")
+                    {
+                        <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SubInvReportSpecial", new { controller = "Reports", id = Model.Inv_ID })'>
+                            @Accountingsystem.Resources.ReceiptDetails.PrintEmail
+                            <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0"href='@Url.Action("SubInvReport", new { controller = "Reports", id = Model.Inv_ID })'>
+                            @Accountingsystem.Resources.ReceiptDetails.PrintEmail
+                            <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                    <a id="printBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("SubInvReportWhite", new { controller = "Reports", id = Model.Inv_ID })' target="_blank">
+                        @Accountingsystem.Resources.SubscriptionDetailofSubscription.PrintSubscription
+                        <span id="printBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                  
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexOfInvoices","Subscription")">
+                        @Accountingsystem.Resources.SubscriptionDetailOFSubInv.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#createSubscriptionReceiptBtn").click(function (e) {
+            $("#createSubscriptionReceiptBtnSpinner").show();
+        });
+        $("#deleteBtn").click(function (e) {
+            $("#deleteBtnSpinner").show();
+        });
+        $("#constraintBtn").click(function (e) {
+            $("#constraintBtnSpinner").show();
+        });
+        $("#printBtn").click(function (e) {
+            $("#printBtnBtnSpinner").show();
+        });
+        $("#printEmailBtn").click(function (e) {
+            $("#printEmailBtnSpinner").show();
+        });
+       
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+
+    </script>
+    }

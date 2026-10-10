@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Accountingsystem.Models.FixedAsset>
+
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+
+    int count = 1;
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <title>تقرير الاصول الاجمالي </title>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <div style="text-align:center; font-size:x-large">
+        <h>تقرير الاصول الاجمالي||Total Asset Report</h>
+    </div>
+    <br />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.Number)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.AssetDescription)
+                </th>
+
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.AssetLife)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.AssetPrice)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.BookBalance)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.DepreciationComplex)
+                </th>
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.LastDepreciationDate)
+                </th>
+
+                <th>
+                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetIndex.NumberOfTimesDepreciation)
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var dep = item.FixedAssetDetails.Select(a => a.DestructionValue).ToList().Sum();
+                <tr>
+                    <td>
+                        @count
+                        @{count = count + 1;}
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FAsset_Description)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FAsset_AgeMonth)
+                    </td>
+                    <td>
+                        @Math.Round(item.FAsset_PurchasePrice.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    @if (item.BookValue > 0)
+                    {
+                        <td>
+                            @Math.Round(Convert.ToDecimal(item.BookValue.Value) - dep, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            0
+                        </td>
+                    }
+                    <td>
+                        @Math.Round(dep, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+
+                    <td>
+                        @if (dep > 0)
+                        {
+                            <h>@item.FixedAssetDetails.OrderByDescending(a => a.Date).FirstOrDefault().Date.ToString("yyyy/MM/dd ")</h>
+                        }
+                    </td>
+                    <td>
+                        @item.FixedAssetDetails.Count()
+                    </td>
+
+
+
+
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

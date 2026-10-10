@@ -1,0 +1,127 @@
+﻿@model Accountingsystem.Models.Slices
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SlicesDetails.SlicesDetailss;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+}
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+       
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @Accountingsystem.Resources.SlicesDetails.SlicesDetailss
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SlicesDetails.SliceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Slice_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SlicesDetails.SliceName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Slice_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row layout-top-spacing">
+                @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Create")'>
+                                @Accountingsystem.Resources.SlicesDetails.Create
+                                <span id="newbtnbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                }
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="editbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.Slice_Id })">
+                            @Accountingsystem.Resources.ReceiptDetails.Edit
+                            <span id="editbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.ReceiptDetails.BackToList
+                            <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#editbtn").click(function (e) {
+            $("#editbtnSpinner").show();
+        });
+      
+
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+
+}
+
+
+

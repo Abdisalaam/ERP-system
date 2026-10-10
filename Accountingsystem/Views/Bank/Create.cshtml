@@ -1,0 +1,322 @@
+﻿@model Accountingsystem.ViewModel.BankVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.BankCreate.CreateNewBankAccount;
+    HttpCookie cookie = Request.Cookies["Language"];
+    Model.CurrencyID = 1;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+             
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+          
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+           
+
+        }
+    }
+    
+</head>
+
+
+
+@using (Html.BeginForm("Create", "Bank", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.CurrencyID)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.BankCreate.CreateNewBankAccount)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BankCreate.BankName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Bank_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Bank_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BankCreate.BankAddress)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Bank_Address, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Bank_Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="EXPID">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BankCreate.Account)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedChartOfAccountId, Model.MyChartOfAccountList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedChartOfAccountId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.BankCreate.BankBalance)
+                <div class="input-group">
+                    @Html.EditorFor(model => model.balance, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                    <div class="input-group-append">
+                        <div>
+                            <span class="form-control text-danger">*</span>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.balance, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BankCreate.BankAccountNumber)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.BankNumber, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BankNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BankCreate.IBANBankNumber)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.IbanNumber, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.IbanNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TreasuryCreate.Employee)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Emp_Id, Model.EmpList, Accountingsystem.Resources.TreasuryCreate.EmployeesListInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.BankCreate.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.BankCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+    @section Scripts {
+        @{
+
+            if (cookie != null && cookie.Value != null)
+            {
+                if (cookie.Value == "en")
+                {
+                    <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                    <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+                }
+                else
+                {
+                    <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+                }
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+            }
+        }
+
+        <script type="text/javascript">
+            $("#Emp_Id").chosen();
+            $("#Emp_Id_chosen").addClass("form-control Dropdownlist-select");
+            $(document).ready(function () {
+
+                if ($('.chosen-container').length > 0) {
+                    $('.chosen-container').on('touchstart', function (e) {
+                        e.stopPropagation(); e.preventDefault();
+                        $(this).trigger('mousedown');
+
+                    });
+                }
+                $("#backToListBtn").click(function (e) {
+                    $("#backTolistBtnSpinner").show();
+                });
+                $("#SelectedChartOfAccountId").chosen();
+                $("#SelectedChartOfAccountId_chosen").addClass("form-control Dropdownlist-select");
+                $("#balance").val("");
+                return false;
+            });
+
+
+        </script>
+        <script>
+            $('#Bank_Name').on('input', function () {
+                $("#Bank_Name").removeClass("addRequiredFieldToInput");
+
+            });
+            $('#Bank_Address').on('input', function () {
+                $("#Bank_Address").removeClass("addRequiredFieldToInput");
+
+            });
+            $('#balance').on('input', function () {
+                $("#balance").removeClass("addRequiredFieldToInput");
+
+            });
+            $('#BankNumber').on('input', function () {
+                $("#BankNumber").removeClass("addRequiredFieldToInput");
+
+            });
+            $('#IbanNumber').on('input', function () {
+                $("#IbanNumber").removeClass("addRequiredFieldToInput");
+
+            });
+
+            $('#SelectedChartOfAccountId').on('change', function () {
+                $("#SelectedChartOfAccountId_chosen").removeClass("addRequiredFieldToInput");
+                $('#SelectedChartOfAccountId_chosen span').css('background', '#ffffff');
+                $('#SelectedChartOfAccountId_chosen b').css('background', '#ffffff');
+            });
+        </script>
+        <script>
+
+            $('#offerCreateMasterForm').submit(function () {
+                $('#createOfferbtn').prop('disabled', true);
+            if ($('#SelectedChartOfAccountId').val() == "" || $('#SelectedChartOfAccountId').val() == null || $('#SelectedChartOfAccountId').val() < 1 || $('#Bank_Name').val() == "" || $('#Bank_Name').val() == null || $('#Bank_Address').val() == "" || $('#Bank_Address').val() == null || $('#BankNumber').val() == "" || $('#BankNumber').val() == null || $('#IbanNumber').val() == "" || $('#IbanNumber').val() == null) {
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createExpensesSpinner").hide();
+                if ($('#Bank_Name').val() == "" || $('#Bank_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BankCreate.BankNameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Bank_Name").addClass("addRequiredFieldToInput");
+                    $('#Bank_Name').trigger('focus');
+                }
+
+                if ($('#Bank_Address').val() == "" || $('#Bank_Address').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BankCreate.BankAddressIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Bank_Address").addClass("addRequiredFieldToInput");
+                    $('#Bank_Address').trigger('focus');
+                }
+              
+              
+                if ($('#BankNumber').val() == "" || $('#BankNumber').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BankCreate.BankAccountNumberIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#BankNumber").addClass("addRequiredFieldToInput");
+                    $('#BankNumber').trigger('focus');
+                }
+                if ($('#IbanNumber').val() == "" || $('#IbanNumber').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BankCreate.BankIBANIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#IbanNumber").addClass("addRequiredFieldToInput");
+                    $('#IbanNumber').trigger('focus');
+                }
+                if ($('#SelectedChartOfAccountId').val() == "" || $('#SelectedChartOfAccountId').val() == null || $('#SelectedChartOfAccountId').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BankCreate.SelectAccountIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedChartOfAccountId_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedChartOfAccountId_chosen span').css('background', 'red');
+                    $('#SelectedChartOfAccountId_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedChartOfAccountId").offset().top
+                    }, 2000);
+                }
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+
+        });
+
+        </script>
+
+
+    }

@@ -1,0 +1,221 @@
+﻿@model Newtonsoft.Json.Linq.JArray
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SubLedgerGetTreeJson.CostCenterTree;
+    HttpCookie cookie = Request.Cookies["Language"];
+   
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <style>
+                    .list-group-item > .badge {
+                        float: right;
+                    }
+
+                    .badge {
+                        vertical-align: bottom;
+                    }
+
+                    .node-icon {
+                        color: green;
+                    }
+
+                    .node-oops {
+                        background-color: white;
+                    }
+
+                    .badge {
+                        display: inline-block;
+                        min-width: 10px;
+                        padding: 3px 7px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 1;
+                        color: #fff;
+                        text-align: center;
+                        white-space: nowrap;
+                        vertical-align: baseline;
+                        background-color: #777;
+                        border-radius: 10px;
+                        float: right;
+                    }
+                </style>
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <style>
+                    .list-group-item > .badge {
+                        float: left;
+                    }
+
+                    .badge {
+                        vertical-align: bottom;
+                    }
+
+                    .node-oops {
+                        background-color: white;
+                    }
+
+                    .node-icon {
+                        color: green;
+                    }
+
+                    .badge {
+                        display: inline-block;
+                        min-width: 10px;
+                        padding: 3px 7px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 1;
+                        color: black;
+                        text-align: center;
+                        white-space: nowrap;
+                        vertical-align: baseline;
+                        background-color: #777;
+                        border-radius: 10px;
+                        float: right;
+                    }
+                </style>
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <style>
+                .list-group-item > .badge {
+                    float: left;
+                }
+
+                .badge {
+                    vertical-align: bottom;
+                }
+
+                .node-icon {
+                    color: green;
+                }
+
+                .node-oops {
+                    background-color: white;
+                }
+
+                .badge {
+                    display: inline-block;
+                    min-width: 10px;
+                    padding: 3px 7px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 1;
+                    color: #000000;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: baseline;
+                    background-color: #777;
+                    border-radius: 10px;
+                    float: right;
+                }
+            </style>
+
+        }
+    }
+
+</head>
+
+@*<style>
+    .list-group-item > .badge {
+        float: right;
+    }
+
+    .badge {
+        vertical-align: bottom;
+    }
+
+    .badge {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        background-color: #777;
+        border-radius: 10px;
+        float: right;
+    }
+</style>*@
+
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.SubLedgerGetTreeJson.CostCenterTree</h2>
+<div class="container">
+    @*<div class="col-md-12" id="tree"></div>*@
+    <div class="col-md-12" id="tree" hidden>@Model.ToString()</div>
+    <div class="col-md-12"></div>
+
+</div>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="row">
+        <div class="col-md-12" id="oops">
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/ContentRTL/assets/js/bootstrap-treeview.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                  $.ajax({
+                      url: '@Url.Action("GetTree", "SubLedger")',
+                      dataType: 'JSON',
+                      type: 'get',
+                  }).done(function (result) {
+                      var data = JSON.parse(result);
+                      alert("in in");
+                      $('#tree').treeview({ data: data });
+                      alert("im after");
+                    });
+                alert(data);
+
+                alert("im done");
+            });
+
+
+        </script>*@
+    <script src="~/ContentRTL/assets/js/bootstrap-treeview.js"></script>
+    <script type="text/javascript">
+        $("#tree").hide();
+
+        var data = $('#tree').html();
+
+        $('#oops').treeview({
+            data: data,
+            color: "#0000A0",
+            showTags: true
+        });
+
+
+
+    </script>
+
+}

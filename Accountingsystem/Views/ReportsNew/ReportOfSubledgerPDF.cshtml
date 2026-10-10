@@ -1,0 +1,476 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.SubledgerVM
+@{
+    Layout = null;
+
+    ViewBag.Title = "تقرير مركز التكلفة التفصيلي";
+
+
+    decimal SUMAmount = 0;
+    decimal Sumbefore = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.To_Date).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.From_Date).ToString("yyyy/MM/dd ");
+}
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>تقرير مراكز التكلفة</title>
+
+</head>
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+   
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير مركز التكلفة التفصيلي / Details Subledger Report
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Model.subledger.SubLed_Name
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+    <hr />
+    <table class="table" style="text-align:right;width:1200px;direction:rtl">
+        <thead>
+            <tr style="background-color:lightgray;">
+
+
+                <th style="text-align:center;font-size:xx-small"> الرقم<br />NO</th>
+                <th style="text-align:center;font-size:xx-small"> التاريخ<br />Date</th>
+                <th style="text-align:center;font-size:xx-small"> رقم المستند<br />Document NO</th>
+                <th style="text-align:center;font-size:xx-small"> الوصف<br />Desc</th>
+                <th style="text-align:center;font-size:xx-small"> الحساب<br />Account</th>
+                <th style="text-align:center;font-size:xx-small"> المدين<br />Debit</th>
+                <th style="text-align:center;font-size:xx-small"> الدائن<br />Credit</th>
+                <th style="text-align:center;font-size:xx-small"> الرصيد<br />balance</th>
+
+
+            </tr>
+        </thead>
+        @{
+            decimal TotalAmount = 0;
+            var Count = 1;
+            decimal totalDepit = 0;
+            decimal totalCredit = 0;
+
+        }
+        <tbody>
+            @foreach (var item in Model.DetailList)
+            {
+                <tr>
+
+                    <td>
+                        @Count
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.GLdate).ToString("yyyy/MM/dd ")
+                        @*@item.GLdate*@
+                    </td>
+                    <td>
+                        @item.serialCode
+                    </td>
+                    <td>
+
+
+                        @item.Description
+                    </td>
+
+
+                    <td>
+
+
+                        @item.Account_Name   @item.Child_Name
+                    </td>
+                    <td>
+
+                        @Math.Round(item.Depite, 2, MidpointRounding.AwayFromZero)
+                        @{totalCredit += @item.Credit;
+                            totalDepit += @item.Depite;
+
+
+
+                        }
+
+                    </td>
+                    <td>
+
+                        @Math.Round(item.Credit, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    @{
+                        TotalAmount += item.Amount;
+                        decimal Amount = @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero);
+                        Count++;
+
+                    }
+
+                    @if (Amount >= 0)
+                    {
+                        <td>
+
+                            @Amount
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            (@(Amount * -1))
+                        </td>
+                    }
+
+                </tr>
+            }
+            <tr style="background-color:lightgray;">
+                @{
+                    var period = Model.DetailList.Where(a => a.serialCode != null && a.serialCode != "").ToList();
+                }
+                <th style="text-align:center;">
+                    رصيد  الفترة
+                    <br />
+                    Period Amount
+
+                </th>
+
+                <th style="text-align:center;">
+
+                </th>
+
+                <th style="text-align:center;">
+
+                </th>
+                <th style="text-align:center;">
+
+
+
+                </th>
+                <th style="text-align:center;">
+
+
+
+                </th>
+
+
+                <th style="text-align:center;">
+                    @Math.Round(period.Select(a => a.Depite).Sum(), 2, MidpointRounding.AwayFromZero)
+
+                </th>
+
+                <th style="text-align:center;">
+                    @Math.Round(period.Select(a => a.Credit).Sum(), 2, MidpointRounding.AwayFromZero)
+                </th>
+
+
+                @if (period.Select(a => a.Depite).Sum() - period.Select(a => a.Credit).Sum() >= 0)
+                {
+                    <th>
+
+                        @Math.Round(period.Select(a => a.Depite).Sum() - period.Select(a => a.Credit).Sum(), 2, MidpointRounding.AwayFromZero)
+                    </th>
+                }
+                else
+                {
+                    <th>
+                        (@Math.Round((period.Select(a => a.Depite).Sum() - period.Select(a => a.Credit).Sum()) * -1, 2, MidpointRounding.AwayFromZero))
+                    </th>
+                }
+
+
+
+            </tr>
+            <tr style="background-color:lightgray;">
+
+                <th style="text-align:center;">
+                    الاجمالي
+                    <br />
+                    Total
+
+                </th>
+
+                <th style="text-align:center;">
+
+                </th>
+
+                <th style="text-align:center;">
+
+                </th>
+                <th style="text-align:center;">
+
+
+
+                </th>
+                <th style="text-align:center;">
+
+
+
+                </th>
+
+
+                <th style="text-align:center;">
+                    @Math.Round(totalDepit, 2, MidpointRounding.AwayFromZero)
+
+                </th>
+
+                <th style="text-align:center;">
+                    @Math.Round(totalCredit, 2, MidpointRounding.AwayFromZero)
+                </th>
+
+
+                @if (TotalAmount >= 0)
+                {
+                    <th>
+
+                        @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                }
+                else
+                {
+                    <th>
+                        (@Math.Round(TotalAmount * -1, 2, MidpointRounding.AwayFromZero))
+                    </th>
+                }
+
+
+
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="text-center">
+        <h3 class="text-center">@Html.Label(Accountingsystem.Resources.validate.Summary)</h3>
+    </div>
+
+
+
+
+    <div class="table-responsive mb-4 mt-4">
+        <table class="table" style="text-align:right;width:1200px;direction:rtl">
+            <thead>
+                <tr style="text-align:right;">
+
+
+
+                    <th>@Accountingsystem.Resources.GLMasterDetail.ConstraintNumber</th>
+                    <th>@Accountingsystem.Resources.ChartOfAccountingCreate.AccountName</th>
+                    <th>@Accountingsystem.Resources.validate.AmountbeforePeriod</th>
+                    <th>@Accountingsystem.Resources.validate.AmountOfPeriod</th>
+
+                    <th>@Accountingsystem.Resources.validate.Balance</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var Account in Model.DetailList.Where(a => a.Account != null).Select(a => a.Account.Account_Id).Distinct())
+                {
+                    var AccountStatistic = Accountingsystem.Models.ReportsNew.getStatisticOAccountOfSubledger(Account, Model.SubLedger_Id, Model.From_Date, Model.To_Date);
+                    var totalaAmount = AccountStatistic.AmountPeriod;
+                    SUMAmount += totalaAmount;
+                    Sumbefore += AccountStatistic.AmountBefor;
+
+
+                    <tr>
+
+                        <td>
+                            @AccountStatistic.Account.Account_Code
+                        </td>
+                        <td>
+                            @AccountStatistic.Account.Account_Name
+                        </td>
+                        <td>
+                            @if (AccountStatistic.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round(AccountStatistic.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (totalaAmount < 0)
+                            {
+                                var a = "(" + Math.Round(totalaAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(totalaAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (totalaAmount + AccountStatistic.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round((totalaAmount + AccountStatistic.AmountBefor) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(totalaAmount + AccountStatistic.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+
+
+
+
+                    </tr>
+                }
+            </tbody>
+            <thead>
+                <tr>
+
+
+
+                    <th>
+                        @Accountingsystem.Resources.validate.TotalBalance
+
+
+                    </th>
+                    <th>
+
+
+
+                    </th>
+                    <th>
+                        @if (Sumbefore < 0)
+                        {
+                            var a = "(" + Math.Round(Sumbefore * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(Sumbefore, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </th>
+                    <th>
+                        @if (SUMAmount < 0)
+                        {
+                            var a = "(" + Math.Round(SUMAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(SUMAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </th>
+                    <th>
+                        @if (SUMAmount + Sumbefore < 0)
+                        {
+                            var a = "(" + Math.Round((SUMAmount + Sumbefore) * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(SUMAmount + Sumbefore, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </th>
+
+
+
+                    <th></th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+
+
+</html>
+

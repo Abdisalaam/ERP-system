@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Accountingsystem.Models.ExpenseFileDetail>
+
+@{
+    ViewBag.Title = "GetAllFiles";
+}
+
+<h2>ملفات سند الصرف</h2>
+
+<p>
+    @*@Html.ActionLink("انشاء جديد", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpenseExpense_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File_Extention)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentLength)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpenseExpense_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File_Extention)
+        </td>
+        <td>
+           @Html.ActionLink("تحميل", "ReturnExpFile", new { fileId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,207 @@
+﻿@model Accountingsystem.Models.CompanyDepartments
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CompanyDepartmentsDetails.DepartmentDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @Accountingsystem.Resources.CompanyDepartmentsDetails.DepartmentDetails
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDepartmentsCreate.Code)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CompDept_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDepartmentsDetails.DepartmentName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CompDept_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDepartmentsDetails.DepartmentPhone)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CompDept_Phone)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CompanyDepartmentsDetails.DepartmentDescription)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CompDept_Description)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row layout-top-spacing">
+                @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+{
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href=" @Url.Action("Create", new { id = Model.CompanyComp_Id })">
+                        @Accountingsystem.Resources.CompanyDepartmentsDetails.New
+                        <span id="newbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+
+                </div>
+            </div>
+        }
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.Id })">
+                            @Accountingsystem.Resources.ReceiptDetails.Edit
+                            <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("DeleteTrans", new { id = Model.Id })">
+                        @if (Model.IsActive != false)
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToNotActive
+                        }
+                        else
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToActive
+                        }
+                        <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                            <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index", new { id = Model.Company.Comp_Id })'>
+                                @Accountingsystem.Resources.ReceiptDetails.BackToList
+                                <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#deletebtn").click(function (e) {
+            $("#deletebtnSpinner").show();
+        });
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#glbtn").click(function (e) {
+            $("#glbtnSpinner").show();
+        });
+        $("#printEmailbtn").click(function (e) {
+            $("#printEmailbtnSpinner").show();
+        });
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+        
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+}

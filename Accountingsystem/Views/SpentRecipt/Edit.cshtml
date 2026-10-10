@@ -1,0 +1,563 @@
+﻿@model Accountingsystem.ViewModel.SpentReciptVM
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.CatchReceiptEdit.Titel;
+    Model.Company_Id = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    Model.Currency_Id = 1;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Edit", "SpentRecipt", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.SpentReceipt_Id)
+    @Html.HiddenFor(model => model.SpentReceipt_Code)
+    @Html.HiddenFor(model => model.Company_Id)
+    @Html.HiddenFor(model => model.Currency_Id)
+    @Html.HiddenFor(model => model.SpentReceiptOrderId)
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.SpentReceiptEdit.SpentReceipt)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.SpentReceiptNumber)
+                                    @Html.EditorFor(model => model.SpentReceipt_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.SpentReceipt_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.SpentReceiptDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.SpentReceipt_date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SpentReceipt_date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.Supplement)
+                                    @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.Value)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.SpentReceipt_Value, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SpentReceipt_Value, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.SelectPayment)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.AccountCredit_Id, Model.AccCreditList, Accountingsystem.Resources.SpentReceiptCreate.PaymentMethodInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccountCredit_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(" ")
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.AccountsubCredit_Id, Model.AccsubCreditList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccountsubCredit_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.Account)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.AccountDebit_Id, Model.AccDebitList, Accountingsystem.Resources.SpentReceiptCreate.AccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccountDebit_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(" ")
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Child_AccountDepit_Id, Model.ChildList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.Attachments)
+                                    <label class="custom-file-container__custom-file form-control mb-4">
+                                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.SpentReceiptCreate.SelectFile</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtFiles" class="list-unstyled"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.Description)
+                                    @Html.TextAreaFor(model => model.SpentReceipt_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.SpentReceiptCreate.Description })
+                                    @Html.ValidationMessageFor(model => model.SpentReceipt_Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.SpentReceiptCreate.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.CatchReceiptCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }
+            $("#createExpensesSpinner").hide();
+            var currentDate = $("#CatchReceipt_date").val();
+            var _ExpensesDate = flatpickr(document.getElementById('SpentReceipt_date'), {
+                defaultDate: currentDate
+            });
+
+
+            $("#AccountCredit_Id").chosen();
+            $("#AccountsubCredit_Id").chosen();
+            $("#AccountDebit_Id").chosen();
+            $("#Child_AccountDepit_Id").chosen();
+
+            $("#AccountCredit_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#AccountsubCredit_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#AccountDebit_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Child_AccountDepit_Id_chosen").addClass("form-control Dropdownlist-select");
+
+
+            $('#Files').change(function () {
+                $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+                $('#selectedtFiles').empty();
+                var totalConteLength = 0;
+                for (var i = 0; i < this.files.length; i++) {
+                    conteLength = this.files[i].size;
+                    totalConteLength += this.files[i].size;
+                    if (totalConteLength > 4000000) {
+                        $('#Files').empty();
+                        $('#selectedtFiles').empty();
+                        $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.Expenses.TotalSizeOfSelectedFiles : " + totalConteLength + " " + "@Accountingsystem.Resources.Expenses.Byte" + '</li > ');
+                        $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.Expenses.MaxOfFilesSize" + '.</li > ');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                        Snackbar.show({
+                            text: "@Accountingsystem.Resources.Expenses.FileSizePopupMessage",
+                            pos: 'bottom-center'
+                        });
+                        return false;
+                    }
+                    else {
+                        var fileName = this.files[i].name;
+                        if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                        $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.FileName : " + fileName + '</li> ');
+                        $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.FileLength :  " + this.files[i].size + " " + "@Accountingsystem.Resources.Expenses.Byte" + '</li> ');
+                    }
+                }
+                $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.TotalSizeOfFiles : " + totalConteLength + " " + "@Accountingsystem.Resources.Expenses.Byte" + '</li > ');
+            });
+
+        });
+
+         $(function () {
+             $("#AccountCredit_Id").change(function (e) {
+                 var selectedValue = $(this).val();
+                 if (selectedValue == "") {
+                     selectedValue = "0"
+                 }
+            $.ajax({
+                url: '@Url.Action("GetAccountSubCredit", "GLMaster")',
+                type: 'get',
+                data: { Acc_ID: selectedValue }
+            }).done(function (result) {
+                $("#AccountsubCredit_Id").empty();
+                @*var subAccountOptions = new Option("@Accountingsystem.Resources.SpentReceiptCreate.BranchDebtorInformation", 0);
+                $("#AccountsubCredit_Id").append(subAccountOptions);*@
+                for (var i = 0; i < result.length; i++) {
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#AccountsubCredit_Id").append(p);
+                }
+                $('#AccountsubCredit_Id').trigger('chosen:updated');
+                $("#AccountsubCredit_Id_chosen").removeClass("addRequiredFieldToInput");
+                $('#AccountsubCredit_Id_chosen span').css('background', '#ffffff');
+                $('#AccountsubCredit_Id_chosen b').css('background', '#ffffff');
+            });
+        });
+    });
+
+         $(function () {
+             $("#AccountDebit_Id").change(function (e) {
+                 var selectedValue = $(this).val();
+                 if (selectedValue == "") {
+                     selectedValue = "0"
+                 }
+            $.ajax({
+                url: '@Url.Action("GetSubChildCredit", "CatchReceipt")',
+                type: 'get',
+                data: { ChildID: selectedValue }
+            }).done(function (result) {
+                $("#Child_AccountDepit_Id").empty();
+                @*var subAccountOptions = new Option("@Accountingsystem.Resources.SpentReceiptCreate.BranchDebtorInformation", 0);
+                $("#Child_AccountDepit_Id").append(subAccountOptions);*@
+                for (var i = 0; i < result.length; i++) {
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#Child_AccountDepit_Id").append(p);
+                }
+                $('#Child_AccountDepit_Id').trigger('chosen:updated');
+                $("#Child_AccountDepit_Id_chosen").removeClass("addRequiredFieldToInput");
+                $('#Child_AccountDepit_Id_chosen span').css('background', '#ffffff');
+                $('#Child_AccountDepit_Id_chosen b').css('background', '#ffffff');
+            });
+        });
+        });
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+
+    </script>
+    <script>
+        $('#SpentReceipt_date').on('change', function (e)
+        {
+            var selectedValue = $(this).val();
+             $.ajax({
+                        url: '@Url.Action("CheckStartdate", "GLMaster")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            var currentDate = new Date();
+
+                            var _OfferDate = flatpickr(document.getElementById('SpentReceipt_date'), {
+                                defaultDate: currentDate
+                            });
+
+                        }
+                    }
+                    );
+            $.ajax({
+                url: '@Url.Action("CheckEndDate", "Company")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {
+                    Snackbar.show({
+                        text: result,
+                        pos: 'top-center'
+                    });
+                }
+            }
+            );
+        });
+
+    </script>
+    <script>
+        $('#catchReceiptCreateForm').submit(function () {
+            $('#subBut').prop('disabled', true);
+            if ($('#AccountCredit_Id').val() == "" || $('#AccountCredit_Id').val() == null || $('#AccountCredit_Id').val() < 1 || $('#AccountDebit_Id').val() == null || $('#AccountDebit_Id').val() == "" || $('#AccountDebit_Id').val() < 1 || $('#SpentReceipt_Value').val() == null || $('#SpentReceipt_Value').val() == "" || $('#SpentReceipt_Value').val() <= 0) {
+                $('#subBut').prop('disabled', false);
+                if ($('#AccountCredit_Id').val() == "" || $('#AccountCredit_Id').val() == null || $('#AccountCredit_Id').val() < 1) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SpentReceiptCreate.PaymentMethodeIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#AccountCredit_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#AccountCredit_Id_chosen span').css('background', 'red');
+                    $('#AccountCredit_Id_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#AccountCredit_Id").offset().top
+                    }, 2000);
+                }
+                if ($('#AccountDebit_Id').val() == "" || $('#AccountDebit_Id').val() == null || $('#AccountDebit_Id').val() < 1) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SpentReceiptCreate.AccountCreditorIsRequierdMessage",
+                        pos: 'top-center'
+                    });
+                    $("#AccountDebit_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#AccountDebit_Id_chosen span').css('background', 'red');
+                    $('#AccountDebit_Id_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#AccountDebit_Id").offset().top
+                    }, 2000);
+                }
+
+
+                if ($('#SpentReceipt_Value').val() == "" || $('#SpentReceipt_Value').val() == null || $('#SpentReceipt_Value').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CatchReceiptCreate.ValueRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#SpentReceipt_Value").addClass("addRequiredFieldToInput");
+                    $('#SpentReceipt_Value').trigger('focus');
+                }
+
+                $("#createExpensesSpinner").hide();
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+        });
+    </script>
+    <script>
+        $('#SpentReceipt_Value').on('input', function () {
+            $("#SpentReceipt_Value").removeClass("addRequiredFieldToInput");
+        });
+
+
+        $('#AccountCredit_Id').on('change', function () {
+            $("#AccountCredit_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#AccountCredit_Id_chosen span').css('background', '#ffffff');
+            $('#AccountCredit_Id_chosen b').css('background', '#ffffff');
+        });
+        $('#AccountDebit_Id').on('change', function () {
+            $("#AccountDebit_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#AccountDebit_Id_chosen span').css('background', '#ffffff');
+            $('#AccountDebit_Id_chosen b').css('background', '#ffffff');
+        });
+
+    </script>
+
+
+}

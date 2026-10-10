@@ -1,0 +1,52 @@
+﻿@model Accountingsystem.Models.MeasuringUnit
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.MeasuringUnitDelete.Delete</h2>
+
+<h3>@Accountingsystem.Resources.MeasuringUnitDelete.DeletionMeasuringUnitQuestion</h3>
+<div>   
+    <hr />
+
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" data-sortable-initialized="true">
+                @Html.HiddenFor(model => model.MUnit_ID)
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(@Accountingsystem.Resources.MeasuringUnitDelete.MeasuringUnitNumber)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.MUnit_Code)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(@Accountingsystem.Resources.MeasuringUnitDelete.MeasuringUnitName)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.MUnit_Descrip)
+                    </td>
+
+
+                </tr>
+            </table>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.MeasuringUnitDelete.BackToList
+                </a>
+                <input type="submit" value=@Accountingsystem.Resources.MeasuringUnitDelete.Delete class="btn BTN-style-danger final-BTN" />
+            </div>
+        </div>
+    }
+    <hr />
+ 
+</div>

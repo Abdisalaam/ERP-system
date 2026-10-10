@@ -1,0 +1,322 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.TaxReportVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير الاقرار الضريبي</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+    <STYLE TYPE="text/css">
+        .breakhere {
+            page-break-after: always
+        }
+    </STYLE>
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="80" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1% ">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+           
+            @{
+                var ToDate = Convert.ToDateTime(Model.Date);
+               
+
+            }
+            @if (ToDate.Year != 2200)
+            {
+            <h style="text-align:right;margin-left:80%;color:black;font-size:large;">الي :   @ToDate.ToString("yyyy/MM/dd ")</h><br />
+            
+            }
+        </div>
+        <div style="text-align:Center;color:black;font-size:xx-large;margin-bottom:25px;">
+            <h> الاقرار الضريبي</h>
+        </div>
+
+
+        <table class="table table-bordered" style="text-align:center;margin-top:0%; width:1000px" data-sortable="" border="1" dir="rtl">
+            <caption>الايراد</caption>
+            <tr style="background-color:gray">
+
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    اسم الضريبة
+                </th>
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    الايراد التابع للضريبة
+                </th>
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    قيمة الضريبة
+                </th>
+
+
+            </tr>
+            @foreach (var item in Model.taxReportDetail.Where(a => a.isPurchase == false))
+            {
+
+                <tr>
+
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @item.Tax_Name
+                    </td>
+                    @if (item.SaleseBallance < 0)
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            ( @Math.Round(item.SaleseBallance * -1, 2, MidpointRounding.AwayFromZero) )
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            @Math.Round(item.SaleseBallance, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+
+                    @if (item.TaxBallance < 0)
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            ( @Math.Round(item.TaxBallance * -1, 2, MidpointRounding.AwayFromZero) )
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            @Math.Round(item.TaxBallance, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+
+
+
+
+
+
+
+
+
+
+                </tr>
+
+
+            }
+            <tr>
+
+                <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                    الاجمالي
+                </td>
+                @if (Model.TotalRevenue < 0)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        ( @Math.Round(Model.TotalRevenue * -1, 2, MidpointRounding.AwayFromZero) )
+                    </td>
+
+                }
+                else
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @Math.Round(Model.TotalRevenue, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+                @if (Model.TotalRevenueTax < 0)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        ( @Math.Round(Model.TotalRevenueTax * -1, 2, MidpointRounding.AwayFromZero) )
+                    </td>
+
+                }
+                else
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @Math.Round(Model.TotalRevenueTax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+        </table>
+        <table class="table table-bordered" style="text-align:center;margin-top:0%; width:1000px" data-sortable="" border="1"dir="rtl">
+            <caption>المشتريات</caption>
+            <tr style="background-color:gray">
+
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    اسم الضريبة
+                </th>
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    المشتريات التابع للضريبة
+                </th>
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    قيمة الضريبة
+                </th>
+
+
+            </tr>
+            @foreach (var item in Model.taxReportDetail.Where(a => a.isPurchase == true))
+            {
+
+                <tr>
+
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @item.Tax_Name
+                    </td>
+                    @if (item.PurchaseBallance < 0)
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            ( @Math.Round(item.PurchaseBallance * -1, 2, MidpointRounding.AwayFromZero) )
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            @Math.Round(item.PurchaseBallance, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+                    @if (item.TaxBallance < 0)
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            ( @Math.Round(item.TaxBallance * -1, 2, MidpointRounding.AwayFromZero) )
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                            @Math.Round(item.TaxBallance, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    }
+
+
+
+
+
+
+
+
+
+
+
+                </tr>
+
+
+            }
+            <tr>
+
+                <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                    الاجمالي
+                </td>
+                @if (Model.TotalPurchase < 0)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        ( @Math.Round(Model.TotalPurchase * -1, 2, MidpointRounding.AwayFromZero) )
+                    </td>
+
+                }
+                else
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @Math.Round(Model.TotalPurchase, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+
+
+                @if (Model.TotalPurchaseTax < 0)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        ( @Math.Round(Model.TotalPurchaseTax * -1, 2, MidpointRounding.AwayFromZero) )
+                    </td>
+
+                }
+                else
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @Math.Round(Model.TotalPurchaseTax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+
+
+
+
+
+
+
+
+
+            </tr>
+        </table>
+        <div style="text-align:right;color:black;font-size:xx-large;">
+            <br />
+          المبلغ
+            @if (Model.DifferenceBetweenRevenueAndTax < 0)
+            {
+                <p>
+
+                    ( @Math.Round(Model.DifferenceBetweenRevenueAndTax * -1, 2, MidpointRounding.AwayFromZero) )
+                </p>
+
+            }
+            else
+            {
+                <p>
+
+                    @Math.Round(Model.DifferenceBetweenRevenueAndTax, 2, MidpointRounding.AwayFromZero)
+                </p>
+            }
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

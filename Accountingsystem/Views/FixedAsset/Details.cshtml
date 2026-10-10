@@ -1,0 +1,432 @@
+﻿@model Accountingsystem.Models.FixedAsset
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.FixedAssetDetails.AssetDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var dep = Model.FixedAssetDetails.Select(a => a.DestructionValue).ToList().Sum();
+    var thisEmp = "";
+    if (Model.FAsset_Employee_ID != 0 && Model.FAsset_Employee_ID != null && Model.FAsset_Employee_ID.ToString() != null)
+    {
+        thisEmp = Accountingsystem.Models.Employee.getEmpById(Convert.ToInt32(Model.FAsset_Employee_ID.ToString())).Emp_Name;
+    }
+    else
+    {
+        thisEmp = "";
+    }
+
+
+    var thisSub = "";
+    if (Model.SubLedger_ID == 0)
+    {
+        thisSub = "";
+    }
+    else
+    { thisSub = Accountingsystem.Models.SubLedger.getDetail(Convert.ToInt32(Model.SubLedger_ID.ToString())).SubLed_Name; }
+    var disposeValue = "";
+    if (Model.FAsset_Dispose == false)
+    {
+        disposeValue = "لم يتم الاستبعاد";
+    }
+    else
+    {
+        disposeValue = "تم الاستبعاد";
+    }
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.Fasset_ID)
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div>
+                        @Html.Label(@Accountingsystem.Resources.FixedAssetDetails.AssetDetails)
+                    </div>
+
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.FAsset_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.PurchasingAssetDate)
+                                        </div>
+                                        <div>
+                                            @*@Html.DisplayFor(model => model.FAsset_BuyDate)*@
+                                            @if (Model.FAsset_BuyDate != null)
+                                            {
+                                            @Model.FAsset_BuyDate.Value.ToString("dd/MM/yyyy")
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.ClosingDateOfAsset)
+                                        </div>
+                                        <div>
+                                            @if (Model.FAsset_SellDate != null)
+                                            {
+                                                @Model.FAsset_SellDate.Value.ToString("dd/MM/yyyy")
+                                            }
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetAgeInMonths)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.FAsset_AgeMonth)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetWorkingDate)
+                                        </div>
+                                        <div>
+                                            @if (Model.FAsset_WorkingDate != null)
+                                            {
+                                                @Model.FAsset_WorkingDate.ToString("dd/MM/yyyy")
+                                            }
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetPrice)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.FAsset_PurchasePrice.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetDescription)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.FAsset_Description)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetType)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.FAsset_Type)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.AssetClass)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.FAssetCat_name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.BookBalance)
+                                        </div>
+                                        <div>
+                                            @if (Model.BookValue > 0)
+                                            {
+                                                <div>
+                                                    @Math.Round(Convert.ToDecimal(Model.BookValue.Value) - dep, 2, MidpointRounding.AwayFromZero)
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    0
+                                                </div>
+                                            }
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.Employee)
+                                        </div>
+                                        <div>
+                                            @thisEmp
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.DepreciationComplex)
+                                        </div>
+                                        <div>
+                                            @Math.Round(dep, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.Activity)
+                                        </div>
+                                        <div>
+                                            @thisSub
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.ScrapValue)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.JunckValue.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.FixedAssetDetails.ExcludingAssetCase)
+                                        </div>
+                                        <div>
+                                            @disposeValue
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @if (Model.FixedAssetFileDetails.Any())
+        {
+            <div class="row inv--product-table-section">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="">
+                                <tr>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileNumber</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileName</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileExtension</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileLength</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var file in Model.FixedAssetFileDetails)
+                                {
+                                    <tr>
+                                        
+                                        <td>@file.Id</td>
+                                        <td>@file.FileName</td>
+                                        <td>@file.File_Type</td>
+                                        <td>@file.ContentLength</td>
+                                        <td>
+                                            <a href='@Url.Action("ReturnInvoicetFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                            </a>
+                                        </td>   
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @if (Math.Round(dep, 2, MidpointRounding.AwayFromZero) > 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                        <a id="transferOfferToInvoiceBtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action( "Edit", new { id = Model.Fasset_ID })">
+                            @Accountingsystem.Resources.FixedAssetDetails.Edit
+                            <span id="transferOfferToInvoiceBtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    }
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.FixedAssetDetails.BackToList
+                        <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#transferOfferToInvoiceBtn").click(function (e) {
+        $("#transferOfferToInvoiceBtnSpinner").show();
+    });
+    $("#backToListBtn").click(function (e) {
+        $("#backTolistBtnSpinner").show();
+    });
+</script>

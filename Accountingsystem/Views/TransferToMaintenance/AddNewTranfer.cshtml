@@ -1,0 +1,573 @@
+﻿@model Accountingsystem.ViewModel.TransferToMaintenanceVM
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.CreateNew;
+    Model.Company_Id = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("AddTransferTOmain", "TransferToMaintenance", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Master_Id)
+    @Html.HiddenFor(model => model.Company_Id)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.CreateNew)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.TransferNumber)
+                                    @Html.EditorFor(model => model.Trans_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Trans_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.TransferDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Trans_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Trans_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.StoreName)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Store_ID, Model.MyStoresList, Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.StoreNameInformation, htmlAttributes: new { @class = "Dropdownlist-select form-control mb-4" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Store_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.Description)
+                                    @Html.EditorFor(model => model.Describtion, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Describtion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @if (package.Number_Branch > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.BranchName)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Branch_Id, Model.BranchList, Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.BranchNameInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.Department)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Department_ID, Model.MyDepartList, Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.DepartmentInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.Activity)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Transfer_BU, Model.BUList, Accountingsystem.Resources.ProjectCreate.ActivityInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (package.Number_subLedgger > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.CostCenter)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subledger_ID, Model.supList, Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.CostCenterInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.Expense)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Account_Id, Model.AccountList, Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.ExpenseInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.ReferenceInformation)
+                                    @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div id="InvoicesDetailsssss" class="row"></div>
+                        <div id="InvoicesDetailList" class="col-md-12"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.Create<span id="createSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+@section Scripts {
+    @{
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script>
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });            }
+            $("#createSpinner").hide();
+            var currentDate = new Date();
+            var _trans_Date = flatpickr(document.getElementById('Trans_Date'), {
+                defaultDate: currentDate
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+
+                 
+            $("#Store_ID").chosen();
+            $("#Branch_Id").chosen();
+            $("#Department_ID").chosen();
+            $("#Transfer_BU").chosen();
+            $("#Subledger_ID").chosen();
+            $("#Account_Id").chosen();
+
+           
+            $("#Store_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#Branch_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Department_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#Transfer_BU_chosen").addClass("form-control Dropdownlist-select");
+            $("#Subledger_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#Account_Id_chosen").addClass("form-control Dropdownlist-select");                   
+            return false;
+        });
+    </script>
+
+    <script type="text/javascript">
+        function AddDetailToMaster() {
+            if ($('#Batch_ID').val() == "" || $('#Batch_ID').val() == null || $('#Batch_ID').val() <= 0 || $('#Product_Quantity').val() == null || $('#Product_Quantity').val() <= 0 || $('#Product_Quantity').val() == "") {
+                if ($('#Batch_ID').val() == "" || $('#Batch_ID').val() == null || $('#Batch_ID').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.SelectProductRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Batch_ID_chosen").addClass("addRequiredFieldToInput");
+                    $('#Batch_ID_chosen span').css('background', 'red');
+                    $('#Batch_ID_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Batch_ID").offset().top
+                    }, 2000);
+                }
+                if ($('#Product_Quantity').val() == "" || $('#Product_Quantity').val() == null || $('#Product_Quantity').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.QuantityRequired",
+                        pos: 'top-center'
+                    });
+                    $("#Product_Quantity").addClass("addRequiredFieldToInput");
+                    $('#Product_Quantity').trigger('focus');
+                }                
+            }
+            else {
+                var invoiceMasterIds = @Model.Master_Id;
+                var batchId = $("#Batch_ID").val();
+                var qty = $("#Product_Quantity").val();
+                var productPrice = $("#Product_Price").val();
+                var productTax = $("#Product_Tax").val();
+                var invoiceMasterDetail;
+             invoiceMasterDetail = {
+                 TransferToMaintenanceMaster_Id:invoiceMasterIds,
+                 Batch_ID:batchId,
+                 Product_Price:productPrice,
+                 Product_Tax:productTax,
+                 Product_Quantity:qty
+             };
+             $.ajax(
+        {
+            url: '@Url.Action("AddInvoiceDetailToMaster", "TransferToMaintenance")',
+            data: JSON.stringify(invoiceMasterDetail),
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {  
+                $("#InvoicesDetailList").load('@(Url.Action("GetAllTempInvoiceDetails", "TransferToMaintenance"))?tempInvoiceMasterId=' + invoiceMasterIds);          
+            },
+            error: function () { alert('error '); }
+        });
+            }
+        };
+
+    </script>
+
+    <script>
+
+        $('#Trans_Date').on('input', function () {
+            $("#Trans_Date").removeClass("addRequiredFieldToInput");
+        });
+     
+        $('#Store_ID').on('change', function () {
+            $("#Store_ID_chosen").removeClass("addRequiredFieldToInput");
+            $('#Store_ID_chosen span').css('background', '#ffffff');
+            $('#Store_ID_chosen b').css('background', '#ffffff');
+        });
+        $('#Account_Id').on('change', function () {
+            $("#Account_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Account_Id_chosen span').css('background', '#ffffff');
+            $('#Account_Id_chosen b').css('background', '#ffffff');
+        });
+
+    </script>
+    <script>
+        $('#catchReceiptCreateForm').submit(function () {
+            $('#subBut').prop('disabled', true);
+            if ($('#Store_ID').val() == "" || $('#Store_ID').val() == null || $('#Store_ID').val() <= 0 || $('#Account_Id').val() == null || $('#Account_Id').val() == "" || $('#Account_Id').val() == "" || $('#Trans_Date').val() == "" || $('#Trans_Date').val() == null || $('#creatOfferDetailList tr').length < 2) {
+                $('#subBut').prop('disabled', false);
+                $("#createSpinner").hide();
+
+                if ($('#Store_ID').val() == "" || $('#Store_ID').val() == null || $('#Store_ID').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.StoreNameMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Store_ID_chosen").addClass("addRequiredFieldToInput");
+                    $('#Store_ID_chosen span').css('background', 'red');
+                    $('#Store_ID_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Store_ID").offset().top
+                    }, 2000);
+                }
+                if ($('#Account_Id').val() == "" || $('#Account_Id').val() == null || $('#Account_Id').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.ExpenseValidation",
+                        pos: 'top-center'
+                    });
+                    $("#Account_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#Account_Id_chosen span').css('background', 'red');
+                    $('#Account_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Account_Id").offset().top
+                    }, 2000);
+                }              
+                if ($('#Trans_Date').val() == "" || $('#Trans_Date').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.TransferToMaintenanceAddNewTranfer.TransferDateMandatory",
+                        pos: 'top-center'
+                    });
+                    $("#Trans_Date").addClass("addRequiredFieldToInput");
+                    $('#Trans_Date').trigger('focus');
+                }
+                 if ($('#creatOfferDetailList tr').length < 2) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddProductsToTheListMessage",
+                        pos: 'top-center'
+                    });
+                    $("#creatOfferDetailList").addClass("addRequiredFieldToInput");
+                     $("#Batch_ID_chosen").addClass("addRequiredFieldToInput");
+                     $('#Batch_ID_chosen span').css('background', 'red');
+                     $('#Batch_ID_chosen b').css('background', 'red');
+                     $('#Batch_ID_chosen').trigger('focus');
+                }
+                event.preventDefault();
+            }
+            else {
+                $("#createSpinner").show();
+            }
+
+
+        });
+
+    </script>
+
+
+    <script>
+        $('#Trans_Date').on('change', function (e)
+       {
+
+        var selectedValue = $(this).val();
+
+             $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Company")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                        }
+                    }
+                    );
+        });
+
+    </script>
+
+    <script>
+    function DeleteTemp(e) {
+        var ids =e;
+        var  purchaseInvoiceMasterId=@Model.Master_Id;
+        var invoiceMasterId = @Model.Master_Id;
+        $.ajax({
+            url: '@Url.Action("DeleteTemp", "TransferToMaintenance")',
+            type: 'get',
+            data: { id: ids }
+        }).done(function (result) {
+
+            $("#InvoicesDetailList").load('@(Url.Action("GetAllTempInvoiceDetails", "TransferToMaintenance"))?tempInvoiceMasterId=' + invoiceMasterId);
+
+        });
+    }
+
+    </script>
+    <script type="text/javascript">
+        $("#Department_ID").empty();
+        var departmentsOptions = new Option("@Accountingsystem.Resources.ProjectCreate.DepartmentInformation", 0);
+        $("#Department_ID").append(departmentsOptions);
+        $('#Department_ID').trigger('chosen:updated');
+        $("#Transfer_BU").empty();
+        var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.ProjectCreate.ActivityInformation", 0);
+        $("#Transfer_BU").append(bussinesSubledgerOptions);
+        $('#Transfer_BU').trigger('chosen:updated');
+        $("#Branch_Id").change(function (e) {
+             var selectedValue = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("GetDepart", "TransferToMaintenance")',
+                    type: 'get',
+                    data: { BranchID: selectedValue }
+                }).done(function (result) {
+                    $("#Department_ID").empty();
+                        var d = new Option("@Accountingsystem.Resources.ProjectCreate.DepartmentInformation", 0);
+                    $("#Department_ID").append(d);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#Department_ID").append(p);
+                        }
+                    $('#Department_ID').trigger('chosen:updated');
+                    });
+                });
+        $("#Department_ID").change(function (e) {
+                    var selectedValue = $(this).val();
+                $.ajax({
+                   url: '@Url.Action("GetBesniss", "TransferToMaintenance")',
+                    type: 'get',
+                    data: { Besniss: selectedValue }
+                }).done(function (result) {
+                    $("#Transfer_BU").empty();
+                         var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.ProjectCreate.ActivityInformation", 0);
+                    $("#Transfer_BU").append(bussinesSubledgerOptions);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#Transfer_BU").append(p);
+                        }
+                    $('#Transfer_BU').trigger('chosen:updated');
+                    });
+                });
+    </script>
+
+  <script>
+       $(function () {
+        $("#Store_ID").change(function (e) {
+            var storeIds = $("#Store_ID").val();
+            var invoiceMasterIds = @Model.Master_Id;
+            $("#InvoicesDetailList").load('@(Url.Action("GetAllTempInvoiceDetails", "TransferToMaintenance"))?tempInvoiceMasterId=' +invoiceMasterIds);
+            $("#InvoicesDetailsssss").load('@(Url.Action("PreperInvoiceDetails", "TransferToMaintenance"))?storId=' + storeIds);
+        });
+    });
+    </script>
+
+}

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Accountingsystem.Models.EmployeeSalaryMonth>
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.MonthlySalaries;
+}
+
+<h2>@Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.MonthlySalaries</h2>
+
+<a class="btn btn-default" href="@Url.Action("Index")">
+    <p>
+        @Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.BackToList
+    </p>
+</a>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.EmployeeNumber)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.Employee)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.SalaryDueDate)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.TotalSalary)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.EmployeeGetTheSallaryForAllEmployeeForThatMounth.SalaryAccount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.TotalSalary)*@
+            @Math.Round(item.TotalSalary,2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @{
+                if (item.AcountSal == null)
+                { }
+                else
+                {
+                    var nameo = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(item.AcountSal.Value).Account_Name;
+                    <h>@nameo</h>
+                }
+
+            }
+       
+        </td>
+      
+    </tr>
+}
+
+</table>

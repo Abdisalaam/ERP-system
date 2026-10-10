@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Accountingsystem.Models.SlicesProduct>
+
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.Price)
+        </th>
+      
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.SliceName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.SlicesProduct_Id)
+    <tr>
+       
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Slice_Price)*@
+            @Math.Round(item.Slice_Price, 2, MidpointRounding.AwayFromZero,MidpointRounding.AwayFromZero)
+        </td>
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.SlicesSlice_Id)
+        </td>
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("DeleteTemp('"+item.SlicesProduct_Id+"')")" class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.ProductDelete.Delete</a>
+            </div>
+
+        </td>  
+    </tr>
+}
+
+</table>

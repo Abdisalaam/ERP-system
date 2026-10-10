@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Accountingsystem.Models.SettlementOfStoresDetails>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Item)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.ItemNumber)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Quantity)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.ItemCost)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Total)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.Settlement_DetailsId)
+        @Html.HiddenFor(modelItem => item.SettlementOfStoresId)
+
+    <tr>
+        <td> @Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Name</td>
+        <td> @Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Code</td>
+        <td>
+            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>        
+            @Math.Round(item.Product_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @Math.Round(item.Total_Cost_Detail, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Settlement_DetailsId+"')")" class="BTN-style-danger" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterIndex.Delete</a>
+            </div>
+        </td>
+
+    </tr>
+    }
+
+</table>

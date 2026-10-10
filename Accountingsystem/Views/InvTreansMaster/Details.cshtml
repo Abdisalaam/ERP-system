@@ -1,0 +1,442 @@
+﻿@model Accountingsystem.Models.InventoryTransfer_Hd
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.InvTreansMasterDetails.StoreTransferringDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    decimal quantity = 0;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+@Html.HiddenFor(model => model.TransferHd_Id)
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.InvTreansMasterDetails.StoreTransferringDetails
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.TransferNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Inv_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Tranfer_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.TransferDate)
+                                        </div>
+                                        <div>
+                                            @Model.Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.StoreTransferredFromIt)
+                                        </div>
+                                        <div>
+                                            @{var Sursto = Accountingsystem.Models.Store.GetStoreById(Model.SourceStore_Id).Store_Name;
+                                                <h>@Sursto</h> }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.TransferredStore)
+                                        </div>
+                                        <div>
+                                            @{var Desstor = Accountingsystem.Models.Store.GetStoreById(Model.DestStore_Id).Store_Name;
+                                                <h>@Desstor</h> }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Description)
+                            </div>
+
+                            @Html.TextAreaFor(model => model.InvTransfere_Notes, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table mb-4">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.InvTreansMasterDetails.ItemNumber</th>
+                        <th>@Accountingsystem.Resources.InvTreansMasterDetails.ItemName</th>
+
+                        <th>@Accountingsystem.Resources.InvTreansMasterDetails.Quantity</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.InventoryTransfer_Detail)
+                    {
+                        quantity += order.Product_Qty;
+                    <tr>
+                        <td>
+                            @{var code = Accountingsystem.Models.Product.GetProdectById(order.Product_ID).Prod_Code;
+                                <h>@code</h> }
+                        </td>
+
+                        <td>
+                            @{var Prod = Accountingsystem.Models.Product.GetProdectById(order.Product_ID).Prod_Name;
+                                <h>@Prod</h> }
+                        </td>
+                        <td>@Math.Round(order.Product_Qty, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Product", new { id = order.Product_ID })" class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.ProductDetails.ItemDetails
+                            </a>
+                        </td>
+                        <td>
+
+
+                            <a href="@Url.Action("printbarcodeTemp", "ReportsNew", new { id = order.Product_ID ,storeId=Model.DestStore_Id })" class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.ProductDetails.PrintTempBarcode
+                            </a>
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <div class=''>
+            <div class="row layout-top-spacing">
+                <div class="col-md-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalAmount)
+                                    </div>
+                                    <div>
+                                        @Math.Round(quantity, 2, MidpointRounding.AwayFromZero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="new" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Create")">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.Createnew
+                        <span id="newSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+                    {
+
+
+                        <button id="changeState" type="button" class="btn btn-block btn-outline-info mb-lg-0"></button>
+
+                        if (Model.Tranfer_State == Accountingsystem.Models.TransactionState.Pending)
+                        {
+
+                            <a id="Edit" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("EditForPending", new { id = Model.TransferHd_Id, isCopy = 0 })">
+                                @Accountingsystem.Resources.InvoiceMasterDetails.Edit
+                                <span id="EditSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="ReceiptConstraint" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Inv_Code })'>
+                                @Accountingsystem.Resources.InvoiceMasterDetails.ReceiptConstraint
+                                <span id="ReceiptConstraintSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+
+
+
+                    <a id="Print" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("InvenrotyTransfer", new { controller = "Reports", id = Model.TransferHd_Id })' target="_blank">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.Print
+                        <span id="PrintSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#new").click(function (e) {
+            $("#newSpinner").show();
+        });
+        $("#Delete").click(function (e) {
+            $("#DeleteSpinner").show();
+        });
+        $("#Edit").click(function (e) {
+            $("#EditSpinner").show();
+        });
+        $("#ReceiptConstraint").click(function (e) {
+            $("#ReceiptConstraintSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+        $("#CopyInvoice").click(function (e) {
+            $("#CopyInvoiceSpinner").show();
+        });
+
+        $("#SentCustomerEmail").click(function (e) {
+            $("#SentCustomerEmailSpinner").show();
+        });
+
+        $("#PrintEmail").click(function (e) {
+            $("#PrintEmailSpinner").show();
+        });
+
+        $("#Print").click(function (e) {
+            $("#PrintSpinner").show();
+        });
+
+        $("#RecieptSupplyOrReceiveGoods").click(function (e) {
+            $("#RecieptSupplyOrReceiveGoodsSpinner").show();
+        });
+        $("#PayNow").click(function (e) {
+            $("#PayNowSpinner").show();
+        });
+        $("#CustomerReport").click(function (e) {
+            $("#CustomerReportSpinner").show();
+        });
+        $("#CustomerDetail").click(function (e) {
+            $("#CustomerDetailSpinner").show();
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                    updateButtonText();
+            hideEditAndDeleteActions();
+        });
+
+                    function updateButtonText() {
+                        var Invoice_State = '@Model.Tranfer_State';
+                        if (Invoice_State == "Void") {
+                            $("#changeState").hide();
+                            return;
+                        }
+
+                        if (Invoice_State == "Pending") {
+
+                            $("#changeState").text('Post');
+                        }
+                        if (Invoice_State == "Post") {
+                            $("#changeState").text('Void');
+                        }
+                    }
+
+
+                    function hideEditAndDeleteActions() {
+                        /// <summary>Hides the edit and delete actions if the invoice is not pending
+                        var Invoice_State = '@Model.Tranfer_State';
+                        if (Invoice_State != "Pending")
+                            $("#EditAndDelete").hide();
+                    }
+
+                    function updateInvoiceState(data) {
+                        return $.ajax({
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+                            url: '@Url.Action("Update", "InvTreansMaster")',
+                            data: data,
+                            success: function (result) {
+                                Snackbar.show({
+                                    text: result,
+                                    pos: 'top-center'
+                                });
+                                setTimeout(function () {
+
+                                    location.reload();
+
+                                }, 5000);
+
+                            },
+                            error: function () {
+                                alert('@Accountingsystem.Resources.InvoiceMasterDetails.ErrorProductsDontMatch')
+                            }
+                        });
+                    }
+
+        $("#changeState").click(function (e) {
+            debugger
+            this.disabled = true;
+            e.preventDefault();
+                        var data = JSON.stringify({
+                            TransferHd_Id: @Model.TransferHd_Id,
+                            Tranfer_State: $("#changeState").text()
+            });
+                        $.when(updateInvoiceState(data)).then(function (response) {
+                            console.log(response);
+                        }).fail(function (err) {
+                            console.log(err);
+                        });
+                        updateButtonText();
+                        hideEditAndDeleteActions();
+
+                    })
+    </script>
+}
+
+

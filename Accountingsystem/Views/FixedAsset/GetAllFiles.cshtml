@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Accountingsystem.Models.FixedAssetFileDetail>
+
+@{
+    ViewBag.Title = "GetAllFiles";
+}
+
+<h2>الملفات</h2>
+
+<p>
+    @*@Html.ActionLink("انشاء جديد", "Create")*@
+</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table-condensed table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayName(" طول المحتوى ")
+                    </th>
+                    <th>
+                        @Html.DisplayName(" اسم الملف ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("رقم الاصل ")
+                    </th>
+                    <th>
+                        @Html.DisplayName(" نوع الملف ")
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentLength)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FixedAssetFasset_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.File_Type)
+                        </td>
+                        <td>
+                            @Html.ActionLink("تحميل", "ReturnFixedFile", new { fileId = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-12">  
+                <div class="col-md-3">
+                    <a class="btn btn-primary" href='@Url.Action("Index")'>
+                        الرجوع للقائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

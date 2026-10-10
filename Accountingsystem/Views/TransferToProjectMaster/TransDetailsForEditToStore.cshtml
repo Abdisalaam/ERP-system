@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransferToProjectDetail>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayName("اسم الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("الكميه")
+        </th>
+
+
+        <th>
+            @Html.DisplayName("اجمالي التكلفه")
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @Html.HiddenFor(modelItem => item.Product_ID)
+        <td>
+
+            @{ var prodName = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Name;
+                <h>@prodName</h>
+            }
+        </td>
+
+        <td>
+
+            @{ var prodCode = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Code;
+                <h>@prodCode</h>
+            }
+        </td>
+        <td>
+            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+            @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+
+
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("AddDetailToMasterss('"+item.Details_Id+"')")" class="btn BTN-style final-BTN" style="text-decoration:none;">تعديل</a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Accountingsystem.Models.SalesReceiptDetails>
+
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayName("الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("الكمية")
+        </th>
+        <th>
+            @Html.DisplayName("السعر")
+        </th>
+     
+       
+        <th>
+            @Html.DisplayName("اجمالى الضريبة")
+        </th>
+        <th>
+            @Html.DisplayName("الاجمالى")
+        </th> 
+     
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.Details_Id)
+    @Html.HiddenFor(modelItem => item.Master_Id)
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem =>Accountingsystem.Models.Product.GetProdectById( item.Product_Id).Prod_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Code)
+        </td>
+        <td>
+            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+            @Math.Round(item.Product_Price,2, MidpointRounding.AwayFromZero)
+        </td>
+       
+       
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Tax)*@
+            @Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+            @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+        </td>
+               
+       
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("AddDetailToMasterss('"+item.Details_Id+"')")" class="BTN-style" style="text-decoration:none;">تعديل</a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

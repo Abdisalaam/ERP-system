@@ -1,0 +1,685 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubscriptionPrintVM
+
+
+@{
+    Layout = null;
+    int counter = 1;
+    decimal totals = 0;
+    decimal totalbeforTax = 0;
+    decimal totalaftertax = 0;
+    decimal totaltaxes = 0;
+    decimal totalafterFixed = 0;
+    var branch = Accountingsystem.Models.Branch.getAddressForInvoice(Model.branchId);
+    var payemntvalue = Accountingsystem.Models.Subscription.GetsubByCode(Model.Sub_Code);
+}
+
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+
+
+        .tho {
+            text-align: left;
+            padding: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <title> فاتورة ضريبية </title>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div style="text-align: center;">
+
+            <text style="text-align: center;  font-size:30px;">فاتورة ضريبية  | Tax Invoice  </text>
+
+        </div>
+
+        <br />
+        <div class="row">
+            <div id="header" style="height:15%;width:100%;">
+
+                <div style='float:left'>
+                    <table width="500" border="1" @*style="margin-left:10%;"*@>
+                        <tr>
+                            <th style="text-align:center; padding-top:0px">
+                                Invoice NO
+                            </th>
+                            <td style="text-align:center; padding-top:0px">
+                                @Model.Sub_Code
+                            </td>
+                            <th style="text-align:center; padding-top:0px">
+                                رقم الفاتورة
+                            </th>
+
+
+
+                        </tr>
+
+
+
+
+                    </table>
+                    <br />
+                    <table width="500" border="1" @*style="margin-left:10%;"*@>
+                        <tr>
+                            <th style="text-align:center; padding-top:0px">
+                                Invoice Date
+                            </th>
+                            <td style="text-align:center; padding-top:0px">
+                                @Convert.ToDateTime(Model.sub_Date).ToString("dd-MM-yyyy")
+                            </td>
+                            <th style="text-align:center; padding-top:0px">
+                                تاريخ الفاتورة
+                            </th>
+
+
+
+                        </tr>
+
+
+                        <tr>
+                            <th style="text-align:center; padding-top:0px">
+                                Currency
+                            </th>
+                            <td style="text-align:center; padding-top:0px">
+                                ريال سعودي
+                            </td>
+                            <th style="text-align:center; padding-top:0px">
+                                العملة
+                            </th>
+
+
+
+                        </tr>
+
+
+
+
+                    </table>
+                </div>
+                @if (Model.QRNumber != null)
+                {
+                    <div style=' text-align:center; '>
+                        <img src="data:image/bmp;base64,@Convert.ToBase64String(@Accountingsystem.Models.TLVCls.GenerateInvoiceQR(Model.QRNumber.Value)))" alt="Image" style="width:200px" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+    <table width="1100" border="1" style="text-align:right;">
+        <tr>
+
+            <th style="text-align:center;border-right:hidden; padding-top:0px">
+                Seller
+            </th>
+
+            <td style="text-align:center;border-right:hidden; padding-top:0px"></td>
+            <th style="text-align:center;border-right:hidden; padding-top:0px">
+                المورد
+            </th>
+            <th style="text-align:center;border-right:hidden;padding-top:0px">
+                Buyer
+            </th>
+
+            <td style="text-align:center;border-right:hidden; padding-top:0px"></td>
+            <th style="text-align:center; padding-top:0px">
+                العميل
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Seller Name
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @Model.EmployeeName
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                اسم البائع
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Name
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @Model.customerName
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الاسم
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                VAT Number
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @Model.company.Tax_Number
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                رقم تسجيل ضريبة القيمة المضافة
+
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                VAT Number
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @Model.customer_Tax
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                رقم تسجيل ضريبة القيمة المضافة
+            </th>
+        </tr>
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Phone
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @branch.Branch_Phone
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الهاتف
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Phone
+            </th>
+
+            <td style="text-align:center;  padding-top:0px">
+                @Model.customerphone
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                الهاتف
+            </th>
+        </tr>
+
+        <tr>
+
+            <th style="text-align:center; padding-top:0px">
+                Address
+            </th>
+
+            <td style="text-align:center; padding-top:0px">
+                @branch.Branch_Address
+            </td>
+            <th style="text-align:center; padding-top:0px">
+                العنوان
+            </th>
+            <th style="text-align:center; padding-top:0px">
+                Address
+            </th>
+            @if (Model.CustomerID > 0)
+            {
+                <td style="text-align:center;  padding-top:0px">
+
+                    @Accountingsystem.Models.Customer.GetCustomerById(Model.CustomerID).Customer_Address
+                </td>
+            }
+            else
+            {
+                <td style="text-align:center;  padding-top:0px"></td>
+
+            }
+            <th style="text-align:center; padding-top:0px">
+                العنوان
+            </th>
+        </tr>
+        @*<tr>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.customerPhone
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    جوال
+                </th>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @branch.Branch_Phone
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    جوال
+                </th>
+
+            </tr>
+
+
+            <tr>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.CustomerTax
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    رقم الضريبى للعميل
+                </th>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.company.Tax_Number
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    رقم الضريبى للشركة
+                </th>
+
+
+            </tr>
+            <tr>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.customerEmail
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    البريد الالكترونى
+                </th>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.company.Comp_Email
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                 البريد الالكتروني
+                </th>
+            </tr>
+            <tr>
+                <td style="text-align:right;border-bottom:hidden; padding-top:0px">
+                    @Model.customerTel
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    هاتف
+                </th>
+                <td style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    @Model.EmployeeName
+                </td>
+                <th style="text-align:right;border-bottom:hidden;padding-top:0px">
+                    الموظف
+                </th>
+
+
+
+            </tr>*@
+
+
+
+    </table>
+    <br />
+
+    @if (Accountingsystem.Utilites.PackageRecognize.checkLanguage(Model.description) == true)
+    {
+
+        <div style="text-align: right;">
+            <span style="white-space: pre-line" dir="rtl" ;>@Model.description</span>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: left;">
+            <span style="white-space: pre-line" dir="ltr" ;>@Model.description</span>
+        </div>
+    }
+
+    <div>
+        <table class="table" style="text-align:right; direction:rtl">
+            <thead>
+                <tr style="text-align:right;">
+
+                    <th style="text-align:right">NatureOfGoodsOrServices<br />تفاصيل السلع و الخدمات</th>
+                    <th style="text-align:right;">
+                        StartDate<br />
+                        تاريخ بدء الاشتراك
+                    </th>
+
+                    <th style="text-align:right;">
+                        EndDate<br />
+                        تاريخ انتهاء الاشتراك
+                    </th>
+
+
+                    <th style="text-align:right">Taxable Amount <br />المبلغ الخاضع للضريبة</th>
+
+                    <th style="text-align:right">Tax Rate <br />نسبة الضريبة</th>
+                    <th style="text-align:right">Tax Amount <br />مبلغ الضريبة</th>
+                    <th style="text-align:right">Item SubTotal(Including VAT) <br />المجموع شامل الضريبة</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td style="text-align:center;">
+                        @Model.Sub_Code
+
+                        <br />
+
+                        @Model.description
+                    </td>
+                    <td style="text-align:center;">
+                        @Model.starttime
+                    </td>
+
+                    <td style="text-align:center;">
+                        @Model.deadline
+                    </td>
+
+
+                    @if (Model.totalAfterdiscount > 0)
+                    {
+                        <td>@String.Format("{0:n}", Math.Round(Model.totalAfterdiscount.Value, 2, MidpointRounding.AwayFromZero))</td>
+                    }
+                    else
+                    {
+                        <td> @String.Format("{0:n}", Math.Round(Model.EstimatedAmount, 2, MidpointRounding.AwayFromZero))</td>
+                    }
+
+
+
+
+                    @if (Model.TaxPercentage > 0)
+                    {
+                        <td>
+
+                            @Model.TaxPercentage %
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+
+                        @String.Format("{0:n}", Math.Round(Model.totaltax, 2, MidpointRounding.AwayFromZero))
+                    </td>
+                    <td>
+
+                        @String.Format("{0:n}", Math.Round(Model.TotalAMountAFterTax, 2, MidpointRounding.AwayFromZero))
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <table width="1100" style="text-align:right;">
+            @{
+                var totalstr = "الاجمالي(غير شامل ضريبة القيمة المضافة";
+                var taxable = "الاجمالي الخاضع للضريبة(غير شامل ضريبة القيمة المضافة";
+            }
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <td style="text-align:center;width:300px"> @String.Format("{0:n}", Math.Round(Model.EstimatedAmount, 2, MidpointRounding.AwayFromZero))</td>
+                    <td style="text-align:right" width="400px">Total(Excluding VAT)</td>
+                    <td style="text-align:right" width="400px">(@totalstr </td>
+
+                </tr>
+                @if (Model.TotalDiscount > 0)
+                {
+                    <tr style="text-align:right;">
+
+
+                        <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.TotalDiscount, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right"> @Math.Round(Model.Master_Discount.Value, 2, MidpointRounding.AwayFromZero)%Discount</td>
+                        <td style="text-align:right">  @Math.Round(Model.Master_Discount.Value, 2, MidpointRounding.AwayFromZero)%مجموع الخصومات</td>
+
+                    </tr>
+                }
+                <tr style="text-align:right;">
+
+                    @if (Model.totalAfterdiscount > 0)
+                    {
+                        <td style="text-align:center">@String.Format("{0:n}", Math.Round(Model.totalAfterdiscount.Value, 2, MidpointRounding.AwayFromZero))</td>
+                    }
+                    else
+                    {
+                        <td style="text-align:center">@String.Format("{0:n}", Math.Round(Model.EstimatedAmount, 2, MidpointRounding.AwayFromZero))</td>
+                    }
+                    <td style="text-align:right">Total Taxable Amount(Excluding VAT)</td>
+                    <td style="text-align:right"> (@taxable</td>
+
+                </tr>
+
+                @if (Model.totaltax > 0)
+                {
+                    <tr style="text-align:right;">
+                        <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.totaltax, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right">Total VAT</td>
+                        <td style="text-align:right">@Model.taxName</td>
+                    </tr>
+                }
+                @if (Model.fixed_Discount > 0)
+                {
+                    <tr style="text-align:right;">
+                        <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.fixed_Discount.Value, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right">Additional Discount</td>
+                        <td style="text-align:right">خصم مسموح به</td>
+                    </tr>
+                    <tr style="text-align:right;">
+
+
+                        <td style="text-align:center;font-weight:900"> @String.Format("{0:n}", Math.Round(((Model.TotalAMountAFterTax) - Model.fixed_Discount.Value), 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right;font-weight:900">Total Amount Due</td>
+                        <td style="text-align:right;font-weight:900">صافي المبلغ المستحق</td>
+
+                    </tr>
+                }
+                else
+                {
+
+                    <tr style="text-align:right;">
+
+
+                        <td style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.TotalAMountAFterTax, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:right">Total Amount Due</td>
+                        <td style="text-align:right">صافي المبلغ المستحق</td>
+
+                    </tr>
+
+
+                }
+                <tr style="text-align:right;">
+
+
+                    <td style="text-align:center"> @String.Format("{0:n}", Math.Round(payemntvalue, 2, MidpointRounding.AwayFromZero))</td>
+                    <td style="text-align:right">Total Amount Paid </td>
+                    <td style="text-align:right">المبلغ المدفوع</td>
+
+                </tr>
+                @if (Model.fixed_Discount > 0)
+                {
+                    <tr style="text-align:right;">
+
+
+                        <th style="text-align:center"> @String.Format("{0:n}", Math.Round((Model.TotalAMountAFterTax - Model.fixed_Discount.Value) - payemntvalue, 2, MidpointRounding.AwayFromZero))</th>
+                        <th style="text-align:right">Total Remaining Amount </th>
+                        <th style="text-align:right">المبلغ المتبقي</th>
+
+                    </tr>
+                }
+                else
+                {
+                    <tr style="text-align:right;">
+
+
+                        <th style="text-align:center"> @String.Format("{0:n}", Math.Round(Model.TotalAMountAFterTax - payemntvalue, 2, MidpointRounding.AwayFromZero))</th>
+                        <th style="text-align:right">Total Remaining Amount </th>
+                        <th style="text-align:right">المبلغ المتبقي</th>
+
+                    </tr>
+
+
+                }
+            </thead>
+
+        </table>
+    </div>
+    <br />
+    @*<div class="row">
+            <div style="width: 50%;">
+                <table class="table" style="text-align:center">
+
+
+                    <tr>
+                        <td>
+                            @Math.Round(totals, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>الاجمالي</td>
+                    </tr>
+                  @if (Model.Master_Discount > 0)
+                    {
+                        <tr>
+
+                            <td>
+
+                                @Math.Round(Model.Masterdiscount, 2, MidpointRounding.AwayFromZero)
+
+                            </td>
+                            <td> الخصم @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)% </td>
+                        </tr>
+                    }
+                    @if (Model.totalTax > 0)
+                    {
+                        foreach (var detailTax in Model.MyDetails.Where(a => a.tax != null).Select(a => a.tax).Distinct())
+                        {
+                            <tr>
+                                <td> @Math.Round(Model.MyDetails.Where(a => a.tax == detailTax).Select(a => a.Total_Tax).Sum(), 2, MidpointRounding.AwayFromZero)</td>
+                                <td> %  @detailTax.Tax_Name @detailTax.Tax_Percentage</td>
+                            </tr>
+                        }
+                    }
+                    @foreach (var tax in Model.Taxes)
+                    {
+                        <tr>
+                            <td> @Math.Round(tax.Amount, 2, MidpointRounding.AwayFromZero)</td>
+                            <td> @tax.TaxName</td>
+                        </tr>
+                    }
+
+
+                    <tr>
+
+
+                        <td>
+                            <h5>
+                                <strong>
+                                    @Math.Round(((totalaftertax + Model.NewTaxTotal) - Model.fixed_Discount), 2, MidpointRounding.AwayFromZero)
+                                </strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>
+                                    الصافي
+                                </strong>
+                            </h5>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+
+        </div>*@
+
+    @*<div style="text-align: right;">
+            <span style="white-space: pre-line" dir="rtl" ;>@Model.Notes</span>
+        </div>*@
+
+    @*<div class="row" style="width: 100%; clear:both; text-align:right; font-size:20px; padding-top: 20px;">
+
+            <div style="width: 50%; float:right;">
+                <div>
+                    <text> :اسم المستلم</text>
+                </div>
+                <div>
+                    <text> :التوقيع</text>
+                </div>
+                <div>
+                    <text> :التاريخ</text>
+                </div>
+            </div>
+        </div>*@
+
+
+
+    <footer style="margin-top:0%;"></footer>
+
+</body>
+
+
+
+
+
+
+
+</html>
+
+
+

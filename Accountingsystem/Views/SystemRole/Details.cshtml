@@ -1,0 +1,156 @@
+﻿@model Accountingsystem.ViewModel.SystemRoleVM
+
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @Accountingsystem.Resources.EmployeeRoleList.Details
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.Name)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row inv--product-table-section">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="">
+                                <tr>
+
+                                    <th>
+                                        @Accountingsystem.Resources.EmployeeRoleList.Number
+                                    </th>
+                                    <th>
+                                        @Accountingsystem.Resources.EmployeeRoleList.Role
+                                    </th>
+
+                                    <th>
+                                        @Accountingsystem.Resources.EmployeeRoleList.Department
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RoleFunctions)
+                                {
+                                    <tr>
+
+
+                                        <td>@item.SystemFunction.Id</td>
+                                        @if (item.SystemFunction.Level == 1)
+                                        {
+                                            <td><h3>@item.SystemFunction.ArabName</h3></td>
+                                        }
+                                        @if (item.SystemFunction.Level == 2)
+                                        {
+                                            <td><h4>@item.SystemFunction.ArabName</h4> </td>
+                                        }
+                                        @if (item.SystemFunction.Level == 3)
+                                        {
+                                            <td><h6>@item.SystemFunction.ArabName</h6></td>
+                                        }
+                                        <td>@Accountingsystem.Models.SystemRole.getDepartment(item.SystemFunction.Id)</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row layout-top-spacing">
+              
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Create")'>
+                                @Accountingsystem.Resources.SlicesDetails.Create
+                                <span id="newbtnbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                @if (Accountingsystem.Models.SystemRole.getAllRole().FirstOrDefault().Id != Model.Id)
+                {
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="editbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.Id })">
+                            @Accountingsystem.Resources.ReceiptDetails.Edit
+                            <span id="editbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+                }
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.ReceiptDetails.BackToList
+                            <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script>
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#editbtn").click(function (e) {
+            $("#editbtnSpinner").show();
+        });
+
+
+        $("#indexbtn").click(function (e) {
+            $("#indexbtnSpinner").show();
+        });
+
+
+
+    </script>
+
+}

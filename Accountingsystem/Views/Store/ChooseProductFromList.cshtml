@@ -1,0 +1,191 @@
+﻿@model Accountingsystem.ViewModel.ProductBatchSelection
+
+@{
+    ViewBag.Title = "ChooseProductFromList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.SettlementOfStoresCreate.StoreSettlement</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.storeID, new { htmlAttributes = new { @class = "textfield" } })
+ 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="Dropdownlist">
+                        @Html.DropDownListFor(model => model.Product_Id, Model.productList, Accountingsystem.Resources.SettlementOfStoresCreate.ChooseItemsInStockInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                        @Html.ValidationMessageFor(model => model.Product_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SettlementOfStoresCreate.ChooseItemsInStock>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.SettlementOfStoresCreate.ChooseItemsInStock)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="Dropdownlist">
+                        @Html.DropDownListFor(model => model.pro_ID, Model.secondProductList, Accountingsystem.Resources.SettlementOfStoresCreate.ItemsAreNotInStockInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                        @Html.ValidationMessageFor(model => model.pro_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SettlementOfStoresCreate.ItemsAreNotInStock>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.SettlementOfStoresCreate.ItemsAreNotInStock)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick='getPrepare();' class="btn BTN-style final-BTN" style="text-decoration:none;">تفاصيل الصنف</a>
+                </div>
+            </div>*@
+    </div>
+}
+
+<div id="PrepareData"></div>
+<div id="TempList"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+            $(function () {
+                $("#Product_Id").change(function (e) {
+                    var serialNum = $("#Serial_Number").val();
+                    var selectedValue = $(this).val();
+
+                    var storID = $("#storeID").val();
+                    $("#PrepareData").load('@(Url.Action("PreparerecallDetails", "Store"))?prodID=' + selectedValue + '&storID=' + storID);
+                });
+            });
+
+            $(function () {
+                $("#pro_ID").change(function (e) {
+                    var serialNum = $("#Serial_Number").val();
+                    var selectedValue = $(this).val();
+
+                    var storID = $("#storeID").val();
+                    $("#PrepareData").load('@(Url.Action("PreparerecallDetails2", "Store"))?prodID=' + selectedValue + '&storID=' + storID);
+                });
+            });
+
+            function AddToTemp() {
+
+
+                var prodID = $("#Product_Id").val();
+                var storID = $("#storeID").val();
+                var Quantity = $("#Quantity").val();
+                var pro_IDs=$("#pro_ID").val();
+                var PPs;
+                PPs = {
+                    Product_Id: prodID,
+                    storeID: storID,
+                    Quantity: Quantity,
+                    pro_ID:pro_IDs
+                };
+
+                $.ajax(
+                 {
+                     url: '@Url.Action("GetProducts", "Store")',
+                     data: JSON.stringify(PPs),
+                     contentType: 'application/json',
+                     dataType: 'json',
+                     type: 'POST',
+                     success: function (data) {
+
+                         $("#TempList").load('@(Url.Action("ShowTempList", "Store"))');
+
+
+                     },
+                     error: function () { alert('error'); }
+                 });
+
+           @*$("#InvoicesDetailList").load('@(Url.Action("AddInvoiceDetailsToMaster", "InvoiceMaster"))?invoiceMasterDetail=' + data);*@
+
+           };
+
+            function DeleteTemp(e,p) {
+                var BatchIDs = e;
+
+                var ProdID = p;
+
+                $.ajax(
+                 {
+                     url: '@Url.Action("DeleteFromTemps", "Store")',
+                     data: { BatchID: BatchIDs, ProductID: ProdID},
+                     contentType: 'application/json',
+                     dataType: 'json',
+                     type: 'get',
+                     success: function (data) {
+                         alert(data);
+                         $("#TempList").load('@(Url.Action("ShowTempList", "Store"))');
+
+
+                     },
+                     error: function () { alert('error'); }
+                 });
+
+           @*$("#InvoicesDetailList").load('@(Url.Action("AddInvoiceDetailsToMaster", "InvoiceMaster"))?invoiceMasterDetail=' + data);*@
+
+           };
+            function Save() {
+                $.ajax(
+                 {
+                     url: '@Url.Action("AddtempToBatch", "Store")',
+                     data: JSON.stringify(),
+                     contentType: 'application/json',
+                     dataType: 'json',
+                     type: 'POST',
+                     success: function (data) {
+                         alert(data);
+                         $("#TempList").load('@(Url.Action("ShowTempList", "Store"))');
+                         location.reload();
+
+                     },
+                     error: function () { alert('error'); }
+                 });
+
+          @*$("#InvoicesDetailList").load('@(Url.Action("AddInvoiceDetailsToMaster", "InvoiceMaster"))?invoiceMasterDetail=' + data);*@
+
+          };
+    </script>
+
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/UiUtils.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Product_Id");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#pro_ID");
+        })
+    </script>
+
+    @*<script type="text/javascript">
+
+            $(document).ready(function () {
+                fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown","Product")", "#pro_ID");
+
+            })
+        </script>*@
+}

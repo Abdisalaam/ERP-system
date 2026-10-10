@@ -1,0 +1,204 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.SalaryListaVM
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sallary </title>
+
+    <STYLE TYPE="text/css">
+        .breakhere {
+            page-break-after: always;
+                display:block;
+                content:"\A0";
+        }
+    </STYLE>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+</head>
+@foreach (var item in Model.LoanOfEmployee)
+{
+
+
+
+
+<body>
+
+
+    <P CLASS="breakhere">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in Model.company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@Model.company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+
+
+
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="container">
+
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                سند قبض سلفة/Loan Documment
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <table class="table" style="text-align:right;direction:ltr;">
+            <tr>
+
+                <th>
+                    التاريخ
+                    <br />
+                    Date
+                </th>
+
+
+                <th>
+                    طريقة الدفع
+                    <br />
+                    PaymentMethod
+                </th>
+                <th>
+                    المبلغ
+                    <br />
+                    Amount
+                </th>
+
+                <th>
+                    استلمنا من  السيد/الساده
+                    <br />
+                    We Recived From
+                </th>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    @Convert.ToDateTime(item.Date).ToString("yyyy/MM/dd ")
+                </td>
+                <td>
+                    @{
+
+                        @item.Account
+                    }
+                </td>
+                <td>
+                    @Math.Round(item.SallaryAmount, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+                <td>
+                    @item.Employee_Name
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+
+</body>
+            
+
+
+
+        }
+</html>
+
+
+

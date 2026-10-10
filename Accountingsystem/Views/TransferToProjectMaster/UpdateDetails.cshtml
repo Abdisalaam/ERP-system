@@ -1,0 +1,135 @@
+﻿@model Accountingsystem.Models.TransfareFromPorjectToStoretemp
+
+@{
+    ViewBag.Title = "UpdateDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>تحويل من مشروع الى مخزن</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Detail_ID)
+        @Html.HiddenFor(model => model.Product_Quantity)
+        @Html.HiddenFor(model => model.Product_Price)
+        @Html.HiddenFor(model => model.Master_ID)
+        @Html.HiddenFor(model => model.ProductID)
+        @Html.HiddenFor(model => model.Total_Amount)
+        @Html.HiddenFor(model => model.Batch_ID)
+        @Html.HiddenFor(model => model.State)
+        <dt>
+           @{var prod = Accountingsystem.Models.Product.GetProdectById(Model.ProductID).Prod_Name;
+            <h>@prod</h>}
+           
+        </dt>
+
+          
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd id="Invoice_State">
+            @Html.DisplayFor(model => model.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Total_Amount)*@
+            @Math.Round(Model.Total_Amount.Value,2, MidpointRounding.AwayFromZero)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-offset-2 col-md-10">
+        <input id="changeState" type="button" value="Post" class="btn btn-primary" />
+    </div>
+    <div id="EditAndDelete" class="col-md-offset-2 col-md-10">
+       
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        <a class="btn btn-default" href="@Url.Action("IndexOFSavedTemp")">العودة إلي القائمة</a>
+        <a class="btn btn-default" align="left" href="javascript:window.print()">Print</a>
+    </div>
+</div>
+
+<div>
+    @section scripts{
+        <script type="text/javascript">
+                updateButtonText();
+                hideEditAndDeleteActions();
+                function updateButtonText() {
+                    var Invoice_State = $.trim($("#Invoice_State").text());
+                    if (Invoice_State == "Void") {
+                        $("#changeState").hide();
+                        return;
+                    }
+                    else if (Invoice_State == "Pending")
+                        $("#changeState").val("Post");
+                    else if (Invoice_State == "Post")
+                        $("#changeState").val("Void");
+                }
+                function updateInvoiceStateText() {
+                    var Invoice_State = $.trim($("#Invoice_State").text());
+                    if (Invoice_State == "Pending")
+                        $("#Invoice_State").text("Post");
+                    else if (Invoice_State == "Post")
+                        $("#Invoice_State").text("Void");
+                }
+
+                function hideEditAndDeleteActions() {
+                    /// <summary>Hides the edit and delete actions if the invoice is not pending
+                    var Invoice_State = $.trim($("#Invoice_State").text());
+                    if (Invoice_State != "Pending")
+                        $("#EditAndDelete").hide();
+                }
+
+                function updateInvoiceState(data) {
+                    return $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: 'POST',
+                    
+                        url: '@Url.Action("UpdateDetails", "TransferToProjectMaster")',
+                        data: data,
+                        success: function (result) {
+                            alert(result);
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("Error!")
+                        }
+                    });
+                }
+
+                $("#changeState").click(function (e) {
+                    
+                    e.preventDefault();
+                    var data = JSON.stringify({
+                        Master_ID: $("#Master_ID").val(),
+                        State: $("#changeState").val(),
+                        Id: $("#Id").val(),
+                        Detail_ID: $("#Detail_ID").val(),
+                        Product_Quantity: $("#Product_Quantity").val(),
+                        Product_Price: $("#Product_Price").val(),
+                        ProductID: $("#ProductID").val(),
+                        Total_Amount: $("#Total_Amount").val(),
+                        Batch_ID: $("#Batch_ID").val(),
+                    });
+
+                    $.when(updateInvoiceState(data)).then(function (response) {
+                        console.log(response);
+                    }).fail(function (err) {
+                        console.log(err);
+                    });
+                    updateButtonText();
+                    updateInvoiceStateText();
+                    hideEditAndDeleteActions();
+                })
+        </script>
+    }
+</div>

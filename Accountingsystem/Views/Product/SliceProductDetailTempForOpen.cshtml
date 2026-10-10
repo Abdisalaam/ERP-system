@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Accountingsystem.Models.SlicesTem>
+
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.Price)
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.SliceName)
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelItem => item.Slice_Id)
+                    @Html.HiddenFor(modelItem => item.ProductTemProd_ID)
+                    @Html.HiddenFor(modelItem => item.SlicesSlice_Id)
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Slice_Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Slice_Name)
+                        </td>
+                        <td>
+                            <div class="col-md-offset-2 col-md-10">
+                                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Slice_Id+"')")" class="btn BTN-style-danger final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.ProductDelete.Delete</a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+        </div>
+    </div>

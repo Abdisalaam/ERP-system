@@ -1,0 +1,145 @@
+﻿@model Accountingsystem.ViewModel.SlicesVM
+
+
+@using (Html.BeginForm("AddNewSlicePartial", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @*<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.SlicesCreate.CreateNewSlice</h2>
+    <hr />*@
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SlicesCreate.SliceNumber)
+                                    @Html.EditorFor(model => model.Slice_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Slice_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SlicesCreate.SliceName)
+                                    @Html.EditorFor(model => model.Slice_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Slice_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addslice();' class="btn btn-block btn-dark mb-lg-0" style="text-decoration:none;">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create <div id="slicePartialSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+}
+
+
+<script>
+    function addslice() {
+        debugger;
+        var Slice_Code = $("#Slice_Code").val();
+        var Slice_Name = $("#Slice_Name").val();
+
+        if (Slice_Name == "" || Slice_Name == null ) {
+
+            if (Slice_Name == "" || Slice_Name == null) {
+                Snackbar.show({
+                    text:"@Accountingsystem.Resources.validate.AddName",
+                    pos: 'top-center'
+                });
+                $("#Slice_Name").addClass("addRequiredFieldToInput");
+                $('#Slice_Name').trigger('focus');
+            }
+
+        }
+        else {
+            //$("#slicePartialSpinner").show();
+            $('#SliceModal').modal('toggle');
+        var DataForslice;
+        DataForslice = {
+            Slice_Name: Slice_Name,
+            Slice_Code: Slice_Code
+
+        };
+            var formData = new FormData();
+            formData.append("Slice_Name", DataForslice.Slice_Name);
+            formData.append("Slice_Code", DataForslice.Slice_Code);
+
+
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewSlicePartial", "Product")",
+                data: formData,
+                type: "post",
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.AddSliceSuccessful" + data,
+                        pos: 'top-center'
+                    });
+                    $("#slicePartialDialogDiv").load('@(Url.Action("PartialDialog3", "Product"))');
+                    $("#slicePartialSpinner").hide();
+                    $.ajax({
+
+                        url: '@Url.Action("GetSliceDropdownList", "Product")',
+                        type: 'get'
+                    }).done(function (result) {
+
+                        $("#CustomerSelectSlice_Id").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+
+                            $("#SlicesSlice_Id").append(p);
+                            $("#SlicesSlice_Id option:last").attr("selected", "selected");
+
+                        }
+                        $('#SlicesSlice_Id').trigger('chosen:updated');
+                        $("#SlicesSlice_Id_chosen").removeClass("addRequiredFieldToInput");
+                        $('#SlicesSlice_Id_chosen span').css('background', '#ffffff');
+                        $('#_SlicesSlice_Id_chosen b').css('background', '#ffffff');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+                     
+                    });
+
+
+
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.Error",
+                        pos: 'top-center'
+                    });
+                    $("#customerPartialSpinner").hide();
+                }
+         });
+        }
+
+    };
+
+
+
+</script>

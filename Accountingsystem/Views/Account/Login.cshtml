@@ -1,0 +1,285 @@
+﻿@using Accountingsystem.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                ViewBag.Title = "Login";
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+                <title>@ViewBag.Title</title>
+                <link rel="icon" type="image/x-icon" href="@Url.Content("~/Image/ByanatyLogo.png")">
+                <link href="@Url.Content("~/ContentLTR/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+                <script src="@Url.Content("~/ContentLTR/assets/js/loader.js")"></script>
+                <!-- BEGIN GLOBAL MANDATORY STYLES -->
+                <link href="@Url.Content("~/ContentLTR/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+                <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+                <link href="@Url.Content("~/ContentLTR/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/Custom/LoginStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                ViewBag.Title = "تسجيل الدخول";
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+                <title>@ViewBag.Title</title>
+                <link rel="icon" type="image/x-icon" href="@Url.Content("~/Image/ByanatyLogo.png")">
+                <link href="@Url.Content("~/ContentRTL/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+                <script src="@Url.Content("~/ContentRTL/assets/js/loader.js")"></script>
+                <!-- BEGIN GLOBAL MANDATORY STYLES -->
+                <link href="@Url.Content("~/ContentRTL/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+                <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+                <link href="@Url.Content("~/ContentRTL/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/Custom/LoginStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            ViewBag.Title = "تسجيل الدخول";
+            <title>@ViewBag.Title</title>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+            <link rel="icon" type="image/x-icon" href="@Url.Content("~/Image/ByanatyLogo.png")">
+            <link href="@Url.Content("~/ContentRTL/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+            <script src="@Url.Content("~/ContentRTL/assets/js/loader.js")"></script>
+            <!-- BEGIN GLOBAL MANDATORY STYLES -->
+            <link href="@Url.Content("~/ContentRTL/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+            <link href="@Url.Content("~/ContentRTL/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/Custom/LoginStyleSheet.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+</head>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "myLoginForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*<body style="background-image:url('../../ContentRTL/assets/img/LoginBGImage.jpeg')">*@
+<body>
+
+    <div class="layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger", @id = "LoginValidationSum" })
+            <form id="myLoginForm" class="center-block">
+                <div class="">
+                    <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                    <h3 class="text-center">@Html.Label(Accountingsystem.Resources.Login.LoginHeader)</h3>
+                    <h3 class="text-center">@Html.Label(Accountingsystem.Resources.Login.LoginInstrection)</h3>
+                    <div class="row layout-top-spacing">
+                        <div class="col-md-11 mx-auto">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-group text-center">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mb-4", @placeholder = @Accountingsystem.Resources.Login.Email } })
+                                                <div class="input-group-append">
+                                                    <div>
+                                                        <span class="form-control text-danger">*</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="form-control">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11 mx-auto">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-group text-center">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-4", @placeholder = @Accountingsystem.Resources.Login.Password } })
+                                                <div class="input-group-append">
+                                                    <div>
+                                                        <span class="form-control text-danger">*</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="form-control">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11 mx-auto">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-group text-center">
+                                            
+                                                <a href="@Url.Action("ForgotPassword")" class="text-center">
+                                                    @Accountingsystem.Resources.Login.Forget
+                                                </a>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11 mx-auto">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-group text-center">
+                                           
+                                                <button type="submit" class="btn btn-block btn-light-dark mb-lg-0" style="background-color:#f6ba19 !important;">
+                                                    @Accountingsystem.Resources.Login.Submit
+                                                    <span id="mySpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                                </button>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+}
+
+@{
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            <script src="@Url.Content("~/ContentLTR/assets/js/libs/jquery-3.1.1.min.js")"></script>
+            <script src="@Url.Content("~/ContentLTR/bootstrap/js/popper.min.js")"></script>
+            <script src="@Url.Content("~/ContentLTR/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@Url.Content("~/ContentLTR/assets/js/authentication/form-2.js")"></script>
+            <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/assets/js/libs/jquery-3.1.1.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/bootstrap/js/popper.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/authentication/form-2.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+        }
+    }
+    else
+    {
+        <script src="@Url.Content("~/ContentLTR/assets/js/libs/jquery-3.1.1.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/bootstrap/js/popper.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/bootstrap/js/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/assets/js/authentication/form-2.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+    }
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    document.getElementById('toggle-password').onclick = function () {
+        var textObj = document.getElementById("Password");
+
+        if (textObj.type == 'text') {
+
+            textObj.type = "password";
+
+        } else {
+            textObj.type = "text";
+        }
+    };
+</script>
+<script>
+    $(document).ready(function () {
+        $("#mySpinner").hide();
+
+    });
+
+    $("#myLoginForm").submit(function (e) {
+        var _email = $("#Email").val();
+        var _password = $("#Password").val();
+        if (_email == "" || _password == "" || !validateEmail(_email)) {
+              if (_email == "") {
+            $("#Email").addClass("addRequiredFieldToInput");
+           
+        }
+        if (_password == "") {
+            $("#Password").addClass("addRequiredFieldToInput");
+           
+        }
+        if (!validateEmail(_email)) {           
+            $("#Email").addClass("addRequiredFieldToInput");
+            Snackbar.show({
+                text: "@Accountingsystem.Resources.AccountRegister.EmailStructureRequiredMSG",
+                pos: 'top-center'
+            });
+            
+            }
+            event.preventDefault();
+        }
+        else {
+            $("#mySpinner").show();
+        }
+           
+    });
+    $('#Email').on('input', function () {
+        $("#Email").removeClass("addRequiredFieldToInput");
+    });
+    $('#Password').on('input', function () {
+        $("#Password").removeClass("addRequiredFieldToInput");
+    });
+    function validateEmail($email) {
+
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+
+        return emailReg.test($email);
+    }
+</script>
+@section Scripts {
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+
+}

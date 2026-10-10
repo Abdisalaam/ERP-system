@@ -1,0 +1,72 @@
+﻿@model Accountingsystem.Models.BussinesUnit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>تفاصيل</h2>
+
+<div>
+    <h4>انشطة الشركة</h4>
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+
+
+                    <td id="Rec_ID">
+                        @Html.DisplayFor(model => model.BU_Code)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("كود النشاط")
+                    </th>
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.BU_Name)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("اسم النشاط")
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.BU_Description)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("وصف النشاط")
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.BU_Type)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("نوع النشاط")
+                    </th>
+                </tr>
+
+                <tr>
+
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.CompanyComp_Id)
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayName("الشركة")
+                    </th>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+        </div>
+        <p>
+            @Html.ActionLink("تعديل", "Edit", new { id = Model.BU_Id }) |
+            @Html.ActionLink("الرجوع الى القائمة", "Index")
+        </p>

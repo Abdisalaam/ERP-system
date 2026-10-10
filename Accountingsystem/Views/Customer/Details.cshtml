@@ -1,0 +1,689 @@
+﻿@model Accountingsystem.Models.Customer
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.validate.DetailCustomer;
+
+    var Package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @Accountingsystem.Resources.CustomerDetails.Details
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerPhone)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Phone)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Employee_Id > 0)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Employee)
+                                            </div>
+                                            <div>
+                                                @Accountingsystem.Models.Employee.getEmpById(Model.Employee_Id.Value).Emp_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerAdress)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Address)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerLocation)
+                                        </div>
+                                        <div>
+                                            <a style="color:dodgerblue" href="http://@Model.Customer_Website">@Model.Customer_Website</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerEmail)
+                                        </div>
+                                        <div>
+                                            <a style="color:dodgerblue" href="mailto:@Model.Customer_Mail">@Model.Customer_Mail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.Country)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Country)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.GovernorateName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Province)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.City)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.City)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerFax)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Fax)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerPhoneNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Mobile)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Package.Number_Branch > 0 && Model.Branch_Id != null && Model.Branch_Id != 0)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.Branch)
+                                            </div>
+                                            <div>
+                                                @{ var branch = Accountingsystem.Models.Branch.GetBranchById(Model.Branch_Id.Value).Branch_Name;
+                                                }
+                                                <h>@branch</h>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.SlideName)
+                                        </div>
+                                        <div>
+                                            @{ if (Model.SlicesSlice_Id == 0 || Model.SlicesSlice_Id == null)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    var slice = Accountingsystem.Models.Slices.GetSliceById(Model.SlicesSlice_Id).Slice_Name;
+                                                    <h>@slice</h>
+                                                }
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Payment_Policy_Id != 0 && Model.Payment_Policy_Id != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.PaymentMethod)
+                                            </div>
+                                            <div>
+                                                @{
+                                                    var pay = Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(Model.Payment_Policy_Id.Value).Payment_Type;
+                                                }
+                                                @Html.Display(pay)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerTaxNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_TaxNumber)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerDetails.CustomerCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.CommercialRegistrationNo)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.CommercialRegistrationNo)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerCreate.IdentificationNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.IdentificationNumber)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Notes)
+                            </div>
+
+                            @Html.TextAreaFor(model => model.Comment, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+
+
+                @if (Model.ContentPersonDetails.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table mb-4">
+                            <thead>
+
+                                <tr>
+                                    <th>@Accountingsystem.Resources.CustomerDetails.ContactName</th>
+                                    <th>@Accountingsystem.Resources.CustomerDetails.ContactNumber</th>
+                                    <th>@Accountingsystem.Resources.CustomerDetails.ContactEmail</th>
+                                    <th>@Accountingsystem.Resources.CustomerDetails.ContactFunction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.ContentPersonDetails)
+                                {
+                                    <tr>
+                                        <td>@detail.Content_Name</td>
+                                        <td>@detail.Content_Number</td>
+                                        <td>@detail.Content_Mail</td>
+                                        <td>@detail.Content_Job</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                @if (Model.CustomerFileDetails.Any())
+                {
+
+                    <div class="table-responsive">
+                        <table class="table mb-4">
+                            <thead>
+
+                                <tr>
+
+
+                                    <th>@Accountingsystem.Resources.validate.Number</th>
+                                    <th>@Accountingsystem.Resources.validate.Name</th>
+                                    <th>@Accountingsystem.Resources.validate.Type</th>
+                                    <th>@Accountingsystem.Resources.validate.Size</th>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{var countfile = 0; }
+                                @foreach (var file in Model.CustomerFileDetails)
+                                {
+                                    countfile += 1;
+                                <tr>
+                                    <td>@countfile</td>
+                                    <td>@file.FileName</td>
+                                    <td>@file.File_Type</td>
+                                    <td>@file.ContentLength</td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("ReturnInvoicetFile", new { fileId = file.Id })" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب"))
+                                        {
+                                            <a href='@Url.Action("deleteFile", new { fileId = file.Id })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+
+
+                                        }
+                                    </td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                    <div class="row layout-top-spacing">
+                        @if (Request.IsAuthenticated && !User.IsInRole("بائع"))
+                        {
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <a id="newbtn" class="btn btn-block btn-outline-info mb-lg-0" href=" @Url.Action("Create")">
+                                        @Accountingsystem.Resources.CustomerDetails.CreateNewCustomer
+                                        <span id="newbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                    </a>
+
+                                    <a id="Editbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Edit", new { id = Model.Customer_Id })'>
+                                        @Accountingsystem.Resources.CustomerDetails.Edit
+                                        <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                    </a>
+
+                                    @{
+                                        if (Package.Casher == true)
+                                        {
+                                            <a id="Catchbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("Create", "Cachier")">
+                                                @Accountingsystem.Resources.CachierCreate.CreateNewOrder
+                                                <span id="Catchbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+
+                                        }
+                                        if (Package.Number_POS > 0)
+                                        {
+                                           
+                                            <a id="Reciptbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("Create", "MasterPOSInvoice", new { cust_ID = Model.Customer_Id, invoice_Id = 0 })">
+                                                @Accountingsystem.Resources.MasterPOSInvoice.CreateQuickInvoice
+                                                <span id="Reciptbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+
+                                        }
+
+
+                                    }
+
+                                </div>
+                            </div>
+                        
+                     
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات"))
+                                    {
+                                        <a id="reportbtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = Model.Customer_Code })'>
+                                            @Accountingsystem.Resources.CustomerDetails.CustomerReport
+                                            <span id="reportbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                        </a>
+
+
+
+                                    }
+                                    @{
+                                        if (Package.Sales == true)
+                                        {
+                                            <a id="futuebtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action("AddNewInvoice", "InvoiceMaster", new { orderido = 0, customerId = Model.Customer_Id })">
+                                                @Accountingsystem.Resources.CustomerDetails.CreateFutureSalesInvoice
+                                                <span id="futuebtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+                                            <a id="salesbtn" class="btn btn-block btn-outline-primary mb-lg-0" href=" @Url.Action( "addnewSaleReciept","SalesReceiptMaster",new {cust_Id=Model.Customer_Id })">
+                                                @Accountingsystem.Resources.CustomerDetails.CreateCashSalesInvoice
+                                                <span id="salesbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+
+                                        }
+
+
+                                    }
+                                </div>
+                            </div>     
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @{
+                                        if (Package.Accounting == true)
+                                        {
+                                            <a id="Catchbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("Create", "CatchReceipt", new { child = Model.Customer_Id, type = "customer" })">
+                                                @Accountingsystem.Resources.CustomerDetails.CreateCatchReceipt
+                                                <span id="Catchbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+
+                                        }
+                                        if (Package.Sales == true)
+                                        {
+                                            <a id="Reciptbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("Create", "Receipt", new { cust_ID = Model.Customer_Id, invoice_Id = 0 })">
+                                                @Accountingsystem.Resources.CustomerDetails.CreateSalesCatchReceipt
+                                                <span id="Reciptbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                            </a>
+
+                                        }
+
+
+                                    }
+
+
+
+                                    @{
+
+                                        if (!string.IsNullOrEmpty(Model.Customer_Phone))
+                                        {
+                                            Model.Customer_Phone.Trim();
+                                            if (Model.Customer_Phone.Contains(" "))
+                                            {
+                                                Model.Customer_Phone = Model.Customer_Phone.Replace(" ", string.Empty);
+                                            }
+                                            if (Model.Customer_Phone.Contains("-"))
+                                            {
+                                                Model.Customer_Phone = Model.Customer_Phone.Replace("-", string.Empty);
+                                            }
+                                            if (Model.Customer_Phone.Contains("#"))
+                                            {
+                                                Model.Customer_Phone = Model.Customer_Phone.Replace("#", string.Empty);
+                                            }
+                                            if (!Model.Customer_Phone.StartsWith("0") && Model.Customer_Phone.Length == 9)
+                                            {
+                                                var phoneNumber = "966";
+                                                phoneNumber += Model.Customer_Phone;
+                                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+
+                                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+
+                                                </a>
+                                            }
+
+                                            if (Model.Customer_Phone.StartsWith("0") && Model.Customer_Phone.Length == 10)
+                                            {
+                                                var phoneNumber = "966";
+                                                phoneNumber += Model.Customer_Phone.Remove(0, 1);
+                                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+                                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                                </a>
+                                            }
+                                            if (Model.Customer_Phone.StartsWith("00") && Model.Customer_Phone.Length > 13)
+                                            {
+                                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.Customer_Phone" target="_blank">
+                                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                                </a>
+                                            }
+                                            if (Model.Customer_Phone.StartsWith("+966") && Model.Customer_Phone.Length >= 12)
+                                            {
+                                                Model.Customer_Phone = Model.Customer_Phone.Remove(0, 1);
+                                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.Customer_Phone" target="_blank">
+                                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                                </a>
+                                            }
+                                            if (Model.Customer_Phone.StartsWith("966") && Model.Customer_Phone.Length >= 12)
+                                            {
+                                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.Customer_Phone" target="_blank">
+
+                                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                                </a>
+                                            }
+                                        }
+                                    }
+                                    <a id="Reciptbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href=" @Url.Action("UpaidInvoices", "ReportsNew", new { code = Model.Customer_Code })">
+                               @Accountingsystem.Resources.validate.UnpaidInvoiceReport
+                                        <span id="backToListbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                    </a>
+                                    <a id="backToListbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                        @Accountingsystem.Resources.CustomerDetails.BackToList
+                                        <span id="backToListbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                    </a>
+
+                                </div>
+                            </div>
+                        }
+                        </div>
+            </div>
+        </div>
+        <div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $("#backToListbtn").click(function (e) {
+            $("#backToListbtnspinner").show();
+        });
+        $("#reportbtn").click(function (e) {
+            $("#reportbtnSpinner").show();
+        });
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+        $("#newbtn").click(function (e) {
+            $("#newbtnSpinner").show();
+        });
+        $("#futuebtn").click(function (e) {
+            $("#futuebtnSpinner").show();
+        });
+
+
+        $("#salesbtn").click(function (e) {
+            $("#salesbtnSpinner").show();
+        });
+        $("#Reciptbtn").click(function (e) {
+            $("#ReciptbtnSpinner").show();
+        });
+        $("#Catchbtn").click(function (e) {
+            $("#CatchbtnSpinner").show();
+        });
+        $("#backToListbtn").click(function (e) {
+            $("#backToListbtnSpinner").show();
+        });
+        
+       
+    </script>
+
+
+
+    }

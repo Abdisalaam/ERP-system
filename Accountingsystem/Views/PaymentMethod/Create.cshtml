@@ -1,0 +1,328 @@
+﻿@model Accountingsystem.ViewModel.PaymentMethodVM
+
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.PaymentMethodCreate.CreateNewPaymentMethod;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+</head>
+
+@using (Html.BeginForm("Create", "PaymentMethod", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.PaymentMethod_Id)
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.PaymentMethodCreate.CreateNewPaymentMethod)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentMethodCreate.PaymentMethodName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Payment_Type, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Payment_Type, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentMethodIndex.Percentage)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentMethodCreate.ExpenseAccount)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Expense_Id, Model.ExpenseList, Accountingsystem.Resources.PaymentMethodCreate.ExpenseAccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.Label(Accountingsystem.Resources.PaymentMethodCreate.SelectBankOrTreasuryAccountInformation)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Bank_Account_Id, Model.MyChartOfAccountList, Accountingsystem.Resources.PaymentMethodCreate.SelectBankOrTreasuryAccount, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentMethodCreate.ExpenseValue)
+                                    @Html.EditorFor(model => model.Operation_Cost, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.TreasuryCreate.Employee)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Emp_Id, Model.EmpList, Accountingsystem.Resources.TreasuryCreate.EmployeesListInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.StoreDetails.Employees)
+                                    <div class="input-group">
+                                        @{
+                                            if (cookie != null && cookie.Value != null)
+                                            {
+                                                if (cookie.Value == "en")
+                                                {
+                                                    @Html.ListBoxFor(model => model.EmployeesMember, Model.EmPloyeeMemberList, new Dictionary<string, Object> { { "class", "chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.EmployeeTeamCreate.SelectEmployee }, { "multiple", "true" } })
+                                                    @Html.ValidationMessageFor(model => model.EmployeesMember, "", new { @class = "text-danger" })
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.ListBoxFor(model => model.EmployeesMember, Model.EmPloyeeMemberList, new Dictionary<string, Object> { { "class", "chosen-rtl chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.EmployeeTeamCreate.SelectEmployee }, { "multiple", "true" } })
+                                                    @Html.ValidationMessageFor(model => model.EmployeesMember, "", new { @class = "text-danger" })
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @Html.ListBoxFor(model => model.EmployeesMember, Model.EmPloyeeMemberList, new Dictionary<string, Object> { { "class", "chosen-rtl chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.EmployeeTeamCreate.SelectEmployee }, { "multiple", "true" } })
+                                                @Html.ValidationMessageFor(model => model.EmployeesMember, "", new { @class = "text-danger" })
+
+                                            }
+                                        }
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.PaymentMethodCreate.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.PaymentMethodCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+            $("#Emp_Id").chosen();
+            $("#Emp_Id_chosen").addClass("form-control Dropdownlist-select");
+
+            $("#Expense_Id").chosen();
+            $("#Expense_Id_chosen").addClass("form-control Dropdownlist-select");
+
+            $("#Bank_Account_Id").chosen();
+            $("#Bank_Account_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Operation_Cost").val("");
+            $("#Percentage").val("");
+            return false;
+        });
+
+
+    </script>
+    <script>
+        $(function () {
+            $("#EmployeesMember").chosen();
+            $("#EmployeesMember_chosen").addClass("form-control mb-4");
+
+            $('#EmployeesMember_chosen ul').css('background', '#ffffff');
+            $('#EmployeesMember_chosen ul li').css('background', '#ffffff');
+            $('#EmployeesMember_chosen ul li span').css('background', '#ffffff');
+            $('#EmployeesMember_chosen ul li a').css('background', '#ffffff');
+        });
+        $('#Payment_Type').on('input', function () {
+            $("#Payment_Type").removeClass("addRequiredFieldToInput");
+        });
+        $('#Percentage').on('input', function () {
+            $("#Percentage").removeClass("addRequiredFieldToInput");
+        });
+        $('#Expense_Id').on('change', function () {
+            $("#Expense_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Expense_Id_chosen span').css('background', '#ffffff');
+            $('#Expense_Id_chosen b').css('background', '#ffffff');
+        });
+        $('#Bank_Account_Id').on('change', function () {
+            $("#Bank_Account_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Bank_Account_Id_chosen span').css('background', '#ffffff');
+            $('#Bank_Account_Id_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+
+            $('#offerCreateMasterForm').submit(function () {
+                $('#createOfferbtn').prop('disabled', true);
+                if ($('#Payment_Type').val() == "" || $('#Payment_Type').val() == null || $('#Expense_Id').val() == "" || $('#Expense_Id').val() == null || $('#Expense_Id ').val() < 1 || $('#Bank_Account_Id').val() == "" || $('#Bank_Account_Id').val() == null || $('#Bank_Account_Id ').val() < 1 || $('#Percentage').val() == "" || $('#Percentage').val() == null || $('#Percentage').val() < 0 ) {
+                    $('#createOfferbtn').prop('disabled', false);
+                $("#createExpensesSpinner").hide();
+                    if ($('#Payment_Type').val() == "" || $('#Payment_Type').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.PaymentMethodCreate.PaymentNameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                        $("#Payment_Type").addClass("addRequiredFieldToInput");
+                        $('#Payment_Type').trigger('focus');
+
+                    }
+                    if ($('#Percentage').val() == "" || $('#Percentage').val() == null || $('#Percentage').val() < 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.PaymentMethodCreate.PaymentPercentageIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                        $("#Percentage").addClass("addRequiredFieldToInput");
+                        $('#Percentage').trigger('focus');
+
+                     }
+                    if ($('#Expense_Id').val() == "" || $('#Expense_Id').val() == null || $('#Expense_Id').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.PaymentMethodCreate.SelectExpencesAccountRequiredMSG",
+                        pos: 'top-center'
+                    });
+                        $("#Expense_Id_chosen").addClass("addRequiredFieldToInput");
+                        $('#Expense_Id_chosen span').css('background', 'red');
+                        $('#Expense_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Expense_Id").offset().top
+                    }, 2000);
+
+                    }
+
+
+                    if ($('#Bank_Account_Id').val() == "" || $('#Bank_Account_Id').val() == null || $('#Bank_Account_Id').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.PaymentMethodCreate.SelectBankAccountRequiredMSG",
+                        pos: 'top-center'
+                    });
+                        $("#Bank_Account_Id_chosen").addClass("addRequiredFieldToInput");
+                        $('#Bank_Account_Id_chosen span').css('background', 'red');
+                        $('#Bank_Account_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Bank_Account_Id").offset().top
+                    }, 2000);
+                }
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+
+        });
+
+    </script>
+
+}

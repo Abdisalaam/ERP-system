@@ -1,0 +1,227 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ClassifySalesInvoiceVM
+
+
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+    decimal totalCost = 0;
+    int counter = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+}
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير مبيعات المستخدمين</title>
+
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.List.FirstOrDefault().company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.List.FirstOrDefault().company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.List.FirstOrDefault().company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير مبيعات موظف / Employee Sales Report
+
+        </div>
+        @if (Model.List.Count() > 1)
+        {
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                @{var a = Model.List.FirstOrDefault().employee;
+
+                    if (Model.List.FirstOrDefault().employee != 0 || Model.List.FirstOrDefault().employee != null)
+                    {
+                        var empName = Accountingsystem.Models.Employee.getEmpById(Model.List.FirstOrDefault().employee).Emp_Name;
+                        <h>@empName</h>
+                    }
+                }
+
+            </div>
+        }
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <br />
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">رقم العميل<br />Customer NO</th>
+                <th style="text-align:center">العميل<br />Customer</th>
+                <th style="text-align:center" width="150px">رقم الفاتورة<br />Invoice NO</th>
+                <th style="text-align:center" width="100px">التاريخ<br />Date</th>
+
+                <th style="text-align:center">قيمة التكلفة<br />Cost Amount</th>
+
+                <th style="text-align:center">القيمة<br />Amount</th>
+
+
+            </tr>
+        </thead>
+
+
+
+
+        <tbody>
+            @foreach (var item in Model.List)
+            {
+                totalamount = totalamount + item.invoiceTotal;
+                totarecall = totarecall + item.RecallInvoicetotal;
+                totaldef = totaldef + item.TotalOFInvoicesBefor;
+                totalCost = totalCost + item.TotalCost;
+                counter++;
+                <tr>
+
+                    <td width="100">
+                        @item.CustomerCode
+                    </td>
+                    <td width="200">
+
+                        @item.CustomerName
+                    </td>
+                    <td width="100">
+
+                        @item.InvoiceCode
+                    </td>
+                    <td width="200">
+                        @Convert.ToDateTime(item.InvoiceDate).ToString("yyyy/MM/dd ")
+                        @*@item.InvoiceDate*@
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(item.TotalCost, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp&nbsp&nbsp
+                    </td>
+                    <td style="width:100px">
+
+                        @Math.Round(item.TotalOFInvoicesBefor, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+        <tr>
+            <th style="text-align:center">اجمالى <br />Total </th>
+            <th style="text-align:center"></th>
+            <th style="text-align:center" width="150px"></th>
+            <th style="text-align:center" width="100px"></th>
+
+            <td style="width:100px">
+                @Math.Round(totalCost, 2, MidpointRounding.AwayFromZero)&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+            <td style="width:100px">
+                @Math.Round(totalamount, 2, MidpointRounding.AwayFromZero)
+            </td>
+
+
+        </tr>
+    </table>
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+</html>

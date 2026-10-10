@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="bytee" xml:space="preserve">
+    <value>byte</value>
+  </data>
+  <data name="DateMust" xml:space="preserve">
+    <value>Enter The Date</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="invoicemust" xml:space="preserve">
+    <value>Select Invoice</value>
+  </data>
+  <data name="invoiceProductMust" xml:space="preserve">
+    <value>Add Product To Invoice</value>
+  </data>
+  <data name="LimitOfSizeFile" xml:space="preserve">
+    <value>The Total File Size Should Not Exceed 4 000 000 Bytes</value>
+  </data>
+  <data name="PaymentMust" xml:space="preserve">
+    <value>Select Payment Method</value>
+  </data>
+  <data name="ReduceSize" xml:space="preserve">
+    <value>Total Size Of The Files Is Larger Than Allowed. Please Reduce The Size And Try Again</value>
+  </data>
+  <data name="TotalFileSize" xml:space="preserve">
+    <value>The Total Size Of The Files Selected</value>
+  </data>
+  <data name="TotalFilesSize" xml:space="preserve">
+    <value>Total Files Size</value>
+  </data>
+  <data name="DeleteSuccessful" xml:space="preserve">
+    <value>Successful Delete</value>
+  </data>
+  <data name="SuccessfullAdd" xml:space="preserve">
+    <value>Successful Adding</value>
+  </data>
+  <data name="AddName" xml:space="preserve">
+    <value>Add Name</value>
+  </data>
+  <data name="AddSliceSuccessful" xml:space="preserve">
+    <value>Adding Slice Successful Number</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Thier Is Error Please Try Again</value>
+  </data>
+  <data name="AmountMust" xml:space="preserve">
+    <value>Amount Should Is Bigger Than 0 </value>
+  </data>
+  <data name="CustomerMust" xml:space="preserve">
+    <value>You Must Select Customer</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="CreateCustomer" xml:space="preserve">
+    <value>Create Customer</value>
+  </data>
+  <data name="CreatePointOfSale" xml:space="preserve">
+    <value>Create Point Of Sale</value>
+  </data>
+  <data name="CreatePOSInvoice" xml:space="preserve">
+    <value>Create POS Invoice</value>
+  </data>
+  <data name="CreateRecipt" xml:space="preserve">
+    <value>Create Receipt</value>
+  </data>
+  <data name="deletePOS" xml:space="preserve">
+    <value>Delete POS</value>
+  </data>
+  <data name="DetailCustomer" xml:space="preserve">
+    <value>Detail Customer</value>
+  </data>
+  <data name="DetailPointOfSale" xml:space="preserve">
+    <value>Detail Point Of Sale</value>
+  </data>
+  <data name="DetailPOSInvoice" xml:space="preserve">
+    <value>Detail POS Invoice</value>
+  </data>
+  <data name="DetailRecipt" xml:space="preserve">
+    <value>Detail Receipt</value>
+  </data>
+  <data name="EditCustomer" xml:space="preserve">
+    <value>Edit Customer</value>
+  </data>
+  <data name="EditPointOfSale" xml:space="preserve">
+    <value>Edit Point Of Sale</value>
+  </data>
+  <data name="EditRecipt" xml:space="preserve">
+    <value>Edit Receipt</value>
+  </data>
+  <data name="IndexOfCustomers" xml:space="preserve">
+    <value>Index Of Customers</value>
+  </data>
+  <data name="IndexOfPointOfSale" xml:space="preserve">
+    <value>Index Of Point Of Sale</value>
+  </data>
+  <data name="IndexOfPOSInvoice" xml:space="preserve">
+    <value>Index Of POS Invoice</value>
+  </data>
+  <data name="IndexOfRecipt" xml:space="preserve">
+    <value>Index Of Recipt</value>
+  </data>
+  <data name="CreateSucc" xml:space="preserve">
+    <value>Create Successfully</value>
+  </data>
+  <data name="DateIsRequired" xml:space="preserve">
+    <value>Date Is Required</value>
+  </data>
+  <data name="Editsucc" xml:space="preserve">
+    <value>Save Change Successfully</value>
+  </data>
+  <data name="InvoiceDepend" xml:space="preserve">
+    <value>There Were Revese Invoice Depend On That Invoice</value>
+  </data>
+  <data name="PaymentPoiceIsRequired" xml:space="preserve">
+    <value>Payment Policy Is Required</value>
+  </data>
+  <data name="SupplierIsRequired" xml:space="preserve">
+    <value>Supplier Is Required</value>
+  </data>
+  <data name="Quantityisthesameinstore" xml:space="preserve">
+    <value>Quantity is the same in store</value>
+  </data>
+  <data name="Quantityshoudbiggerthan" xml:space="preserve">
+    <value>Quantity should bigger than 0</value>
+  </data>
+  <data name="PriceMust" xml:space="preserve">
+    <value>enter Price</value>
+  </data>
+  <data name="SliceIsExist" xml:space="preserve">
+    <value>this Slices Is Exisit in theList</value>
+  </data>
+  <data name="SliceMust" xml:space="preserve">
+    <value>select Slice</value>
+  </data>
+  <data name="ChooseProduct" xml:space="preserve">
+    <value>Choose Product</value>
+  </data>
+  <data name="TheQuantityIsbiggerfromStor" xml:space="preserve">
+    <value>The Quantity that Entered Is Bigger than quantity in Choosen Store</value>
+  </data>
+  <data name="CannotEdit" xml:space="preserve">
+    <value>Cannot Edit For This Account</value>
+  </data>
+  <data name="cannotFindthatExpences" xml:space="preserve">
+    <value>can not Find that Expences</value>
+  </data>
+  <data name="ThereIsNoSubledgerToShow" xml:space="preserve">
+    <value>There Is  No Subledger To Show</value>
+  </data>
+  <data name="GLDone" xml:space="preserve">
+    <value>Accredited successfully</value>
+  </data>
+  <data name="GLReverse" xml:space="preserve">
+    <value>GL was successfully reversed</value>
+  </data>
+  <data name="chooseComponentOfSalary" xml:space="preserve">
+    <value>Choose Component Of Salary</value>
+  </data>
+  <data name="chooseVactionType" xml:space="preserve">
+    <value>Choose Vaction Type </value>
+  </data>
+  <data name="EnterAmount" xml:space="preserve">
+    <value>Enter Amount</value>
+  </data>
+  <data name="EnterNumberOfDay" xml:space="preserve">
+    <value>Enter Number Of Day</value>
+  </data>
+  <data name="thisCompnentIsExist" xml:space="preserve">
+    <value>this Compnent Is Exist</value>
+  </data>
+  <data name="thisIsTyprOfVactionisExist" xml:space="preserve">
+    <value>this Is Typy Of Vaction is Exist</value>
+  </data>
+  <data name="CannotReverseGL" xml:space="preserve">
+    <value>You cannot reverse GL due to making a manual exchange entry for this month</value>
+  </data>
+  <data name="CannotReverseGL1" xml:space="preserve">
+    <value>You cannot reverse GL</value>
+  </data>
+  <data name="RemoveAutherize" xml:space="preserve">
+    <value>The employee's authority has been removed successfully</value>
+  </data>
+  <data name="Thismonthssalary" xml:space="preserve">
+    <value>This month's salary entry was done before.</value>
+  </data>
+  <data name="YourpackagedoesnotsupporttheHRdepartment" xml:space="preserve">
+    <value>Your package does not support the HR department</value>
+  </data>
+  <data name="DateVacationWrong" xml:space="preserve">
+    <value>date of Vacation is wrong</value>
+  </data>
+  <data name="DeportationExist" xml:space="preserve">
+    <value>Deportation took Place in this mounth</value>
+  </data>
+  <data name="DeportationSuccess" xml:space="preserve">
+    <value>Deportation Successful</value>
+  </data>
+  <data name="EmailError" xml:space="preserve">
+    <value>EmailError</value>
+  </data>
+  <data name="EnterConfirm" xml:space="preserve">
+    <value>EnterConfirm</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>EnterEmail</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>EnterPassword</value>
+  </data>
+  <data name="passportWrong" xml:space="preserve">
+    <value>the Passport is wrong</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>PasswordNotMatch with Confirm</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>Your package does not support this number of users</value>
+  </data>
+  <data name="vacationpendding" xml:space="preserve">
+    <value>vacation is pendding</value>
+  </data>
+  <data name="vacationrefused" xml:space="preserve">
+    <value>vacation is refused</value>
+  </data>
+  <data name="vactionaccept" xml:space="preserve">
+    <value>vacation is accept</value>
+  </data>
+  <data name="TotalSaleQuantity" xml:space="preserve">
+    <value>Total disbursed quantity</value>
+  </data>
+  <data name="ReportAllSub" xml:space="preserve">
+    <value>All  Subscriptions Reports</value>
+  </data>
+  <data name="ReportSub" xml:space="preserve">
+    <value>Subscriptions reports</value>
+  </data>
+  <data name="ReportSubPayed" xml:space="preserve">
+    <value>Report subscriptions not paid or partially</value>
+  </data>
+  <data name="ReportSubSales" xml:space="preserve">
+    <value>Subscription sales report</value>
+  </data>
+  <data name="ReportSubSalesForEmp" xml:space="preserve">
+    <value>Subscriptions sales report for a specific employee</value>
+  </data>
+  <data name="ReportSubStatus" xml:space="preserve">
+    <value>Report statuses of Subscriptions</value>
+  </data>
+  <data name="ReportSubTeam" xml:space="preserve">
+    <value>subscription report for a specific team</value>
+  </data>
+  <data name="ReportSubTrans" xml:space="preserve">
+    <value>Report of store transfers </value>
+  </data>
+  <data name="ReportSubType" xml:space="preserve">
+    <value>Report of subscription information </value>
+  </data>
+  <data name="SubNumbNew" xml:space="preserve">
+    <value>renewed subscription number</value>
+  </data>
+  <data name="AllowedWasApproved" xml:space="preserve">
+    <value>Allowed Was Approved</value>
+  </data>
+  <data name="youdidnotchoosebonds" xml:space="preserve">
+    <value>you did not choose bonds</value>
+  </data>
+  <data name="Addpreviouspayments" xml:space="preserve">
+    <value>Add previous payments</value>
+  </data>
+  <data name="InvoiceSup" xml:space="preserve">
+    <value>Invoice supplier</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
+  <data name="Depreciationisstartedonceeveryday" xml:space="preserve">
+    <value>Depreciation is started once every day</value>
+  </data>
+  <data name="DisposeAsset" xml:space="preserve">
+    <value>Disposed Asset Successfully</value>
+  </data>
+  <data name="productSame" xml:space="preserve">
+    <value>the same Product in the List</value>
+  </data>
+  <data name="savedSuc" xml:space="preserve">
+    <value>Saved Successfully</value>
+  </data>
+  <data name="SubActive" xml:space="preserve">
+    <value>Subscription is Actived Successfully</value>
+  </data>
+  <data name="Subcancel" xml:space="preserve">
+    <value>Subscription is cancel Successfully</value>
+  </data>
+  <data name="SubStop" xml:space="preserve">
+    <value>Subscription is Stopped Successfully</value>
+  </data>
+  <data name="Thedepreciationwassuccessful" xml:space="preserve">
+    <value>The depreciation was successful</value>
+  </data>
+  <data name="Yourpackagedoesnotsupportthesubdepartment1" xml:space="preserve">
+    <value>Your package does not support the Subscription department</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Total Balance</value>
+  </data>
+  <data name="cash" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="notCash" xml:space="preserve">
+    <value>Not Pay</value>
+  </data>
+  <data name="Nosalarydataforthismonth" xml:space="preserve">
+    <value>No salary data for this month</value>
+  </data>
+  <data name="Payrollprocessingcannotbedoneforafuturedate" xml:space="preserve">
+    <value>Payroll processing cannot be done for a future date</value>
+  </data>
+  <data name="quantitynotSuitable" xml:space="preserve">
+    <value>quantitynotSuitable</value>
+  </data>
+  <data name="YourpackagedoesnotsupporttheProdepartment" xml:space="preserve">
+    <value>Your package does not support the Project department</value>
+  </data>
+  <data name="Pleasesendtheproblemtothisemail" xml:space="preserve">
+    <value>Please send the problem to this e-mail</value>
+  </data>
+  <data name="Yourpackagedoesnotsupportyourentry" xml:space="preserve">
+    <value>Your package does not support your entry</value>
+  </data>
+  <data name="ALL" xml:space="preserve">
+    <value>ALL</value>
+  </data>
+  <data name="YourpackagedoesnotsupportthatNumberOfBranch" xml:space="preserve">
+    <value>Your package does not support that Number from Branch</value>
+  </data>
+  <data name="YourpackagedoesnotsupportthatNumberOfEmp" xml:space="preserve">
+    <value>Your package does not support that Number from Employee</value>
+  </data>
+  <data name="YourpackagedoesnotsupportthatNumberOfPOS" xml:space="preserve">
+    <value>Your package does not support that Number from POS</value>
+  </data>
+  <data name="YourpackagedoesnotsupportthatNumberOfStore" xml:space="preserve">
+    <value>Your package does not support that Number from Store</value>
+  </data>
+  <data name="YourpackagedoesnotsupportthatNumberOfSub" xml:space="preserve">
+    <value>Your package does not support that Number from Subledger</value>
+  </data>
+  <data name="EditPenddingSub" xml:space="preserve">
+    <value>Edit All Data</value>
+  </data>
+  <data name="Expence" xml:space="preserve">
+    <value>Expence</value>
+  </data>
+  <data name="Noticenumber" xml:space="preserve">
+    <value>Notice number</value>
+  </data>
+  <data name="Printnotice" xml:space="preserve">
+    <value>Print Notice</value>
+  </data>
+  <data name="CustomerSubscribtionReport" xml:space="preserve">
+    <value>balance of Customer Subscribtion Report</value>
+  </data>
+  <data name="CompoundProduct" xml:space="preserve">
+    <value>Compound Product</value>
+  </data>
+  <data name="Accounting" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="ChartOfAccount" xml:space="preserve">
+    <value>ChartOfAccount</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="ReportAndPendingDocument" xml:space="preserve">
+    <value>ReportAndPendingDocument</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="FatherAccount" xml:space="preserve">
+    <value>With Main Account</value>
+  </data>
+  <data name="yourAuth" xml:space="preserve">
+    <value>Your Authority does not support this function</value>
+  </data>
+  <data name="SimplifiedTaxInvoice" xml:space="preserve">
+    <value>Simplified Print</value>
+  </data>
+  <data name="SimplifiedTaxInvoiceEmail" xml:space="preserve">
+    <value>Simplified Print Email</value>
+  </data>
+  <data name="CustomizePrinting" xml:space="preserve">
+    <value>Customize Printing</value>
+  </data>
+  <data name="FrontPage" xml:space="preserve">
+    <value>Front Page</value>
+  </data>
+  <data name="sellForAllCustomer" xml:space="preserve">
+    <value>sell For All Customer</value>
+  </data>
+  <data name="difference" xml:space="preserve">
+    <value>Difference</value>
+  </data>
+  <data name="EndPage" xml:space="preserve">
+    <value>End Page Image</value>
+  </data>
+  <data name="ReservedQuantity" xml:space="preserve">
+    <value>Reserved Quantity</value>
+  </data>
+  <data name="CreateCrediteNotice" xml:space="preserve">
+    <value>Create Credit Notice</value>
+  </data>
+  <data name="CreateCrediteNoticeCash" xml:space="preserve">
+    <value>CreateCrediteNoticeCash</value>
+  </data>
+  <data name="CreateCrediteNoticePOS" xml:space="preserve">
+    <value>CreateCrediteNotice</value>
+  </data>
+  <data name="CreditNoticeDetails" xml:space="preserve">
+    <value>CreditNoticeDetails</value>
+  </data>
+  <data name="CreditNoticeList" xml:space="preserve">
+    <value>CreditNoticeList</value>
+  </data>
+  <data name="NoticeNo" xml:space="preserve">
+    <value>NoticeNo</value>
+  </data>
+  <data name="Showwhohascredit" xml:space="preserve">
+    <value>Show who has credit</value>
+  </data>
+  <data name="PriceWithTax" xml:space="preserve">
+    <value>Price With Tax</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="AmountbeforePeriod" xml:space="preserve">
+    <value>Amount before Period</value>
+  </data>
+  <data name="AmountOfPeriod" xml:space="preserve">
+    <value>Amount Of Period</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="Createmultipleexpenses" xml:space="preserve">
+    <value>create multiple expenses</value>
+  </data>
+  <data name="OperationDate" xml:space="preserve">
+    <value>OperationDate</value>
+  </data>
+  <data name="HRNotificationReport" xml:space="preserve">
+    <value> Notification Report</value>
+  </data>
+  <data name="ImageWaterMark" xml:space="preserve">
+    <value>Image Water Mark</value>
+  </data>
+  <data name="CreateSettlementGL" xml:space="preserve">
+    <value>CreateSettlementGL</value>
+  </data>
+  <data name="SettlementAccount" xml:space="preserve">
+    <value>SettlementAccount</value>
+  </data>
+  <data name="SettlementGL" xml:space="preserve">
+    <value>SettlementGL</value>
+  </data>
+  <data name="PromoformaInvoiceEmail" xml:space="preserve">
+    <value>PromoformaInvoiceEmail</value>
+  </data>
+  <data name="PromoformaInvoiceWhite" xml:space="preserve">
+    <value>PromoformaInvoice</value>
+  </data>
+  <data name="CurrentBalance" xml:space="preserve">
+    <value>CurrentBalance</value>
+  </data>
+  <data name="Thevalueoftheactualcreditbalance" xml:space="preserve">
+    <value>The value of the actual credit balance</value>
+  </data>
+  <data name="Thevalueoftheactualdebitbalance" xml:space="preserve">
+    <value>The value of the actual debit balance</value>
+  </data>
+  <data name="TheInvoiceHasBeenPartiallyApprovedUntilThequantitiesAreAvailableInTheStore" xml:space="preserve">
+    <value>The invoice has been partially approved until the quantities are available in the store</value>
+  </data>
+  <data name="UnpaidInvoiceReport" xml:space="preserve">
+    <value>Unpaid Invoice Report</value>
+  </data>
+</root>

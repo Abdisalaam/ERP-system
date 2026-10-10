@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Accountingsystem.Models.ReceiptFileDetail>
+
+@{
+    ViewBag.Title = "GetAllFiles";
+}
+
+<h2>GetAllFiles</h2>
+
+<p>
+    @Html.ActionLink(Accountingsystem.Resources.ReceiptDetails.DownloadFiles, "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.Content)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.FileName)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.ReceiptDetails.ReceiptNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentLength)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceiptRec_ID)
+        </td>
+
+        <td>
+
+            @Html.ActionLink("تحميل", "ReturnRecFile", new { fileId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

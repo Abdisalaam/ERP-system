@@ -1,0 +1,516 @@
+﻿@model Accountingsystem.ViewModel.SewingVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+
+}
+
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+
+
+
+
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <form id="offerCreateMasterForm">
+
+        <div class="text-center">
+            @Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create
+        </div>
+        <br />
+        <div class=''>
+            <div class="row">
+                @Html.HiddenFor(model => model.order)
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceDate)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                            <div class="input-group-append">
+                                <div>
+                                    <span class="form-control text-danger">*</span>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.Sewing.receiveddate)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                            <div class="input-group-append">
+                                <div>
+                                    <span class="form-control text-danger">*</span>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Customer)
+                        <div class="input-group">
+                            @Html.DropDownListFor(model => model.SelectedCustomerId, Model.CustList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.DropDownListCustomer, htmlAttributes: new { @class = "Dropdownlist-select form-control mb-4" })
+                            <div class="input-group-append">
+                                <div class="form-control">
+                                    <label class="text-danger">*</label>
+                                </div>
+
+                                <button id="addNewCustomerBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SelectedCustomerId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.Sewing.Number)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.NumberOfSewing, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                            @Html.ValidationMessageFor(model => model.NumberOfSewing, "", new { @class = "text-danger" })
+                            <div class="input-group-append">
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+          
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.Sewing.Amount)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                            <div class="input-group-append">
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.ProductOrService)
+                        <div class="input-group">
+                            @Html.DropDownListFor(model => model.ProductId, Model.ProdductList, Accountingsystem.Resources.InvoiceMasterAddNewInvoice.ProductOrService, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                            <div class="input-group-append">
+                                <div class="form-control">
+                                    <label class="text-danger"></label>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Quantity)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                            <div class="input-group-append">
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+  </form>
+</div>
+<div id="customerModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+  <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddNewCustomer</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div id="customerPartialDialogDiv"></div>
+          </div>
+          <div class="md-button">
+              <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="table-responsive mb-4 mt-4">
+  <table id="default-ordering" class="table table-hover">
+
+      <tbody>
+          @foreach (var item in Model.QuestionList)
+          {
+
+          <tr>
+              <td hidden>@item.Id</td>
+
+              <td>@item.Name</td>
+              @if (item.Answers.Count() == 0)
+              {
+                  <td><input id="answerDesc" class="details-form-control" /></td>
+                  <td hidden></td>
+
+              }
+              else
+              {
+                  <td hidden></td>
+                  <td>
+
+                 
+                      @foreach (var a in item.Answers)
+                      {
+                          <label>
+
+                              @if (a.PathImage != "")
+                              {
+                                  <img src="@a.PathImage" width="100" height="150" alt="@a.Id">
+
+                                  <br />
+                              }
+                              <input type="radio" name="@a.QuestionId" value="@a.Id" checked>
+                              <a style="color:white"> @a.Desc</a>
+
+                          </label>
+
+
+                      }
+
+                  </td>
+
+              }
+              <td hidden>@item.IsRequired</td>
+          </tr>
+                }
+                </tbody>
+                </table>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" onclick="fun()" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+
+
+    <script>
+        $("#ProductId").chosen();
+        $("#ProductId_chosen").addClass("form-control Dropdownlist-select");
+        $("#SelectedCustomerId").chosen();
+        $("#SelectedCustomerId_chosen").addClass("form-control Dropdownlist-select");
+        $("#TaxId").chosen();
+        $("#TaxId_chosen").addClass("form-control Dropdownlist-select");
+        var currentDate = new Date();
+        var _OfferDate = flatpickr(document.getElementById('Date'), {
+            defaultDate: currentDate
+        });
+        var _DeadLineDate = flatpickr(document.getElementById('DueDate'), {
+            defaultDate: currentDate
+        });
+
+  $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "Sewing"))');
+    </script>
+
+
+
+    <script>
+
+        function fun() {
+
+
+            $("#createOfferSpinner").show();
+            $('#createOfferbtn').prop('disabled', true);
+            var orderArr = [];
+            orderArr.length = 0;
+            debugger
+            $.each($("#default-ordering tbody tr"), function () {
+                orderArr.push({
+
+                    QuestionId: $(this).find('td:eq(0)').html(),
+                    QuestionName: $(this).find('td:eq(1)').html(),
+                    AnswerDesc: $(this).find('td:eq(2)').find('input').val(),
+                    AnswerId: $(this).find('td:eq(3)').find('input[type="radio"]:checked').val(),
+                     Required: $(this).find('td:eq(4)').html()
+
+                });
+
+            });
+            var FiledRequired = null;
+            var filterArray = orderArr.filter(item => item.AnswerDesc == '' && item.Required == 'True' &&item.AnswerId == undefined);
+            if (filterArray.length > 0) {
+                FiledRequired = orderArr.find(item => item.AnswerDesc == '' && item.Required == 'True' && item.AnswerId == undefined);
+
+              
+
+            }
+
+            if ($('#SelectedCustomerId').val() == "" || $('#SelectedCustomerId').val() == null || FiledRequired != null) {
+                $('#createOfferbtn').prop('disabled', false);
+
+                $("#createOfferSpinner").hide();
+                if ($('#SelectedCustomerId').val() == "" || $('#SelectedCustomerId').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.CustomerNameValidation",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedCustomerId").addClass("addRequiredFieldToInput");
+                    $('#SelectedCustomerId').trigger('focus');
+                }
+
+                if (FiledRequired != null) {
+                    Snackbar.show({
+                        text: ('  ادخل ' + FiledRequired.QuestionName),
+                        pos: 'top-center'
+                    });
+
+                    event.preventDefault();
+                }
+
+
+
+                
+            }
+            else {
+
+
+                    var date = $("#Date").val();
+                    var DueDate = $("#DueDate").val();
+                var CustomerId = $("#SelectedCustomerId").val();
+                    var ProductId = $("#ProductId").val();
+                    var NumberOfSewing = $("#NumberOfSewing").val();
+                    var order = $("#order").val();
+                var Amount = $("#Amount").val();
+                var Quantity = $("#Quantity").val();
+                    var datao = JSON.stringify(orderArr);
+
+                var data = { 'detail': datao, 'Date': date, 'DueDate': DueDate, 'CustomerId': CustomerId, 'ProductId': ProductId, 'NumberOfSewing': NumberOfSewing, 'order': order, 'Amount': Amount, 'quantity': Quantity };
+                    var data = JSON.stringify(data);
+                    debugger
+                    console.log(data);
+                    $.ajax(
+                        {
+
+                            url: '@Url.Action("Create", "Sewing")',
+                            data: data,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+
+
+                        }).done(function (result) {
+
+                            setTimeout(function () {
+
+                                window.location = result;
+
+                            }, 5000);
+                        });
+
+                };
+            };
+    </script>
+
+
+
+}
+

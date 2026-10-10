@@ -1,0 +1,287 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.MRGL
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.ReportsgetListofLedger.GeneralLedger;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("getListofLedger", "ReportsNew", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ReportsgetListofLedger.LedgerReport)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsgetListofLedger.From)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsgetListofLedger.To)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Todate, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Todate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsgetListofLedger.Account)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.accountId, Model.AccountList, Accountingsystem.Resources.ReportsgetListofLedger.Account, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.accountId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="TREID">
+                                <div class="form-group">
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
+                                            @Html.EditorFor(model => model.penddingDocument, new { htmlAttributes = new { @class = "new-control-input", @type = "checkbox" } })
+                                            <span class="new-control-indicator"></span><span class="new-chk-content">@Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.UnApprovedReceipts</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ReportsgetListofLedger.ToReport<span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GetAllReports","Reports")'>
+                        @Accountingsystem.Resources.ReportsgetListofLedger.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+    <script>
+        $("#TREID").hide();
+            $(function () {
+                $("#accountId").change(function (e) {
+                    var selectedValue = $(this).val();
+                
+                    $.ajax({
+                        url: '@Url.Action("getTreasuryOrBank", "ChartOfAccounting")',
+                        data: { AccountId: selectedValue},
+                        type: 'get',
+                    }).done(function (result) {
+                        debugger
+                        if (result > 0) {
+                            $("#TREID").show();
+                        }
+                        else {
+                            $("#TREID").hide();
+                        }
+                    }
+                 );
+                });
+            });
+
+
+
+    </script>
+    <script>
+        debugger
+        var selectedValue = $("#accountId").val();
+                
+                    $.ajax({
+                        url: '@Url.Action("getTreasuryOrBank", "ChartOfAccounting")',
+                        data: { AccountId: selectedValue},
+                        type: 'get',
+                    }).done(function (result) {
+                        if (result > 0) {
+                            $("#TREID").show();
+                        }
+                        else {
+                            $("#TREID").hide();
+                        }
+                    }
+                 );
+             
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+
+            var currentDate = new Date();
+            var _StartDate = flatpickr(document.getElementById('FromDate'), {
+                defaultDate: currentDate
+            });
+            var currentDate = new Date();
+            var _EndDate = flatpickr(document.getElementById('Todate'), {
+                defaultDate: currentDate
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+
+
+            $("#accountId").chosen();
+
+            $("#accountId_chosen").addClass("form-control Dropdownlist-select");
+
+
+            return false;
+        });
+
+
+    </script>
+    <script>
+        $('#accountId').on('change', function () {
+            $("#accountId_chosen").removeClass("addRequiredFieldToInput");
+            $('#accountId_chosen span').css('background', '#ffffff');
+            $('#accountId_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+
+        $('#catchReceiptCreateForm').submit(function () {
+
+            if ($('#accountId').val() == "" || $('#accountId').val() == null || $('#accountId').val() < 1) {
+
+                $("#createExpensesSpinner").hide();
+                Snackbar.show({
+                        text: "@Accountingsystem.Resources.ReportsgetListofLedger.SubAccountIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                $("#accountId_chosen").addClass("addRequiredFieldToInput");
+                $('#accountId_chosen span').css('background', 'red');
+                $('#accountId_chosen b').css('background', 'red');
+
+                $('html, body').animate({
+                    scrollTop: $("#accountId").offset().top
+                }, 2000);
+                event.preventDefault();
+            }
+            else {
+                $("#createExpensesSpinner").show();
+            }
+
+
+        });
+
+    </script>
+
+
+}

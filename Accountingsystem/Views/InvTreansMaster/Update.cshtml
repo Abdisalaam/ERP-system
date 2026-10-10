@@ -1,0 +1,203 @@
+﻿@model Accountingsystem.ViewModel.InventoryTransfer_HdVM
+
+@{
+    ViewBag.Title = "Update";
+ 
+}
+
+<h2>Update</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+      
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.TransferHd_Id)
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+                        <div class="Dropdownlist">
+                            @Html.EditorFor(model => model.InvTransfere_Notes, new { htmlAttributes = new { @class = "Dropdownlist-select" } })
+                            @Html.ValidationMessageFor(model => model.InvTransfere_Notes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(Accountingsystem.Resources.InvTreansMasterCreate.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Inv_Code, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Inv_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterCreate.Code)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCompanyId, Model.MyCompanyList, Accountingsystem.Resources.InvTreansMasterCreate.SelectCompany, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCompanyId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterCreate.Company)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedSourceStore_Id, Model.MySoursStoreList, Accountingsystem.Resources.InvTreansMasterCreate.StoreTransferredFromItInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedSourceStore_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(Accountingsystem.Resources.InvTreansMasterCreate.StoreTransferredFromIt)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedDestStore_Id, Model.MyDestStoreList, Accountingsystem.Resources.InvTreansMasterCreate.TransferredStoreInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedDestStore_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.InvTreansMasterCreate.TransferredStore)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+ction Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+
+
+    $(function () {
+        $("#SelectedSourceStore_Id").change(function (e) {
+
+            var storeId = $("#SelectedSourceStore_Id").val();
+            var InventoryH_dDetailsid = @Model.TransferHd_Id;
+            $("#InventoryDetailList").load('@(Url.Action("GetAllTempInventoryDetails", "InvTreansMaster"))?tempInventoryH_dId='+ InventoryH_dDetailsid);
+
+            $("#InventoryDetail").load('@(Url.Action("PrepareInventoryeH_dDetail", "InvTreansMaster"))?storeId='+storeId);
+
+            });
+        });
+
+        function AddDetailToMaster1() {
+            var inventoryH_dId = @Model.TransferHd_Id;
+            var Product_ID =$("#SelectedProductId").val();
+           // var Batch_ID =$("#SelectedBtachtId").val();
+
+            var Product_Qty =$("#Product_Qty").val();
+            var inventoryH_dDetail;
+            inventoryH_dDetail={
+                InventoryTransfer_Id:inventoryH_dId,
+                SelectedProductId:Product_ID,
+                //SelectedBtachtId:Batch_ID,
+
+                Product_Qty:Product_Qty,
+
+            };
+
+            $.ajax(
+        {
+            url: '@Url.Action("AddInventoryDetailsToMaster", "InvTreansMaster")',
+            data: JSON.stringify(inventoryH_dDetail),
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+                $("#InventoryDetailList").load('@(Url.Action("GetAllTempInventoryDetails", "InvTreansMaster"))?tempInventoryH_dId='+ inventoryH_dId);
+
+                //$("#InventoryDetailList").load('@(Url.Action("GetAllTemprecallInventoryDetailsresult", "InvTreansMaster"))?TemptH_dDetailes='+ inventoryH_dId);
+
+            },
+
+            error: function () { alert('error'); }
+        });
+        };
+
+</script>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

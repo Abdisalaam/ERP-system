@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Accountingsystem.Models.ProductBatchesTemp>
+
+
+<table class="table table-bordered table-striped">
+    <tr>
+      
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Item)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.StoreCreate.StoreName)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Quantity)
+        </th>
+   
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        @Html.HiddenFor(modelItem => item.Product_ID)
+        @Html.HiddenFor(modelItem => item.Batch_ID)
+        @{var proName = "";
+            if (item.Product_ID != null || item.Product_ID != 0)
+            {
+                proName = Accountingsystem.Models.Product.GetProdectById(Convert.ToInt32(item.Product_ID.ToString())).Prod_Name;
+                <td>
+                    @proName
+                </td>}
+            else
+            {
+                <td>
+                    @proName
+                </td>}
+        }
+
+
+      
+         
+            @{var StoreName = "";
+                if (item.Store_ID != null || item.Store_ID != 0)
+                {
+                    StoreName = Accountingsystem.Models.Store.GetStoreById(Convert.ToInt32(item.Store_ID.ToString())).Store_Name;
+                <td>
+                    @StoreName
+                </td>}
+            else
+            {
+                <td>
+                    @StoreName
+                </td>}
+            }
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Quantity)
+            </td>
+
+            <td>
+                <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick="@("DeleteTemp('"+item.Batch_ID+"','"+item.Product_ID+"')")" class="btn BTN-style-danger final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterDelete.Delete</a>
+                </div>
+            </td>
+        </tr>
+}
+
+</table>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href='javascript:;' onclick='Save();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.StoreDetails.StoreDetails</a>
+    </div>
+</div>

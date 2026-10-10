@@ -1,0 +1,339 @@
+﻿@model Accountingsystem.Models.Expense
+@{
+    ViewBag.Title = Accountingsystem.Resources.ExpenseDetails.SpentReceiptDetails;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    var Currency = Accountingsystem.Models.Currency.GetAllcurrency().FirstOrDefault().Currency_Type;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+@Html.HiddenFor(model => model.Expense_Id)
+@Html.HiddenFor(model => model.RandomValue)
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <div class="text-center">
+                        @Accountingsystem.Resources.ExpenseDetails.SpentReceiptDetails
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+
+                                            @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.SpentReceiptNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Expense_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.ExpenseDate)
+                                        </div>
+                                        <div>
+                                            @Model.Expense_date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.ExpenseCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Expense_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.Reference)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Reference)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="listofTemp"></div>
+            <div class="layout-top-spacing">
+                @{ if (Model.ExpenseFileDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileNumber</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileName</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileLength</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.FileExtension</th>
+                                        <th>@Accountingsystem.Resources.ExpenseDetails.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var file in Model.ExpenseFileDetails)
+                                    {
+                                        <tr>
+                                            <td>@file.Id</td>
+                                            <td>@file.FileName</td>
+                                            <td>@file.ContentLength</td>
+                                            <td>@file.File_Extention</td>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                                        <a href="@Url.Action("ReturnExpFile", new { fileId = file.Id })" class="dropdown-item">
+                                                            @Accountingsystem.Resources.ExpenseDetails.DownloadFile
+                                                        </a>
+
+                                                        <a class="dropdown-item" href="@Url.Action("DeleteFile", new { fileId = file.Id })">
+                                                            @Accountingsystem.Resources.ExpenseDetails.DeleteFile
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row layout-top-spacing">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Model.Expense_State == Accountingsystem.Models.TransactionState.Pending && Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+                        {
+
+                            <button id="changeStatepost" class="btn btn-block btn-outline-success mb-lg-0">Post<span id="changeStatepostSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                            if (Model.Expense_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+
+                              
+                                <a id="editExpensesBtn" href="@Url.Action("Edit", new { id = Model.Expense_Id })" class="btn btn-block btn-outline-info mb-lg-0">
+                                    @Accountingsystem.Resources.ExpenseDetails.Edit
+                                    <span id="editExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a id="registerdRecordExpenseBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Expense_Code })'>
+                                    @Accountingsystem.Resources.ExpenseDetails.RegisterdRecordExpense
+                                    <span id="registerdRecordExpenseBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+
+
+                        }
+                        else if (Model.Expense_State == Accountingsystem.Models.TransactionState.Post && Request.IsAuthenticated /*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*/)
+                        {
+                            <button id="changeStatevoid" class="btn btn-block btn-outline-success mb-lg-0">Void<span id="changeStatevoidSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+
+                           
+
+                        }
+                        @if (Model.Expense_State == Accountingsystem.Models.TransactionState.Pending @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+                        {
+
+                            <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("Delete", new { id = Model.Expense_Id })">
+                                @Accountingsystem.Resources.ExpenseDetails.Delete
+                                <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        }
+                        @if (Model.Expense_State != Accountingsystem.Models.TransactionState.Pending @*&& (User.IsInRole("عميل") || User.IsInRole("مالك النظام"))*@)
+                        {
+
+                            <a id="deleteExpensesBtn" class="btn btn-block btn-outline-danger mb-lg-0" href="@Url.Action("DeleteActiveExp", new { id = Model.Expense_Id })">
+                                @Accountingsystem.Resources.ExpenseDetails.Delete
+                                <span id="deleteExpensesBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="expenseCreateBtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("CreateNew")">
+                            @Accountingsystem.Resources.ExpenseDetails.CreateExpense
+                            <span id="expenseCreateBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="printExpenseBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("prientExpen", new { controller = "Reports", id = Model.Expense_Id })' target="_blank">
+                            @Accountingsystem.Resources.ExpenseDetails.Print
+                            <span id="printExpenseBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.ExpenseDetails.BackToList
+                            <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section scripts{
+
+
+
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        var RandNu = $("#RandomValue").val();
+            $("#listofTemp").load('@(Url.Action("DetailTempList", "Expense"))?RandNum=' + RandNu);
+              });
+    </script>
+    <script>
+        $("#expenseCreateBtn").click(function (e) {
+            $("#expenseCreateBtnSpinner").show();
+        });
+        $("#changeStatepost").click(function (e) {
+            $("#changeStatepostSpinner").show();
+                this.disabled = true;
+                var thisid = $("#Expense_Id").val();
+                    $.ajax({
+                        url: '@Url.Action("PostExp", "Expense")',
+                        type: 'get',
+                        data: { ExpID: thisid }
+                    }).done(function (result) {
+
+                        Snackbar.show({
+                            text: result,
+                            pos: 'top-center'
+
+                        });
+                        setTimeout(function () {
+
+                            location.reload();
+
+                        }, 5000);
+                    });
+        });
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+        $("#registerdRecordExpenseBtn").click(function (e) {
+            $("#registerdRecordExpenseBtnSpinner").show();
+        });
+        $("#changeStatevoid").click(function (e) {
+            $("#changeStatevoidSpinner").show();
+                this.disabled = true;
+                var thisid = $("#Expense_Id").val();
+                    $.ajax({
+
+                        url: '@Url.Action("VoidExp", "Expense")',
+                        type: 'get',
+                        data: { ExpID: thisid }
+                    }).done(function (result) {
+
+                        Snackbar.show({
+                            text: result,
+                            pos: 'top-center'
+
+                        });
+                        setTimeout(function () {
+
+                            location.reload();
+
+                        }, 5000);
+
+                    });
+        });
+        $("#deleteExpensesBtn").click(function (e) {
+            $("#deleteExpensesBtnSpinner").show();
+        });
+        $("#editExpensesBtn").click(function (e) {
+            $("#editExpensesBtnSpinner").show();
+        });
+
+
+    </script>
+
+}
+

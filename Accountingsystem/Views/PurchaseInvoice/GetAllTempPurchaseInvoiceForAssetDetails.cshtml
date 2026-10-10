@@ -1,0 +1,101 @@
+﻿@model Accountingsystem.ViewModel.PurchaseDetailsTempVM
+
+
+@{
+    decimal Totals = 0;
+    decimal tax = 0;
+}
+
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+        <table id="creatOfferDetailList" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.AssetName)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.AssetNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.AssetPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.TotalAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.ItemTax)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.AssetsReports.TotalTax)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.invoiceTemp)
+                {
+                    <tr>
+                        @Html.HiddenFor(modelItem => item.Details_Id)
+                        @Html.HiddenFor(modelItem => item.Asset_Id)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product_Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product_Quantity)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                            @Math.Round(item.Product_Price, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                            @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                            @{ Totals += item.Total_Amount;
+
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product_Tax)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Detail_Total_Tax)*@
+                            @Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                            @{ tax += item.Detail_Total_Tax;
+
+                            }
+                        </td>
+                        <td>
+
+                            <div class="col-md-offset-2 col-md-10">
+                                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Details_Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="col-md-11 mx-auto">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Accountingsystem.Resources.AssetsReports.Total
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Math.Round((Totals - Model.AllowDiscount) + tax, 2, MidpointRounding.AwayFromZero)
+            </div>
+        </div>
+    </div>   
+ </div>

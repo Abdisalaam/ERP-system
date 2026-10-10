@@ -1,0 +1,252 @@
+﻿@model Accountingsystem.Models.PaymentMethod
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.PaymentMethodDetails.PaymentMethod;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.PaymentMethodDetails.PaymentMethod
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodDetails.PaymentMethod)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Payment_Type)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodDetails.BankAccount)
+                                        </div>
+                                        <div>
+                                            @{if (Model.Bank_Account_Id == null)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    var bank = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Bank_Account_Id.Value).Account_Name;
+                                                    <h>@bank</h>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodDetails.Percentage)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Percentage.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodDetails.ExpenseAccount)
+                                        </div>
+                                        <div>
+                                            @{if (Model.Expense_Account_Id == null)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    var exp = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Expense_Account_Id.Value).Account_Name;
+                                                    <h>@exp</h>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodDetails.CommissionTransaction)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Operatin_Cost.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Emp_Id > 0)
+                    {
+
+
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.TreasuryDetails.Employee)
+                                            </div>
+                                            <div>
+                                                @Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value).Emp_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <div>
+            @if (Model.PaymentMethodEmployees.Any())
+            {
+                int count = 0;
+                <div class="row inv--product-table-section">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="">
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.validate.Number</th>
+                                        <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Employee</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var file in Model.PaymentMethodEmployees)
+                                    {
+                                        count += 1;
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@Accountingsystem.Models.Employee.getEmpById(file.Employee_Id).Emp_Name</td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        <br />
+        <div class="row layout-top-spacing">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="EditTax" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Edit", new { id = Model.PaymentMethod_Id })'>
+                        @Accountingsystem.Resources.PaymentMethodDetails.Edit
+                        <span id="EditTaxSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.PaymentMethodDetails.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="printEmailbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("DeleteTrans", new { id = Model.PaymentMethod_Id })">
+                        @if (Model.IsActive != false)
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToNotActive
+                        }
+                        else
+                        {
+                            @Accountingsystem.Resources.ProductDetails.TransferToActive
+                        }
+                        <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $("#EditTax").click(function (e) {
+            $("#EditTaxSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+    </script>
+}
+

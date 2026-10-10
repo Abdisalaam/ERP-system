@@ -1,0 +1,255 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.SalaryListaVM
+
+@{
+    Layout = null;
+    decimal totalSal = 0;
+    decimal totallay = 0;
+    var All = Model;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" />
+    <title>تقرير مرتبات</title>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير المرتبات/Salary Report
+
+        </div>
+
+
+
+
+    </div>
+    <hr />
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr style="text-align:right;">
+                <th style="text-align:center">الرقم<br />NO</th>
+                <th style="text-align:center" width="200">الموظف<br />Employee</th>
+                <th style="text-align:center">التاريخ<br />Date</th>
+                <th style="text-align:center">طريقة الدفع<br />Payment Method</th>
+                <th style="text-align:center">اجمالى الراتب<br />Total Salary</th>
+                <th style="text-align:center">اجمالى السلف<br />Total Advance</th>
+                <th style="text-align:center">المستلم<br />Residual</th>
+
+
+
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.ListSallary)
+        {
+            totalSal += item.SallaryAmount;
+            totallay += item.LoanOfEmp;
+            <tr>
+                <td>
+                    @item.Employee_Code
+                </td>
+                <td>
+                    @item.Employee_Name
+                </td>
+
+                <td>
+                    @Convert.ToDateTime(item.Date).ToString("yyyy/MM/dd ")
+                </td>
+
+                <td>
+                    @item.Account
+                </td>
+                <td>
+                    @Math.Round(item.SallaryAmount, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @Math.Round(item.LoanOfEmp, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td>
+                    @Math.Round(item.SallaryAmount - item.LoanOfEmp, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+            </tr>
+
+
+        }
+        <tr>
+            <th>
+                الاجمالي &nbsp&nbsp&nbsp&nbsp
+                <br />
+             Total
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+
+            <th>
+
+            </th>
+            <th>
+                @Math.Round(totalSal, 2, MidpointRounding.AwayFromZero)
+            </th>
+            <th>
+                @Math.Round(totallay, 2, MidpointRounding.AwayFromZero)
+            </th>
+            <th>
+                @Math.Round(totalSal - totallay, 2, MidpointRounding.AwayFromZero)
+            </th>
+
+        </tr>
+
+    </table>
+    <br />
+    <br />
+    @if (Model.ListSallary.Select(a => a.Account).Count() > 0)
+    {
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr style="text-align:right;">
+                    <th style="text-align:center">الحساب<br />Account</th>
+                    <th style="text-align:center">المبلغ<br />Amount</th>
+                   
+
+                </tr>
+                @foreach (var item in Model.ListSallary.Select(a => a.Account).Distinct())
+                {
+                    var totalbank = Model.ListSallary.Where(a => a.Account == item).Select(a => a.SallaryAmount).Sum() - Model.ListSallary.Where(a => a.Account == item).Select(a => a.LoanOfEmp).Sum();
+
+
+                    <tr>
+                        <td style="text-align:center">
+                            @item
+                        </td>
+
+
+                        <td style="text-align:center">
+                            @Math.Round(totalbank, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+
+                    </tr>
+
+
+                }
+                <tr>
+                    <th style="text-align:center">
+                        الاجمالي 
+                        <br />
+                        Total
+                    </th>
+
+
+                    <th style="text-align:center">
+                        @Math.Round(totalSal - totallay, 2, MidpointRounding.AwayFromZero)
+                    </th>
+
+                </tr>
+        </table>
+    }
+    </div>
+    <footer style="margin-top:90%;"></footer>
+</body>
+</html>

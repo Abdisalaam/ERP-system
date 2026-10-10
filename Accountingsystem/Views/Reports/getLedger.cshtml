@@ -1,0 +1,306 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.LedgerListVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalcredit = 0;
+    decimal totaldebit = 0;
+    decimal diffrenceOfTotals = 0;
+    decimal balanceafter = 0;
+    decimal totalBalanaceShow = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الاستاذ العام</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+        <div class="col-md-12">
+            <div class="col-lg-6">
+                @{
+                    var fromdate = Convert.ToDateTime(Model.FromDate);
+                    var ToDate = Convert.ToDateTime(Model.ToDate);
+
+                } @if (fromdate.Year != 1995 && ToDate.Year != 2200)
+                {
+                    <table class="table" style="float:left; width:10%;color:black;font-size:small">
+                        <tr>
+                            <th style="text-align:center; ">
+                                من
+
+                            </th>
+                            <th style="text-align:center; ">
+                                @Model.FromDate.ToString()
+                            </th>
+
+
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; ">
+                                الي
+
+                            </th>
+                            <th style="text-align:center; ">
+                                @Model.ToDate.ToString()
+                            </th>
+
+
+                        </tr>
+                    </table>
+                }
+            </div>
+
+
+        </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            دفتر  الاستاذ
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-lg-6">
+                <table class="table" style="float:right; width:10%;color:black;font-size:small" >
+
+                    <tr>
+                        <th style="text-align:center; ">
+                            @Model.BalanceNameBefor رصيد قبل المدة
+
+                        </th>
+                        <th style="text-align:center; ">
+                            @Model.totalbeforDate
+                        </th>
+
+
+                    </tr>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <hr />
+    <div style="text-align:center;color:black;font-size:large;margin-bottom:25px;">
+        ح\@Model.AccountName
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="col-lg-6">
+                <table class="table table-bordered" style="float:right; width:100%" border="1" dir="rtl">
+                    <tr style="background-color:gray;">
+                        <th style="text-align:center; ">
+                            التاريخ
+
+                        </th>
+                        <th style="text-align:center; ">
+                            بيان الحساب المساعد
+                        </th>
+                        <th style="text-align:center; ">
+                            البيان
+                        </th>
+                        <th style="text-align:center; ">
+                            الشرح
+                        </th>
+
+                        <th style="text-align:center; ">
+                            المدين
+                        </th>
+                        <th style="text-align:center; ">
+                            الدائن
+                        </th>
+                        <th hidden="hidden"></th>
+                        <th style="text-align:center; ">
+                            الرصيد
+                        </th>
+
+
+                    </tr>
+                    @foreach (var item in Model.LedgDetails)
+                    {
+
+                        <tr>
+
+                            <td style="text-align:center;">
+                                @if (item.Debit_Date != null)
+                                {
+                                    @Convert.ToDateTime(item.Debit_Date).ToString("yyyy/MM/dd ")}
+                                @if (item.Credit_Date != null)
+                                {
+                                    @Convert.ToDateTime(item.Credit_Date).ToString("yyyy/MM/dd ")
+                                }
+
+
+                            </td>
+                            <td style="text-align:center;">
+                                @item.childName
+                            </td>
+                            <td style="text-align:center;">
+                                @item.Statment_debit @item.Debit_COde   @item.Statment_credit @item.Credit_COde
+                            </td>
+                            <td style="text-align:center;">
+                                @item.Debit_Desc   @item.Credit_Desc
+                            </td>
+
+                            <td style="text-align:center;">
+
+                                @Math.Round(item.Balance_Debit, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td style="text-align:center;">
+
+                                @Math.Round(item.Balance_Credit, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td hidden="hidden">
+                                @Math.Round(item.totalBalance, 2, MidpointRounding.AwayFromZero)
+                                @if (Math.Round(item.totalBalance, 2, MidpointRounding.AwayFromZero) < 0)
+                                {
+                                    totalBalanaceShow = item.totalBalance * -1;
+                                }
+                                else
+                                {
+                                    totalBalanaceShow = item.totalBalance;
+                                }
+                            </td>
+
+                            <td style="text-align:center;">
+                                @Math.Round(totalBalanaceShow, 2, MidpointRounding.AwayFromZero)
+                            </td>
+
+                        </tr>
+
+                    }
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+    @foreach (var i in Model.LedgDetails)
+    {
+        totalcredit += i.Balance_Credit;
+        totaldebit += i.Balance_Debit;
+
+        if (Model.BalanceNameBefor == "دائن")
+        {
+            if ((Math.Round(Model.totalbeforDate, 2, MidpointRounding.AwayFromZero) + Math.Round(totalcredit, 2, MidpointRounding.AwayFromZero)) > Math.Round(totaldebit, 2, MidpointRounding.AwayFromZero))
+            {
+                Model.BalanceNameAfter = "دائن";
+            }
+            else
+            {
+                Model.BalanceNameAfter = "مدين";
+            }
+        }
+        else if (Model.BalanceNameBefor == "مدين")
+        {
+            if ((Math.Round(Model.totalbeforDate, 2, MidpointRounding.AwayFromZero) + Math.Round(totaldebit, 2, MidpointRounding.AwayFromZero)) > Math.Round(totalcredit, 2, MidpointRounding.AwayFromZero))
+            {
+                Model.BalanceNameAfter = "مدين";
+
+
+            }
+            else
+            {
+                Model.BalanceNameAfter = "دائن";
+            }
+        }
+        else if (Model.BalanceNameBefor == null)
+        {
+            if (Math.Round(totalcredit, 2, MidpointRounding.AwayFromZero) > Math.Round(totaldebit, 2, MidpointRounding.AwayFromZero))
+            { Model.BalanceNameAfter = "دائن"; }
+            else if (Math.Round(totaldebit, 2, MidpointRounding.AwayFromZero) > Math.Round(totalcredit, 2, MidpointRounding.AwayFromZero))
+            { Model.BalanceNameAfter = "مدين"; }
+            else
+            {
+
+            }
+        }
+        if (Math.Round(i.totalBalance, 2, MidpointRounding.AwayFromZero) < 0)
+        { balanceafter = i.totalBalance * -1; }
+        else
+        { balanceafter = i.totalBalance; }
+
+
+    }
+    <div>
+        <div class="col-lg-6">
+            <table class="table" style="float:right; width:10%;color:black;font-size:small">
+
+                <tr>
+                    <th style="text-align:center; ">
+                        @Model.BalanceNameAfter الرصيد
+
+                    </th>
+                    @if (Model.LedgDetails.Count() == 0)
+                    {
+                        <th style="text-align:center; ">
+                            @Math.Round(Model.totalbeforDate, 2, MidpointRounding.AwayFromZero)
+                        </th>
+
+                    }
+                    else
+                    {
+                        <th style="text-align:center; ">
+                            @Math.Round(balanceafter, 2, MidpointRounding.AwayFromZero)
+                        </th>
+                    }
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <footer style="margin-top:70%;">
+        <hr />
+
+    </footer>
+</body>
+</html>
+
+

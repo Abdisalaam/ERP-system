@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Accountingsystem.Models.PurchaseOrderDetail>
+
+
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Quantity)
+            @*@Html.DisplayNameFor(model => model.Product_Quantity)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.ItemPrice)
+            @*@Html.DisplayNameFor(model => model.Product_Price)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceIndex.TotalBeforeTax)
+            @*@Html.DisplayNameFor(model => model.Total_Amount)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Tax)
+            @*@Html.DisplayNameFor(model => model.Product_Tax)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalTax)
+            @*@Html.DisplayNameFor(model => model.Detail_Total_Tax)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalAfterTaxes)
+            @*@Html.DisplayNameFor(model => model.Detail_Total_Cost)*@
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Product)
+            @*@Html.DisplayNameFor(model => model.Product_ID)*@
+        </th>
+   
+     
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+            @Html.HiddenFor(modelItem => item.Details_Id)
+       
+            @Html.HiddenFor(modelItem => item.InvoiceMaster_Id)
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Quantity)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+           @Math.Round(item.Product_Price,2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+            @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Tax)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Tax)*@
+            @Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+            @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+        @{var thisProduct = Accountingsystem.Models.Product.GetProdectById(Convert.ToInt32(item.Product_ID.ToString())); }
+        <td>
+           <h>@thisProduct.Prod_Name</h>
+        </td>
+    
+       
+      
+    </tr>
+}
+
+</table>

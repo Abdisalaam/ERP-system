@@ -1,0 +1,100 @@
+﻿@model Accountingsystem.Models.Currency
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">حذف العملة</h2>
+
+    <h3>هل ترغب في حذف هذة العملة؟</h3>
+
+
+    <hr />
+    <table data-sortable="" class="table" data-sortable-initialized="true">
+
+        <tr>
+            <th class="col-md-2">
+                @Html.DisplayName("اسم العمله عربي")
+
+            </th>
+
+            <td id="Rec_ID">
+                @Html.DisplayFor(model => model.Currency_Name)
+            </td>
+
+
+
+            <th class="col-md-2">
+                @Html.DisplayName("اسم العمله انجليزي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Currency_Type)
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName("اختصار العمله عربي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Currency_ISO)
+            </td>
+
+            <th class="col-md-2">
+                @Html.DisplayName("اختصار العمله انجليزي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Currency_Iso2)
+            </td>
+        </tr>
+
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName("كسر العمله عربي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Break_Coin)
+            </td>
+
+            <th class="col-md-2">
+                @Html.DisplayName("كسر العمله انجليزي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Break_Coin2)
+            </td>
+        </tr>
+
+        <tr>
+
+            <th class="col-md-2">
+                @Html.DisplayName("السعر الحالي")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Current_Price)
+            </td>
+
+            <th class="col-md-2">
+                @Html.DisplayName("عمله البلد")
+            </th>
+            <td class="col-md-2">
+                @Html.DisplayFor(model => model.Currency_Country)
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="حذف" class="btn BTN-style final-BTN" />
+        <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+            الرجوع للقائمة
+        </a>
+     
+    </div>
+    }
+</div>

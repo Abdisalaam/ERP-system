@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = Accountingsystem.Resources.SalesSetting.SalesSettings;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var usermangername = User.Identity.Name;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                      الاعدادت
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("IndexOFNotesAndDesc","SalesSetting")'>
+                            @Accountingsystem.Resources.SalesSetting.descAndNote
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditTypeOfPrint","SalesSetting",new {TypeId=1 })'>
+                            @Accountingsystem.Resources.SalesSetting.InvoiceDesignsPDFSales
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditTypeOfPrint","SalesSetting",new {TypeId=2 })'>
+                            @Accountingsystem.Resources.SalesSetting.InvoiceSimpleDesignsPDFSales
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditTypeOfPrint","SalesSetting",new {TypeId=3 })'>
+                            @Accountingsystem.Resources.SalesSetting.OfferPriceDesignsPDF
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                @if (usermangername == "sutumsuperadmin@sutum.org")
+                {
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditSettingWord", "SalesSetting")'>
+                                تغيير مسميات للطباعة
+                                <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+
+        $("#salesReportBtn").click(function (e) {
+            $("#salesReportBtnSpinner").show();
+        });
+        $("#salesReturnReportBtn").click(function (e) {
+            $("#salesReturnReportBtnSpinner").show();
+        });
+        $("#salesClassificationReportBtn").click(function (e) {
+            $("#salesClassificationReportBtnSpinner").show();
+        });
+
+        $("#salesEmployeeReportBtn").click(function (e) {
+            $("#salesEmployeeReportBtnSpinner").show();
+        });
+
+        $("#salesProductAndServicesReportBtn").click(function (e) {
+            $("#salesProductAndServicesReportBtnSpinner").show();
+        });
+        $("#salesCustomerReportBtn").click(function (e) {
+            $("#salesCustomerReportBtnSpinner").show();
+        });
+        $("#salesOfferPriceReportBtn").click(function (e) {
+            $("#salesOfferPriceReportBtnSpinner").show();
+        });
+    </script>
+}
+

@@ -1,0 +1,411 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.AllSectionPendingVM>
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.UnApprovedReceipts;
+
+    WebGrid webGrid = new WebGrid(source: Model, canPage: false, canSort: false);
+    var count = 1;
+    HttpCookie cookie = Request.Cookies["Language"];
+    decimal total = 0;
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    @using (Html.BeginForm())
+    {
+
+
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            <label>@ViewBag.Message</label>
+        </div>
+        <div class="text-center">
+            @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.UnApprovedReceipts
+        </div>
+
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+
+                    <tr>
+                        <th>
+                            <input type="checkbox" name="select-all" id="select-all" />
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Number)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.ReceiptNumber)
+
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterIndex.InvoiceNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterIndex.InvoiceDate)
+                        </th>
+
+                        <th hidden="hidden">
+                            @Html.DisplayNameFor(model => model.MasterID)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.ReceiptDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Total)
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceCase)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.CheckBox(item.Serial)
+                            @*<input type="checkbox" name="chkRow" id="checkBoxes" />*@
+                        </td>
+                        <td>
+                            @count
+                            @{count = count + 1;
+                                total += item.TotalAmount;
+                            }
+                            @*<input type="checkbox" name="chkRow" id="checkBoxes" />*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Serial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Number)
+                        </td>
+                        <td>
+                            @item.date.ToString("yyyy/MM/dd ")
+                        </td>
+                        <td hidden="hidden">
+                            @Html.DisplayFor(modelItem => item.MasterID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+
+                            @Math.Round(item.TotalAmount, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+
+                            @item.status
+                        </td>
+                        <td>
+                            @if (item.Serial.StartsWith("PUR"))
+                            {
+
+
+                                <a href="@Url.Action("Details", "PurchaseInvoice", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+
+                            else if (item.Serial.StartsWith("REVP"))
+                            {
+                                <a href="@Url.Action("Details", "RecalPurchInvoiceMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("PAY"))
+                            { <a href="@Url.Action("Details", "Payment", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("TMain"))
+                            { <a href="@Url.Action("Details", "TransferToMaintenance", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("PINV"))
+                            { <a href="@Url.Action("DetailsofInvoice", "Project", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("PROPAY"))
+                            { <a href="@Url.Action("Details", "ProjectPayment", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("TTPRO"))
+                            { <a href="@Url.Action("Details", "TransferToProjectMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("TTSTO"))
+                            { <a href="@Url.Action("Detailstrans", "TransferToProjectMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("SALRC"))
+                            { <a href="@Url.Action("Details", "SalesReceiptMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("SAL"))
+                            { <a href="@Url.Action("Details", "InvoiceMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+
+                            else if (item.Serial.StartsWith("TRS"))
+                            { <a href="@Url.Action("Details", "InvTreansMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("REVSa"))
+                            { <a href="@Url.Action("Details", "ReverseSalesReceiptMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("REVS"))
+                            { <a href="@Url.Action("Details", "ReverseSalesInvoiceMaster", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("REC"))
+                            { <a href="@Url.Action("Details", "Receipt", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("SPRE"))
+                            { <a href="@Url.Action("Details", "SpentRecipt", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("CARECI"))
+                            { <a href="@Url.Action("Details", "CatchReceipt", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("EXP") && item.TotalAmount > 0)
+                            { <a href="@Url.Action("DetailsNew", "Expense", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("EXP"))
+                            { <a href="@Url.Action("Details", "Expense", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+                            }
+                            else if (item.Serial.StartsWith("SUBS"))
+                            {
+                                <a href="@Url.Action("DetailofSubscription", "Subscription", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+
+                            }
+                            else if (item.Serial.StartsWith("SETSTO"))
+                            {
+                                <a href="@Url.Action("Details", "SettlementOfStores", new { id = item.MasterID })" class="btn btn-outline-primary">
+                                    @Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.Details
+                                </a>
+
+                            }
+
+                        </td>
+
+
+                    </tr>
+                    }
+                </tbody>
+                <thead>
+
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalAmount)
+                        </th>
+                        <th>
+
+
+
+                        </th>
+
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+                            @Math.Round(total, 2, MidpointRounding.AwayFromZero)
+                        </th>
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+        @{
+            if (Model.Any())
+            {
+        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.AllPendingDocumentsIndexPendingPurchSection.AccreditationPermitted <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+
+            }
+        }
+    </div>
+
+
+    }
+</div>
+
+    @section Scripts {
+
+        @{
+
+            if (cookie != null && cookie.Value != null)
+            {
+                if (cookie.Value == "en")
+                {
+                    <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                    <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                    <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                    <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                    <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                    <script>                       
+                        $('#default-ordering').DataTable({
+                            "oLanguage": {
+                                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                                "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                                "sSearchPlaceholder": "Search...",
+                                "sLengthMenu": "Results :  _MENU_",
+                            },
+                            "order": [[3, "desc"]],
+                            "stripeClasses": [],
+                            "lengthMenu": [20000, 40000, 50000 ],
+                            "pageLength": 20000,
+                            drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                        });
+                        $("#createOfferbtn").click(function (e) {
+                            $("#createOfferSpinner").show();
+                        });
+                    </script>
+                }
+                else
+                {
+                    <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                    <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                    <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                    <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                    <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                    <script>
+                        $('#default-ordering').DataTable({
+                            "oLanguage": {
+                                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                                "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                                "sSearchPlaceholder": "ابحث...",
+                                "sLengthMenu": "النتائج :  _MENU_",
+                            },
+                            "order": [[3, "desc"]],
+                            "stripeClasses": [],
+                            "lengthMenu": [20000, 40000, 50000],
+                            "pageLength": 20000,
+                            drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                        });
+                        $("#createOfferbtn").click(function (e) {
+                            $("#createOfferSpinner").show();
+                        });
+                    </script>
+                }
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [20000, 40000, 50000],
+                        "pageLength": 20000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                    $("#createOfferbtn").click(function (e) {
+                        $("#createOfferSpinner").show();
+                    });
+                </script>
+            }
+        }
+        <script>
+            $('#select-all').click(function (event) {
+                if (this.checked) {
+                    // Iterate each checkbox
+                    $(':checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $(':checkbox').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+        </script>
+
+    }
+  

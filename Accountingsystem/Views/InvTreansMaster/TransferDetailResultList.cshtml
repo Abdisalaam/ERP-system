@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Accountingsystem.Models.InventoryTransfer_DetailTemp>
+
+
+<table class="table table-bordered table-striped" data-sortable-initialized="true">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.InvTreansMasterDetails.TotalAmounts)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterCreateOffer.ItemName)
+        </th>
+        <th></th>
+    
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.HiddenFor(modelItem => item.TransferDetail_Id)
+    @Html.HiddenFor(modelItem => item.TransferDetail_Id)
+    @Html.HiddenFor(modelItem => item.Batch_ID)
+    <tr>
+
+        <td>
+          
+            @Math.Round(item.Product_Qty, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+        <td>
+            @{var Prod = Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Name;
+                <h>@Prod</h> }
+        </td>
+     
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("DeleteTemp('"+item.TransferDetail_Id+"')")" class="BTN-style-danger" style="text-decoration:none;">@Accountingsystem.Resources.InvoiceMasterDetails.Delete</a>
+            </div>
+        </td>
+
+    </tr>
+}
+
+</table>

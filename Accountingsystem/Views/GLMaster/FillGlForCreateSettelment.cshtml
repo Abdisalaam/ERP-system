@@ -1,0 +1,532 @@
+﻿@model Accountingsystem.ViewModel.GLMasterVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.validate.CreateSettlementGL;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("FillGlForCreateSettelment", "GLMaster", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+
+                <h3 class="text-center"><label>@Accountingsystem.Resources.validate.CreateSettlementGL</label></h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DailyConstraintNumber)
+                                    @Html.EditorFor(model => model.GLCode, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.GLCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DateOfConstraint)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.GL_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.GL_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreateStartGL.AccountName)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.selectedAccount, Model.accountList, Accountingsystem.Resources.GLMasterFillGlForCreate.AccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreateStartGL.SubAccountInformation)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Account_Child_ID, Model.childList, Accountingsystem.Resources.GLMasterFillGlForCreateStartGL.SubAccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.Thevalueoftheactualdebitbalance)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.debit, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.Thevalueoftheactualcreditbalance)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Credit, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.SettlementAccount)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.AccountSettlement, Model.AccountSettlementList, Accountingsystem.Resources.GLMasterFillGlForCreate.AccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenter)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SubLed_Id, Model.SubLedgerList, Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenter, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.CurrentBalance)
+                                    <div class="input-group">
+                                        @*<input id="RealBallance" class="form-control mb-4" style="background:#ffffff">*@
+                                        @Html.EditorFor(model => model.RealBallance, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control">$</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DescriptionOfConstraint)
+                                    @Html.TextAreaFor(model => model.GL_Desc, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.Expenses.Description })
+                                    @Html.ValidationMessageFor(model => model.GL_Desc, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }
+            $("#createExpensesSpinner").hide();
+            var currentDate = new Date();
+            var _ExpensesDate = flatpickr(document.getElementById('GL_Date'), {
+                defaultDate: currentDate
+            });
+            $("#Account_Child_ID").empty();
+             var childAccountOption = new Option("@Accountingsystem.Resources.GLMasterFillGlForCreate.SubAccountInformation", 0);
+            $("#Account_Child_ID").append(childAccountOption);
+            $('#Account_Child_ID').trigger('chosen:updated');
+
+            $("#SubLed_Id").chosen();
+            $("#Account_Child_ID").chosen();
+            $("#selectedAccount").chosen();
+
+            $("#SubLed_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Account_Child_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#selectedAccount_chosen").addClass("form-control Dropdownlist-select");
+            $("#GLDetail_Debit").val("0");
+            $("#GLDetail_Credit").val("0");
+            $("#AccountSettlement").chosen();
+
+            $("#AccountSettlement_chosen").addClass("form-control Dropdownlist-select");
+        });
+    </script>
+    <script>
+        $("#debit").change(function () {
+            if ($(this).val() == "" || $(this).val() == 0) {
+                $(this).val(0);
+                document.getElementById('Credit').disabled = false;
+            }
+            else
+                document.getElementById('Credit').disabled = true;
+        });
+
+        $("#Credit").change(function () {
+            if ($(this).val() == "" || $(this).val() == 0) {
+                $(this).val(0);
+                document.getElementById('debit').disabled = false;
+            }
+            else
+                document.getElementById('debit').disabled = true;
+        });
+
+              $("#selectedAccount").change(function (e) {
+
+             var selectedValue = $(this).val();
+                            $.ajax({
+
+                 url: '@Url.Action("GetAccountLedger","GLMaster")',
+                                type: 'get',
+                                data: { Acc_ID: selectedValue }
+             }).done(function (result) {
+
+                $("#Account_Child_ID").empty();
+
+                 for (var i = 0; i < result.length; i++) {
+                     var item = result[i];
+                     var p = new Option(result[i].Text, result[i].Value);
+                     $("#Account_Child_ID").append(p);
+                     $("#Account_Child_ID").trigger('chosen:updated');
+                                }
+
+                      });
+        });
+
+    </script>
+    <script>
+        $('#GL_Date').on('change', function (e)
+       {
+
+        var selectedValue = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("CheckEndDate", "Company")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {
+
+                    Snackbar.show({
+                        text: result,
+                     pos: 'top-center'
+                    });
+
+                }
+            }
+            );
+             $.ajax({
+                 url: '@Url.Action("CheckStartdate", "GLMaster")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {
+                    Snackbar.show({
+                        text: result,
+                        pos: 'top-center'
+                    });
+                    var currentDate = new Date();
+                    var _OfferDate = flatpickr(document.getElementById('GL_Date'), {
+                        defaultDate: currentDate
+                    });
+                }
+            }
+            );
+        });
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+
+
+            if ($.trim($("#GL_Date").val()) == "" || $.trim($("#GL_Date").val()) == null || $("#selectedAccount").val() == "" || $("#selectedAccount").val() < 1 || $("#selectedAccount").val() == null || $("#AccountSettlement").val() == "" || $("#AccountSettlement").val() < 1 || $("#AccountSettlement").val() == null) {
+                $('#createOfferbtn').prop('disabled', false);
+
+                $("#createOfferSpinner").hide();
+                if ($.trim($("#GL_Date").val()) == "" || $.trim($("#GL_Date").val()) == null) {
+                    Snackbar.show({
+                                text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.ErorMessage",
+                                pos: 'top-center'
+                            });
+                    $("#GL_Date").addClass("addRequiredFieldToInput");
+                    $('#GL_Date').trigger('focus');
+                }
+                if ($("#selectedAccount").val() == "" || $("#selectedAccount").val() < 1 || $("#selectedAccount").val() == null) {
+                    $("#selectedAccount").addClass("addRequiredFieldToInput");
+                    $("#selectedAccount_chosen").addClass("addRequiredFieldToInput");
+                    $('#selectedAccount_chosen span').css('background', 'red');
+                    $('#selectedAccount_chosen b').css('background', 'red');
+                    $('#selectedAccount_chosen').trigger('focus');
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.ErorMessage",
+                        pos: 'top-center'
+                    });
+                }
+                if ($("#AccountSettlement").val() == "" || $("#AccountSettlement").val() < 1 || $("#AccountSettlement").val() == null) {
+                    $("#selectedAccount").addClass("addRequiredFieldToInput");
+                    $("#selectedAccount_chosen").addClass("addRequiredFieldToInput");
+                    $('#selectedAccount_chosen span').css('background', 'red');
+                    $('#selectedAccount_chosen b').css('background', 'red');
+                    $('#selectedAccount_chosen').trigger('focus');
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.SettlementAccount",
+                        pos: 'top-center'
+                    });
+                }
+
+                event.preventDefault();
+            }
+
+
+
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        $("#selectedAccount").change(function (e) {
+                    var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("getbalanceAccount", "GLMaster")',
+                        type: 'get',
+                        data: { AccountId: selectedValue }
+                    }).done(function (result) {
+                        $("#RealBallance").val(result);
+                    });
+                });
+    </script>
+    <script type="text/javascript">
+
+        $("#Account_Child_ID").change(function (e) {
+                    var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("getbalanceAccountChild", "GLMaster")',
+                        type: 'get',
+                        data: { ChildId: selectedValue }
+                    }).done(function (result) {
+                        $("#RealBallance").val(result);
+                    });
+                });
+    </script>
+}

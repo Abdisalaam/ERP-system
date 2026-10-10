@@ -1,0 +1,230 @@
+﻿@model Accountingsystem.Models.ExternalEmployeePayments
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.AdminExterNalEmployee.PaymentDetailsTitle;
+    HttpCookie cookie = Request.Cookies["Language"];  
+}
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div>
+                        @Html.Label(@Accountingsystem.Resources.AdminExterNalEmployee.PaymentDetailsTitle)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.Name)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.ExtrnalSalesEmployee.Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.Amount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.PaymentAmount)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.RegistrationDate)
+                                        </div>
+                                        <div>
+                                            @Model.PaymentDate.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.Comment)
+                            </div>
+                            @Html.TextAreaFor(model => model.Comment, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @*<a id="editBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Edit" , new { id = Model.Id})'>
+            @Accountingsystem.Resources.AdminExterNalEmployee.EditPayment
+            <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+        </a>*@
+                    <a id="newPaymentBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("AddPaymentToEmployee" , new { empID = Model.ExtrnalSalesEmployeeId})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.NewPayment
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="newSaleBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditPayment" , new { id = Model.Id})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.EditPayment
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="newSaleBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("DeletePayment" , new { id = Model.Id})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.DeletePaymentTitle
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="newSaleBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("AddSalesToEmployee" , new { empID = Model.ExtrnalSalesEmployeeId})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.NewSale
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="newPaymentBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Details" , new { id = Model.ExtrnalSalesEmployeeId})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.Ambassador
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="editBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Edit" , new { id = Model.ExtrnalSalesEmployeeId})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.EditAmbassador
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @*<a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("PrintOfferPriceNew", new { controller = "Reports", id = Model.Id })' target="_blank">
+            @Accountingsystem.Resources.OfferPriceMasterDetails.PrintEmail
+        </a>*@
+
+                    @{
+
+                        if (!string.IsNullOrEmpty(Model.ExtrnalSalesEmployee.MobileNumber))
+                        {
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.Contains(" "))
+                            {
+                                Model.ExtrnalSalesEmployee.MobileNumber = Model.ExtrnalSalesEmployee.MobileNumber.Replace(" ", string.Empty);
+                            }
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.Contains("-"))
+                            {
+                                Model.ExtrnalSalesEmployee.MobileNumber = Model.ExtrnalSalesEmployee.MobileNumber.Replace("-", string.Empty);
+                            }
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.Contains("#"))
+                            {
+                                Model.ExtrnalSalesEmployee.MobileNumber = Model.ExtrnalSalesEmployee.MobileNumber.Replace("#", string.Empty);
+                            }
+                            if (!Model.ExtrnalSalesEmployee.MobileNumber.StartsWith("0") && Model.ExtrnalSalesEmployee.MobileNumber.Length == 9)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += Model.ExtrnalSalesEmployee.MobileNumber;
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+
+                                </a>
+                            }
+
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.StartsWith("0") && Model.ExtrnalSalesEmployee.MobileNumber.Length == 10)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += Model.ExtrnalSalesEmployee.MobileNumber.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                </a>
+                            }
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.StartsWith("00") && Model.ExtrnalSalesEmployee.MobileNumber.Length > 13)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.ExtrnalSalesEmployee.MobileNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.StartsWith("+966") && Model.ExtrnalSalesEmployee.MobileNumber.Length >= 12)
+                            {
+                                Model.ExtrnalSalesEmployee.MobileNumber = Model.ExtrnalSalesEmployee.MobileNumber.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.ExtrnalSalesEmployee.MobileNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                            if (Model.ExtrnalSalesEmployee.MobileNumber.StartsWith("966") && Model.ExtrnalSalesEmployee.MobileNumber.Length >= 12)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.ExtrnalSalesEmployee.MobileNumber" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                        }
+                    }
+                    <a id="backToListBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("IndexOfAllPayment")'>
+                        @Accountingsystem.Resources.List.CommissionPaymentsList
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="backToListBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.List.CommissionsIndex
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+
+    </script>
+}
+

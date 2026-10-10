@@ -1,0 +1,746 @@
+﻿@model Accountingsystem.ViewModel.PaymentVM
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.PaymentCreate.SupplierSpentReceipts;
+    Model.Pay_Currency_ID = 1;
+    HttpCookie cookie = Request.Cookies["Language"];
+    Model.PayComp_ID = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+}
+
+
+@*@using (Html.BeginForm()*@
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("Create", "Payment", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+
+
+{
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Accountingsystem.Resources.PaymentCreate.SupplierSpentReceipts</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentDetails.SpentReceiptNumber)
+                                    @Html.EditorFor(model => model.Pay_Number, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Pay_Number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentCreate.ReceiptDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Pay_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Pay_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentCreate.Amount)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Pay_Amount, new { htmlAttributes = new { @Value = "", @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger">*</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Pay_Amount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PrintReports.PaymentMethod)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedChartOfAccountId, Model.MyChartOfAccountList, Accountingsystem.Resources.ReceiptCreate.PaymentMethodsInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedChartOfAccountId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentCreate.SupplierName)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Supplier_Id, Model.mySupplierId, Accountingsystem.Resources.PaymentCreate.SupplierNameInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Supplier_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentCreate.PurchasesBill)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedPurInvoiceMaster_Id, Model.MyPurInvoiceMaster, Accountingsystem.Resources.PaymentCreate.SelectInvoice, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PaymentCreate.ReferenceNumber)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.RecCheck_Number, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.RecCheck_Number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Attachments)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtFiles" class="list-unstyled"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReceiptCreate.ReceiptDescription)
+                                    @Html.TextAreaFor(model => model.Rec_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.ReceiptCreate.ReceiptDescriptionInformation })
+                                    @Html.ValidationMessageFor(model => model.Rec_Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="MyPurInvoiceDetails"></div>
+                    <div class="col-md-6" id="MyRecallInvoiceDetails"></div>
+                    <div id="reminingShow"></div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                            @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+}
+
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+    <script>
+        if ($('.chosen-container').length > 0) {
+            $('.chosen-container').on('touchstart', function (e) {
+                e.stopPropagation(); e.preventDefault();
+                $(this).trigger('mousedown');
+
+            });
+        }
+        $('#Files').change(function () {
+
+            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+            $('#selectedtFiles').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Files').empty();
+                    $('#selectedtFiles').empty();
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' +"@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee </li > ');
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.validate.LimitOfSizeFile" + '</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.ReduceSize ",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.validate.FileName "  + fileName + '</li> ');
+                    $('#selectedtFiles').append('<li>' +"  @Accountingsystem.Resources.validate.TotalFileSize"  + this.files[i].size + ' @Accountingsystem.Resources.validate.bytee  </li> ');
+
+                }
+            }
+            $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee  </li >');
+
+        });
+    </script>
+
+    <script>
+
+        $("#reminingShow").hide();
+        var currentDate = new Date();
+
+        var _OfferDate = flatpickr(document.getElementById('Pay_Date'), {
+            defaultDate: currentDate
+        });
+        $("#Supplier_Id").chosen();
+
+        $("#Supplier_Id_chosen").addClass("form-control Dropdownlist-select");
+
+        $("#SelectedPurInvoiceMaster_Id").chosen();
+
+        $("#SelectedPurInvoiceMaster_Id_chosen").addClass("form-control Dropdownlist-select");
+
+        $("#SelectedChartOfAccountId").chosen();
+
+        $("#SelectedChartOfAccountId_chosen").addClass("form-control Dropdownlist-select");
+    </script>
+    <script type="text/javascript">
+
+
+         $("#Supplier_Id").change(function (e) {
+
+                var selectedText = $(this).find("option:selected").text();
+                var data = 0;
+                var selectedValue = $(this).val();
+
+                $.ajax({
+
+                    url: '@Url.Action("GetInvoice", "Payment")',
+                    type: 'get',
+                    data: { SuppId: selectedValue }
+                }).done(function (result) {
+
+                    $("#SelectedPurInvoiceMaster_Id").empty();
+
+                    var placeholder = new Option('@Accountingsystem.Resources.validate.invoicemust',null);
+                    $("#SelectedPurInvoiceMaster_Id").append(placeholder);
+                    if (result.length == 0) {
+
+
+
+                        $("#SelectedPurInvoiceMaster_Id").append(placeholder);
+                        $('#SelectedPurInvoiceMaster_Id').trigger('chosen:updated');
+                    }
+                    else {
+                        for (var i = 0; i < result.length; i++) {
+                            var item = result[i];
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#SelectedPurInvoiceMaster_Id").append(p);
+                            $('#SelectedPurInvoiceMaster_Id').trigger('chosen:updated');
+                        }
+                    }
+                    $("#MyPurInvoiceDetails").hide();
+                    //var placeholder = new Option("اختر الفاتورة", -1);
+                    //$("#SelectedPurInvoiceMaster_Id").append(placeholder);
+
+                    //for (var i = 0; i < result.length; i++) {
+                    //    var item = result[i];
+                    //    var p = new Option(result[i].Text, result[i].Value);
+                    //    $("#SelectedPurInvoiceMaster_Id").append(p);
+                    //}
+                });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+     $(document).ready(function () {
+         $('.btn-primarys').on('click', function () {
+                $("#partialDialogDiv").dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: '@Accountingsystem.Resources.SupplierCreate.AddNewSupplier',
+                    modal: true,
+                    height: 650,
+                    width: 1000,
+                    draggable: false,
+                    open: function () {
+                        $(this).load('@Url.Action("PartialDialog", "Payment")');
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    },
+                    buttons: [
+                    {
+                        text: "OK",
+                        "class": 'btn btn-primary',
+                        click: function () {
+                            // OK button click event
+                            $("#partialDialogDiv").dialog("close");
+                            $("#SupplierDropDownList").load('@(Url.Action("GetSupplierDropdownList", "Payment"))');
+                        }
+                    }, {
+                        text: "Cancel",
+                        "class": 'btn btn-default',
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                    ],
+                });
+                $("#advancedSearchDialog").dialog('open');
+                return false;
+            });
+        });
+    </script>
+
+
+    <script>
+    function addSupplier() {
+
+        var SupplierId = $("#Supp_Id").val();
+        var SupplierName = $("#Supp_Name").val();
+        var SupplierAddress = $("#Supp_Address").val();
+        var SupplierPhone = $("#Supp_Phone").val();
+        var SupplierMail = $("#Supp_Mail").val();
+        var CharId = $("#SelectedChartOfAccountId").val();
+        var ProvinceId = $("#SelectedProvinceId").val();
+        var CountryId = $("#SelectedCountryId").val();
+        var CityId = $("#SelectedCityId").val();
+        var SupplierFax = $("#Supp_Fax").val();
+        var SupplierCode = $("#Supp_Code").val();
+        var SupplierMobile = $("#Supp_Mobile").val();
+        var PurchasePrice = $("#Purchase_Price").val();
+        var PaymentPolicy = $("#Payment_Policy_Id").val();
+        var SupplierWebsite = $("#Supp_Website").val();
+        var BranchId = $("#Branch_Id").val();
+        var Files1 = $("#Files").val();
+        var DataForSupplier;
+        DataForSupplier = {
+            Supp_Id: SupplierId,
+            Supp_Name: SupplierName,
+            Supp_Address: SupplierAddress,
+            Supp_Phone: SupplierPhone,
+            Supp_Mail: SupplierMail,
+            SelectedChartOfAccountId: CharId,
+            SelectedProvinceId: ProvinceId,
+            SelectedCountryId: CountryId,
+            SelectedCityId: CityId,
+            Supp_Fax: SupplierFax,
+            Supp_Code: SupplierCode,
+            Supp_Mobile: SupplierMobile,
+            Purchase_Price: PurchasePrice,
+            Payment_Policy_Id: PaymentPolicy,
+            Supp_Website: SupplierWebsite,
+            Branch_Id: BranchId,
+            Files: Files1
+        };
+
+        $.ajax(
+         {
+            url: "@Url.Action("AddNewSupplierPartial", "Payment")",
+             data: JSON.stringify(DataForSupplier),
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'POST',
+             success: function (data) {
+                 alert(data);
+                 //$("#partialDialogDiv").hide();
+                 //$("SelectedCustomerId").reload();
+                 $("#partialDialogDiv").reload($(this).attr('#Supplier_Id'));
+
+
+             },
+             error: function () { alert('ffffffff'); }
+         });
+    };
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            //$("#SelectedPurInvoiceMaster_Id").empty();
+
+            $("#SelectedPurInvoiceMaster_Id").change(function () {
+                var data = $(this).val();
+
+                $("#MyPurInvoiceDetails").load('@(Url.Action("GetMatchingPurInvoiceDetails", "Payment", null, Request.Url.Scheme))?InvoiceDetailsID=' + data);
+                @*$("#MyRecallInvoiceDetails").load('@(Url.Action("GetMatchingRecalls", "Payment", null, Request.Url.Scheme))?InvoiceDetailsID=' + data);*@
+                $("#MyPurInvoiceDetails").show();
+            });
+
+
+
+        });
+
+
+
+    </script>
+
+    <script>
+        $('#Pay_Date').on('change', function (e)
+                {
+            $("#Pay_Date").removeClass("addRequiredFieldToInput");
+                var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Company")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                        }
+                    }
+                    );
+                     $.ajax({
+                        url: '@Url.Action("CheckStartdate", "GLMaster")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            var currentDate = new Date();
+
+                            var _OfferDate = flatpickr(document.getElementById('Pay_Date'), {
+                                defaultDate: currentDate
+                            });
+                        }
+                    }
+                    );
+                });
+
+    </script>
+    <script>
+
+        $('#SelectedChartOfAccountId').on('change', function () {
+            $("#SelectedChartOfAccountId_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedChartOfAccountId_chosen span').css('background', '#ffffff');
+            $('#SelectedChartOfAccountId_chosen b').css('background', '#ffffff');
+        });
+        $('#Supplier_Id').on('change', function () {
+            $("#Supplier_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Supplier_Id_chosen span').css('background', '#ffffff');
+            $('#Supplier_Id_chosen b').css('background', '#ffffff');
+        });
+        $('#SelectedPurInvoiceMaster_Id').on('change', function () {
+            $("#SelectedPurInvoiceMaster_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedPurInvoiceMaster_Id_chosen span').css('background', '#ffffff');
+            $('#SelectedPurInvoiceMaster_Id_chosen b').css('background', '#ffffff');
+        });
+        
+        $('#Pay_Date').on('input', function () {
+            $("#Pay_Date").removeClass("addRequiredFieldToInput");
+        });
+        $('#Pay_Amount').on('input', function () {
+            $("#Pay_Amount").removeClass("addRequiredFieldToInput");
+        });
+        $('#AllowDiscount').on('input', function () {
+            $("#AllowDiscount").removeClass("addRequiredFieldToInput");
+        });
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            var remain = parseFloat(document.getElementById("reminingShow").innerHTML);
+
+            if ($('#Pay_Date').val() == "" || $('#Pay_Date').val() == null || $('#Pay_Amount').val() == "" || $('#Pay_Amount').val() == null || $('#Pay_Amount').val() <= 0 || $('#SelectedChartOfAccountId').val() == "" || $('#SelectedChartOfAccountId').val() == null || $('#Supplier_Id').val() == "" || $('#Supplier_Id').val() == null || $('#SelectedPurInvoiceMaster_Id').val() == "" || $('#SelectedPurInvoiceMaster_Id').val() == null || $('#SelectedPurInvoiceMaster_Id').val() == 0 || $('#SelectedPurInvoiceMaster_Id').val() == "null" || remain < $('#Pay_Amount').val()) {
+                $('#createOfferbtn').prop('disabled', false);
+
+                $("#createOfferSpinner").hide();
+                if ($('#Pay_Date').val() == "" || $('#Pay_Date').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.DateMust",
+                        pos: 'top-center'
+                    });
+                    $("#Pay_Date").addClass("addRequiredFieldToInput");
+                    $('#Pay_Date').trigger('focus');
+                }
+                if (remain < $('#Pay_Amount').val()) {
+                     Snackbar.show({
+                        text: "@Accountingsystem.Resources.SupplierCreate.PaymentValueIsGreater",
+                        pos: 'top-center'
+                    });
+                }
+                if ($('#Pay_Amount').val() == "" || $('#Pay_Amount').val() == null || $('#Pay_Amount').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.AmountMust ",
+                        pos: 'top-center'
+                    });
+                    $("#Pay_Amount").addClass("addRequiredFieldToInput");
+                    $('#Pay_Amount').trigger('focus');
+                }
+                if ($('#SelectedChartOfAccountId').val() == "" || $('#SelectedChartOfAccountId').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.PaymentMust",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedChartOfAccountId_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedChartOfAccountId_chosen span').css('background', 'red');
+                    $('#SelectedChartOfAccountId_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedChartOfAccountId").offset().top
+                    }, 2000);
+                }
+
+
+                if ($('#Supplier_Id').val() == "" || $('#Supplier_Id').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.SupplierCreate.SupplierNameValidation",
+                        pos: 'top-center'
+                    });
+
+                    $("#Supplier_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#Supplier_Id_chosen span').css('background', 'red');
+                    $('#Supplier_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Supplier_Id").offset().top
+                    }, 2000);
+                }
+
+                if ($('#SelectedPurInvoiceMaster_Id').val() == "" || $('#SelectedPurInvoiceMaster_Id').val() == null || $('#SelectedPurInvoiceMaster_Id').val() == 0 || $('#SelectedPurInvoiceMaster_Id').val() == "null") {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.invoicemust",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedPurInvoiceMaster_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedPurInvoiceMaster_Id_chosen span').css('background', 'red');
+                    $('#SelectedPurInvoiceMaster_Id_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedPurInvoiceMaster_Id").offset().top
+                    }, 2000);
+                }
+
+
+                event.preventDefault();
+            }
+
+
+
+        });
+
+    </script>
+}

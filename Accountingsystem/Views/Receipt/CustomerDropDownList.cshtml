@@ -1,0 +1,32 @@
+﻿@model Accountingsystem.ViewModel.ReceiptVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">    
+        
+            <div class="row">
+                <div>
+                    <div>
+                        <div class="Dropdownlist">
+                            <div class="Dropdownlist" style="margin-left: 49px; margin-top:-49px;">
+                                @Html.DropDownListFor(model => model.SelectedCustomer, Model.MyCustomerList, Accountingsystem.Resources.ReceiptCreate.CustomerInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                                @Html.ValidationMessageFor(model => model.SelectedCustomer, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div>
+                        <div class="saber">
+                            <label class="control-label" for="" style="margin-left: 165px;">@Accountingsystem.Resources.ReceiptCreate.CustomerName</label>                      
+                          </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+ 
+}
+

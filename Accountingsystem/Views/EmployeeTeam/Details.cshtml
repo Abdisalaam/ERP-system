@@ -1,0 +1,243 @@
+﻿@model Accountingsystem.Models.EmployeeTeam
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeTeamDetails.TeamDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="statbox widget box box-shadow">
+        
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    @ViewBag.Message
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                @Accountingsystem.Resources.EmployeeTeamDetails.TeamDetails
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Team_ID)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Team_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamLeaderName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Team_Leader_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                </div>
+
+
+              
+                    <div class="table-responsive">
+                        <table class="table mb-4">
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeCode)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeName)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeEmail)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeePhone)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeJob)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeBirthDate)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamName)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Accountingsystem.Models.Employee.getEmployeesALL().Where(a => a.Team_ID == Model.Team_ID))
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Code)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Name)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Mail)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Phone)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_DOB)
+                                        </td>
+
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Team_Name)
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                
+               
+                <div class="row layout-top-spacing">
+                    @if (Request.IsAuthenticated && !User.IsInRole("بائع"))
+                    {
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <a id="reportbtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Create")'>
+                                    @Accountingsystem.Resources.EmployeeTeamDetails.New
+                                    <span id="reportbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات"))
+                                {
+
+                                    <a id="Editbtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Edit", new { id = Model.Team_ID })'>
+                                        @Accountingsystem.Resources.CustomerDetails.Edit
+                                        <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <a id="backToListbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                                    @Accountingsystem.Resources.CustomerDetails.BackToList
+                                    <span id="backToListbtnspinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $("#backToListbtn").click(function (e) {
+            $("#backToListbtnspinner").show();
+        });
+        $("#reportbtn").click(function (e) {
+            $("#reportbtnSpinner").show();
+        });
+        $("#Editbtn").click(function (e) {
+            $("#EditbtnSpinner").show();
+        });
+
+    </script>
+
+
+
+}

@@ -1,0 +1,69 @@
+﻿@model Accountingsystem.ViewModel.AnotherAssetVM
+
+@{
+    ViewBag.Title = "انشاء";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">انشاء اصول اخرى</h2>
+    @*<h4>AnotherAssetVM</h4>*@
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="col-md-5">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.AnothrAsst_Descs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AnothrAsst_Descs, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <span class="required-mark col-md-1">*</span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اسم الاصل الاخر">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <label class="control-label" for="AnothrAsst_Descs" >وصف الاصل</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="col-md-5">
+                <div class="Dropdownlist">
+                    @Html.EditorFor(model => model.AnothrAsst_Prices, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AnothrAsst_Prices, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <span class="required-mark col-md-1">*</span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="قيمة الاصل الاخر">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <label class="control-label" for="AnothrAsst_Prices" >قيمة الاصل</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="انشاء" class="BTN-style" />
+            </div>
+        </div>
+
+}
+
+<div>
+    @Html.ActionLink("العودة", "Index")
+</div>

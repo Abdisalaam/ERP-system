@@ -1,0 +1,266 @@
+﻿@model Accountingsystem.ViewModel.AttendingAndLeavingVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.Atttendace.AttendingAndLeaving;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var ListOfStringFrom = new List<string>();
+    var ListOfStringTo = new List<string>();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+
+
+
+    @Html.AntiForgeryToken()
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+
+                <h3 class="text-center"><label>@Accountingsystem.Resources.Atttendace.AttendingAndLeavingDetails</label></h3>
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.Atttendace.ShiftCoding)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.shiftCoding.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                        <div class="input-group-append">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SpentReceiptCreate.SpentReceiptDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                        <div class="input-group-append">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsGetDateOfIncome.From)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.shiftCoding.From, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                        <div class="input-group-append">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ReportsGetDateOfIncome.To)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.shiftCoding.To, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                        <div class="input-group-append">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            @if (Model.BranchId > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Branch)
+                                        <div class="input-group">
+                                            @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                            <div class="input-group-append">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive mb-4 mt-4">
+                    <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    @Accountingsystem.Resources.InvoiceMasterIndex.Number
+                                </th>
+                                <th>
+                                    @Accountingsystem.Resources.EmployeeCreate.EmployeeName
+
+                                </th>
+
+
+
+                                <th>
+                                    من
+                                </th>
+                                <th>
+                                    الي
+                                </th>
+                                <th>
+                                    عدد ساعات العمل
+                                </th>
+                                <th>
+                                    الاضافي
+                                </th>
+                                <th>
+                                    ساعات الخصم
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.AttendingAndLeavingDetailsList)
+                            {
+                                var difference = item.Attending.Hours - item.Attending.ShiftCoding.Hours;
+                            <tr>
+
+                                <td hidden>@item.Id</td>
+                                <td>@item.Employee.Emp_Code</td>
+                                <td>@item.Employee.Emp_Name</td>
+
+
+                                <td>@item.From</td>
+
+
+
+                                <td>@item.To</td>
+                                <td>@item.Attending.Hours</td>
+                                @if (difference > 0)
+                                {
+                                    <td>@difference</td>
+                                    <td>@item.Attending.RewardsAndPenalties.Select(a => a.NumberOfHour).Sum()</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                    <td>@item.Attending.RewardsAndPenalties.Select(a => a.NumberOfHour).Sum()</td>
+                                }
+                                    <td>
+                                        @foreach (var Penalit in item.Attending.RewardsAndPenalties)
+                                        {
+
+                                            <p>@Penalit.RewardsAndPenaltiesCoding.Name</p>
+                                        }
+                                    </td>
+                            </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+             
+            </div>
+        </form>
+    </div>
+
+

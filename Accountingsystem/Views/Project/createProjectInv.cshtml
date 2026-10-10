@@ -1,0 +1,383 @@
+﻿@model Accountingsystem.ViewModel.ProjectInvoiceMasterVM
+
+@{
+    ViewBag.Title = "createProjectInv";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>فاتورة مشروع</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PInvoiceMaster_ID)
+        @Html.HiddenFor(model => model.CustomerCustomer_Id)
+        @Html.HiddenFor(model => model.Payment_Method)
+        @Html.HiddenFor(model => model.Revenu_Id)
+        @Html.HiddenFor(model => model.Project_State)
+        <div class="container">
+
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.Project_Id, Model.ProjectList, "اختر المشروع", htmlAttributes: new { @class = "Dropdownlist-select" })
+                                @Html.ValidationMessageFor(model => model.Project_Id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="Project_Id" style=" margin-left: -20px;">اختر المشروع</label>
+                        </div>
+                    </div>
+                </div>
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Serial_Number, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Serial_Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Serial_Number, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Project_Code, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Project_Code, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <label class="control-label" for="Project_Code" style="margin-left: -20px;">Project_Code</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Project_Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Project_Name, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Project_Description, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Project_Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="Project_Description" style="margin-left: -20px;">Project_Description</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Invoice_Description, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Invoice_Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Invoice_Description, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Project_Location, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Project_Location, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="Project_Location" style=" margin-left: -20px;">Project_Location</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Payment_Method_Name, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Payment_Method_Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="Payment_Method_Name" style="margin-left: -20px;">Payment_Method_Name</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="StartTime" style="margin-left: -20px;">StartTime</label>
+                        </div>
+                    </div>
+                </div>
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Estimate_Amount, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Estimate_Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Estimate_Amount, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="Customer_Name" style=" margin-left: -20px;">Customer_Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.Emp_Id, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.Emp_Id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Emp_Id, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-6" hidden>
+                            <div class="textfieldcont">
+                                @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "textfield" } })
+                                @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6" hidden>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("العودة الي القائمة", "IndexOfInvoice")
+
+    </p>
+}
+
+<div id="GetPartialForDetails"></div>
+<div id="GetListOfDetailTemps"></div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+
+   
+
+
+
+
+
+            alert("a");
+        
+            $@*.ajax({
+                url: '@Url.Action("GetPurchInvoiceJson", "Project")',
+                data: { proid: selectedValue },
+                type: 'get',
+            }).done(function (result) {
+
+                //$("#Branch_Id").val(result["Branch_Id"]);
+                $("#CustomerCustomer_Id").val(result["CustomerCustomer_Id"]);
+                $("#Payment_Method").val(result["Payment_Method"]);
+                $("#Revenu_Id").val(result["Revenu_Id"]);
+                $("#Project_State").val(result["Project_State"]);
+                $("#Project_Code").val(result["Project_Code"]);
+                $("#Project_Name").val(result["Project_Name"]);
+                $("#Project_Description").val(result["Project_Description"]);
+                $("#Project_Location").val(result["Project_Location"]);
+                $("#DeadLine").val(result["deadline"]);
+                $("#StartTime").val(result["starttime"]);
+                $("#Estimate_Amount").val(result["Estimate_Amount"]);
+                $("#Customer_Name").val(result["Customer_Name"]);
+                $("#Emp_Id").val(result["Emp_Id"]);
+                $("#Payment_Method_Name").val(result["Payment_Type"]);
+                 $("#GetPartialForDetails").load('@(Url.Action("GetPartialForDetail", "Project"))');
+               $("#GetListOfDetailTemps").load('@(Url.Action("GetListOfDetailTemp", "Project"))');
+            }
+            );
+        });*@
+
+    </script>
+    <script type="text/javascript">
+    $('#StartTime').datetimepicker({ format: 'DD/MM/YYYY' });
+    $('#DeadLine').datetimepicker({ format: 'DD/MM/YYYY' });
+
+  $(function () {
+      $("#Project_Id").change(function (e) {
+                var selectedText = $(this).find("option:selected").text();
+
+                var selectedValue = $(this).val();
+                var serialId = $("#Project_Id").val();
+
+          alert(selectedValue);
+
+                @*$("#RecallMasterDetailList").load('@(Url.Action("GetAllTempInvoiceDetails", "RecalPurchInvoiceMaster"))?tempInvoiceMasterId=' + serialId);*@
+                $.ajax({
+
+                url: '@Url.Action("GetPurchInvoiceJson", "Project")',
+                data: {proid: selectedValue},
+                type: 'get',
+                }).done(function (result) {
+
+                    $("#CustomerCustomer_Id").val(result["CustomerCustomer_Id"]);
+                    $("#Payment_Method").val(result["Payment_Method"]);
+                    $("#Revenu_Id").val(result["Revenu_Id"]);
+                    $("#Project_State").val(result["Project_State"]);
+                $("#Project_Code").val(result["Project_Code"]);
+                $("#Project_Name").val(result["Project_Name"]);
+                $("#Project_Description").val(result["Project_Description"]);
+                $("#Project_Location").val(result["Project_Location"]);
+                $("#DeadLine").val(result["deadline"]);
+                $("#StartTime").val(result["starttime"]);
+                $("#Estimate_Amount").val(result["Estimate_Amount"]);
+                $("#Customer_Name").val(result["Customer_Name"]);
+                $("#Emp_Id").val(result["Emp_Id"]);
+                $("#Payment_Method_Name").val(result["Payment_Type"]);
+
+
+                }
+                );
+                });
+  });
+    $("#GetPartialForDetails").load('@(Url.Action("GetPartialForDetail", "Project"))');
+    $("#GetListOfDetailTemps").load('@(Url.Action("GetListOfDetailTemp", "Project"))');
+    function addProudect() {
+
+        var MasterTempMaster_Id = $("#Project_Id").val();
+        var Tax_ID =  $("#Tax_ID").val();
+        var Product_Price =  $("#Product_Price").val();
+        var Product_Name =  $("#Product_Name").val();
+        var productPrice =  $("#Product_Price").val();
+        var Product_Quantity =  $("#Product_Quantity").val();
+        var PVM;
+        PVM = {
+            Tax_ID:Tax_ID,
+            Product_Price:Product_Price,
+            Product_Name:Product_Name,
+            Product_Price:Product_Price,
+            Product_Quantity:Product_Quantity,
+            ProjectInvoiceMasterPInvoiceMaster_ID: MasterTempMaster_Id
+        };
+
+        $.ajax(
+         {
+             url: '@Url.Action("AddPartialDatatoTemp", "Project")',
+             data: JSON.stringify(PVM),
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'POST',
+             success: function (data) {
+
+
+                 @*alert(data);
+                $("#GetListOfDetailTemps").load('@(Url.Action("GetListOfDetailTemp", "Project"))');*@
+
+
+             },
+             error: function () { alert('error'); }
+         });
+
+          @*$("#InvoicesDetailList").load('@(Url.Action("AddInvoiceDetailsToMaster", "InvoiceMaster"))?invoiceMasterDetail=' + data);*@
+
+          };
+    </script>
+
+}

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Accountingsystem.Models.GL_Type>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>قائمة انواع القيود</h2>
+
+<p>
+    @Html.ActionLink("انشاء نوع جديد", "Create")
+</p>
+<table class="table-condensed table-hover">
+    <tr>
+
+        <th class="col-md-3">
+            @Html.DisplayName("اسم نوع القيد")
+        </th>
+        <th class="col-md-3">
+            @Html.DisplayName("وصف نوع القيد")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.GL_Type_Name)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.GL_Type_Description)
+            </td>
+            <td>
+                @Html.ActionLink("تعديل", "Edit", new { id = item.GL_Type_Id }) |
+                @Html.ActionLink("نفاصيل", "Details", new { id = item.GL_Type_Id })
+
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,183 @@
+﻿@model Accountingsystem.Models.FixedAssetInformation
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.FixedAssetDeleteFixedInfo.Title;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+
+
+
+@using (Html.BeginForm("DeleteFixedInfo", "FixedAsset", FormMethod.Post, new { @id = "offerDeleteMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing" }))
+{
+    @Html.AntiForgeryToken()
+     @Html.HiddenFor(model => model.CompanyComp_Id)             
+    @Html.HiddenFor(model => model.SubLedger_ID)              
+    @Html.HiddenFor(model => model.FixedAssetTypeFAsset_TypeID)             
+    @Html.HiddenFor(model => model.FixedAssetSecCategoryFAsset_CatID)
+    <form id="offerDeleteMasterForm">     
+        <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                            <div class="text-center"><label>@ViewBag.Message</label></div>
+                            @Accountingsystem.Resources.FixedAssetDeleteFixedInfo.Title
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-content widget-content-area">
+                    <div class=''>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.Number)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.FAsset_Code)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.Description)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.FAsset_Description)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.AssetAge)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.FAsset_AgeMonth)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.StartingOprationDate)
+                                                </div>
+                                                <div>
+                                                    @Model.FAsset_WorkingDate.ToShortDateString()
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.AssetType)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.FAsset_Type)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.FixedAssetDeleteFixedInfo.ScrapValue)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.JunckValue)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="deleteOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.FixedAssetDeleteFixedInfo.Delete <span id="submitBTNSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("FixedInfoList")'>
+                            @Accountingsystem.Resources.FixedAssetDeleteFixedInfo.BackToList<span id="backTolistBTNSpinner" style="display:none;" class="spinner-border text-dark  mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+}
+
+@section Scripts {
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#submitBTNSpinner").hide();
+
+        });
+
+        $("#offerDeleteMasterForm").submit(function (e) {
+
+            $("#submitBTNSpinner").show();
+            //document.getElementById("mySpinner").style.display = "inline";
+        });
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBTNSpinner").show();
+
+            //document.getElementById("mySpinner").style.display = "inline";
+        });
+    </script>
+
+
+}
+

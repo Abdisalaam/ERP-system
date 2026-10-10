@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Accountingsystem.Models.SalesReceiptDetails>
+
+@{ decimal tax = 0;
+    decimal total = 0;
+    decimal quantity = 0;
+}
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table  class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ReverseSalesReceiptMasterDetails.Item)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDetails.ItemNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDetails.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ReverseSalesInvoiceMasterDetails.Price)
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Discount)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.DiscountValue)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ReverseSalesReceiptMasterIndex.TotalTax)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Total)
+                    </th>
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @Html.HiddenFor(modelItem => item.Details_Id)
+                        @{
+                            var product = Accountingsystem.Models.Product.GetProdectById(item.Product_Id);
+
+                        }
+                        <td><h>@product.Prod_Name</h></td>
+                        <td><h>@product.Prod_Code</h></td>
+                        <td>
+                            @Math.Round(item.Reverse_Quantity, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                            @Math.Round(item.Product_Price, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        @if (item.Detail_Discount > 0)
+                        {
+                            <td>
+                                @Math.Round(item.Detail_Discount.Value, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                                @Math.Round(item.Detail_Discount_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+
+                        }
+                        <td>
+                            @{tax += item.Reverse_Total_Tax;
+                                quantity += item.Product_Quantity;
+
+                            }
+                            @*@Html.DisplayFor(modelItem => item.Reverse_Total_Tax)*@
+                            @Math.Round(item.Reverse_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+                        <td>
+                            @{total += item.Reverse_Total_Amount; }
+                            @*@Html.DisplayFor(modelItem => item.Reverse_Total_Amount)*@
+                            @Math.Round(item.Reverse_Total_Amount, 2, MidpointRounding.AwayFromZero)
+
+                        </td>
+
+
+                        <td>
+                            <div class="col-md-offset-2 col-md-10">
+
+                                <a href='javascript:;' onclick="@("AddDetailToMaster('" + item.Details_Id + "')")" class="btn btn-outline-primary" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterDetails.Edit</a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+                <tr>
+
+                    <td>@Accountingsystem.Resources.InvoiceMasterDetails.Total</td>
+                    <td></td>
+                    <td>
+                        @Math.Round(quantity, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td></td>
+                    <td>
+
+                        @Math.Round(tax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td>
+
+
+                        @Math.Round(total, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+

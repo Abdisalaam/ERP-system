@@ -1,0 +1,216 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.StoreQuantityVM
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+@{
+    Layout = null;
+    decimal qyt = 0;
+    decimal totalvalue = 0;
+
+
+}
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" />
+    <title> تقرير كميات المخزن بالتكلفة</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+
+                @if (Model.Company.CompanyPhotoDetails.FirstOrDefault() == null)
+                {
+                    <div>
+                        <h style="padding-top:100px">
+                            <br /><br />
+                        </h>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item2 in Model.Company.CompanyPhotoDetails)
+                    {
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                    }
+                }
+            </div>
+            <div class="col-md-6" style="margin-top:-70px">
+                <table style="text-align:right;" data-sortable="" width="900">
+
+
+                    <tr>
+                        <td style="text-align:right;">@Model.Company.Comp_Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+
+
+                    @*<tr>
+                            <td style="text-align:right; padding-top:20px">
+                                @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                                &nbsp&nbsp  : تاريخ عرض السعر
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                        </tr>*@
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير كميات المخزن بالتكلفة/Quantity Of Store With Cost
+
+        </div>
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @Model.Store_Name
+
+        </div>
+
+
+
+
+
+    </div>
+    <div class="container">
+
+
+
+
+
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr>
+                    <th style="text-align:center">الرقم<br />NO</th>
+                    <th style="text-align:center">الصنف<br />item</th>
+                    <th style="text-align:center">الكمية<br />Qty</th>
+                    <th style="text-align:center">التكلفة<br />Cost</th>
+                    <th style="text-align:center">الاجمالي<br />Total</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductBatch)
+                {
+                    qyt += item.Product_Quantity;
+                    totalvalue += item.Batch_Cost;
+                    <tr>
+                        <td style="text-align:center">
+                            @Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Code
+                        </td>
+
+                        <td style="text-align:center">
+
+                            @Accountingsystem.Models.Product.GetProdectById(item.Product_ID).Prod_Name
+                        </td>
+                        <td style="text-align:center">
+                            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+
+                        <td style="text-align:center">
+                            @Math.Round(item.Product_Cost, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td style="text-align:center">
+                            @Math.Round(item.Batch_Cost, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                    </tr>
+
+                }
+                <tr>
+                    <th style="text-align:center">الاجمالي<br />Total</th>
+                    <th>
+
+                    </th>
+                    <th>
+                        @Math.Round(qyt, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                    <th>
+
+                    </th>
+
+                    <th>
+                        @Math.Round(totalvalue, 2, MidpointRounding.AwayFromZero)
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+    </div>
+</body>
+</html>
+
+
+
+

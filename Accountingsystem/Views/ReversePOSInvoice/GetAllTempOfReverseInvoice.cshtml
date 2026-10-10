@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Accountingsystem.Models.ReversePOSDetailTemp>
+
+
+            <div class="statbox widget box box-shadow">
+                <div class="table-responsive">
+
+                    <table id="InvoiceMasterDetailList" class="table table-hover" style="width:100%">
+                        <thead>
+                            @{decimal tax = 0;
+                                decimal TotalAmount = 0;
+                                decimal quantity = 0;
+                            }
+                            <tr>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.Item)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.ItemNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.Quantity)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.ItemPrice)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Discount)
+                                </th>
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.DiscountValue)
+                                </th>
+
+
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.TotalTax)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayName(Accountingsystem.Resources.ReversePOSInvoiceDetails.Total)
+                                </th>
+
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                @Html.HiddenFor(modelItem => item.Details_Id)
+                                @Html.HiddenFor(modelItem => item.Product_Id)
+                                var product = Accountingsystem.Models.Product.GetProdectById(item.Product_Id);
+                            <tr>
+                                <td>
+                                    @product.Prod_Name
+                                </td>
+                                <td>
+                                    @product.Prod_Code
+                                </td>
+                                <td>
+                                    @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                                <td>
+
+                                    @Math.Round(item.Product_Price, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                                @if (item.Detail_Discount > 0)
+                                {
+                                    <td>
+                                        @Math.Round(item.Detail_Discount.Value, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                    <td>
+                                        @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                                        @Math.Round(item.Detail_Discount_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        0
+                                    </td>
+                                    <td>
+                                        0
+                                    </td>
+
+                                }
+                                <td>
+
+                                    @Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                                @{ tax += item.Detail_Total_Tax;
+
+                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total_Amount)
+                                    @{ TotalAmount += item.Total_Amount;
+                                        quantity += item.Product_Quantity;
+
+                                    }
+                                <td>
+                                <td>
+                                    <a href='javascript:;' onclick="@("DeleteTemp('"+item.Details_Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="حذف" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                </td>
+                            </tr>
+                            }
+                            <tr>
+                                <td>
+                                    @Accountingsystem.Resources.ReversePOSInvoiceDetails.Total;
+                                </td>
+                                <td></td>
+                                <td>
+                                    @Math.Round(quantity, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+
+                                    @Math.Round(tax, 2, MidpointRounding.AwayFromZero)
+                                </td>
+
+                                <td>
+                                    @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>

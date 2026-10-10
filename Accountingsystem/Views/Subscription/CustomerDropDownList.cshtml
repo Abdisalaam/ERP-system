@@ -1,0 +1,62 @@
+﻿@model Accountingsystem.ViewModel.SubscriptionVM
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Customer)
+        <div class="input-group">
+            @Html.DropDownListFor(model => model.Customer_Id, Model.MyCompList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.DropDownListCustomer, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+            <div class="input-group-append">
+                <div class="form-control">
+                    <label class="text-danger">*</label>
+                </div>
+                <button id="addNewCustomerBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                </button>
+            </div>
+        </div>
+        @Html.ValidationMessageFor(model => model.Customer_Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div id="customerModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddNewCustomer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="customerPartialDialogDiv"></div>
+            </div>
+            <div class="md-button">
+                <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "Subscription"))');
+    $('#addNewCustomerBTN').on('click', function () {
+        $("#customerModal").dialog('open');
+        return false;
+    });
+ $("#Customer_Id").change(function () {
+
+            var selectedValue = $("#Customer_Id").val();
+            $.ajax({
+                url: '@Url.Action("GetPhone", "Subscription")',
+                type: 'get',
+                data: { ID: selectedValue }
+                }).done(function (result) {
+                $("#tel_customer").val(result);
+
+                });
+ });
+</script>
+
+
+
+

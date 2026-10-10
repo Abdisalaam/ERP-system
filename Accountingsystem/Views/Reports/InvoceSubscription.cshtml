@@ -1,0 +1,94 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.PrintSubscriptionInvoiceVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InvoceSubscription</title>
+</head>
+<body>
+    <div>
+        @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+        <div style="width:50Px; margin-left:15px; margin-top:1%">
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br /><br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="container">
+            <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+                @Model.company.Comp_Name
+            </div>
+        </div>
+        <div style="text-align:left;color:black;font-size:xx-large;margin-bottom:25px;">
+            SubscriptionIncoice
+            <h style="text-align:right;margin-left:25%;color:black;font-size:large;">Start Date: @Model.StartTime</h><br />
+            <h style="text-align:right;margin-left:55%;color:black;font-size:large;">End Date: @Model.DeadLine</h><br />
+        </div>
+    </div>
+ 
+    <table class="table" style="text-align:center;margin-top:5%;" data-sortable="" data-sortable-initialized="true">
+        <tr>
+            <th style="text-align:center;">
+                Serial_Number &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+                Subscrip_Code &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+               Customer_Name &nbsp&nbsp&nbsp&nbsp
+            </th>
+        </tr>
+        <tr>
+            <th style="text-align:center;">
+                @Model.Serial_Number
+            </th>
+            <th style="text-align:center;">
+                @Model.Subscrip_Code
+            </th>
+            <th style="text-align:center;">
+                @Model.Customer_Name
+            </th>
+        </tr>
+        
+    </table>
+    <footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Amount  : @Model.Estimate_Amount</h>
+    </footer>
+</body>
+</html>

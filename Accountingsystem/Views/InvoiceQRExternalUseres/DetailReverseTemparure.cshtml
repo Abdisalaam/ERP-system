@@ -1,0 +1,260 @@
+﻿@model Accountingsystem.Models.ReverseQRInvoice
+@{
+    var _Company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+
+    decimal paiedAmount = 0;
+    decimal subTotalBeforeTax = 0;
+
+    var employee = Accountingsystem.Models.Employee.getEmpById(Model.MasterQRInvoice.Employee_Id);
+    var branch = Accountingsystem.Models.Branch.getAddressForInvoice(Model.MasterQRInvoice.Branch_Id);
+
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/Content/PrintPOS.css" rel="stylesheet" />
+    <title>Receipt Cashier</title>
+</head>
+<body>
+    <center>
+        <div class="ticket" style="font-size:smaller;">
+            @if (branch.BranchLogo != null)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(branch.BranchLogo)" alt="Sutumatic" style="width:300px; height:250px;" />
+            }
+            <p class="centered" style="border-bottom:dotted;">
+                <span style="font-size:16px;"><strong>رابغ - حي الجود - بجوار حاشي باشا</strong></span>
+                <br />
+                <span style="font-size:16px"><strong>مقابل مستشفى رابغ العام</strong></span>
+                <br />
+                <span style="font-size:16px"><strong>Tel: 0545917202 </strong></span> <span style="font-size:16px"><strong>Tel: 0545917201 </strong></span>
+            </p>
+            <p class="centered" style="border-bottom:dotted;border-top:dotted;">
+                <span style="font-size:14px;"><strong>اشعار دائن لفاتورة ضريبية</strong></span>
+                <br />
+                <span style="font-size:14px"><strong>Credit Notice for Tax Invoice</strong></span>
+            </p>
+            <p class="centered" style="border-bottom:dotted;">
+                <span style="font-size:26px;"><strong>Cancelled</strong></span>
+            </p>
+            <table>
+
+                <tr style="border-top:hidden; border-bottom:dotted">
+
+
+                    <th style="font-size:12px; width:200px">
+                        <span style="font-size:14px"> @branch.Branch_Name</span>
+                        <br />
+
+                        <span style="font-size:14px">@branch.Branch_Address</span>
+                        <br />
+                        <span style="font-size:14px">@_Company.Tax_Number / </span>  <span style="font-size:10px"> الرقم الضريبي </span>
+
+                        <br />
+                        <span style="font-size:14px">@employee.Emp_Name</span>
+                        <br />
+                        <span style="font-size:14px">Tel:  @branch.Branch_Phone</span>
+                        <br />
+                        <span style="font-size:14px">Email:  @branch.Branch_Email</span>
+                    </th>
+
+                </tr>
+
+            </table>
+
+            <table>
+                <tr style="border-top:hidden">
+                    <th class="description" style="font-size:12px; text-align:left; padding-left:5px"> Notice No</th>
+                    @if (Model.Number == null)
+                    {
+                        <th class="description" style="font-size:26px; padding-right:10px"> <b>@Model.Serial_Number </b></th>
+                    }
+                    else
+                    {
+                        <th class="description" style="font-size:26px; padding-right:10px"> <b>@Model.Number </b></th>
+                    }
+                    <th class="quantity" style="font-size:12px; text-align:right; padding-right:5px"> رقم الاشعار</th>
+
+                </tr>
+                <tr style="border-top:hidden">
+                    <th class="description" style="font-size:12px; text-align:left; padding-left:5px"> Invoice Number</th>
+
+                    @if (Model.MasterQRInvoice.Number == null)
+                    {
+                        <th class="description" style="font-size:26px; padding-right:10px"> <b>@Model.MasterQRInvoice.Serial_Number </b></th>
+                    }
+                    else
+                    {
+                        <th class="description" style="font-size:26px; padding-right:10px"> <b>@Model.MasterQRInvoice.Number </b></th>
+                    }
+                    <th class="quantity" style="font-size:12px; text-align:right; padding-right:5px"> رقم الفاتورة</th>
+
+                </tr>
+                <tr style="border-top:hidden; text-align:center;">
+                    <th class="description" style="font-size:12px; text-align:left; padding-left:5px"> Notice Date</th>
+
+                    <th class="description" style="font-size:14px;">@Model.Invoice_Date</th>
+                    <th class="quantity" style="font-size:12px; text-align:right; padding-right:5px">تاريخ الاشعار</th>
+
+                </tr>
+
+            </table>
+            @if (Model.Customer_Id > 0)
+            {
+                var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value);
+                <table>
+
+                    <tr>
+                        <th class="description" style="font-size:14px"> Customer</th>
+
+                        <th class="description" style="font-size:14px">@customer.Customer_Name</th>
+                        <th class="quantity" style="font-size:14px">العميل</th>
+
+                    </tr>
+                    <tr style="border-top:hidden">
+                        <th class="description" style="font-size:14px">Phone</th>
+
+                        <th class="description" style="font-size:14px">@customer.Customer_Phone</th>
+                        <th class="quantity" style="font-size:14px">الهاتف</th>
+
+                    </tr>
+
+                </table>
+
+            }
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <th class="description" style="font-size:10px;"> <b> Price | السعر</b></th>
+
+                        <th class="quantity" style="font-size:9px"> <b>QTY | الكمية</b> </th>
+
+                        <th class="description" style="font-size:10px; text-align:right; padding-right:5px"><b> Item | الصنف</b></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.ReversePOSDetails)
+                    {
+                        var a = Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero);
+
+                        var product = Accountingsystem.Models.Product.GetProdectById(detail.Product_Id);
+
+                        <tr style="border-top:hidden; text-align:center">
+                            <th class="description" style="font-size:14px"> <b>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</b></th>
+
+                            <th class="quantity" style="font-size:14px"><b>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</b></th>
+
+                            <th class="description" style="font-size:14px; word-break: break-all; text-align:right; padding-right:5px"> <b>@product.Prod_Name</b></th>
+                        </tr>
+                        subTotalBeforeTax += detail.Product_Quantity * detail.Product_Price;
+
+
+                    }
+
+                    <tr></tr>
+                </tbody>
+            </table>
+            <br />
+            <p class="centered">
+                <table style="width:250px">
+                    <tr>
+                        <th class="description" style="font-size:12px;">Total</th>
+                        <th class="quantity" style="font-size:14px;">@Math.Round(subTotalBeforeTax, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:12px;">المجموع</th>
+
+                    </tr>
+                    @if (Model.Master_Discount > 0)
+                    {
+                        <tr>
+                            <th class="description" style="font-size:12px">Discount</th>
+                            <th class="quantity" style="font-size:14px">@Math.Round(subTotalBeforeTax * (Model.Master_Discount.Value / 100), 2, MidpointRounding.AwayFromZero)</th>
+                            <th class="description" style="font-size:12px">الخصم % @Math.Round(Model.Master_Discount.Value, 2, MidpointRounding.AwayFromZero) </th>
+
+                        </tr>
+
+                    }
+                    @*else
+                {
+                    <tr>
+                        <th class="description" style="font-size:10px">Discount</th>
+                        <th class="quantity" style="font-size:10px">%0</th>
+                        <th class="description" style="font-size:10px">الخصم</th>
+
+                    </tr>
+                }*@
+
+                    <tr>
+                        <th class="description" style="font-size:12px">VAT</th>
+                        <th class="quantity" style="font-size:14px">
+
+                            @Math.Round(Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+
+
+                        </th>
+                        <th class="description" style="font-size:12px">الضريبة</th>
+
+                    </tr>
+
+
+
+                    <tr>
+                        <th class="description" style="font-size:12px">Total</th>
+                        <th class="quantity" style="font-size:14px">@Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:12px">المبلغ المستحق</th>
+
+                    </tr>
+
+
+                    @if (Model.PaymentMethod_Id > 0)
+                    {
+
+
+
+                        <tr>
+                            <th class="description" style="font-size:12px">Payment</th>
+                            <th class="quantity" style="font-size:14px">@Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(Model.PaymentMethod_Id).Payment_Type</th>
+                            <th class="description" style="font-size:12px">طريقة الدفع</th>
+
+                        </tr>
+                    }
+
+
+
+
+
+
+
+                </table>
+            </p>
+
+
+
+            <div style=' text-align:center; '>
+                @if (Model.MasterQRInvoice.Id > 0)
+                {
+
+                    <br />
+                    <img src="data:image/jpg;base64,@Accountingsystem.Models.TLVCls.GenerateInvoiceQRbase(Model.MasterQRInvoice.Id)" alt="Image" width="150px" height="150px" />
+
+                }
+
+            </div>
+
+        </div>
+
+    </center>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print(); window.onfocus = function () { window.close(); }
+
+        }
+    </script>
+</body>
+</html>

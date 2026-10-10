@@ -1,0 +1,247 @@
+﻿@model Accountingsystem.ViewModel.ExternalEmployeePaymentsVM
+
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.AdminExterNalEmployee.AddPaymentTitle;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+</head>
+
+@using (Html.BeginForm("EditPayment", "AdminExternalEmployee", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ExternalSalesEmployeeID)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.AddPaymentTitle)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.TheCurrentAmbassador)
+                                    <div class="input-group">
+                                        @Html.DisplayFor(model => model.ExtrnalSalesEmployee.Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ExternalEmployee.Email)
+                                    <div class="input-group">
+                                        @Html.DisplayFor(model => model.ExtrnalSalesEmployee.Email, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ExternalEmployee.MobileNumber)
+                                    <div class="input-group">
+                                        @Html.DisplayFor(model => model.ExtrnalSalesEmployee.MobileNumber, new { htmlAttributes = new { @class = "form-control mb-4" } })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.PaymentReceivedDate)
+                                    <div class="input-group">
+                                        @Html.DisplayFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">                          
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.Ambassador)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedExternalSalesEmployeeID, Model.ExternalSalesEmployeeList, Accountingsystem.Resources.AdminExterNalEmployee.SelectAmbassador, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedExternalSalesEmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.Amount)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.PaymentAmount, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.PaymentAmount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.AdminExterNalEmployee.Comment)
+                                    @Html.TextAreaFor(model => model.Comment, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes })
+                                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                        </div>
+                    </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.AdminExterNalEmployee.EditPayment <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+
+        }
+    }
+
+    <script>
+        $(document).ready(function () {
+
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+            $("#SelectedExternalSalesEmployeeID").chosen();
+            $("#SelectedExternalSalesEmployeeID_chosen").addClass("form-control Dropdownlist-select");
+
+
+            return false;
+        });
+    </script>
+    <script>
+
+        $('#PaymentAmount').on('input', function () {
+            $("#PaymentAmount").removeClass("addRequiredFieldToInput");
+        });
+        $('#SelectedExternalSalesEmployeeID').on('change', function () {
+            $("#SelectedExternalSalesEmployeeID_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedExternalSalesEmployeeID_chosen span').css('background', '#ffffff');
+            $('#SelectedExternalSalesEmployeeID_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+            $('#offerCreateMasterForm').submit(function () {
+                $('#createOfferbtn').prop('disabled', true);
+                if ($('#PaymentAmount').val() == "" || $('#PaymentAmount').val() == null || $('#SelectedExternalSalesEmployeeID').val() == "" || $('#SelectedExternalSalesEmployeeID').val() == null) {
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createExpensesSpinner").hide();
+                    if ($('#SelectedExternalSalesEmployeeID').val() == "" || $('#SelectedExternalSalesEmployeeID').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.OfferPriceMasterCreateOffer.CustomerIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedExternalSalesEmployeeID_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedExternalSalesEmployeeID_chosen span').css('background', 'red');
+                    $('#SelectedExternalSalesEmployeeID_chosen b').css('background', 'red');
+
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedExternalSalesEmployeeID").offset().top
+                    }, 2000);
+                    }
+                    if ($('#PaymentAmount').val() == "" || $('#PaymentAmount').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ExternalEmployee.NameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                        $("#PaymentAmount").addClass("addRequiredFieldToInput");
+                        $('#PaymentAmount').trigger('focus');
+                    }
+
+                    event.preventDefault();
+
+                }
+
+                else {
+                $("#createExpensesSpinner").show();
+
+                }
+
+            });
+
+    </script>
+}
+
+

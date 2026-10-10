@@ -1,0 +1,413 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ProductListVM
+@{
+    if (Model.all == 1)
+    {
+        ViewBag.Title = Accountingsystem.Resources.ProductIndex.PrintItemQuantitiesAtCostAndSellingPriceAll;
+    }
+    else
+    {
+        ViewBag.Title = Accountingsystem.Resources.ProductIndex.PrintItemQuantitiesAtCostAndSellingPrice;
+    }
+    HttpCookie cookie = Request.Cookies["Language"];
+    decimal totalQuantity = 0;
+    decimal totalPrice = 0;
+    decimal totalCost = 0;
+}
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+@*<link href="~/Content/css/Report.css" rel="stylesheet" />*@
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+
+
+
+</head>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+        <!--  BEGIN NAVBAR  -->
+        <div class="header-container">
+            <header class="header navbar navbar-expand-sm">
+                <ul class="navbar-item flex-row text-center">
+
+                    <li class="nav-item theme-text">
+
+                    </li>
+
+                </ul>
+                <ul class="navbar-item flex-row ml-md-auto">
+
+
+                    <li class="nav-item dropdown user-profile-dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                        </a>
+                        <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                            <div class="">
+
+
+                                <div class="dropdown-item">
+
+                                    <ul class="nav navbar-nav navbar-right">
+
+                                        <li>
+                                            <div class="dropdown-item">
+                                                <a href="@Url.Action( "GetALLProductPdf")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>PDF</a>
+                                            </div>
+
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-item">
+                                                <a href="@Url.Action( "GetALLProductExcel")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>Excel</a>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </li>
+
+                </ul>
+            </header>
+        </div>
+        <!--  END NAVBAR  -->
+        <div class="widget-content widget-content-area br-6">
+            <div class="text-center">
+                <label>@ViewBag.Msg</label>
+            </div>
+            @if (Model.all == 1)
+            {
+                <div style="text-align:center;font-size:medium;margin-bottom:25px;">
+                    @Accountingsystem.Resources.ProductIndex.PrintItemQuantitiesAtCostAndSellingPriceAll
+                </div>
+            }
+            else
+            {
+                <div style="text-align:center;font-size:medium;margin-bottom:25px;">
+                    @Accountingsystem.Resources.ProductIndex.PrintItemQuantitiesAtCostAndSellingPrice
+                </div>
+            }
+
+
+
+            <div class="table-responsive mb-4 mt-4">
+                <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                    <thead>
+                        <tr style="text-align:right;">
+                            <th>@Accountingsystem.Resources.ProductDetails.Code</th>
+                            <th width="200">@Accountingsystem.Resources.InvoiceMasterDetails.Product</th>
+                            <th>@Accountingsystem.Resources.InvoiceMasterDetails.Quantity</th>
+                            <th>@Accountingsystem.Resources.ProductIndex.ItemCost</th>
+                            <th> @Accountingsystem.Resources.ProductIndex.SellingPrice</th>
+                            <th> @Accountingsystem.Resources.ProductCreate.EstimatedCost</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.all > 0)
+                        {
+                            foreach (var item in Model.Products)
+                            {
+
+                                var pro = Accountingsystem.Models.Product.getTotalQuantityandCost(item.Prod_ID);
+                                var probatch = item.ProductBatches.Where(a => a.Store_ID == 1).FirstOrDefault();
+                                totalPrice += pro.Sale_Price.Value * item.Sale_Price.Value;
+                                totalQuantity += pro.Sale_Price.Value;
+
+
+
+                                <tr>
+
+
+
+                                    <td width="100">
+                                        @item.Prod_Code
+                                    </td>
+                                    <td>
+                                        @item.Prod_Name
+                                    </td>
+
+                                    <td>
+                                        @Math.Round(pro.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                    @if (pro.Sale_Price == 0)
+                                    {
+                                        <td> @Math.Round(pro.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @Math.Round(pro.Prod_Cost_Price.Value / pro.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                            @{totalCost += pro.Prod_Cost_Price.Value;
+
+
+                                            }
+                                        </td>
+                                    }
+                                    @if (probatch == null || probatch.SalesPrice == null)
+                                    {
+                                        <td>  @Math.Round(item.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @Math.Round(probatch.SalesPrice.Value, 2, MidpointRounding.AwayFromZero)
+                                        </td>
+                                    }
+                                    <td>
+                                        @Math.Round(item.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+
+                                            <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+
+
+                                                <a href="@Url.Action("Details","Product", new { id = item.Prod_ID })" class="dropdown-item">
+                                                    @Accountingsystem.Resources.ReceiptIndex.Details
+                                                </a>
+
+
+
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in Model.Products)
+                            {
+
+                                var pro = Accountingsystem.Models.Product.getTotalQuantityandCost(item.Prod_ID);
+                                var probatch = item.ProductBatches.Where(a => a.Store_ID == 1).FirstOrDefault();
+                                totalPrice += pro.Sale_Price.Value * item.Sale_Price.Value;
+                                totalQuantity += pro.Sale_Price.Value;
+                                if (Math.Round(pro.Sale_Price.Value, 2, MidpointRounding.AwayFromZero) > 0)
+                                {
+
+
+                                    <tr>
+
+
+
+                                        <td width="100">
+                                            @item.Prod_Code
+                                        </td>
+                                        <td>
+                                            @item.Prod_Name
+                                        </td>
+
+                                        <td>
+                                            @Math.Round(pro.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                        </td>
+                                        @if (pro.Sale_Price == 0)
+                                        {
+                                            <td> @Math.Round(pro.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @Math.Round(pro.Prod_Cost_Price.Value / pro.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                                @{totalCost += pro.Prod_Cost_Price.Value;
+
+
+                                                }
+                                            </td>
+                                        }
+                                        @if (probatch == null || probatch.SalesPrice == null)
+                                        {
+                                            <td>  @Math.Round(item.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @Math.Round(probatch.SalesPrice.Value, 2, MidpointRounding.AwayFromZero)
+                                            </td>
+                                        }
+
+                                        <td>
+                                            @Math.Round(item.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+
+                                                <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+
+
+                                                    <a href="@Url.Action("Details","Product", new { id = item.Prod_ID })" class="dropdown-item">
+                                                        @Accountingsystem.Resources.ReceiptIndex.Details
+                                                    </a>
+
+
+
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+                <br />
+                <table class="table" style="text-align:right;direction:rtl;">
+                    <thead>
+                        <tr style="text-align:right;">
+                            <th style="text-align:center">اجمالي الكميات<br />TotalQuantity</th>
+                            <th style="text-align:center">اجمالي اسعار التكلفة<br />TotalCost</th>
+                            <th style="text-align:center">اجمال اسعار البيع<br />TotalPrice</th>
+
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+
+
+
+                        <tr>
+
+
+
+                            <td style="text-align:center">
+                                @Math.Round(totalQuantity, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                            <td style="text-align:center">
+                                @Math.Round(totalCost, 2, MidpointRounding.AwayFromZero)
+                            </td>
+
+                            <td style="text-align:center">
+                                @Math.Round(totalPrice, 2, MidpointRounding.AwayFromZero)
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top:50%;"></footer>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,494 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.CustomerBalanceDetailsVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تفاصيل رصيد العميل</title>
+    <link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            El Salam
+        </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:15px;">
+            تفاصيل رصيد العميل
+        </div>
+
+    </div>
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:15px;">
+
+        @Model.Customer_Name : فواتير المبيعات الى
+    </div>
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الاستحقاق
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                كود الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالى الفاتورة
+            </th>
+        </tr>
+        @foreach (var item in Model.InvoiceList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Customer.Customer_Name
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Invoice_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Due_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Serial_Number
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Total_Amount
+                </td>
+
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+
+        @Model.Customer_Name : مردودات الفواتير من
+    </div>
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الاستحقاق
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                كود الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالى الفاتورة
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.ReversInvoiceList)
+        {
+
+        <tr>
+            <td class="col-md-4" style="text-align:center">
+
+                @{var customername = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id)).Customer_Name;
+                    <h>@customername</h> }
+            </td>
+            <td class="col-md-4" style="text-align:center">
+                @item.Invoice_Date
+            </td>
+            <td class="col-md-4" style="text-align:center">
+                @item.Due_Date
+            </td>
+            <td class="col-md-4" style="text-align:center">
+                @item.Serial_Number
+            </td>
+            <td class="col-md-4" style="text-align:center">
+                @item.Total_Amount
+            </td>
+
+        </tr>
+
+        }
+    </table>
+
+    @*<hr />
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:20px;">
+            Sales Receipt For:
+            @Model.Customer_Name
+        </div>
+
+        <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+            <caption></caption>
+            <tr>
+                <th class="col-md-4">
+                    Customer
+                </th>
+                <th class="col-md-4">
+                    Sales Receipt Date
+                </th>
+
+                <th class="col-md-4">
+                    Serial
+                </th>
+                <th class="col-md-4">
+                    Total Amount
+                </th>
+
+
+            </tr>
+            @foreach (var item in Model.SalesReceiptList)
+            {
+
+                <tr>
+                    <td class="col-md-4">
+                        @{var customer4 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id)).Customer_Name;
+                            <h>@customer4</h> }
+                    </td>
+                    <td class="col-md-4">
+                        @item.Invoice_Date
+                    </td>
+
+                    <td class="col-md-4">
+                        @item.Serial_Number
+                    </td>
+                    <td class="col-md-4">
+                        @item.Total_Amount
+                    </td>
+
+
+                </tr>
+
+            }
+        </table>
+        <hr />
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:20px;">
+            Reverse Sales Receipt For:
+
+            @Model.Customer_Name
+        </div>
+
+        <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+            <caption></caption>
+            <tr>
+                <th class="col-md-4">
+                    Customer
+                </th>
+                <th class="col-md-4">
+                    Reverse Date
+                </th>
+
+                <th class="col-md-4">
+                    Serial
+                </th>
+                <th class="col-md-4">
+                    Total Amount
+                </th>
+
+
+            </tr>
+            @foreach (var item in Model.ReversSalesReceiptList)
+            {
+
+                <tr>
+                    <td class="col-md-4">
+                        @{var customer6 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id)).Customer_Name;
+                            <h>@customer6</h> }
+                    </td>
+                    <td class="col-md-4">
+                        @item.Invoice_Date
+                    </td>
+
+                    <td class="col-md-4">
+                        @item.Serial_Number
+                    </td>
+                    <td class="col-md-4">
+                        @item.Total_Amount
+                    </td>
+
+
+                </tr>
+
+            }
+        </table>*@
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        @Model.Customer_Name : سندات القبض الى
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center">
+               تاريخ السند
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالى السند
+            </th>
+
+        </tr>
+        @foreach (var item in Model.ReceiptsList)
+        {
+
+            <tr>
+                <td class="col-md-4">
+                    @{var customer8 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Customer_Id)).Customer_Name;
+                        <h>@customer8</h> }
+                </td>
+                <td class="col-md-4">
+                    @item.Rec_Date
+                </td>
+
+                <td class="col-md-4">
+                    @item.Rec_Number
+                </td>
+                <td class="col-md-4">
+                    @item.Rec_Amount
+                </td>
+
+            </tr>
+
+        }
+    </table>
+
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:15px;">  
+        @Model.Customer_Name : سندات القبض العام الى
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ السند 
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+               اجمالى السند
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.CatchReceiptList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @{var customer9 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Child_AccountCredit_Id)).Customer_Name;
+                        <h>@customer9</h> }
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.CatchReceipt_date
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @item.CatchReceipt_Code
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.CatchReceipt_Value
+                </td>
+
+            </tr>
+
+        }
+    </table>
+
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+       
+        @Model.Customer_Name : سندات الصرف العام الى
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم العميل
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                 تاريخ السند
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+               اجمالى السند
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.SpentReceiptList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @{var customer10 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Child_AccountDebit_Id)).Customer_Name;
+                        <h>@customer10</h> }
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.CatchReceipt_date
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @item.SpentReceipt_Code
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.SpentReceipt_Value
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        @Model.Customer_Name : اجمالى قيود العميل اليدوية والافتتاحية
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+
+            <th class="col-md-4" style="text-align:center">
+               اجمالى الدائن
+            </th>
+            <th class="col-md-4" style="text-align:center">
+               اجمالى المدين
+            </th>
+            <th class="col-md-4" style="text-align:center">
+               اسم الحساب
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.Customer_Account)
+        {
+
+            <tr>
+                @*<td class="col-md-4">
+
+                        @{if (item.Account_Child_ID == 0)
+                            {
+
+                            }
+                            else
+                            {
+                                var customer11 = Accountingsystem.Models.Customer.GetCustomerById(Convert.ToInt32(item.Account_Child_ID)).Customer_Name;
+                                <h>@customer11</h>
+                            }
+                        }
+                    </td>*@
+                <td class="col-md-4" style="text-align:center">
+                    @item.GLDetail_Credit
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @item.GLDetail_Debit
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Account_Name
+                </td>
+
+
+            </tr>
+
+        }
+    </table>
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        
+        @Model.Customer_Name : اشتراكات العميل
+    </div>
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+
+            <th class="col-md-4" style="text-align:center">
+                وصف
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                اجمالى الاشتراك
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                كود الاشتراك
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.Subscriptionslist)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Subscrip_Description
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @item.Estimate_Amount
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Subscrip_Code
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    @*<footer style="margin-top:25%;">
+            Total Balance For:
+            @Model.Customer_Name is
+            @Model.Total_Balance
+        </footer>*@
+    <div style="text-align:right;color:black;font-size:xx-large;margin-top:20%;">
+        @Model.Total_Balance : @Model.Customer_Name اجمالى رصيد العميل
+
+    </div>
+</body>
+</html>

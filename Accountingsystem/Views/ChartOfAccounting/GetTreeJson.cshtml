@@ -1,0 +1,274 @@
+﻿@model Newtonsoft.Json.Linq.JArray
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ChartOfAccountingCreate.AccountsTree;
+
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+@*<head>
+        <link href="@Url.Content("~/ContentRTL/assets/css/bootstrap-treeview.css")" rel="stylesheet" type="text/css" />
+
+
+    </head>*@
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <style>
+                    .list-group-item > .badge {
+                        float: right;
+                    }
+
+                    .badge {
+                        vertical-align: bottom;
+                    }
+
+                    .node-icon {
+                        color: green;
+                    }
+
+                    .node-oops {
+                        background-color: white;
+                    }
+
+                    .badge {
+                        display: inline-block;
+                        min-width: 10px;
+                        padding: 3px 7px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 1;
+                        color: #fff;
+                        text-align: center;
+                        white-space: nowrap;
+                        vertical-align: baseline;
+                        background-color: #777;
+                        border-radius: 10px;
+                        float: right;
+                    }
+                </style>
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <style>
+                    .list-group-item > .badge {
+                        float: left;
+                    }
+
+                    .badge {
+                        vertical-align: bottom;
+                    }
+
+                    .node-oops {
+                        background-color: white;
+                    }
+
+                    .node-icon {
+                        color: green;
+                    }
+
+                    .badge {
+                        display: inline-block;
+                        min-width: 10px;
+                        padding: 3px 7px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 1;
+                        color: black;
+                        text-align: center;
+                        white-space: nowrap;
+                        vertical-align: baseline;
+                        background-color: #777;
+                        border-radius: 10px;
+                        float: right;
+                    }
+                </style>
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <style>
+                .list-group-item > .badge {
+                    float: left;
+                }
+
+                .badge {
+                    vertical-align: bottom;
+                }
+
+                .node-icon {
+                    color: green;
+                }
+
+                .node-oops {
+                    background-color: white;
+                }
+
+                .badge {
+                    display: inline-block;
+                    min-width: 10px;
+                    padding: 3px 7px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 1;
+                    color: #000000;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: baseline;
+                    background-color: #777;
+                    border-radius: 10px;
+                    float: right;
+                }
+            </style>
+
+        }
+    }
+
+</head>
+@*<style>
+        .list-group-item > .badge {
+            float: right;
+        }
+
+        .badge {
+            vertical-align: bottom;
+        }
+
+        .badge {
+            display: inline-block;
+            min-width: 10px;
+            padding: 3px 7px;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            background-color: #777;
+            border-radius: 10px;
+            float: right;
+        }
+    </style>*@
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+                <li class="nav-item theme-text">
+
+                </li>
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+                            <div class="dropdown-item">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href="@Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>@Accountingsystem.Resources.ChartOfAccountingIndex.CreateNewAccount</a>
+                                        </div>
+                                    </li>
+                                    @*<li>
+                                            <div class="dropdown-item">
+                                                <a href='@Url.Action("GetTreeJson")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>@Accountingsystem.Resources.ChartOfAccountingIndex.Diagram</a>
+                                            </div>
+                                        </li>*@
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href='@Url.Action("PrintChartOfAccount", new { controller = "ReportsNew" })' target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>@Accountingsystem.Resources.ChartOfAccountingIndex.PrintAccountingTree</a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <div class="widget-content widget-content-area br-6">
+     
+        <div class="text-center">
+            @Accountingsystem.Resources.ChartOfAccountingCreate.AccountsTree
+        </div>
+      </div>
+
+        @*<a class="btn BTN-style" href='@Url.Action("Create")'>
+                @Accountingsystem.Resources.ChartOfAccountingCreate.New
+            </a>*@
+        <div class="container">
+            @*<div class="col-md-12" id="tree"></div>*@
+            <div class="col-md-12" id="tree" hidden>@Model.ToString()</div>
+            <div class="col-md-12"></div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="oops" style="color:black">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @section Scripts {
+
+
+        @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+            <script src="~/Scripts/bootstrap.js"></script>*@
+        <script src="~/ContentRTL/assets/js/bootstrap-treeview.js"></script>
+        @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
+
+        @*<script type="text/javascript">
+                $(document).ready(function () {
+                    alert();
+                      $.ajax({
+                          url: '@Url.Action("GetTree", "ChartOfAccounting")',
+                          dataType: 'JSON',
+                          type: 'get',
+                      }).done(function (result) {
+                          var data = JSON.parse(result);
+                          alert("in in");
+                          $('#tree').treeview({ data: data });
+                          alert("im after");
+                        });
+                    alert(data);
+
+                    alert("im done");
+                });
+
+
+            </script>*@
+        <script type="text/javascript">
+            $("#tree").hide();
+
+            var data = $('#tree').html();
+
+            $('#oops').treeview({
+                data: data,
+                color: "#0000A0",
+                showTags: true
+            });
+
+
+
+        </script>
+
+    }

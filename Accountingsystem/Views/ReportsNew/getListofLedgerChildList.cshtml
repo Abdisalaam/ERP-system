@@ -1,0 +1,636 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.ChildAccountGL
+
+
+@{
+
+    HttpCookie cookie = Request.Cookies["Language"];
+    var count = 0;
+    var msgo = ViewBag.message;
+    ViewBag.Title = Accountingsystem.Resources.ReportsgetListofLedger.AccountReport;
+    decimal Balance = Model.AmountBefor;
+
+    var dateto = "الي" + Convert.ToDateTime(Model.Todate).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.FromDate).ToString("yyyy/MM/dd ");
+    decimal totalAmount = 0;
+}
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("Import", "Slices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        var msg = ViewBag.Error;
+        @Html.Raw(ViewBag.Error)
+        <a href="~/Slices/Getexcel"><i class="BTN-style"> تحميل الملف</i></a>
+        <span>>>></span>
+        <input type="file" name="excelfile" />
+        <span>>>></span>
+        <input type="submit" value="Excel ادخال  شرائح السعر من" class="BTN-style" />
+
+    }*@
+@{
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+
+                <li class="nav-item theme-text">
+
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+
+                                <ul class="nav navbar-nav navbar-right">
+
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a class="BTN-style" href=" @Url.Action( "getListofLedgerChildPDF")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>PDF</a>
+
+
+
+                                        </div>
+                                    </li>
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a class="BTN-style" href=" @Url.Action( "getListofLedgerChildLExcel")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>EXCEL</a>
+
+
+
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+
+        </header>
+    </div>
+
+
+
+
+
+
+
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            @ViewBag.Message
+        </div>
+        <div class="container">
+
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                تقرير حساب / Account Report
+
+            </div>
+
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                @Model.Account.Account_Name
+
+            </div>
+            <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+                @datefrom      @dateto
+
+            </div>
+
+
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+                    <tr style="text-align:right;">
+
+                        <th style="text-align:center;"></th>
+                        <th style="text-align:center;">الدائن<br />Credit</th>
+
+                        <th style="text-align:center;">المدين<br />Depit</th>
+
+                        <th></th>
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td style="text-align:center;">رصيد اول المدة | Opening balance </td>
+                        <td style="text-align:center;">(@Math.Round(Model.Creditbefor * -1, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:center;"> @Math.Round(Model.Depitbefor, 2, MidpointRounding.AwayFromZero)</td>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </tr>
+                    <tr>
+
+                        <td style="text-align:center;">الفترة المحددة | Specified Period </td>
+                        <td style="text-align:center;">(@Math.Round(Model.details.Where(a => a.Amount < 0).Select(a => a.Amount).Sum() * -1, 2, MidpointRounding.AwayFromZero))</td>
+                        <td style="text-align:center;">@Math.Round(Model.details.Where(a => a.Amount > 0).Select(a => a.Amount).Sum(), 2, MidpointRounding.AwayFromZero)</td>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </tr>
+                    <tr>
+
+                        <th style="text-align:center;">الاجمالي<br />Total</th>
+                        <th style="text-align:center;">(@Math.Round((Model.details.Where(a => a.Amount < 0).Select(a => a.Amount).Sum() + Model.Creditbefor) * -1, 2, MidpointRounding.AwayFromZero) )</th>
+                        <th style="text-align:center;"> @Math.Round(Model.details.Where(a => a.Amount > 0).Select(a => a.Amount).Sum() + Model.Depitbefor, 2, MidpointRounding.AwayFromZero) </th>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <br />
+
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center">التاريخ<br />Date</th>
+                    @if (Model.Account.Account_Code.StartsWith("EMP"))
+                    {
+
+                    }
+                    else
+                    {
+                        <th style="text-align:center">الاستحقاق<br />Due</th>
+                    }
+                    <th style="text-align:center;font-size:xx-small">الرقم<br />No</th>
+
+                    <th style="text-align:center;font-size:xx-small">الوصف<br />Description</th>
+                    <th style="text-align:center;font-size:xx-small">القيمة<br />Amount</th>
+
+                    <th style="text-align:right">الرصيد<br />Balance</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+                <tr>
+                    <td style="text-align:center;font-size:10px">
+                        رصيد اول المدة | Opening balance
+                    </td>
+                    @if (Model.Account.Account_Code.StartsWith("EMP"))
+                    {
+
+                    }
+                    else
+                    {
+                        <td style="text-align:left;font-size:5px"></td>
+                    }
+                    <td style="text-align:left;font-size:5px"></td>
+                    <td style="text-align:left;font-size:5px"></td>
+                    <td style="text-align:left;font-size:5px"></td>
+
+
+                    <td>
+                        @if (Model.AmountBefor < 0)
+                        {
+                            var a = "(" + Math.Round(Model.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+
+
+
+
+
+
+
+                    <td></td>
+                </tr>
+                @foreach (var item in Model.details.OrderBy(a => a.date))
+                {
+                    Balance += item.Amount;
+                    totalAmount += item.Amount;
+                    <tr>
+                        <td style="text-align:center;width:150px;">
+                            <h6>
+                                @item.date.ToString("yyyy/MM/dd ")
+                            </h6>
+                        </td>
+                        @if (Model.Account.Account_Code.StartsWith("EMP"))
+                        {
+
+                        }
+                        else
+                        {
+                            <td style="text-align:center;width:150px;">
+                                @if (item.dueDate != null)
+                                {
+                                    <h6>
+                                        @item.dueDate.Value.ToString("yyyy/MM/dd ")
+                                    </h6>
+                                }
+                            </td>
+                        }
+                        <td style="text-align:center;">
+                            @Html.DisplayFor(modelItem => item.Number)
+                        </td>
+
+                        <td style="text-align:right;">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+
+                        <td>
+                            @if (item.Amount < 0)
+                            {
+                                var a = "(" + Math.Round(item.Amount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            @if (Balance < 0)
+                            {
+                                var taxvalue = "(" + Math.Round(Balance * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @taxvalue
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Balance, 2, MidpointRounding.AwayFromZero)
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group">
+
+                                <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+
+                                    <a href="@Url.Action("getdetailForAutoGL","GLMaster", new { code = item.DocumentNumber })" class="dropdown-item">
+                                        @Accountingsystem.Resources.GLMasterIndexAuto.OperationDetails
+                                    </a>
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center">الاجمالي<br />Total</th>
+                    @if (Model.Account.Account_Code.StartsWith("EMP"))
+                    {
+
+                    }
+                    else
+                    {
+                        <th style="text-align:right"></th>
+                    }
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right">
+                        @if (totalAmount < 0)
+                        {
+                            var a = "(" + Math.Round(totalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(totalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+                    </th>
+                    <th style="text-align:right"></th>
+
+                </tr>
+
+            </thead>
+        </table>
+        <br />
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            خاص بالسندات المعتمدة
+
+        </div>
+        <br />
+        @if (Model.Account.Account_Code.StartsWith("CUS") || Model.Account.Account_Code.StartsWith("SUP"))
+        {
+            <table class="table" style="text-align:right;direction:rtl;">
+                <thead>
+                    <tr>
+
+                        <th width="200px">الرقم<br />NO</th>
+                        <th style="text-align:center">الاسم<br />Name</th>
+                        @*<th style="text-align:center" width="100px">الرصيد <br /> balance</th>*@
+
+                        <th width="10px" style="text-align:center">رصيد الفترة<br />Period Balance</th>
+
+
+
+                        <th width="10px" style="text-align:center">0-30</th>
+                        <th width="10px" style="text-align:center">31-60</th>
+                        <th width="10px" style="text-align:center">61-90</th>
+                        <th width="10px" style="text-align:center">90+</th>
+
+
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+
+
+
+                        <td>
+                            @Model.Account.Account_Code
+                        </td>
+
+                        <td>
+                            @Model.Account.Account_Name
+
+                        </td>
+                        @*<td>
+                            @if (Model.statistic.CurrentBalance >= 0)
+                            {
+                                @Math.Round(Model.statistic.CurrentBalance, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.CurrentBalance * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+
+                        </td>*@
+                        <td>
+
+                            @if (Model.statistic.Datebalance >= 0)
+                            {
+                                @Math.Round(Model.statistic.Datebalance, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.Datebalance * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+                        </td>
+
+                        <td>
+
+                            @if (Model.statistic.Date30After >= 0)
+                            {
+                                @Math.Round(Model.statistic.Date30After, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.Date30After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+
+                        </td>
+                        <td>
+
+                            @if (Model.statistic.Date60After >= 0)
+                            {
+                                @Math.Round(Model.statistic.Date60After, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.Date60After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+
+                        </td>
+                        <td>
+
+                            @if (Model.statistic.Date90After >= 0)
+                            {
+                                @Math.Round(Model.statistic.Date90After, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.Date90After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+
+                        </td>
+                        <td>
+
+                            @if (Model.statistic.Date120After >= 0)
+                            {
+                                @Math.Round(Model.statistic.Date120After, 2, MidpointRounding.AwayFromZero)
+                            }
+                            else
+                            {
+                                <p> ( @Math.Round(Model.statistic.Date120After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                            }
+
+                        </td>
+                    </tr>
+
+
+                </tbody>
+
+
+
+
+            </table>
+        }
+    </div>
+</div>
+@section Scripts {
+
+
+
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+    }
+

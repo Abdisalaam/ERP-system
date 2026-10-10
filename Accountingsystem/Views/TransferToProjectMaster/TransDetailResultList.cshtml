@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransferToProjectDetailTemp>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("الكميه")
+        </th>
+        <th>
+            @Html.DisplayName("اسم الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الصنف")
+        </th>
+        <th>
+            @Html.DisplayName("اجمالي التكلفه")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.Details_Id)
+    <tr>
+
+        <td>
+            @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+        </td>
+
+        <td>
+            @{var Prod = Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Name;
+                <h>@Prod</h> }
+        </td>
+        <td>
+            @{var code = Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Code;
+                <h>@code</h> }
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+            @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+        </td>
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Details_Id+"')")" class="btn BTN-style-danger final-BTN" style="text-decoration:none;">حذف</a>
+            </div>
+
+        </td>
+
+    </tr>
+    }
+
+</table>

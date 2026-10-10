@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApproveDocument" xml:space="preserve">
+    <value>Approval</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+  <data name="AssetsDepartment" xml:space="preserve">
+    <value>Assets Department</value>
+  </data>
+  <data name="Banks" xml:space="preserve">
+    <value>Banks</value>
+  </data>
+  <data name="CashBills" xml:space="preserve">
+    <value>Cash Invoice</value>
+  </data>
+  <data name="CashSaleReturns" xml:space="preserve">
+    <value>Return Cash Invoice</value>
+  </data>
+  <data name="CatchReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="CatchReceiptOfSales" xml:space="preserve">
+    <value>Sales Receipt</value>
+  </data>
+  <data name="ChartOfAccounting" xml:space="preserve">
+    <value>Chart Of Accounting</value>
+  </data>
+  <data name="CompanyData" xml:space="preserve">
+    <value>Company Data</value>
+  </data>
+  <data name="ControlBoard" xml:space="preserve">
+    <value>Dash Board</value>
+  </data>
+  <data name="CostCenters" xml:space="preserve">
+    <value>Cost Centers</value>
+  </data>
+  <data name="CostCenterTree" xml:space="preserve">
+    <value>Cost Center Tree</value>
+  </data>
+  <data name="CreateCostDistribution" xml:space="preserve">
+    <value>Create Cost Distribution</value>
+  </data>
+  <data name="CreateExpense" xml:space="preserve">
+    <value>Create Expense</value>
+  </data>
+  <data name="CreateSubscription" xml:space="preserve">
+    <value>Create A Subscription</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Customers</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="FinancialConstraints" xml:space="preserve">
+    <value>Journal Entry</value>
+  </data>
+  <data name="FinancialDepartment" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="FinancialReports" xml:space="preserve">
+    <value>Financial Reports</value>
+  </data>
+  <data name="FixedAssetReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="FutureBillings" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="FutureSaleReturns" xml:space="preserve">
+    <value>Invoice Return</value>
+  </data>
+  <data name="Graphics" xml:space="preserve">
+    <value>Accounts Tree</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="HumanResourcesDepartment" xml:space="preserve">
+    <value>Human Resources</value>
+  </data>
+  <data name="ImportCostsDistribution" xml:space="preserve">
+    <value>Purchases Costs</value>
+  </data>
+  <data name="MainData" xml:space="preserve">
+    <value>Main Data</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="MechanicalConstraints" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="OpiningConstraints" xml:space="preserve">
+    <value>Opening Entry</value>
+  </data>
+  <data name="PaymentMethods" xml:space="preserve">
+    <value>Payment Methods</value>
+  </data>
+  <data name="PriceOffer" xml:space="preserve">
+    <value>Quotations</value>
+  </data>
+  <data name="ProductsAndServicesList" xml:space="preserve">
+    <value>Item List</value>
+  </data>
+  <data name="ProjectPayment" xml:space="preserve">
+    <value>Project Payment</value>
+  </data>
+  <data name="ProjectsDepartment" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ProjectsInvoice" xml:space="preserve">
+    <value>Projects Invoice</value>
+  </data>
+  <data name="ProjectsList" xml:space="preserve">
+    <value>Projects List</value>
+  </data>
+  <data name="ProjectsReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="PublicReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="PurchaseInvoice" xml:space="preserve">
+    <value>Bill</value>
+  </data>
+  <data name="PurchaseOrder" xml:space="preserve">
+    <value>Purchase Order</value>
+  </data>
+  <data name="PurchasesAssetInvoice" xml:space="preserve">
+    <value>Purchases Bill</value>
+  </data>
+  <data name="PurchasingSection" xml:space="preserve">
+    <value>Purchases</value>
+  </data>
+  <data name="QuickInventorySalesList" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="QuickInventorySalesReturnsList" xml:space="preserve">
+    <value>Returns </value>
+  </data>
+  <data name="QuickStoreSalesDepartment" xml:space="preserve">
+    <value>Point Of Sale</value>
+  </data>
+  <data name="QuickStoreSalesList" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="RecalPurcheInvoice" xml:space="preserve">
+    <value>Purchase Returnes</value>
+  </data>
+  <data name="ReportsDepartment" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="ReportsPurchases" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="SalesCenter" xml:space="preserve">
+    <value>Sales Center</value>
+  </data>
+  <data name="SalesReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="SalesSection" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ServicesDepartment" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SpentRecipt" xml:space="preserve">
+    <value>Cash Voucher</value>
+  </data>
+  <data name="StaffMenu" xml:space="preserve">
+    <value>Employees List</value>
+  </data>
+  <data name="StaffReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="StaffTeams" xml:space="preserve">
+    <value>Employees Teams</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="StorageDepartment" xml:space="preserve">
+    <value>Stores</value>
+  </data>
+  <data name="StorageReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="StoresList" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="SubscriptionsList" xml:space="preserve">
+    <value>Subscriptions List</value>
+  </data>
+  <data name="SubscriptionsReports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="SubscriptionsSection" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="SubscriptionsTypes" xml:space="preserve">
+    <value>Subscriptions Types</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="SuppliersSpentReceipt" xml:space="preserve">
+    <value>Suppliers Cash Voucher</value>
+  </data>
+  <data name="Taxes" xml:space="preserve">
+    <value>Taxes</value>
+  </data>
+  <data name="TranseferFromStoreToStore" xml:space="preserve">
+    <value>Transefer</value>
+  </data>
+  <data name="TransferToProject" xml:space="preserve">
+    <value>Transfer From Store</value>
+  </data>
+  <data name="TransferTostore" xml:space="preserve">
+    <value>Transfer From Project</value>
+  </data>
+  <data name="TransferToSubscription" xml:space="preserve">
+    <value>Transfer To Subscription</value>
+  </data>
+  <data name="Treasury" xml:space="preserve">
+    <value>Treasury</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="BanksAndTreasury" xml:space="preserve">
+    <value>Banks And Treasurys</value>
+  </data>
+  <data name="Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Profit</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="DailySales" xml:space="preserve">
+    <value>Daily sales</value>
+  </data>
+  <data name="GoToColumns" xml:space="preserve">
+    <value>Go to columns for details.</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="IncomeAndExpences" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="UncommitedDocuments" xml:space="preserve">
+    <value>Unposted Documents</value>
+  </data>
+  <data name="CustomersAndSupliersTitle" xml:space="preserve">
+    <value>Customers and Supliers</value>
+  </data>
+  <data name="CreateInvoice" xml:space="preserve">
+    <value>Create Invoice</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="PackagesAndSubscriptions" xml:space="preserve">
+    <value>Packages and subscriptions</value>
+  </data>
+  <data name="Subscripers" xml:space="preserve">
+    <value>Subscripers</value>
+  </data>
+  <data name="Cashier" xml:space="preserve">
+    <value>Cashier</value>
+  </data>
+  <data name="Commissions" xml:space="preserve">
+    <value>Commissions</value>
+  </data>
+  <data name="CommissionsIndex" xml:space="preserve">
+    <value>Ambassadors List</value>
+  </data>
+  <data name="CommissionPaymentsList" xml:space="preserve">
+    <value>The payments list</value>
+  </data>
+  <data name="CommissionsSales" xml:space="preserve">
+    <value>The sales list</value>
+  </data>
+</root>

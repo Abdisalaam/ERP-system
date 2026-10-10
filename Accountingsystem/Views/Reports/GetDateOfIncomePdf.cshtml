@@ -1,0 +1,496 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.IncomeStatementVM
+    @{ 
+        var dateto = "الي" + Convert.ToDateTime(Model.To_Date).ToString("yyyy/MM/dd ");
+        var datefrom = "من" + Convert.ToDateTime(Model.From_Date).ToString("yyyy/MM/dd ");
+        Layout = null;
+    }
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير قائمة الدخل  </title>
+
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+    <STYLE TYPE="text/css">
+        .breakhere {
+            page-break-after: always;
+            display: block;
+            content: "\A0";
+        }
+    </STYLE>
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+
+
+</head>
+
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    @*<div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+        
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير قائمة الدخل  | Income Statement Report
+
+        </div>
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+    <hr />
+    <div class="row">
+
+        <div class="text-center">
+            الايرادات | Revenue
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table class="table" style="text-align:center;direction:ltr;">
+                <tr>
+                    <th>
+                        القيمة<br /> Value
+                    </th>
+                    <th>
+                         الحساب<br /> Account
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.Account_Revenue)
+                {
+                    <tr>
+                        @if (@Math.Round(item.difference, 2, MidpointRounding.AwayFromZero) == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            if (@Math.Round(item.difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                            {
+                                <td>
+                                    @Math.Round(item.difference, 2, MidpointRounding.AwayFromZero)
+
+                                </td>
+                            }
+                            else
+                            {
+                                var dif = item.difference * -1;
+                                <td>
+                                    (@Math.Round(dif, 2, MidpointRounding.AwayFromZero))
+
+                                </td>
+                            }
+                            <td>
+                                @item.Account_Name
+                            </td>
+                        }
+
+                    </tr>
+
+
+
+                }
+                <tr>
+                    @if (@Math.Round(Model.Total_Revenue, 2, MidpointRounding.AwayFromZero) >= 0)
+                    {
+                        <th>
+                            @Math.Round(Model.Total_Revenue, 2, MidpointRounding.AwayFromZero)
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+                            (@Math.Round(Model.Total_Revenue * -1, 2, MidpointRounding.AwayFromZero))
+                        </th>
+                    }
+                    <th>
+                        الاجمالي | Total
+                    </th>
+
+
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="text-center">
+             تكلفة المبيعات | Cost Of Sales
+        </div>
+
+        <div class="table-responsive mb-4 mt-4">
+            <table class="table" style="text-align:center;direction:ltr;">
+                <tr>
+                    <th>
+                        القيمة<br /> Value
+                    </th>
+                    <th>
+                        الحساب<br /> Account
+                    </th>
+
+
+                </tr>
+                @foreach (var item in Model.ExpenseSubLedger)
+                {
+                    <tr>
+
+                        @if (@Math.Round(item.difference, 2, MidpointRounding.AwayFromZero) == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            if (@Math.Round(item.difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                            {
+                                <td>
+                                    @Math.Round(item.difference, 2, MidpointRounding.AwayFromZero)
+                                    @*@item.difference  &nbsp&nbsp&nbsp&nbsp*@
+                                </td>
+                            }
+                            else
+                            {
+                                var dif = item.difference * -1;
+                                <td>
+                                    (@Math.Round(dif, 2, MidpointRounding.AwayFromZero)
+                                    @*( @dif)  &nbsp&nbsp&nbsp&nbsp*@
+                                </td>
+                            }
+                            <td>
+                                @item.Account_Name
+                            </td>
+                        }
+
+
+                    </tr>
+
+                }
+                <tr>
+                    @if (@Math.Round(Model.salesCost, 2, MidpointRounding.AwayFromZero) >= 0)
+                    {
+                        <th>
+                            @Math.Round(Model.salesCost, 2, MidpointRounding.AwayFromZero)
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+                            (@Math.Round(Model.salesCost * -1, 2, MidpointRounding.AwayFromZero))
+                        </th>
+                    }
+                    <th>
+                        الاجمالي | Total
+                    </th>
+
+
+                </tr>
+                <tr>
+                    @if (@Math.Round(Model.collectofRevenue, 2, MidpointRounding.AwayFromZero) >= 0)
+                    {
+                        <th>
+                            @Math.Round(Model.collectofRevenue, 2, MidpointRounding.AwayFromZero)
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+                            (@Math.Round(Model.collectofRevenue * -1, 2, MidpointRounding.AwayFromZero))
+                        </th>
+                    }
+                        <th>
+                           مجمل الربح والخسارة | Gross profit and loss
+                        </th>
+
+
+                </tr>
+            </table>
+        </div>
+       
+        <P CLASS="breakhere">
+            <div class="text-center">
+                المصروفات | Expences
+            </div>
+            <div class="table-responsive mb-4 mt-4">
+                <table class="table" style="text-align:center;direction:ltr;">
+                    <tr>
+                        <th>
+                            القيمة<br /> Value
+                        </th>
+                        <th>
+                            الحساب<br /> Account
+                        </th>
+
+
+
+                    </tr>
+
+                    @foreach (var item in Model.Account_Expense.Where(a => a.difference > 0))
+                    {
+                        <tr>
+
+                            @if (Math.Round(item.difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                            {
+                                <td>
+                                    @Math.Round(item.difference, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                            }
+                            else
+                            {
+                                var dif = item.difference * -1;
+                                <td>
+                                    (@Math.Round(dif, 2, MidpointRounding.AwayFromZero))
+                                </td>
+                            }
+                            <td style="width:auto">
+                                @item.Account_Name
+                            </td>
+
+
+
+
+                        </tr>
+
+
+                    }
+
+                    <tr>
+                        @if (@Math.Round(Model.Total_Expense, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.Total_Expense, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.Total_Expense * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+                        <th>
+                            الاجمالي | Total
+                        </th>
+
+                    </tr>
+                    <tr>
+                        @if (@Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.Difference * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+                        <th>
+                            صافي الربح والخسارة | net profit and loss
+                        </th>
+
+
+                    </tr>
+                </table>
+            </div>
+
+
+
+            <div class="text-center">
+                الملخص | Summary
+            </div>
+            <div class="table-responsive mb-4 mt-4">
+                <table class="table" style="text-align:center;direction:rtl;">
+                    <tr>
+                        <th>
+                            الايرادات<br /> Revenue
+                        </th>
+                        @if (@Math.Round(Model.Total_Revenue, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.Total_Revenue, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.Total_Revenue * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+
+
+
+                    </tr>
+
+                    <tr>
+                        <th>
+                            تكلقة المبيعات<br /> Cost Of Sales
+                        </th>
+                        @if (@Math.Round(Model.salesCost, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.salesCost, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.salesCost * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+
+
+                    </tr>
+                    <tr>
+                        <th>
+                            المصروفات<br /> Expenses
+                        </th>
+                        @if (@Math.Round(Model.Total_Expense, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.Total_Expense, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.Total_Expense * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+
+
+
+                    </tr>
+                    <tr>
+                        <th>
+                            صافي الربح والخسارة <br /> net profit and loss
+                        </th>
+                        @if (@Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero) >= 0)
+                        {
+                            <th>
+                                @Math.Round(Model.Difference, 2, MidpointRounding.AwayFromZero)
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+                                (@Math.Round(Model.Difference * -1, 2, MidpointRounding.AwayFromZero))
+                            </th>
+                        }
+
+
+                    </tr>
+
+                </table>
+            </div>
+
+
+
+
+</div>
+
+    <footer style="margin-top:50%;"></footer>
+</body>
+</html>

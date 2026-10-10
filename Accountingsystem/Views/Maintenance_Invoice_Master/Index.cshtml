@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Accountingsystem.Models.Maintenance_Invoice_Master>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2 class="HEADTITLE-STYLE">القائمة</h2>
+<table class="table table-bordered table-striped" data-sortable-initialized="true" id="sasa">
+    <tr>
+
+        <th>
+            @Html.DisplayName("اسم العميل")
+        </th>
+        <th>
+            @Html.DisplayName("تاريخ البدء")
+        </th>
+        <th>
+            @Html.DisplayName("تاريخ الانتهاء")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الاشتراك")
+        </th>
+        <th>
+            @Html.DisplayName("رقم الفاتورة")
+        </th>
+        <th>
+            @Html.DisplayName("الوصف")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer_Name)
+            </td>
+            <td>
+             @item.Starting_Date.ToString("yyyy/MM/dd ")
+            </td>
+            <td>
+                @item.Ending_Date.ToString("yyyy/MM/dd ")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subscription_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Main_Invoice_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Describtion)
+            </td>
+            <td>
+                <a href="@Url.Action( "Details", new { id = item.Main_Invoice_Id })" class="BTN-style">
+                    التفاصيل
+                </a>
+
+            </td>
+        </tr>
+    }
+
+</table>

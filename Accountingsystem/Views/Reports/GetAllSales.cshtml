@@ -1,0 +1,78 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.AllSalseInvoices
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsGetAllReportsInvoiceSales.SalesReport;
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.ReportsGetAllReportsInvoiceSales.SalesReport</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="height:500px">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.startDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.From>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.From)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="Dropdownlist">
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.To>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.ReportsNewgetdateofSalesclassification.To)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value=@Accountingsystem.Resources.ReportsNewmakeSalesProductForCustomer.Create  class="btn BTN-style" />
+                <a class="btn BTN-style" href='@Url.Action("GetAllReportsPurchases","Reports")'>
+                    @Accountingsystem.Resources.ReportsGetAllDoneOfEmployee.BackToList
+                </a>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $('#startDate').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#EndDate').datetimepicker({ format: 'DD/MM/YYYY' });
+    </script>
+}

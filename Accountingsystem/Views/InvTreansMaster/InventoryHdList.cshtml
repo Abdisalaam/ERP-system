@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Accountingsystem.Models.InventoryTransfer_Detail>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TransferDetail_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Qty)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryTransfer_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail_TotalCoct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Batch_ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransferDetail_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Qty)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryTransfer_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Detail_TotalCoct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Batch_ID)
+        </td>
+        <td>
+            <div class="col-md-offset-2 col-md-10">
+
+                <a href='javascript:;' onclick="@("AddInf('"+item.InventoryTransfer_Id+"')")"  class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterDetails.Edit</a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

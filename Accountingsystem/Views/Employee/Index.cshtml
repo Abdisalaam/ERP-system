@@ -1,0 +1,553 @@
+﻿@model IEnumerable<Accountingsystem.Models.Employee>
+
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeIndex.EmployeesList;
+
+    var msg = ViewBag.Message;
+    var count = 1;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    decimal totalSalary = 0;
+
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+@{
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+<head>
+
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+
+                <li class="nav-item theme-text">
+
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+
+                                <ul class="nav navbar-nav navbar-right">
+
+
+
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.CreateNew</a>
+
+
+
+                                        </div>
+                                    </li>
+                                    @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات")*@)
+{
+                                <li>
+
+                                    <div class="dropdown-item">
+                                        <a href='@Url.Action("IndexOfNotActiVeEmployee")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.ExcludedEmployeesList</a>
+
+
+
+                                    </div>
+                                </li>
+                            }
+                                    @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+{
+                                <li>
+
+                                    <div class="dropdown-item">
+                                        <a href='@Url.Action("IndexOfUser","SystemRole")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.EmployeeIndex.UserPermissions </a>
+
+
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-item">
+                                        <a href='@Url.Action("makeEmpExcel")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.EmployeeDataExcel</a>
+
+
+
+                                    </div>
+                                </li>
+                                @*<li>
+        <div class="dropdown-item">
+            <a href='@Url.Action("AllRoleList")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.PermissionsList</a>
+
+
+
+        </div>
+    </li>*@
+                            }
+                                    @if (package.HR == true)
+                                    {
+                                        if (Request.IsAuthenticated /*&& !User.IsInRole("مدخل بيانات")*/)
+                                        {
+
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("makeGL")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.EmployeeIndex.PaySalariesPreparation</a>
+
+
+
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("makevoidGL")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.CancelingPaySalariesPreparation </a>
+
+
+
+                                                </div>
+                                            </li>
+                                            if (Request.IsAuthenticated /*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*/)
+                                            {
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <a href='@Url.Action("makManualGL")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.TransferSalaryReceipt </a>
+
+
+
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <a href='@Url.Action("IndexEMP","GLMaster")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.TransferSalaryGLList </a>
+
+
+
+                                                    </div>
+                                                </li>
+                                            }
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("Index", "TypeOfDetailSalary")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.SalaryList</a>
+
+
+
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("SalesByEmployeeForAllSales", "ReportsNew")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.EmployeeIndex.SalesReport</a>
+
+
+
+                                                </div>
+                                            </li>
+                                        }
+                                        if (Request.IsAuthenticated /*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*/)
+                                        {
+
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("Index", "Vacation_Types")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.VacationTypesList</a>
+
+
+
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a href='@Url.Action("IndexOfPenddingVac", "Vacations")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.EmployeeIndex.VacationsPendingList</a>
+
+
+
+                                                </div>
+                                            </li>
+
+
+
+                                        }
+                                    }
+                                    <li>
+
+                                        <div class="dropdown-item">
+                                            <a href='@Url.Action("Index","SpentReciptOrder")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>قائمة طلبات السلف</a>
+
+
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href='@Url.Action("Index","HRNotification")'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> @Accountingsystem.Resources.HRNotification.ListofHRNotification</a>
+
+
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+
+        </header>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            @ViewBag.Message
+        </div>
+        <div class="text-center">
+           @Accountingsystem.Resources.EmployeeIndex.EmployeesList
+        </div>
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.Number)
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.EmployeeNumber)
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.EmployeeName)
+                        </th>
+
+                        @if (package.HR == true)
+                        {
+                            <th>
+                                @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.SalaryCase)
+                            </th>
+                            <th>
+                                @Html.DisplayName(Accountingsystem.Resources.EmployeeIndex.TotalSalary)
+                            </th>
+                        }
+                        <th>
+                            @Html.Display(Accountingsystem.Resources.EmployeeIndex.EmployeePhoto)
+                        </th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Emp_Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Emp_Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Emp_Name)
+                            </td>
+
+                            @if (package.HR == true)
+                            {
+                                <td id="Status">
+                                    @if (item.Status == Accountingsystem.Models.Status.صرف)
+                                    {
+                                        @Accountingsystem.Resources.validate.cash
+                                    }
+                                    else
+                                    {
+                                        @Accountingsystem.Resources.validate.notCash
+                                    }
+
+                                </td>
+                                <td id="Status">
+                                    @*@Html.DisplayFor(modelItem => item.Total_Salary)*@
+                                    @Math.Round(item.Total_Salary.Value, 2, MidpointRounding.AwayFromZero)
+                                </td>
+                            }
+                            <td>
+
+                                @if (item.Emp_Image != null)
+                                {
+                                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Emp_Image)" alt="Image" style="width: 100px" />
+                                }
+
+                            </td>
+                            <td>
+                                @if (item.Emp_Id !=1)
+                                {
+                                    <div class="btn-group">
+
+                                        <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                            <a href="@Url.Action("Details", new { id = item.Emp_Id })" class="dropdown-item">
+                                                @Accountingsystem.Resources.OfferPriceMasterIndex.Details
+                                            </a>
+
+                                            @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب") && !User.IsInRole("بائع")*@)
+{
+                                        <a href="@Url.Action("Edit", new { id = item.Emp_Id })" class="dropdown-item">
+                                            @Accountingsystem.Resources.CustomerIndex.Edit
+                                        </a>
+
+                                        <a href=" @Url.Action("ChangeValueOfEmployeeActiveOrNot", new { id = item.Emp_Id })" class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.ConvertInactiveEmployee
+                                        </a>
+
+
+                                    }
+                                            @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات")*@)
+{
+                                        <a href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = item.Emp_Code })' class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.EmployeeReport
+                                        </a>
+                                    }
+                                            @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("محاسب") && !User.IsInRole("مساعد محاسب")*@)
+{
+{
+var thisempl = Accountingsystem.Models.Employee.getEmpById(item.Emp_Id);
+if (thisempl.Reg_ID == null)
+{
+
+
+                                        <a href=" @Url.Action("Register", "Account", new { id = item.Emp_Id }, null)" class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.Register
+                                        </a>
+
+
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("GetAllDoneOfEmployee", "Reports", new { id = item.Emp_Id })' class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.UserActivity
+                                        </a>
+                                        <a href=" @Url.Action("RoleView", "Employee", new { id = item.Emp_Id })" class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.EditRole
+                                        </a>
+                                        <a href=" @Url.Action("RmoveAccount", new { id = item.Emp_Id })" class="dropdown-item">
+                                            @Accountingsystem.Resources.EmployeeIndex.DeleteEmployeeRole
+                                        </a>
+
+
+
+
+                                    }
+                                }
+
+                            }
+                                            @if (Request.IsAuthenticated &&@*!User.IsInRole("مدخل بيانات") &&*@ /**/
+                                                                                                                                    package.HR == true)
+                                                                {
+
+                                                                    <a href=" @Url.Action("EditStatus", new { id = item.Emp_Id })" class="dropdown-item">
+                                                                        @Accountingsystem.Resources.EmployeeIndex.ChangeSalarypayCase
+                                                                    </a>
+
+
+                                                                }
+                                            <a href='@Url.Action("FillGlForCreateSettelment", new { controller = "GLMaster", code =item.Emp_Code  })' class="dropdown-item">
+                                                @Accountingsystem.Resources.validate.SettlementGL
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                { <div class="btn-group">
+
+                           <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                     </button>
+                           <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                               <a href="@Url.Action("Edit", new { id = item.Emp_Id })" class="dropdown-item">
+                                   @Accountingsystem.Resources.CustomerIndex.Edit
+                               </a>
+
+                               <a href=" @Url.Action("ChangeValueOfEmployeeActiveOrNot", new { id = item.Emp_Id })" class="dropdown-item">
+                                   @Accountingsystem.Resources.EmployeeIndex.ConvertInactiveEmployee
+                               </a>
+                               <a href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = item.Emp_Code })' class="dropdown-item">
+                                   @Accountingsystem.Resources.EmployeeIndex.EmployeeReport
+                               </a>
+                          
+                           </div>
+    </div>
+    }
+</td>
+
+
+
+
+
+
+                        </tr>
+                        {
+                            count = count + 1;
+
+                            totalSalary += item.Total_Salary.Value;
+
+                        }
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>
+
+
+                        </th>
+                        <th>
+
+                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.TotalAmount)
+                        </th>
+                        <th>
+
+                        </th>
+                        <th></th>
+                        <th>
+                            @Math.Round(totalSalary, 2, MidpointRounding.AwayFromZero)
+                        </th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+           
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+}
+

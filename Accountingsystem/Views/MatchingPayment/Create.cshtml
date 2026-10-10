@@ -1,0 +1,266 @@
+﻿@model Accountingsystem.ViewModel.MatchingPaymentVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h4>خصم قيمة الدفع من فاتورة المشتريات</h4>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal"style="margin-bottom:90px">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Match_Code, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Match_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Match_Code">الكود</label>                    
+                            </div>
+                    </div>
+                </div>
+    
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedSupp_Id, Model.MySuppList, "اختر المورد", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedSupp_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedSupp_Id, " اخترالمورد", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedPurInvoiceMaster_Id, Model.MyPurInvoiceMaster, "اخر الفاتوره", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedPurInvoiceMaster_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedPurInvoiceMaster_Id, "فاتورة المشتريات", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                      
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedPaymentPay_ID, Model.MyPaymentPay, "اختر الايصال", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedPaymentPay_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedPaymentPay_ID, "تحديد الايصال", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                       
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Comp_ID, Model.MyCompanyList, "اختر الشركة", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Comp_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Comp_ID" style="margin-left: 50px;">الشركة</label>                       
+                         </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                @*<div class="col-md-5">
+                    <div class="col-md-6">
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Match_BU, Model.MyBusinessUnitList, "اختر نشاط الشركة", htmlAttributes: new { @class = "Dropdownlist-select" })
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Match_BU, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                       
+                    </div>
+                </div>*@
+
+                <div class="col-md-5">
+                    <div class="col-md-6">
+
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Match_currency, Model.myPayCurrency, "اختر العمله", htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Match_currency, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label class="control-label" for="Match_currency" style=" margin-left: 55px;">العملة</label>       
+                                         </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="انشاء" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <div id="MyPurInvoiceDetails"></div>
+    <div id="MyPaymentDetails"></div>
+}
+
+@*<div>
+    @Html.ActionLink("العودة", "Index")
+</div>*@
+
+
+<a class="btn btn-primary" href='@Url.Action("Index")'>
+    <p>
+
+        العودة الى القائم
+    </p>
+</a><div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript">
+        $('#Date').datetimepicker({ format: 'DD/MM/YYYY' });
+
+        $(function () {
+            $("#SelectedPurInvoiceMaster_Id").empty();
+            $("#SelectedPaymentPay_ID").empty();
+
+            $("#SelectedPurInvoiceMaster_Id").change(function () {
+                var data = $(this).val();
+                $("#MyPurInvoiceDetails").load('@(Url.Action("GetMatchingPurInvoiceDetails", "MatchingPayment", null, Request.Url.Scheme))?InvoiceDetailsID=' + data);
+            });
+            $("#SelectedPaymentPay_ID").change(function () {
+                var data = $(this).val();
+                $("#MyPaymentDetails").load('@(Url.Action("GetMatchingPaymentDetails", "MatchingPayment", null, Request.Url.Scheme))?paymentId=' + data);
+
+            })
+
+            $("#SelectedSupp_Id").change(function (e) {
+
+                var selectedText = $(this).find("option:selected").text();
+
+                var selectedValue = $(this).val();
+
+                $.ajax({
+
+                    url: '@Url.Action("GetInvoice", "MatchingPayment")',
+                    type: 'get',
+                    data: { SuppId: selectedValue }
+                }).done(function (result) {
+
+                    $("#SelectedPurInvoiceMaster_Id").empty();
+                    var placeholder = new Option("اختر الفاتورة", -1);
+                    $("#SelectedPurInvoiceMaster_Id").append(placeholder);
+
+                    for (var i = 0; i < result.length; i++) {
+                        var item = result[i];
+                        var p = new Option(result[i].Text, result[i].Value);
+                        $("#SelectedPurInvoiceMaster_Id").append(p);
+                    }
+                });
+
+                $.ajax({
+
+                    url: '@Url.Action("GetResult", "MatchingPayment")',
+                    type: 'get',
+                    data: { SuppId: selectedValue }
+                }).done(function (res) {
+
+                    $("#SelectedPaymentPay_ID").empty();
+                    var placeholder = new Option("اختر الايصال", -1);
+                    $("#SelectedPaymentPay_ID").append(placeholder);
+
+                    for (var i = 0; i < res.length; i++) {
+                        var item = res[i];
+                        var p1 = new Option(res[i].Text, res[i].Value);
+                        $("#SelectedPaymentPay_ID").append(p1)
+
+
+                    }
+
+                });
+
+
+            });
+        });
+
+
+    </script>
+}

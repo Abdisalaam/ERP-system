@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.OrderVM>
+
+
+<table id="holdedOrdersTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Id)*@
+            </th>
+
+            <th>
+                @*@Html.DisplayNameFor(model => model.OrderDate)*@
+                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceDate)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.TotalNet)*@
+                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Net)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalNet)
+            </td>
+            <td>
+                <a href='javascript:;' onclick="@("GetHoldedOrder('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="GetOrder"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
+            </td>
+            <td>
+                <a href='javascript:;' onclick="@("DeleteHoldedOrder('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $("#holdedOrdersCountId").text(@Model.Count());
+</script>

@@ -1,0 +1,454 @@
+﻿@model Accountingsystem.Models.SettlementOfStores
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SettlementOfStoresDetails.SettlementDetails;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    decimal QuantityDif = 0;
+    string state = "";
+
+    decimal Total = Model.Total_Cost_Credit + Model.Total_Cost_Debit;
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.SettlementOfStoresDetails.SettlementDetails
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.Code)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Settlement_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceDate)
+                                        </div>
+                                        <div>
+                                            @Model.Date.Value.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.SettlementCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Settlement_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresDetails.StoreName)
+                                        </div>
+                                        <div>
+                                            @Accountingsystem.Models.Store.GetStoreById(Model.StoreId).Store_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Expense_Id > 0)
+                    {
+                            <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.Expenses.ExpenseAccount)
+                                        </div>
+                                        <div>
+                                            @Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Expense_Id.Value).Account_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    @if (package.Number_Branch > 0)
+                    {
+                        if (Model.BranchSubledger_Id != null)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BranchSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.BranchName)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (Model.DepartSubledger_Id != null && Model.DepartSubledger_Id > 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.DepartSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.SettlementOfStoresCreate.Department)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        if (Model.BussinesSubledger_Id != null && Model.BussinesSubledger_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BussinesSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Activity)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                
+                </div>
+
+            </div>
+
+
+            <div class="table-responsive">
+                <table class="table mb-4">
+                    <thead>
+                        <tr>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Item</th>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.ItemNumber</th>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.SettlementCase</th>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Quantity</th>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.ItemCost</th>
+                            <th>@Accountingsystem.Resources.SettlementOfStoresDetails.TotalCost</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.SettlementOfStoresDetails)
+                        {
+                            <tr>
+                                <td> @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id).Prod_Name</td>
+                                <td> @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id).Prod_Code</td>
+
+                                @{
+                                    if (detail.Product_Quantity > detail.Real_Quantity)
+                                    {
+                                        QuantityDif = detail.Product_Quantity - detail.Real_Quantity;
+                                        state = "زيادة";
+                                    }
+                                    else
+                                    {
+                                        QuantityDif = detail.Real_Quantity - detail.Product_Quantity;
+                                        state = "نقصان";
+                                    }
+                                }
+                                <td>@state</td>
+
+                                <td>@Math.Round(QuantityDif, 2, MidpointRounding.AwayFromZero)</td>
+                                <td>@Math.Round(detail.Product_Cost, 2, MidpointRounding.AwayFromZero)</td>
+                                <td>@Math.Round(detail.Total_Cost_Detail, 2, MidpointRounding.AwayFromZero)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class=''>
+                <div class="row layout-top-spacing">
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.Label(@Accountingsystem.Resources.SettlementOfStoresDetails.Total)
+
+                                        </div>
+                                        <div>
+                                            @Math.Round(Total, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="row layout-top-spacing">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <a id="newbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Create", "SettlementOfStores", new { storeId = Model.StoreId })">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Createnew
+                            <span id="newbtnSpinner" style="display:none;" class="spinner-border text-danger mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        @*@if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب"))
+                        {*@
+
+
+
+
+                            @if (Model.Settlement_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+                                <input id="changeState" type="button" value="Post" class="btn btn-block btn-outline-info mb-lg-0" />
+
+                                <a id="Delete" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Delete", new { id = Model.SettlementId })">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Delete
+                                </a>
+                                <a id="EditInvoice" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Edit", new { id = Model.SettlementId })">
+                                    @Accountingsystem.Resources.InvoiceMasterDetails.Edit
+                                    <span id="EditInvoiceSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+
+                            }
+
+
+
+                        @*}*@
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @if (Model.Settlement_State != Accountingsystem.Models.TransactionState.Pending)
+                        {
+                            <a id="gLbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Settlement_Code })'>
+                                @Accountingsystem.Resources.InvoiceMasterDetails.ReceiptConstraint
+                                <span id="gLbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+
+                            </a>
+                        }
+                        <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                            <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    @section scripts{
+        <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+        <script>
+            $("#Delete").click(function (e) {
+                $("#DeleteSpinner").show();
+            });
+            $("#newbtn").click(function (e) {
+                $("#newbtnSpinner").show();
+            });
+            $("#Edit").click(function (e) {
+                $("#EditSpinner").show();
+            });
+            $("#ReceiptConstraint").click(function (e) {
+                $("#ReceiptConstraintSpinner").show();
+            });
+            $("#BackToList").click(function (e) {
+                $("#BackToListSpinner").show();
+            });
+            $("#EditInvoice").click(function (e) {
+                $("#EditInvoiceSpinner").show();
+            });
+
+            $("#gLbtn").click(function (e) {
+                $("#gLbtnSpinner").show();
+            });
+
+            $("#PrintEmail").click(function (e) {
+                $("#PrintEmailSpinner").show();
+            });
+
+            $("#Print").click(function (e) {
+                $("#PrintSpinner").show();
+            });
+
+            
+
+        </script>
+        <script type="text/javascript">
+                    updateButtonText();
+                    hideEditAndDeleteActions();
+                    function updateButtonText() {
+                        var Settlement_State = $.trim($("#Settlement_State").text());
+                        if (Settlement_State == "Post") {
+                            $("#changeState").hide();
+                            return;
+                        }
+                        else if (Settlement_State == "Pending")
+                            $("#changeState").val("Post");
+                        else if (Settlement_State == "Post")
+                            $("#changeState").val("Void");
+                    }
+                    function updateInvoiceStateText() {
+                        var Settlement_State = $.trim($("#Settlement_State").text());
+                        if (Settlement_State == "Pending")
+                            $("#Settlement_State").text("Post");
+                        else if (Settlement_State == "Post")
+                            $("#Settlement_State").text("Void");
+                    }
+
+                    function hideEditAndDeleteActions() {
+                        /// <summary>Hides the edit and delete actions if the invoice is not pending
+                        var Settlement_State = $.trim($("#Settlement_State").text());
+                        if (Settlement_State != "Pending")
+                            $("#EditAndDelete").hide();
+                    }
+
+                    function updateInvoiceState(data) {
+                        return $.ajax({
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+                            url: '@Url.Action("UpdateGL", "SettlementOfStores")',
+                            data: data,
+                            success: function (result) {
+                                alert(result);
+                                location.reload();
+                            },
+                            error: function () {
+                                alert("Error!")
+                            }
+                        });
+                    }
+
+                    $("#changeState").click(function (e) {
+                        this.disabled = true;
+                        e.preventDefault();
+                        var data = JSON.stringify({
+                            SettlementId: @Model.SettlementId,
+                            Settlement_State: $("#changeState").val()
+                        });
+
+                        $.when(updateInvoiceState(data)).then(function (response) {
+                            console.log(response);
+                        }).fail(function (err) {
+                            console.log(err);
+                        });
+                        updateButtonText();
+                        updateInvoiceStateText();
+                        hideEditAndDeleteActions();
+                        this.disabled = true;
+                    })
+        </script>
+    }

@@ -1,0 +1,76 @@
+﻿@model Accountingsystem.Models.Store
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.StoreDelete.Delete;
+}
+
+
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.StoreDelete.DeletionStoreQuestion</h2>
+<div>
+   
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+                <tr>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.StoreDelete.StoreName)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Store_Name)
+                    </td>
+
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.StoreDelete.StoreAccountNumber)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Store_Code)
+                    </td>
+                </tr>
+                <tr>
+                    @*<th class="col-md-2">
+                        @Html.DisplayName(" اسم الموظف")
+                    </th>*@
+                    @*<td class="col-md-2">
+
+                        @{if (Model.Emp_Id == null || Model.Emp_Id == 0)
+                            {
+
+                            }
+                            else
+                            {
+                                var Emp = Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value).Emp_Name;
+                                <h>@Emp</h>
+                            }
+
+                        }
+                    </td>*@
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.StoreDelete.StoreAddress)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Store_Address)
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value=@Accountingsystem.Resources.StoreDelete.Delete class="btn BTN-style final-BTNs" />
+        <a class="btn BTN-style final-BTNs" href='@Url.Action("Index", new { controller = "Store"})'>
+            @Accountingsystem.Resources.StoreDelete.BackToList
+        </a>
+    </div>
+   
+    }
+</div>

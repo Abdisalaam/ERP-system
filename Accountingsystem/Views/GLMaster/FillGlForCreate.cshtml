@@ -1,0 +1,801 @@
+﻿@model Accountingsystem.ViewModel.GLMasterVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.GLMasterFillGlForCreate.CreateDailyConstraint;
+    HttpCookie cookie = Request.Cookies["Language"];
+    Model.Company_Id = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    Model.Currency_Id = 1;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+   
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@Html.HiddenFor(model => model.Company_Id)
+@Html.HiddenFor(model => model.Currency_Id)
+@Html.HiddenFor(model => model.GLType_Id)
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <form id="expensesCreateForm">
+        <div class="">
+            <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+            <h3 class="text-center">@Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.CreateDailyConstraint)</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-11 mx-auto">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DailyConstraintNumber)
+                                @Html.EditorFor(model => model.GLCode, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.GLCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DateOfConstraint)
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.GL_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    <div class="input-group-append">
+                                        <div>
+                                            <span class="form-control text-danger">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.GL_Date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DescriptionOfConstraint)
+                                @Html.TextAreaFor(model => model.GL_Desc, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.Expenses.Description })
+                                @Html.ValidationMessageFor(model => model.GL_Desc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="text-center">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreateStartGL.AccountName)
+                                </div>
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.selectedAccount, Model.accountList, Accountingsystem.Resources.GLMasterFillGlForCreate.AccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    <div class="input-group-append">
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                </div>
+                                @Html.ValidationMessageFor(model => model.selectedAccount, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(model => model.Account_Child_ID, Model.childList, Accountingsystem.Resources.GLMasterFillGlForCreateStartGL.SubAccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.ValueOfDebtor)
+                                <div class="input-group">
+                                    <input type="number" step="any" id="GLDetail_Debit" name="GLDetail_Debit" class="form-control mb-4" value="0" />
+                                    <div class="input-group-append">
+                                        <div>
+                                            <span class="form-control text-danger">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.ValueOfCreditor)
+                                <div class="input-group">
+                                    <input type="number" step="any" id="GLDetail_Credit" name="GLDetail_Credit" class="form-control mb-4" value="0" />
+                                    <div class="input-group-append">
+                                        <div>
+                                            <span class="form-control text-danger">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (package.Number_subLedgger > 0 || package.Number_Branch > 0 || package.Project == true)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenter)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SubLed_Id, Model.SubLedgerList, Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenterInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.MovementDescription)
+                                <div class="input-group">
+                                    <input type="text" id="Description_Detail" name="Description_Detail" class="form-control mb-4" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="addToList" class="btn btn-block btn-outline-success mb-lg-0" style="text-decoration:none;">
+                            @Accountingsystem.Resources.GLMasterFillGlForCreate.AddToList
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            <span id="addToAccountBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+
+            <table id="detailsTable" class="table mb-4">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.AccountDebtor</th>
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.AccountCreditor</th>
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.AccountName</th>
+
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenter</th>
+
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.SubAccount</th>
+                        <th>@Accountingsystem.Resources.GLMasterFillGlForCreate.MovementDescription</th>
+
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class=''>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.GLMasterFillGlForCreate.TotalValuOfDebtor)
+                                    </div>
+                                    <div>
+                                        <lable id="totalDebtLable"></lable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.validate.difference)
+                                    </div>
+                                    <div>
+                                        <lable id="difference"></lable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.GLMasterFillGlForCreate.TotalValuOfCreditor)
+                                    </div>
+                                    <div>
+                                        <lable id="totalCreditLable"></lable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="saveOrder" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create <span id="createExpensesSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index", "GLMaster")'>
+                            @Accountingsystem.Resources.Expenses.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+    </form>
+</div>
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }
+            $("#createExpensesSpinner").hide();
+            var currentDate = new Date();
+            var _ExpensesDate = flatpickr(document.getElementById('GL_Date'), {
+                defaultDate: currentDate
+            });
+            $("#Account_Child_ID").empty();
+             var childAccountOption = new Option("@Accountingsystem.Resources.GLMasterFillGlForCreate.SubAccountInformation", 0);
+            $("#Account_Child_ID").append(childAccountOption);
+            $('#Account_Child_ID').trigger('chosen:updated');
+
+            $("#SubLed_Id").chosen();
+            $("#Account_Child_ID").chosen();
+            $("#selectedAccount").chosen();
+
+            $("#SubLed_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Account_Child_ID_chosen").addClass("form-control Dropdownlist-select");
+            $("#selectedAccount_chosen").addClass("form-control Dropdownlist-select");
+            $("#GLDetail_Debit").val("");
+            $("#GLDetail_Credit").val("");
+        });
+    </script>
+    <script>
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+    </script>
+    <script>
+        $('#GLDetail_Debit').on('input', function () {
+            $("#GLDetail_Debit").removeClass("addRequiredFieldToInput");
+            $("#GLDetail_Credit").removeClass("addRequiredFieldToInput");
+        });
+        $('#GLDetail_Credit').on('input', function () {
+            $("#GLDetail_Credit").removeClass("addRequiredFieldToInput");
+            $("#GLDetail_Debit").removeClass("addRequiredFieldToInput");
+        });
+        $('#selectedAccount').on('change', function () {
+            $("#selectedAccount_chosen").removeClass("addRequiredFieldToInput");
+            $('#selectedAccount_chosen span').css('background', '#ffffff');
+            $('#selectedAccount_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script type="text/javascript">
+        var Total_Debit = 0, Total_Credit = 0, difference = 0;
+                   // Add Multiple Order.
+
+        $("#addToList").click(function (e) {
+            $("#detailsTable").removeClass("addRequiredFieldToInput");
+            if ($("#selectedAccount").val() == "" || $("#selectedAccount").val() < 1 || $("#selectedAccount").val() == null) {  
+                $("#selectedAccount").addClass("addRequiredFieldToInput");
+                    $("#selectedAccount_chosen").addClass("addRequiredFieldToInput");
+                    $('#selectedAccount_chosen span').css('background', 'red');
+                    $('#selectedAccount_chosen b').css('background', 'red');
+                    $('#selectedAccount_chosen').trigger('focus');
+                     Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.ErorMessage",
+                    pos: 'top-center'
+                });
+                    $('html, body').animate({
+                        scrollTop: $("#selectedAccount").offset().top
+                    }, 2000);
+                return false;
+            }
+            if ($.trim($("#GLDetail_Debit").val()) == "" && $.trim($("#GLDetail_Credit").val()) == "") {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.CreditAndDebetAreZeroValue",
+                    pos: 'top-center'
+                });
+                $("#GLDetail_Debit").addClass("addRequiredFieldToInput");
+                $("#GLDetail_Credit").addClass("addRequiredFieldToInput");
+                $('html, body').animate({
+                    scrollTop: $("#selectedAccount").offset().top
+                }, 2000);
+                return false;
+            }
+            if ($.trim($("#GLDetail_Debit").val()) <= 0 && $.trim($("#GLDetail_Credit").val()) <= 0) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.CreditAndDebetAreZeroValue",
+                    pos: 'top-center'
+                });
+                $("#GLDetail_Debit").addClass("addRequiredFieldToInput");
+                $("#GLDetail_Credit").addClass("addRequiredFieldToInput");
+                $('html, body').animate({
+                    scrollTop: $("#selectedAccount").offset().top
+                }, 2000);
+                return false;
+            }
+            if ($.trim($("#GLDetail_Debit").val()) == "" && $.trim($("#GLDetail_Credit").val()) <= 0) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.CreditAndDebetAreZeroValue",
+                    pos: 'top-center'
+                });
+                $("#GLDetail_Debit").addClass("addRequiredFieldToInput");
+                $("#GLDetail_Credit").addClass("addRequiredFieldToInput");
+                $('html, body').animate({
+                    scrollTop: $("#selectedAccount").offset().top
+                }, 2000);
+                return false;
+            }
+            if ($.trim($("#GLDetail_Debit").val()) <= 0 && $.trim($("#GLDetail_Credit").val()) == "") {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.CreditAndDebetAreZeroValue",
+                    pos: 'top-center'
+                });
+                $("#GLDetail_Debit").addClass("addRequiredFieldToInput");
+                $("#GLDetail_Credit").addClass("addRequiredFieldToInput");
+                $('html, body').animate({
+                    scrollTop: $("#selectedAccount").offset().top
+                }, 2000);
+                return false;
+            }
+                        var GLDetail_Debit = 0,
+                            GLDetail_Credit = 0,
+                            Account_Id = $("#selectedAccount").val(),
+                            accountName = $('#selectedAccount option:selected').text(),                           
+                            Description_Detail = $("#Description_Detail").val(),
+                detailsTableBody = $("#detailsTable tbody");
+            if ($("#GLDetail_Debit").val() > 0) {
+                GLDetail_Debit = parseFloat($("#GLDetail_Debit").val());
+            }
+            if ($("#GLDetail_Credit").val() > 0) {
+                GLDetail_Credit = parseFloat($("#GLDetail_Credit").val());
+            }
+
+           
+            var SubLedger_Id = 0;
+            var SubLedger_Name = "";
+            if ($("#SubLed_Id").val() > 0) {
+                SubLedger_Id = $("#SubLed_Id").val();
+                SubLedger_Name = $('#SubLed_Id option:selected').text();
+            }
+            var Account_Child_IDs = 0;
+            var Account_Child_Name = "";     
+            if ($("#Account_Child_ID").val() > 0) {
+                Account_Child_IDs = $("#Account_Child_ID").val();
+                Account_Child_Name = $('#Account_Child_ID option:selected').text();
+            }                                                                                                                                                                                                                                                                                                                   
+        
+            var GL_attribute = '<tr><td>' + GLDetail_Debit + '</td><td>' + GLDetail_Credit + '</td><td>' + accountName + '</td><td>' + SubLedger_Name + '</td><td>' + Account_Child_Name + '</td><td>' + Description_Detail + '</td><td hidden>' + Account_Child_IDs + '</td><td hidden>' + Account_Id + '</td><td hidden>' + SubLedger_Id + '</td><td><a href="#" id ="deleteItemFromTable" class="bs-tooltip deleteicon" data-itemId="0" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></td></tr>';
+
+         Total_Debit += GLDetail_Debit;
+         Total_Credit += GLDetail_Credit;
+         detailsTableBody.append(GL_attribute);
+            updateTotals(Total_Debit, Total_Credit);
+            clearItem();
+             Snackbar.show({
+                    text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.SuccessfullyAdded",
+                    pos: 'top-center'
+                });
+     });
+
+     function clearItem() {
+                        $("#GLDetail_Debit").val("");
+                        $("#GLDetail_Credit").val("");
+
+         $("#SubLed_Id").val(null);
+         @*var SubledgerOptions = new Option("@Accountingsystem.Resources.GLMasterFillGlForCreate.CostCenterInformation", 0);
+         $("#SubLed_Id").append(SubledgerOptions);*@
+         $("#SubLed_Id").trigger('chosen:updated');
+
+         $("#selectedAccount").val(null);
+           @*var accountsOptions = new Option("@Accountingsystem.Resources.GLMasterFillGlForCreate.AccountInformation", 0);
+         $("#selectedAccount").append(accountsOptions);*@
+         $("#selectedAccount").trigger('chosen:updated');
+
+         $("#Account_Child_ID").empty();
+          var childAccountOption = new Option("@Accountingsystem.Resources.GLMasterFillGlForCreate.SubAccountInformation", 0);
+         $("#Account_Child_ID").append(childAccountOption);
+         $("#Account_Child_ID").trigger('chosen:updated');
+
+         $("#Description_Detail").val('');
+         document.getElementById('GLDetail_Debit').disabled = false;
+         document.getElementById('GLDetail_Credit').disabled = false;
+
+        }
+        function round(value, precision) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+     // Update Total Amount and Total Tax of products
+     function updateTotals(totalAmount, c) {
+         $("#totalDebtLable").text(round(Total_Debit, 4));
+         $("#totalCreditLable").text(round(Total_Credit, 4));
+         $("#difference").text(round(Total_Credit - Total_Debit, 4))
+      
+     }
+
+                    // After Add A New Order In The List, If You Want, You Can Remove It.
+        $(document).on('click', '#deleteItemFromTable', function (e) {
+         e.preventDefault();
+         if ($(this).attr('data-itemId') == "0") {
+             $(this).parents('tr').css("background-color", "#ffffff").fadeOut(800, function () {
+                 Total_Debit -= parseFloat($(this).find('td:eq(0)').html());
+                 Total_Credit -= parseFloat($(this).find('td:eq(1)').html());
+                 updateTotals(Total_Debit, Total_Credit);
+                                $(this).remove();
+             });
+         }
+     });
+     //After Click Save Button Pass All Data View To Controller For Save Database
+        var orderArr = [];
+        orderArr.length = 0;
+        var debitTotal = 0,
+            creditTotal = 0;
+        function saveOrder(data) {
+            document.getElementById("saveOrder").disabled = true;
+             var newUrl= '@Url.Action("Index", "GLMaster")';
+         return $.ajax({
+             contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+
+                             url: '@Url.Action("FillGlForCreate", "GLMaster")',
+                            data: data,
+             success: function (result) {
+
+                 Snackbar.show({
+                     text: '@Accountingsystem.Resources.GLMasterFillGlForCreate.RecordSuccesfullySaved',
+                     pos: 'top-center'
+                 });
+                 setTimeout(function () {
+
+                     window.location = result;
+
+                 }, 5000);
+             },
+             error: function () {
+                                  Snackbar.show({
+                                text: '@Accountingsystem.Resources.GLMasterFillGlForCreate.TechnicalError',
+                                pos: 'top-center'
+                            });
+                            }
+         });
+     }
+                    //Collect Multiple Order List For Pass To Controller
+        $("#saveOrder").click(function (e) {
+                        e.preventDefault();
+                        if ($.trim($("#GL_Date").val()) == "" || $.trim($("#GL_Date").val()) == null) {
+                            Snackbar.show({
+                                text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.ErorMessage",
+                                pos: 'top-center'
+                            });
+                            return false;
+            }
+           debitTotal = parseFloat($("#totalDebtLable").text());
+                        creditTotal = parseFloat($("#totalCreditLable").text());
+                         if (round(debitTotal, 2) == 0 && round(creditTotal, 2) == 0) {                            
+                            Snackbar.show({
+                                text: "@Accountingsystem.Resources.GLMasterFillGlForCreate.ErorMessage",
+                                pos: 'top-center'
+                             });
+                             $("#detailsTable").addClass("addRequiredFieldToInput");
+                            return;
+         }
+            if (round(debitTotal, 4) != round(creditTotal, 4)) {
+                           
+                            Snackbar.show({
+                                text: '@Accountingsystem.Resources.GLMasterFillGlForCreate.TotalDebtAndCredAreNotEqual',
+                                pos: 'top-center'
+                            });
+                            return;
+         }
+
+                        $.each($("#detailsTable tbody tr"), function () {
+             orderArr.push({
+                 GLDetail_Debit: $(this).find('td:eq(0)').html(),
+                  GLDetail_Credit: $(this).find('td:eq(1)').html(),
+                  Account_Id: $(this).find('td:eq(7)').html(),
+                  SubLedger_Id: $(this).find('td:eq(8)').html(),
+                  Account_Child_ID: $(this).find('td:eq(6)').html(),
+                  Description_Detail: $(this).find('td:eq(5)').html()
+                            });
+                           
+                        });
+                        
+                     
+
+         var data = JSON.stringify({
+             GL_Date: $("#GL_Date").val(),
+                            GLCode: $("#GLCode").val(),
+                            GL_Desc: $("#GL_Desc").val(),
+                            Company_Id: $("#Company_Id").val(),
+                            GLType_Id: $("#GLType_Id").val(),
+                            Currency_Id: $("#Currency_Id").val(),
+             detailForThatMaster: orderArr
+
+            });
+            var a = data;
+
+                        $.when(saveOrder(data)).then(function (response) {
+             console.log(response);
+         }).fail(function (err) {
+             console.log(err);
+         });
+     });
+
+                    $("#GLDetail_Debit").change(function () {
+         if ($(this).val() == "" || $(this).val() == 0) {
+                            $(this).val(0);
+             document.getElementById('GLDetail_Credit').disabled = false;
+         }
+                        else
+                            document.getElementById('GLDetail_Credit').disabled = true;
+     })
+
+                    $("#GLDetail_Credit").change(function () {
+         if ($(this).val() == "" || $(this).val() == 0) {
+                            $(this).val(0);
+             document.getElementById('GLDetail_Debit').disabled = false;
+         }
+                        else
+                            document.getElementById('GLDetail_Debit').disabled = true;
+     })
+
+
+                    $(function () {
+
+                        $("#selectedAccount").change(function (e) {
+
+             var selectedValue = $(this).val();
+                            $.ajax({
+
+                 url: '@Url.Action("GetAccountLedger","GLMaster")',
+                                type: 'get',
+                                data: { Acc_ID: selectedValue }
+             }).done(function (result) {
+
+                                $("#Account_Child_ID").empty();
+
+                 for (var i = 0; i < result.length; i++) {
+                     var item = result[i];
+                     var p = new Option(result[i].Text, result[i].Value);
+                     $("#Account_Child_ID").append(p);
+                     $("#Account_Child_ID").trigger('chosen:updated');
+                                }
+
+             });
+         });
+     });
+
+
+    </script>
+    <script>
+        $('#GL_Date').on('change', function (e)
+       {
+
+        var selectedValue = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("CheckEndDate", "Company")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {
+                   
+                    Snackbar.show({
+                        text: result,
+                     pos: 'top-center'
+                    });
+                   
+                }
+            }
+            );
+             $.ajax({
+                 url: '@Url.Action("CheckStartdate", "GLMaster")',
+                data: { date : selectedValue },
+            type: 'get',
+            }).done(function (result) {
+                if (result == "" || result == null) {
+
+                }
+                else {                   
+                    Snackbar.show({
+                        text: result,
+                        pos: 'top-center'
+                    });
+                    var currentDate = new Date();
+                    var _OfferDate = flatpickr(document.getElementById('GL_Date'), {
+                        defaultDate: currentDate
+                    });
+                }
+            }
+            );
+        });
+
+    </script>
+
+}
+
+
+
+
+
+
+

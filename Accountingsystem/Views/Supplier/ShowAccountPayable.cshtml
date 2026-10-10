@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "ShowAccountPayable";
+}
+
+<h2>ShowAccountPayable</h2>
+
+<select id="SelectSupplier" class="form-control">
+    <option value="-1">@Accountingsystem.Resources.SupplierCreate.SelectSupplier</option>
+</select>
+
+<div id="PurInvoices"></div>
+<div id="Payments"></div>
+
+@section Scripts{
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/UiUtils.js" type="text/javascript"></script>
+    <script src="~/Scripts/select2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        fillDropdownWithResponse("@Url.Action("getSuppliersJson", "Supplier")", SelectSupplier);
+
+        $("#SelectSupplier").change(function () {
+            var data = $(this).val();
+            $("#PurInvoices").load('@(Url.Action("GetPurInvoicesPartial", "Supplier"))?id=' + data);
+            $("#Payments").load('@(Url.Action("GetPaymentsPartial", "Supplier"))?id=' + data);
+        })
+    </script>
+}

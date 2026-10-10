@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c586af0f2d5b452d929a4e07c9c0dcdc" Name="Diagram1" ZoomLevel="77" >
+        <EntityTypeShape EntityType="Accounting.Product" Width="2" PointX="40" PointY="4.75" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Store" Width="1.75" PointX="44.625" PointY="5" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.MeasuringUnit" Width="1.5" PointX="53.375" PointY="11.75" FillColor="Yellow" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.Category" Width="1.5" PointX="51.375" PointY="11.75" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Branch" Width="1.5" PointX="16.75" PointY="13.375" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.Company" Width="1.75" PointX="19.375" PointY="12.625" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.BranchDepartment" Width="1.5" PointX="17.125" PointY="10" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.Partner" Width="1.875" PointX="22.875" PointY="9.5" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.Currency" Width="1.5" PointX="56.25" PointY="23" IsExpanded="true" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.CompanyDepartments" Width="1.5" PointX="24.25" PointY="13" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.CompanyConfigration" Width="1.5" PointX="16.75" PointY="17.375" IsExpanded="true" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.Country" Width="1.5" PointX="58" PointY="35.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.Province" Width="1.5" PointX="60.25" PointY="35.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.Cities" Width="1.5" PointX="62.5" PointY="35.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.BussinesUnit" Width="1.5" PointX="61.5" PointY="36" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.Expense" Width="1.5" PointX="65.5" PointY="16.75" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.GLMaster" Width="1.5" PointX="58.25" PointY="22.875" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.GLDetail" Width="2" PointX="60.5" PointY="22.625" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.ChartOfAccounting" Width="1.75" PointX="63.125" PointY="22.625" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.GL_Type" Width="1.5" PointX="60.75" PointY="20.5" IsExpanded="true" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.Customer" Width="1.5" PointX="32" PointY="35.375" FillColor="255, 128, 255" />
+        <EntityTypeShape EntityType="Accounting.InvoiceMaster" Width="2.375" PointX="19.625" PointY="28.5" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="Accounting.InvoiceDetails" Width="1.5" PointX="22.75" PointY="27.375" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="Accounting.Employee" Width="2" PointX="41.5" PointY="22" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Treasury" Width="1.5" PointX="68.75" PointY="19.25" FillColor="64, 0, 64" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.EmployeeFileDetail" Width="1.5" PointX="44.625" PointY="22.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Supplier" Width="1.5" PointX="32.25" PointY="19.25" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="Accounting.PurInvoiceMaster" Width="1.625" PointX="28" PointY="14" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Accounting.PurchaseDetails" Width="1.5" PointX="26" PointY="18" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Accounting.AnotherAsset" Width="1.5" PointX="63.75" PointY="8.25" IsExpanded="false" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.CurrentAssetType" Width="1.5" PointX="63.75" PointY="8.875" IsExpanded="false" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.FixedAssetImage" Width="1.5" PointX="60.125" PointY="5.5" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.DepreciationType" Width="1.5" PointX="61.75" PointY="11.25" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.RecalPurchInvoiceMaster" Width="1.5" PointX="35" PointY="14.125" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.RecalPurchInvoiceDetails" Width="1.5" PointX="37.25" PointY="12.75" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.InventoryTransfer_Hd" Width="1.75" PointX="41.5" PointY="15.5" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.InventoryTransfer_Detail" Width="1.5" PointX="44.625" PointY="14.375" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Matching" Width="1.5" PointX="29.25" PointY="26" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.Receipt" Width="1.5" PointX="31.5" PointY="26" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.MatchingPayment" Width="1.875" PointX="34.5" PointY="6.75" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.Payment" Width="1.5" PointX="32.25" PointY="8" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.ReveInvoiceDetails" Width="2.5" PointX="24.125" PointY="38.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesInvoiceMaster" Width="2.375" PointX="27" PointY="36.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.Bank" Width="1.5" PointX="59.125" PointY="15.75" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.Tax" Width="1.5" PointX="63.125" PointY="18" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.TransactionBatch" Width="1.75" PointX="57.875" PointY="36" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.Project" Width="1.5" PointX="40.5" PointY="35.25" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.OfferPriceDetail" Width="2" PointX="26.75" PointY="42.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.OfferPriceMaster" Width="1.875" PointX="24" PointY="41.875" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.DeprTaskStatus" Width="1.5" PointX="62" PointY="8.125" IsExpanded="true" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.ProductBatches" Width="1.5" PointX="42.5" PointY="5" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.CostDistribution" Width="1.5" PointX="26" PointY="9.125" IsExpanded="true" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.CostDistributionDetails" Width="1.875" PointX="25.75" PointY="11.875" IsExpanded="true" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.ReceiptFileDetail" Width="1.5" PointX="31.25" PointY="31.75" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.PaymentFileDetail" Width="1.5" PointX="34.625" PointY="10.625" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.PartnerFileDetail" Width="1.5" PointX="20.875" PointY="10" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.ExpenseFileDetail" Width="1.5" PointX="68.25" PointY="16.75" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.FixedAssetFileDetail" Width="1.5" PointX="60.125" PointY="8" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.SupplierFileDetail" Width="1.5" PointX="29.875" PointY="21.25" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="Accounting.CustomerFileDetail" Width="3" PointX="34.5" PointY="36.125" FillColor="255, 128, 255" />
+        <EntityTypeShape EntityType="Accounting.ProjectFileDetail" Width="1.5" PointX="42.125" PointY="34.875" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.InvoiceDetailsTemp" Width="1.625" PointX="24.375" PointY="34.375" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="Accounting.InvoiceMasterTemp" Width="1.75" PointX="22.5" PointY="34.125" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="Accounting.SalesFileDetail" Width="1.5" PointX="22.625" PointY="31.375" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="Accounting.PurchaseDetailsTemp" Width="2" PointX="32.375" PointY="14.75" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.PurInvoiceMasterTemp" Width="1.875" PointX="29.875" PointY="14.75" FillColor="Lime" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.PurchaseFileDetail" Width="1.5" PointX="26" PointY="15" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Accounting.RecallPurchInvDetailsTemp" Width="1.5" PointX="36.25" PointY="19.625" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.RecallPurchInvoicMasterTemp" Width="1.625" PointX="34.375" PointY="19.375" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.RecallPurchFileDetails" Width="1.5" PointX="37.25" PointY="17.125" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.ReversSalesFileDetail" Width="1.5" PointX="29.625" PointY="37" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesInvoiceMasterTemp" Width="1.5" PointX="18.875" PointY="40.375" FillColor="Fuchsia" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.ReveInvoiceDetailsTemp" Width="1.5" PointX="21.25" PointY="40.5" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.InventoryTransfer_HdTemp" Width="2" PointX="46.75" PointY="14.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.InventoryTransfer_DetailTemp" Width="1.5" PointX="49.25" PointY="14.625" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Contacts" Width="1.5" PointX="59.75" PointY="36" IsExpanded="false" />
+        <EntityTypeShape EntityType="Accounting.PaymentMethod" Width="1.625" PointX="68" PointY="25" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptDetailsTemp" Width="2" PointX="29" PointY="30.75" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptMasterTemp" Width="2" PointX="26.625" PointY="30.5" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptFile" Width="1.5" PointX="24.625" PointY="31.875" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptMaster" Width="2.5" PointX="24.5" PointY="24.875" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptDetails" Width="1.75" PointX="27.25" PointY="26.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.FixedAsset" Width="1.5" PointX="57.875" PointY="5" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.PurchaseOrderDetail" Width="1.5" PointX="28" PointY="7" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.PurchaseFileOrder" Width="1.5" PointX="28" PointY="10.875" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.PurchaseOrderMaster" Width="1.625" PointX="30.375" PointY="8.5" FillColor="Lime" />
+        <EntityTypeShape EntityType="Accounting.EmployeeTeamTemp" Width="1.5" PointX="53.375" PointY="26.875" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.EmployeeTeam" Width="1.5" PointX="51.375" PointY="22.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Subscription" Width="1.5" PointX="58.375" PointY="27.25" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.Subscription_Type" Width="1.625" PointX="63" PointY="27.5" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.ProductBatchesTemp" Width="1.5" PointX="44.625" PointY="11.125" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.TransferToprojectFile1" Width="2.125" PointX="46.5" PointY="42.25" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.TransferToProjectMaster" Width="2" PointX="44.125" PointY="42.25" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.TransferToProjectDetail" Width="2.125" PointX="41.125" PointY="42.5" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.TransferToProjectTemp" Width="1.5" PointX="51.5" PointY="34" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.TransferToProjectDetailTemp" Width="2.5" PointX="53.75" PointY="34.375" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.TransfareFromPorjectToStoretemp" Width="2.5" PointX="40.875" PointY="47.75" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.Vacations" Width="1.5" PointX="39.5" PointY="32" FillColor="0, 64, 0" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.Vacation_Types" Width="2.125" PointX="46.5" PointY="31.375" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Salary_Components" Width="1.5" PointX="37.875" PointY="24.75" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Emp_Evaluation" Width="1.5" PointX="44.5" PointY="28.5" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.EmployeTemp" Width="1.5" PointX="47.25" PointY="25.5" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Salary_ComponentsTemp" Width="1.5" PointX="49.375" PointY="25.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.ProjectPayment" Width="1.5" PointX="49.125" PointY="39.375" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectInvoiceMaster" Width="2.25" PointX="48.875" PointY="33.75" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectInvoiceDetails" Width="1.75" PointX="46" PointY="34.125" FillColor="64, 64, 64" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.ProjectInvoiceDetailTemp" Width="2.25" PointX="43.125" PointY="38.5" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectInvoiceMasterTemp" Width="2.25" PointX="45.875" PointY="37" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.SubscriptionInvoice" Width="1.75" PointX="60.25" PointY="27.375" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.Maintenance_Invoice_Detail" Width="1.5" PointX="52.75" PointY="5.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Maintenance_Invoice_Master" Width="1.5" PointX="50.625" PointY="5.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Maintenance_Invoice_Master_Temp" Width="1.5" PointX="51.25" PointY="8.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Maintenance_Invoice_Detail_Temp" Width="1.5" PointX="53.375" PointY="8.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesReceiptMasterTemp1" Width="2.875" PointX="15.5" PointY="35" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesReceiptDetailsTemp" Width="2.25" PointX="19.75" PointY="36.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesReceiptDetails" Width="1.75" PointX="20.375" PointY="24.25" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesReceiptFile" Width="1.5" PointX="22.625" PointY="24.875" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.ReverseSalesReceiptMaster" Width="1.75" PointX="18" PointY="25.125" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="Accounting.Accounts" Width="1.5" PointX="70.375" PointY="16.75" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SlicesProduct" Width="1.5" PointX="39.75" PointY="11.875" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.SlicesTem" Width="1.875" PointX="44.5" PointY="8.5" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.ProductTem" Width="1.5" PointX="42.5" PointY="8.5" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.Slices" Width="1.5" PointX="40" PointY="13.75" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.SubLedgerFileDetail1" Width="1.5" PointX="68.125" PointY="22.25" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SubLedger" Width="1.75" PointX="66" PointY="22.625" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.DepartmentBussinesUnit" Width="1.5" PointX="19.125" PointY="10" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.TransferToMaintenanceDetailsTemp" Width="1.5" PointX="48.875" PointY="5.25" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.TransferToMaintenanceTemp" Width="1.5" PointX="46.75" PointY="5.125" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.TransferToMaintenanceDetails" Width="2" PointX="49" PointY="9.375" IsExpanded="true" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.TransferToMaintenance" Width="1.5" PointX="46.875" PointY="9.375" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.AssetDepDates" Width="1.5" PointX="62" PointY="5.375" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.CompanyFileDetail" Width="1.5" PointX="18.25" PointY="18.75" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.CompanyPhotoDetail" Width="1.5" PointX="21.75" PointY="19" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.CatchReceipt" Width="1.5" PointX="60.875" PointY="15.25" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.CatchReceiptFileDetail" Width="1.5" PointX="63.125" PointY="15.5" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.ContentPersonDetailsTemp" Width="1.5" PointX="35.375" PointY="33.5" FillColor="255, 128, 255" />
+        <EntityTypeShape EntityType="Accounting.ContentPersonDetails" Width="1.5" PointX="34.625" PointY="38.75" FillColor="255, 128, 255" />
+        <EntityTypeShape EntityType="Accounting.CustomerTemp" Width="1.5" PointX="33.375" PointY="29.75" FillColor="255, 128, 255" />
+        <EntityTypeShape EntityType="Accounting.SpentRecipt" Width="2" PointX="70.75" PointY="22.25" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SpentReciptFileDetail" Width="1.5" PointX="73.375" PointY="22.25" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.Sales_Settings" Width="1.5" PointX="47.25" PointY="22.5" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Sales_Setting_Slice" Width="1.5" PointX="49.25" PointY="22.5" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Sales_Setting_SliceTemp" Width="1.5" PointX="51.375" PointY="27.375" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.ProductProductBatches" />
+        <AssociationConnector Association="Accounting.ProductSlicesProduct" />
+        <AssociationConnector Association="Accounting.BranchBranchDepartment" />
+        <AssociationConnector Association="Accounting.CompanyBranch" />
+        <AssociationConnector Association="Accounting.PartnerPartnerFileDetail" />
+        <AssociationConnector Association="Accounting.CompanyCompanyDepartments" />
+        <AssociationConnector Association="Accounting.CountryProvince" />
+        <AssociationConnector Association="Accounting.ProvinceCities" />
+        <AssociationConnector Association="Accounting.ExpenseExpenseFileDetail" />
+        <AssociationConnector Association="Accounting.GLMasterGLDetail" />
+        <AssociationConnector Association="Accounting.ChartOfAccountingChartOfAccounting" />
+        <AssociationConnector Association="Accounting.CustomerCustomerFileDetail" />
+        <AssociationConnector Association="Accounting.CustomerContentPersonDetails" />
+        <AssociationConnector Association="Accounting.EmployeeEmployeeFileDetail" />
+        <AssociationConnector Association="Accounting.EmployeeSalary_Components" />
+        <AssociationConnector Association="Accounting.EmployeeVacations" />
+        <AssociationConnector Association="Accounting.EmployeeEmp_Evaluation" />
+        <AssociationConnector Association="Accounting.SupplierSupplierFileDetail" />
+        <AssociationConnector Association="Accounting.InvoiceMasterInvoiceDetails1" />
+        <AssociationConnector Association="Accounting.FixedAssetFixedAssetImage" />
+        <AssociationConnector Association="Accounting.RecalPurchInvoiceMasterRecalPurchInvoiceDetails" />
+        <AssociationConnector Association="Accounting.InventoryTransfer_HdInventoryTransfer_Detail" />
+        <AssociationConnector Association="Accounting.ReceiptMatching" />
+        <AssociationConnector Association="Accounting.PaymentMatchingPayment" />
+        <AssociationConnector Association="Accounting.OfferPriceMasterOfferPriceDetail" />
+        <AssociationConnector Association="Accounting.CostDistributionCostDistributionDetails" />
+        <AssociationConnector Association="Accounting.ReceiptReceiptFileDetail" />
+        <AssociationConnector Association="Accounting.PaymentPaymentFileDetail" />
+        <AssociationConnector Association="Accounting.FixedAssetFixedAssetFileDetail" />
+        <AssociationConnector Association="Accounting.ProjectProjectFileDetail" />
+        <AssociationConnector Association="Accounting.FK_InvoiceMasterInvoiceDetails3" />
+        <AssociationConnector Association="Accounting.InvoiceMasterSalesFileDetail" />
+        <AssociationConnector Association="Accounting.PurInvoiceMasterTempPurchaseDetailsTemp" />
+        <AssociationConnector Association="Accounting.PurInvoiceMasterPurchaseFileDetail" />
+        <AssociationConnector Association="Accounting.RecallPurchInvoicMasterTempRecallPurchInvDetailsTemp" />
+        <AssociationConnector Association="Accounting.RecalPurchInvoiceMasterRecallPurchFileDetails" />
+        <AssociationConnector Association="Accounting.ReverseSalesInvoiceMasterReversSalesFileDetail" />
+        <AssociationConnector Association="Accounting.ReverseSalesInvoiceMasterTempReveInvoiceDetailsTemp" />
+        <AssociationConnector Association="Accounting.InventoryTransfer_HdTempInventoryTransfer_DetailTemp" />
+        <AssociationConnector Association="Accounting.SalesReceiptMasterTempSalesReceiptDetailsTemp" />
+        <AssociationConnector Association="Accounting.SalesReceiptMasterSalesReceiptFile" />
+        <AssociationConnector Association="Accounting.SalesReceiptMasterSalesReceiptDetails" />
+        <AssociationConnector Association="Accounting.PurchaseOrderMasterPurchaseOrderDetail" />
+        <AssociationConnector Association="Accounting.PurchaseOrderMasterPurchaseFileOrder" />
+        <AssociationConnector Association="Accounting.TransferToProjectMasterTransferToprojectFile1" />
+        <AssociationConnector Association="Accounting.TransferToProjectTempTransferToProjectDetailTemp" />
+        <AssociationConnector Association="Accounting.EmployeTempSalary_ComponentsTemp" />
+        <AssociationConnector Association="Accounting.ProjectInvoiceMasterProjectInvoiceDetails" />
+        <AssociationConnector Association="Accounting.Maintenance_Invoice_MasterMaintenance_Invoice_Detail" />
+        <AssociationConnector Association="Accounting.Maintenance_Invoice_Master_TempMaintenance_Invoice_Detail_Temp" />
+        <AssociationConnector Association="Accounting.SalesReceiptMasterTempSalesReceiptDetailsTemp2" />
+        <AssociationConnector Association="Accounting.ReverseSalesReceiptMasterReverseSalesReceiptDetails" />
+        <AssociationConnector Association="Accounting.ReverseSalesReceiptMasterReverseSalesReceiptFile" />
+        <AssociationConnector Association="Accounting.ProductTemSlicesTem" />
+        <AssociationConnector Association="Accounting.SubLedgerSubLedgerFileDetail1" />
+        <AssociationConnector Association="Accounting.BranchDepartmentDepartmentBussinesUnit" />
+        <AssociationConnector Association="Accounting.TransferToMaintenanceTempTransferToMaintenanceDetailsTemp" />
+        <AssociationConnector Association="Accounting.TransferToMaintenanceTransferToMaintenanceDetails" />
+        <AssociationConnector Association="Accounting.CompanyCompanyFileDetail" />
+        <AssociationConnector Association="Accounting.CompanyCompanyPhotoDetail" />
+        <AssociationConnector Association="Accounting.CatchReceiptCatchReceiptFileDetail" />
+        <AssociationConnector Association="Accounting.CustomerTempContentPersonTemp" />
+        <AssociationConnector Association="Accounting.SpentReciptSpentReciptFileDetail" />
+        <AssociationConnector Association="Accounting.Sales_SettingsSales_Setting_Slice" />
+        <AssociationConnector Association="Accounting.SubLedgerSubLedger" />
+        <AssociationConnector Association="Accounting.ReveInvoiceDetailsReverseSalesInvoiceMaster" />
+        <AssociationConnector Association="Accounting.InvoiceDetailsInvoiceMaster" />
+        <AssociationConnector Association="Accounting.TransferToProjectDetailTransferToProjectMaster" />
+        <EntityTypeShape EntityType="Accounting.EmployeeSalaryMonth" Width="1.5" PointX="47.25" PointY="19.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Employee_Sales" Width="1.5" PointX="51.5" PointY="19.375" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.SlicesProductSlices" />
+        <AssociationConnector Association="Accounting.ChartOfAccountingGLDetail" />
+        <AssociationConnector Association="Accounting.ProjectInvoiceMasterTempProjectInvoiceDetailTemp" />
+        <EntityTypeShape EntityType="Accounting.EmpSal_Detail" Width="1.5" PointX="49.375" PointY="19.375" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.EmployeeSalaryMonthEmpSal_Detail" />
+        <EntityTypeShape EntityType="Accounting.FixedAssetFileDetailInfo" Width="1.5" PointX="60" PointY="11.25" FillColor="Aqua" />
+        <EntityTypeShape EntityType="Accounting.FixedAssetInformation" Width="2.125" PointX="57.375" PointY="11.25" FillColor="Aqua" />
+        <AssociationConnector Association="Accounting.FixedAssetInformationFixedAssetFileDetailInfo" />
+        <EntityTypeShape EntityType="Accounting.TypeOfDetailSalary" Width="1.875" PointX="35.75" PointY="23.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Client" Width="1.5" PointX="64" PointY="36.375" IsExpanded="true" />
+        <AssociationConnector Association="Accounting.StoreProductBatches" />
+        <EntityTypeShape EntityType="Accounting.Charts" Width="1.5" PointX="74" PointY="25.375" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SettlementOfStores" Width="2" PointX="40.75" PointY="0.75" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.SettlementOfStoresDetails" Width="1.875" PointX="43.875" PointY="0.75" FillColor="Yellow" />
+        <AssociationConnector Association="Accounting.SettlementOfStoresSettlementOfStoresDetails" />
+        <EntityTypeShape EntityType="Accounting.SettlementOfStoresTemp" Width="1.5" PointX="46.125" PointY="0.75" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.SettlementOfStoresDetailsTemp" Width="1.875" PointX="48.5" PointY="0.75" FillColor="Yellow" />
+        <AssociationConnector Association="Accounting.SettlementOfStoresTempSettlementOfStoresDetailsTemp" />
+        <EntityTypeShape EntityType="Accounting.ProjectRecipt" Width="1.5" PointX="46.625" PointY="45" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.POSDetailPayment" Width="1.5" PointX="52.75" PointY="39.75" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.PointOfSale" Width="1.5" PointX="54.875" PointY="39.5" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.MasterPOSInvoice" Width="2.125" PointX="58.875" PointY="40" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.DetailPOSInvoice" Width="2.25" PointX="61.75" PointY="40.25" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.PosPaymentMethod" Width="1.5" PointX="57.875" PointY="48.375" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.ReversePOSInvoice" Width="1.5" PointX="56.375" PointY="43.75" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.ReversePOSDetail" Width="1.75" PointX="53.5" PointY="44" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.PointOfSalePOSDetailPayment" />
+        <AssociationConnector Association="Accounting.PointOfSaleMasterPOSInvoice" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceDetailPOSInvoice" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoicePosPaymentMethod" />
+        <AssociationConnector Association="Accounting.ReversePOSInvoiceReversePOSDetail" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceReversePOSInvoice" />
+        <EntityTypeShape EntityType="Accounting.POSDetailPaymentTemp" Width="1.5" PointX="66.875" PointY="40" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.PointOfSaleTemp" Width="1.5" PointX="64.875" PointY="39.875" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.PointOfSaleTempPOSDetailPaymentTemp" />
+        <EntityTypeShape EntityType="Accounting.MasterPOSInvoiceTemp" Width="2.375" PointX="61.75" PointY="44.625" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.PosPaymentMethodTemp" Width="1.5" PointX="64.125" PointY="43.875" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.DetailPOSInvoiceTemp" Width="1.5" PointX="64.125" PointY="46.875" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceTempDetailPOSInvoiceTemp" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceTempPosPaymentMethodTemp" />
+        <EntityTypeShape EntityType="Accounting.ReversePOSInvoiceTemp" Width="1.5" PointX="66.25" PointY="44" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.ReversePOSDetailTemp" Width="1.5" PointX="68.5" PointY="45.125" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.ReversePOSInvoiceTempReversePOSDetailTemp" />
+        <EntityTypeShape EntityType="Accounting.SubscriptionItemsTemp" Width="1.5" PointX="63" PointY="30.625" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.SubscriptionTemp" Width="1.875" PointX="56.125" PointY="27.25" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.ExpenseAccountTemp" Width="1.5" PointX="65.5" PointY="13.5" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectDetail" Width="1.5" PointX="37.875" PointY="35.5" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.ProjectProject_Details" />
+        <EntityTypeShape EntityType="Accounting.ProjectTemp" Width="1.5" PointX="38.25" PointY="38.625" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectDetailTemp" Width="1.5" PointX="40.5" PointY="39.75" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.ProjectTempProjectDetailTemp" />
+        <EntityTypeShape EntityType="Accounting.StoreCard" Width="1.5" PointX="50.75" PointY="0.875" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.LockCode" Width="1.5" PointX="61.5" PointY="36.625" />
+        <EntityTypeShape EntityType="Accounting.ProjectPaymentFile" Width="1.5" PointX="49.125" PointY="45" FillColor="64, 64, 64" />
+        <EntityTypeShape EntityType="Accounting.ProjectReceiptFile" Width="1.5" PointX="44.5" PointY="47.875" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.ProjectPaymentProjectPaymentFile" />
+        <AssociationConnector Association="Accounting.ProjectReciptProjectReceiptFile" />
+        <EntityTypeShape EntityType="Accounting.SubscriptionInvoiceFile" Width="1.5" PointX="60.5" PointY="32.625" FillColor="255, 192, 192" />
+        <AssociationConnector Association="Accounting.SubscriptionInvoiceSubscriptionInvoiceFile" />
+        <EntityTypeShape EntityType="Accounting.GLMasterFile" Width="1.5" PointX="58.5" PointY="19.875" FillColor="64, 0, 64" />
+        <AssociationConnector Association="Accounting.GLMasterGLMasterFile" />
+        <EntityTypeShape EntityType="Accounting.Package" Width="3.125" PointX="69.75" PointY="34.625" />
+        <AssociationConnector Association="Accounting.ClientPackage" />
+        <EntityTypeShape EntityType="Accounting.OperationRun" Width="1.5" PointX="14.75" PointY="9" />
+        <AssociationConnector Association="Accounting.VacationsVacation_Types" />
+        <EntityTypeShape EntityType="Accounting.EmpVacation" Width="1.5" PointX="44.75" PointY="31.5" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.EmpVacationVacation_Types" />
+        <AssociationConnector Association="Accounting.EmpVacationEmployee" />
+        <EntityTypeShape EntityType="Accounting.EmpVacationTemp" Width="2.125" PointX="49" PointY="28.625" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.EmployeTempEmpVacationTemp" />
+        <EntityTypeShape EntityType="Accounting.VacationEmgration" Width="1.5" PointX="44" PointY="26.375" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.ChartDate" Width="1.5" PointX="13" PointY="8.125" />
+        <EntityTypeShape EntityType="Accounting.InvoiceTax" Width="1.5" PointX="18" PointY="32.25" FillColor="Fuchsia" />
+        <AssociationConnector Association="Accounting.InvoiceMasterInvoiceTax" />
+        <EntityTypeShape EntityType="Accounting.SalesReceiptTax" Width="1.5" PointX="27.125" PointY="23.75" FillColor="Fuchsia" />
+        <AssociationConnector Association="Accounting.SalesReceiptMasterSalesReceiptTax" />
+        <EntityTypeShape EntityType="Accounting.TaxPOSInvoice" Width="1.5" PointX="57.125" PointY="39" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceTaxPOSInvoice" />
+        <EntityTypeShape EntityType="Accounting.OfferTax" Width="1.5" PointX="20.625" PointY="46.25" FillColor="Fuchsia" />
+        <AssociationConnector Association="Accounting.OfferPriceMasterOfferTax" />
+        <EntityTypeShape EntityType="Accounting.ProductFileDetails" Width="1.5" PointX="37.25" PointY="4.25" />
+        <AssociationConnector Association="Accounting.ProductProductFileDetails" />
+        <EntityTypeShape EntityType="Accounting.UserConnection" Width="1.5" PointX="9.375" PointY="8" />
+        <EntityTypeShape EntityType="Accounting.PrintBarcode" Width="1.5" PointX="36.75" PointY="9.375" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.ProductCompound" Width="2" PointX="37.125" PointY="7" FillColor="Yellow" />
+        <EntityTypeShape EntityType="Accounting.ProductCompoundTemp" Width="1.5" PointX="42.625" PointY="13.5" FillColor="Yellow" />
+        <AssociationConnector Association="Accounting.ProductTemProductCompoundTemp" />
+        <AssociationConnector Association="Accounting.ProductProductCompound" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperation" Width="2.625" PointX="7.625" PointY="13.125" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperationDetail" Width="3.125" PointX="11.625" PointY="13.375" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationMaintenanceOrderOperationDetail" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperational" Width="3.25" PointX="8.625" PointY="11.5" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperationalDetail" Width="3" PointX="12.625" PointY="11.375" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationalMaintenanceOrderOperationalDetail" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperationalStatus" Width="3.5" PointX="12" PointY="16.625" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceStatus" Width="1.5" PointX="6.25" PointY="16.75" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationalMaintenanceOrderOperationalStatus" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperationalDetailTemp" Width="4.25" PointX="7.5" PointY="19" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderOperationalTemp" Width="4.25" PointX="13.625" PointY="19.375" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationalMaintenanceOrderOperationalDetail1" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderDetail" Width="1.5" PointX="10.375" PointY="24.75" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrder" Width="2.625" PointX="7" PointY="24.25" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderStatus" Width="1.5" PointX="10.375" PointY="29.375" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationalMaintenanceOrderOperationalDetail2" />
+        <AssociationConnector Association="Accounting.MaintenanceOrderOperationalMaintenanceOrderOperationalStatus1" />
+        <EntityTypeShape EntityType="Accounting.MaintenanceOrderCoding" Width="1.5" PointX="4.5" PointY="15.375" />
+        <EntityTypeShape EntityType="Accounting.Order" Width="2" PointX="1.125" PointY="4.875" />
+        <EntityTypeShape EntityType="Accounting.OrderDetail" Width="1.875" PointX="3.75" PointY="4.875" />
+        <AssociationConnector Association="Accounting.OrderOrderDetail" />
+        <EntityTypeShape EntityType="Accounting.TempOrderDetail" Width="2.125" PointX="6.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Accounting.TempOrder" Width="2" PointX="3.125" PointY="2.125" />
+        <EntityTypeShape EntityType="Accounting.HoldedOrder" Width="1.5" PointX="9.375" PointY="1" />
+        <EntityTypeShape EntityType="Accounting.HoldedOrderDetail" Width="3.125" PointX="11.625" PointY="1.75" />
+        <AssociationConnector Association="Accounting.TempOrderTempOrderDetail" />
+        <AssociationConnector Association="Accounting.HoldedOrderHoldedOrderDetail" />
+        <EntityTypeShape EntityType="Accounting.ReverseOrder" Width="1.5" PointX="1.125" PointY="10.875" />
+        <EntityTypeShape EntityType="Accounting.ReverseOrderDetail" Width="2.25" PointX="3.75" PointY="10.375" />
+        <AssociationConnector Association="Accounting.OrderReverseOrder" />
+        <AssociationConnector Association="Accounting.ReverseOrderReverseOrderDetail" />
+        <EntityTypeShape EntityType="Accounting.DetailQRInvoice" Width="3.75" PointX="8.375" PointY="35.375" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.QRPaymentMethod" Width="3.75" PointX="8.375" PointY="40.125" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.MasterQRInvoice" Width="3.75" PointX="2.5" PointY="34.125" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.MasterQRInvoiceQRPaymentMethod" />
+        <AssociationConnector Association="Accounting.MasterQRInvoiceDetailQRInvoice" />
+        <EntityTypeShape EntityType="Accounting.TaxQRInvoice" Width="1.5" PointX="3.75" PointY="41.875" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.MasterQRInvoiceTaxQRInvoice" />
+        <EntityTypeShape EntityType="Accounting.StoreEmployee" Width="1.5" PointX="45.875" PointY="3.375" FillColor="Yellow" />
+        <AssociationConnector Association="Accounting.StoreStoreEmployee" />
+        <EntityTypeShape EntityType="Accounting.ExtrnalSalesEmployee" Width="2.625" PointX="6.375" PointY="5" />
+        <EntityTypeShape EntityType="Accounting.EmployeeSalesDetails" Width="2.25" PointX="10.5" PointY="5.375" />
+        <AssociationConnector Association="Accounting.ExtrnalSalesEmployeeEmployeeSalesDetails" />
+        <EntityTypeShape EntityType="Accounting.ExternalEmployeePayments" Width="2.375" PointX="13.375" PointY="5.5" />
+        <AssociationConnector Association="Accounting.ExtrnalSalesEmployeeExternalEmployeePayments" />
+        <EntityTypeShape EntityType="Accounting.RoleFunction" Width="1.5" PointX="40.625" PointY="19.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.SystemFunction" Width="2.25" PointX="38" PointY="19.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.SystemRole" Width="1.5" PointX="43" PointY="19.125" FillColor="0, 64, 0" />
+        <AssociationConnector Association="Accounting.SystemRoleRoleFunction" />
+        <AssociationConnector Association="Accounting.RoleFunctionSystemFunction" />
+        <AssociationConnector Association="Accounting.SystemFunctionSystemFunction" />
+        <AssociationConnector Association="Accounting.EmployeeSystemRole" />
+        <EntityTypeShape EntityType="Accounting.ProjectClause" Width="1.5" PointX="43.75" PointY="36.625" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.ProjectProjectSub" />
+        <EntityTypeShape EntityType="Accounting.SubLedgertemp" Width="2.25" PointX="35.875" PointY="41.625" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.SubLedgerSubLedger1" />
+        <EntityTypeShape EntityType="Accounting.ProjectClausetemp" Width="1.5" PointX="36.25" PointY="39.25" FillColor="64, 64, 64" />
+        <AssociationConnector Association="Accounting.ProjectTempProjectClausetemp" />
+        <AssociationConnector Association="Accounting.ProjectTempSubLedgertemp" />
+        <EntityTypeShape EntityType="Accounting.SpentReciptOrder" Width="1.875" PointX="71" PointY="19.5" FillColor="64, 0, 64" />
+        <EntityTypeShape EntityType="Accounting.SpentReciptOrderType" Width="2.25" PointX="73.625" PointY="19.875" FillColor="64, 0, 64" />
+        <AssociationConnector Association="Accounting.SpentReciptOrderSpentReciptOrderType" />
+        <AssociationConnector Association="Accounting.SpentReciptOrderSpentRecipt" />
+        <EntityTypeShape EntityType="Accounting.FixedAssetDetails" Width="1.5" PointX="55.75" PointY="5.875" FillColor="Aqua" />
+        <AssociationConnector Association="Accounting.FixedAssetFixedAssetDetails" />
+        <AssociationConnector Association="Accounting.FixedAssetDetailsGLMaster" />
+        <EntityTypeShape EntityType="Accounting.ReceiptPOSFileDetail" Width="1.5" PointX="56.875" PointY="51.75" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.POSReceipt" Width="1.5" PointX="60.125" PointY="49.75" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.ReceiptReceiptFileDetail1" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoicePOSReceipt" />
+        <EntityTypeShape EntityType="Accounting.ReverseQRDetail" Width="1.5" PointX="5.125" PointY="29.75" FillColor="GreenYellow" />
+        <EntityTypeShape EntityType="Accounting.ReverseQRInvoice" Width="1.5" PointX="2.125" PointY="27.875" FillColor="GreenYellow" />
+        <AssociationConnector Association="Accounting.ReversePOSInvoiceReversePOSDetail1" />
+        <AssociationConnector Association="Accounting.ReverseQRInvoiceMasterQRInvoice" />
+        <AssociationConnector Association="Accounting.ReverseQRDetailDetailQRInvoice" />
+        <EntityTypeShape EntityType="Accounting.PaymentMethodEmployee" Width="2.75" PointX="70.125" PointY="28.125" FillColor="64, 0, 64" />
+        <AssociationConnector Association="Accounting.PaymentMethodPaymentMethodEmployee" />
+        <EntityTypeShape EntityType="Accounting.InvoiceSerial" Width="1.5" PointX="74.125" PointY="36.125" />
+        <EntityTypeShape EntityType="Accounting.ReveseInvoiceSerial" Width="1.5" PointX="74.5" PointY="38.625" />
+        <EntityTypeShape EntityType="Accounting.MedianSubscription" Width="1.5" PointX="65.125" PointY="27.875" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="Accounting.HRNotification" Width="3" PointX="44.125" PointY="24.375" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.Shift" Width="1.5" PointX="39.125" PointY="29.625" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.ShiftCoding" Width="1.5" PointX="37.25" PointY="29.875" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.ShiftShiftCoding" />
+        <AssociationConnector Association="Accounting.EmployeeShift" />
+        <EntityTypeShape EntityType="Accounting.VacationWeekly" Width="1.5" PointX="35.375" PointY="30.5" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.ShiftCodingVacationWeekly" />
+        <EntityTypeShape EntityType="Accounting.VacationWeeklyCoding" Width="1.5" PointX="36.875" PointY="27.75" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.VacationWeeklyVacationWeeklyCoding" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Accounting.AttendingAndLeaving" Width="2.125" PointX="38.75" PointY="27.5" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.AttendingAndLeavingEmployee" />
+        <AssociationConnector Association="Accounting.AttendingAndLeavingShiftCoding" />
+        <EntityTypeShape EntityType="Accounting.RewardsAndPenalties" Width="1.75" PointX="39.5" PointY="21.875" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.RewardsAndPenaltiesCodingCategory" Width="2.875" PointX="33.25" PointY="28.875" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="Accounting.RewardsAndPenaltiesCoding" Width="2.375" PointX="33.375" PointY="25" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.RewardsAndPenaltiesCodingRewardsAndPenaltiesCodingCategory" />
+        <AssociationConnector Association="Accounting.RewardsAndPenaltiesAttendingAndLeaving" />
+        <AssociationConnector Association="Accounting.RewardsAndPenaltiesCodingRewardsAndPenalties" />
+        <EntityTypeShape EntityType="Accounting.OfficialHolidays" Width="1.5" PointX="37.625" PointY="23" FillColor="192, 64, 0" />
+        <AssociationConnector Association="Accounting.TypeOfDetailSalaryRewardsAndPenaltiesCoding" />
+        <EntityTypeShape EntityType="Accounting.InvoicePrintSetting" PointX="23.5" PointY="18.25" Width="2.5" FillColor="Red" />
+        <EntityTypeShape EntityType="Accounting.InvoiceWordPrintSetting" Width="2.25" PointX="21.375" PointY="13.75" FillColor="Red" />
+        <AssociationConnector Association="Accounting.EmployeeSalaryMonthRewardsAndPenalties" />
+        <EntityTypeShape EntityType="Accounting.Question" Width="1.5" PointX="66.25" PointY="2.625" />
+        <EntityTypeShape EntityType="Accounting.Answer" Width="1.5" PointX="69.75" PointY="2.375" />
+        <AssociationConnector Association="Accounting.QuestionAnswer" />
+        <EntityTypeShape EntityType="Accounting.Sewing" Width="1.5" PointX="67" PointY="9.25" />
+        <EntityTypeShape EntityType="Accounting.SewingDetail" Width="1.5" PointX="69.625" PointY="8.25" />
+        <AssociationConnector Association="Accounting.SewingDetailQuestion" />
+        <AssociationConnector Association="Accounting.SewingDetailSewing" />
+        <AssociationConnector Association="Accounting.AnswerSewingDetail" />
+        <AssociationConnector Association="Accounting.MasterPOSInvoiceSewing" />
+        <EntityTypeShape EntityType="Accounting.SewingStatus" Width="1.5" PointX="69.875" PointY="11.875" />
+        <AssociationConnector Association="Accounting.SewingSewingStatus" />
+        <EntityTypeShape EntityType="Accounting.OrderType" Width="1.5" PointX="1.5" PointY="0.625" />
+        <EntityTypeShape EntityType="Accounting.AdditionalOrderDetail" Width="1.5" PointX="4" PointY="0.5" />
+        <EntityTypeShape EntityType="Accounting.StartAndEndSelling" Width="1.5" PointX="6.5" PointY="1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

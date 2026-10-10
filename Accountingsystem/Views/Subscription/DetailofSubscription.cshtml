@@ -1,0 +1,717 @@
+﻿@model Accountingsystem.Models.Subscription
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionDetails;
+    var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value);
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.Subscrip_Id)
+    @Html.HiddenFor(model => model.Customer_Id)
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionDetails)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.InvoiceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.InvoiceNumber)
+                                        </div>
+                                        @if (Model.Number == null)
+                                        {
+                                            <div>
+                                                @Html.DisplayFor(model => model.Subscrip_Code)
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                @Html.DisplayFor(model => model.Number)
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.QRNumber != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Barcode)
+                                            </div>
+                                            <div>
+                                                @*<img src="data:image/jpg;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeQRcode(Model.QRNumber.Value, Request.Url.ToString()))" alt="Image" style="width:100px" />*@
+                                                <img src="data:image/jpg;base64,@Accountingsystem.Models.TLVCls.GenerateInvoiceQRbase(Model.QRNumber.Value)" alt="Image" style="width:100px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+
+                                            </div>
+                                            <div>
+                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeQRcode(Model.QRNumber.Value, Request.Url.ToString()))" alt="Image" style="width:100px" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Sub_Date != null)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionDate)
+                                            </div>
+                                            <div>
+                                                @Model.Sub_Date.Value.ToString("dd/MM/yyyy")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionName)
+                                        </div>
+                                        <div>
+                                            @Accountingsystem.Models.Subscription_Type.GetSuptypetById(Model.Sub_Type_ID).Subscrip_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        if (Model.Customer_Id != null || Model.Customer_Id != 0)
+                        {
+                            var CustomerCode = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Code;
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.CustomerNumber)
+                                                </div>
+                                                <div>
+                                                    @CustomerCode
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.CustomerName)
+                                        </div>
+                                        <div>
+                                            @customer.Customer_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.CustomerIndex.CustomerPhone)
+                                        </div>
+                                        <div>
+                                            @customer.Customer_Phone
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{if (Model.Emp_Id != null || Model.Emp_Id > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.EmployeeName)
+                                                </div>
+                                                <div>
+                                                    @{
+                                                        var employee = Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value);
+                                                        @employee.Emp_Name
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        } }
+                    @{if (Model.Emp_Team != null || Model.Emp_Team > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.TeamName)
+                                                </div>
+                                                <div>
+                                                    @{
+                                                        var employeeTeam = Accountingsystem.Models.EmployeeTeam.getEmployeeBYID(Model.Emp_Team.Value).Team_Name;
+                                                        @employeeTeam
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        } }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ProjectDetails.StartingDate)
+                                        </div>
+                                        <div>
+                                            @Model.StartTime.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionExpirationDate)
+                                        </div>
+                                        <div>
+                                            @Model.DeadLine.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionPrice)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Estimate_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Net)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.Paid)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Payed_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Tax_ID > 0)
+                    {
+                        var thistax = Accountingsystem.Models.Tax.GetTaxesbyId(Model.Tax_ID);
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.Tax)
+                                            </div>
+                                            <div>
+                                                @thistax.Tax_Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.TaxRate)
+                                            </div>
+                                            <div>
+                                                @Math.Round(thistax.Tax_Percentage, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.SubscriptionCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Subscrip_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @if (Model.Subledger_ID > 0)
+                    {
+                        var thissubledger = Accountingsystem.Models.SubLedger.getDetail((int)Model.Subledger_ID).SubLed_Name;
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.SubscriptionDetailofSubscription.CostCenter)
+                                            </div>
+                                            <div>
+                                                @thissubledger
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Notes)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.Subscrip_Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row layout-top-spacing">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <a id="createBtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Create")">
+                        @Accountingsystem.Resources.SubscriptionDetailofSubscription.CreateNew
+                        <span id="createBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب"))
+                    {
+                        if (Model.Subscrip_State != Accountingsystem.Models.TransactionState.Pending)
+                        {
+                            <a id="constraintBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Subscrip_Code })'>
+                                @Accountingsystem.Resources.SubscriptionDetailofSubscription.ReceiptConstraint
+                                <span id="constraintBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+
+
+                        }
+                        if (Model.Subscrip_State == Accountingsystem.Models.TransactionState.Pending)
+                        {
+                            <input type="submit" onclick='PostSub();' value="Post" class="btn btn-block btn-outline-info mb-lg-0" />
+                        }
+                        if (Model.Subscrip_State == Accountingsystem.Models.TransactionState.Post)
+                        {
+                            <input type="submit" onclick='VoidSub();' value="Void" class="btn btn-block btn-outline-info mb-lg-0" />
+                        }
+                        if (Model.AmountAfterTax != 0)
+                        {
+                            if (Math.Round(Model.Payed_Amount.Value, 2, MidpointRounding.AwayFromZero) != Math.Round(Model.AmountAfterTax, 2, MidpointRounding.AwayFromZero))
+                            {
+                                <a id="createSubscriptionReceiptBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("CreateSubInv", "Subscription", new { id = Model.Subscrip_Id })'>
+                                    @Accountingsystem.Resources.SubscriptionDetailofSubscription.PayNow
+                                    <span id="createSubscriptionReceiptBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                </a>
+                            }
+
+                        }
+                        <a id="editBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Edit", new { controller = "Subscription", id = Model.Subscrip_Id })'>
+                            @Accountingsystem.Resources.SubscriptionDetailofSubscription.Edit
+                            <span id="editBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+
+
+                    }
+                    <a id="custommerRepportBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code =Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Code })'>
+                        @Accountingsystem.Resources.SubscriptionDetailofSubscription.CustomerReport
+                        <span id="custommerRepportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="CustomerDetail" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Details", new { controller = "Customer", id = Model.Customer_Id })'>
+                        @Accountingsystem.Resources.InvoiceMasterDetails.CustomerDetail
+                        <span id="CustomerDetailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @if (customer != null && customer.Customer_TaxNumber != null)
+                    {
+                        var companyPrint = Accountingsystem.Models.InvoicePrintSetting.getCompanyPrint(1);
+
+                        <a id="PrintEmail" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action(companyPrint.PrintLogo, new { controller = "InvoiceQRExternalUseres", id = Model.QRNumber })' target="_blank">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.PrintEmail
+
+                        </a>
+                        <a id="Print" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action(companyPrint.printWhite, new { controller = "InvoiceQRExternalUseres", id = Model.QRNumber })' target="_blank">
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Print
+
+                        </a>
+                        @*<a id="printBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Printsub", "Reports", new { subIDid = Model.Subscrip_Id })' target="_blank">
+                @Accountingsystem.Resources.SubscriptionDetailofSubscription.PrintSubscription
+                <span id="printBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+            </a>
+            <a id="printEmailBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Printsubcolor", "Reports", new { subIDid = Model.Subscrip_Id })' target="_blank">
+                @Accountingsystem.Resources.SubscriptionDetailofSubscription.PrintSubscriptionEmail
+                <span id="printEmailBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+            </a>*@
+                        if (customer.Customer_Mail != null && Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value).Customer_Mail != "")
+                        {
+                            <a id="SentCustomerEmail" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("SendSUbEmail", new { controller = "Reports", id = Model.Subscrip_Id })'>
+                                @Accountingsystem.Resources.InvoiceMasterDetails.SentCustomerEmail
+                                <span id="SentCustomerEmailSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        var companyPrint = Accountingsystem.Models.InvoicePrintSetting.getCompanyPrint(2);
+                        <a id="PrintSimple" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action(companyPrint.PrintLogo, new { controller = "InvoiceQRExternalUseres", id = Model.QRNumber })' target="_blank">
+                            @Accountingsystem.Resources.validate.SimplifiedTaxInvoiceEmail
+
+                        </a>
+                        <a id="PrintSimple" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action(companyPrint.printWhite, new { controller = "InvoiceQRExternalUseres", id = Model.QRNumber })' target="_blank">
+                            @Accountingsystem.Resources.validate.SimplifiedTaxInvoice
+
+                        </a>
+                    }
+
+                    @{
+
+                        if (Model.Customer_Id != 0 && Model.Customer_Id != null)
+                        {
+
+
+
+                            if (!string.IsNullOrEmpty(customer.Customer_Phone))
+                            {
+                                customer.Customer_Phone.Trim();
+                                if (customer.Customer_Phone.Contains(" "))
+                                {
+                                    customer.Customer_Phone = customer.Customer_Phone.Replace(" ", string.Empty);
+                                }
+                                if (customer.Customer_Phone.Contains("-"))
+                                {
+                                    customer.Customer_Phone = customer.Customer_Phone.Replace("-", string.Empty);
+                                }
+                                if (customer.Customer_Phone.Contains("#"))
+                                {
+                                    customer.Customer_Phone = customer.Customer_Phone.Replace("#", string.Empty);
+                                }
+                                if (!customer.Customer_Phone.StartsWith("0") && customer.Customer_Phone.Length == 9)
+                                {
+                                    var phoneNumber = "966";
+                                    phoneNumber += customer.Customer_Phone;
+                                    <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+
+                                        <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+
+                                    </a>
+                                }
+
+                                if (customer.Customer_Phone.StartsWith("0") && customer.Customer_Phone.Length == 10)
+                                {
+                                    var phoneNumber = "966";
+                                    phoneNumber += customer.Customer_Phone.Remove(0, 1);
+                                    <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+                                        <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                    </a>
+                                }
+                                if (customer.Customer_Phone.StartsWith("00") && customer.Customer_Phone.Length > 13)
+                                {
+                                    <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+                                        <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                    </a>
+                                }
+                                if (customer.Customer_Phone.StartsWith("+966") && customer.Customer_Phone.Length >= 12)
+                                {
+                                    customer.Customer_Phone = customer.Customer_Phone.Remove(0, 1);
+                                    <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+                                        <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                    </a>
+                                }
+                                if (customer.Customer_Phone.StartsWith("966") && customer.Customer_Phone.Length >= 12)
+                                {
+                                    <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+
+                                        <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                    </a>
+                                }
+                            }
+                        }
+                    }
+
+                    @if (Model.Subscrip_State == Accountingsystem.Models.TransactionState.Pending)
+                    {
+                        <a id="EditPBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("EditForPendding","Subscription",new { id = Model.Subscrip_Id })'>
+                            @Accountingsystem.Resources.validate.EditPenddingSub
+                            <span id="EditPBtnBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="printEmailBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Delete","Subscription",new { id = Model.Subscrip_Id })'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.Delete
+                            <span id="printEmailBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexSubPending")">
+                            @Accountingsystem.Resources.SubscriptionDetailofSubscription.BackToList
+                            <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.SubscriptionDetailofSubscription.BackToList
+                            <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    }
+                    @*@if (Model.Subscrip_State == Accountingsystem.Models.TransactionState.Void)
+        {
+            <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexSubVoid")">
+                @Accountingsystem.Resources.SubscriptionDetailofSubscription.BackToList
+                <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+            </a>
+
+        }*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $("#createBtn").click(function (e) {
+            $("#createBtnSpinner").show();
+        });
+        $("#CustomerDetail").click(function (e) {
+            $("#CustomerDetailSpinner").show();
+        });
+        $("#EditPBtn").click(function (e) {
+            $("#EditPBtnSpinner").show();
+        });
+        
+        $("#constraintBtn").click(function (e) {
+            $("#constraintBtnSpinner").show();
+        });
+        $("#createSubscriptionReceiptBtn").click(function (e) {
+            $("#createSubscriptionReceiptBtnSpinner").show();
+        });
+        $("#editBtn").click(function (e) {
+            $("#editBtnSpinner").show();
+        });
+        $("#custommerRepportBtn").click(function (e) {
+            $("#custommerRepportBtnSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        function PostSub() {
+            var Subids = $("#Subscrip_Id").val();
+             var newUrl= '@Url.Action("DetailofSubscription", "Subscription")';
+             $.ajax({
+                url: '@Url.Action("PostSubscription", "Subscription")',
+                type: 'get',
+                 data: { SubID: Subids}
+
+             }).done(function (result) {
+                 alert(result);
+                     window.location.href = newUrl;
+            });
+        };
+        function VoidSub() {
+            var Subids = $("#Subscrip_Id").val();
+             var newUrl= '@Url.Action("DetailofSubscription", "Subscription")';
+             $.ajax({
+                url: '@Url.Action("VoidSubscription", "Subscription")',
+                type: 'get',
+                 data: { SubID: Subids}
+
+             }).done(function (result) {
+                 alert(result);
+                     window.location.href = newUrl;
+            });
+        };
+    </script>
+}

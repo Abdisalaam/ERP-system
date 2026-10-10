@@ -1,0 +1,32 @@
+﻿@model Accountingsystem.ViewModel.PurMasterVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+
+    <div class="col-md-5">
+        <div class="textfieldcont">
+            @Html.EditorFor(model => model.Due_Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Due_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <span class="required-mark col-md-1">*</span>
+
+    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.BillDueDate>
+        <i class="fas fa-question-circle"></i>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            @Html.LabelFor(Accountingsystem.Resources.PrintReports.DueDate)
+        </div>
+    </div>
+
+
+
+
+
+}

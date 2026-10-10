@@ -1,0 +1,105 @@
+﻿@model Accountingsystem.Models.GLMaster
+
+@{  
+
+
+
+
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>القيد اليومي</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("تاريخ القيد")
+        </dt>
+
+        <dd>
+          @Model.GL_Date.ToShortDateString()
+        </dd>
+
+        <dt>
+            @Html.DisplayName("وصف القيد")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GL_Desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("الشركة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("نوع القيد")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GLType_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("العملة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency_Id)
+        </dd>
+
+
+
+
+
+    </dl>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>قيمة مدينة</th>
+                <th>قيمة دائنة</th>
+                <th>الحساب </th>
+                <th>اسم الحساب</th>
+                <th>المجال</th>
+                <th>رقم الاصل</th>
+                <th>مركز التكلفة</th>
+                <th>وصف الحركة</th>
+
+
+            </tr>
+
+            @foreach (var GL in Model.GLDetails)
+            {
+                <tr>
+                    <td>@Math.Round(GL.GLDetail_Debit,2)</td>
+                    <td>@Math.Round(GL.GLDetail_Credit,2)</td>
+                    <td>@GL.Account_Id</td>
+                    <td>@GL.Account_Name</td>
+                    <td>@GL.Bu_Id</td>
+                    <td>@GL.Asset_Id</td>
+                    <td>@GL.SubLedger_Id</td>
+                    <td>@GL.Description_Detail</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("الرجوع الى القائمة", "Index")
+        </div>
+    }
+</div>

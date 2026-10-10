@@ -1,0 +1,489 @@
+﻿@model IEnumerable<Accountingsystem.Models.InvoicePrintSetting>
+@{
+
+    HttpCookie cookie = Request.Cookies["Language"];
+    var Type = Model.FirstOrDefault().TypeId;
+    var title = "";
+    if (Type == 1)
+    {
+        title = Accountingsystem.Resources.SalesSetting.InvoiceDesignsPDFSales;
+    }
+    else if (Type == 2)
+    {
+        title = Accountingsystem.Resources.SalesSetting.InvoiceSimpleDesignsPDFSales;
+    }
+    else
+    {
+        title = Accountingsystem.Resources.SalesSetting.OfferPriceDesignsPDF;
+    }
+    var companyPrint = Accountingsystem.Models.InvoicePrintSetting.getCompanyPrint(Type);
+    ViewBag.Title = title;
+}
+
+@{
+
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+<style>
+    .wrapper {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1400px;
+    }
+
+    .gallery {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 100px 10px;
+    }
+
+        .gallery img {
+            cursor: pointer;
+        }
+
+    .boxOfimages .big-img img {
+        display: block;
+        margin: 0 auto;
+        width: 290px;
+        margin-bottom: 10px;
+    }
+
+    .boxOfsmallImgs {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+        .boxOfsmallImgs img {
+            width: 70px;
+            opacity: 0.7;
+            transition: opacity 0.4s ease;
+            margin: 2px;
+        }
+
+            .boxOfsmallImgs img:hover {
+                opacity: 1;
+            }
+
+    }
+
+    .boxOftext {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        font-size: 0.8rem;
+    }
+
+        .boxOftext h2 {
+            padding: 20px 10px;
+        }
+
+        .boxOftext p {
+            padding: 10px 10px;
+        }
+</style>
+
+
+
+
+
+
+
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    @*<div class="header-container">
+            <header class="header navbar navbar-expand-sm">
+                <ul class="navbar-item flex-row text-center">
+
+                    <li class="nav-item theme-text">
+
+                    </li>
+
+                </ul>
+                <ul class="navbar-item flex-row ml-md-auto">
+
+                    <li class="nav-item dropdown user-profile-dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                        </a>
+                        <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                            <div class="">
+
+
+                                <div class="dropdown-item">
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        @if (package.Number_store > 0)
+                                        {
+                                            <li>
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.CreateStore</a>
+                                                </div>
+                                            </li>
+                                        }
+
+                                        <li>
+
+                                            <div class="dropdown-item">
+                                                <a class="BTN-style" href=" @Url.Action( "IndexNotActive" )"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.StoreNotActive</a>
+
+
+
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                            <div class="dropdown-item">
+                                                <a class="BTN-style" href=" @Url.Action( "Index" , "SettlementOfStores")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.StoreIndex.AdjustmentsList</a>
+
+
+
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.ReceiptIndex.CreateSalesCatchReceipt</a>
+
+
+
+                                                </div>
+                                            </li>
+                                            <li>
+
+                                                <div class="dropdown-item">
+                                                    <a class="BTN-style" href=" @Url.Action( "Create")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>  @Accountingsystem.Resources.ReceiptIndex.CreateSalesCatchReceipt</a>
+
+
+
+                                                </div>
+                                            </li>
+
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </li>
+                </ul>
+
+            </header>
+        </div>*@
+    <div class="text-center">
+     @title
+    </div>
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.percentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.percentage, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+    @if (companyPrint != null)
+    {
+
+        <div class="text-center">
+            <img id="imageBox1" src="data:image/jpg;base64,@Convert.ToBase64String(companyPrint.Image)" width="500" height="500" alt="">
+        </div>
+
+    }
+    else
+    {
+        <div class="text-center">
+            <img id="imageBox1" src="data:image/jpg;base64,@Convert.ToBase64String(Model.FirstOrDefault().Image)" width="500" height="500" alt="">
+        </div>
+    }
+    <input hidden id="SelectImage" />
+    
+    <div class="table-responsive mb-4 mt-4">
+        <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th hidden>
+
+                    </th>
+
+                    <th hidden>
+
+                    </th>
+
+
+
+
+
+                    <th>
+
+
+                    </th>
+
+
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td hidden class="Idclass">@item.Id</td>
+                        <td hidden>@item.TypeId</td>
+
+
+                        <td>
+                            @if (item.Image == null)
+                            {
+                                <h>No Image</h>
+                            }
+                            else
+                            {
+
+
+                                <div class="boxOfsmallImgs">
+                                    <a>
+                                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Image)" onclick="galleryFunction1(this)" alt="Forest" style="width:150px">
+                                    </a>
+                                </div>
+                            }
+
+                        </td>
+
+
+
+
+
+
+
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" id="createOfferbtn" onclick="fun()" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterIndex.Edit <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("GetAllSalesSetting")'>
+                    @Accountingsystem.Resources.SubLedgerCreate.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 5000,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+    @*<script>
+        function OnChangeDrop(obj) {
+            debugger
+            var Tax = $(obj).val()
+            var detailId = $(obj).parents('tr').find('.Id').html();
+            $(':checkbox').each(function () {
+                this.checked = false;
+            });
+            $(obj).parents('tr').find('.Active').checked = true;
+            //if (this.checked) {
+            //    $(':checkbox').each(function () {
+            //        this.checked = true;
+            //    });
+            //} else {
+            //    $(':checkbox').each(function () {
+            //        this.checked = false;
+            //    });
+        }
+    </script>*@
+
+
+    <script>
+
+        function fun() {
+
+
+            $("#createOfferSpinner").show();
+            $('#createOfferbtn').prop('disabled', true);
+            var orderArr = [];
+            orderArr.length = 0;
+            debugger
+            $.each($("#default-ordering tbody tr"), function () {
+                orderArr.push({
+
+                    Id: $(this).find('td:eq(0)').html(),
+                    TypeId: $(this).find('td:eq(1)').html(),
+
+                   Active: $(this).find('td:eq(3)').find('input').prop('checked')
+                });
+
+            });
+
+
+
+            var xz = 22;
+            var datao = JSON.stringify(orderArr);
+            var printselect = $("#SelectImage").val();
+            var data = { 'vm': datao, 'printselect':printselect };
+            var data = JSON.stringify(data);
+
+            console.log(data);
+             $.ajax(
+                 {
+
+                     url: '@Url.Action("EditTypeOfPrint", "SalesSetting")',
+                     data: data,
+                     contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+                     type: 'POST',
+
+
+            }).done(function (result) {
+
+                setTimeout(function () {
+
+                    window.location = result;
+
+                }, 5000);
+            });
+
+        };
+
+    </script>
+<script>
+    function galleryFunction1(smallImg) {
+        debugger
+        let fullImg = document.getElementById('imageBox1');
+        fullImg.src = smallImg.src;
+        var TaxPercentage = $(smallImg).parents('tr').find('.Idclass').html();
+        $("#SelectImage").val(TaxPercentage);
+    }
+    </script>
+    <script>
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('check')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+    </script>
+}

@@ -1,0 +1,112 @@
+﻿@model Accountingsystem.Models.Company
+
+@{
+    ViewBag.Title = "WelcomePage";
+    HttpCookie cookie = Request.Cookies["Language"];
+
+
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+@*<h2 class="HEADTITLE-STYLE">التفاصيل</h2>*@
+@if (!User.IsInRole("مالك النظام"))
+{
+    <input type="hidden" value="@Accountingsystem.Utilites.PackageRecognize.alertForRenew()" id="h_var1" />
+}
+@*<h4>Company</h4>*@
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            @ViewBag.Message
+        </div>
+        <div class="text-center">
+
+            @if (Model.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br /><br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+
+        </div>
+        <div class="text-center">
+            @Model.Comp_Name
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @{
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            }
+            else
+            {
+
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            }
+        }
+        else
+        {
+
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+
+        }
+    }
+    <script>
+        var var1 = $("#h_var1").val();
+        if (var1 == null || var1 == "") {
+
+        }
+        else {
+            Snackbar.show({
+                text: var1,
+                pos: 'top-center'
+            });
+        }
+    </script>
+}

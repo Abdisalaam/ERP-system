@@ -1,0 +1,55 @@
+﻿@model Accountingsystem.Models.Slices
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.SlicesDelete.Delete;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.SlicesDelete.Delete</h2>
+
+<h3>@Accountingsystem.Resources.SlicesDelete.DeletionSliceQuestion</h3>
+<div>
+    <hr />
+
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" data-sortable-initialized="true">
+                @Html.HiddenFor(model => model.Slice_Id)
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.SlicesDelete.SliceName)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Slice_Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.SlicesDelete.SliceNumber)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Slice_Code)
+                    </td>
+
+
+                </tr>
+            </table>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.SlicesDelete.BackToList
+                </a>
+                <input type="submit" value=@Accountingsystem.Resources.SlicesDelete.Delete class="btn BTN-style-danger final-BTN" />
+            </div>
+        </div>
+    }
+    <hr />
+
+</div>
+

@@ -1,0 +1,479 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.TrialBalanceNew
+
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    var count = 1;
+    decimal totalAmount = 0;
+    ViewBag.Title = "تقرير الضرائب التفصيلي";
+
+    var Company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ميزان المراجعة</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    @*<div class="row">
+        <div class="col-md-6">
+
+
+            @if (Company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+     
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+           ميزان المراجعة / Trial Balance Report
+
+        </div>
+
+        
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+    <hr />
+    <div class="row">
+
+
+
+
+        <table class="table" style="text-align:right;direction:rtl;">
+            <thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:right" width="300:px">الحساب<br />Account</th>
+                    <th style="text-align:center" width="300:px">رقم الحساب<br />Account NO</th>
+                    <th style="text-align:center;font-size:xx-small">رصيد قبل المدة<br />Balance Before duration</th>
+                    <th colspan="3" style="text-align:center;font-size:xx-small">الحركات<br />Transaction</th>
+                    <th style="text-align:center;font-size:xx-small">رصيد اخر المدة<br />Final Balance</th>
+
+
+                </tr>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center;" width="300:px"></th>
+                    <th style="text-align:center;font-size:xx-small"></th>
+                    <th style="text-align:center;font-size:xx-small"></th>
+                    <th style="text-align:center;font-size:xx-small">مدين<br />Debit</th>
+                    <th style="text-align:center;font-size:xx-small">دائن<br />Credit</th>
+                    <th style="text-align:center;font-size:xx-small">الصافي<br />Net</th>
+
+
+                    <th style="text-align:center;font-size:xx-small"></th>
+
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model.Detail)
+                {
+                    if (item.Account.Account_Level == 1)
+                    {
+                <tr>
+
+                    @if (item.ChildAccountd == null && item.Asset == null)
+                    {
+                        <td style="float:right;font-size:x-large;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.LevelExpresion@item.Account.Account_Name</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.Account.Account_Code
+                        </td>
+                    }
+                    else if (item.Asset != null)
+                    {
+                        <td style="float:right;font-size:x-large;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.Asset.FAsset_Description</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.Asset.FAsset_Code
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="float:right;font-size:x-large;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.ChildAccountd.Account_Name</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.ChildAccountd.Account_Code
+                        </td>
+                    }
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.AmountBefor < 0)
+                        {
+                            var a = "(" + Math.Round(item.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @Math.Round(item.DepitMov, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @Math.Round(item.CeditMov, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.AmountOfPeriod < 0)
+                        {
+                            var a = "(" + Math.Round(item.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.FinalAmount < 0)
+                        {
+                            var a = "(" + Math.Round(item.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+
+
+
+
+                </tr>
+                    }
+                    else
+                    {
+                <tr>
+
+                    @if (item.ChildAccountd == null && item.Asset == null)
+                    {
+                        <td style="float:right;font-size:small;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.LevelExpresion@item.Account.Account_Name</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.Account.Account_Code
+                        </td>
+                    }
+                    else if (item.Asset != null)
+                    {
+                        <td style="float:right;font-size:small;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.Asset.FAsset_Description</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.Asset.FAsset_Code
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="float:right;font-size:small;width:300px;">
+
+                            <div style="text-align: right;">
+                                <span style="white-space: pre-line" dir="rtl" ;>@item.ChildAccountd.Account_Name</span>
+                            </div>
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @item.ChildAccountd.Account_Code
+                        </td>
+                    }
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.AmountBefor < 0)
+                        {
+                            var a = "(" + Math.Round(item.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @Math.Round(item.DepitMov, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @Math.Round(item.CeditMov, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.AmountOfPeriod < 0)
+                        {
+                            var a = "(" + Math.Round(item.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+                    <td style="text-align:center;font-size:small;">
+                        @if (item.FinalAmount < 0)
+                        {
+                            var a = "(" + Math.Round(item.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(item.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </td>
+
+
+
+
+
+                </tr>
+                    }
+
+                }
+
+            </tbody>
+            <thead>
+
+                <tr style="text-align:right;">
+                    
+                    
+
+                    <th style="text-align:center;" width="300:px">الاجمالي<br />Total</th>
+                    <th></th>
+                    <th style="text-align:center;">
+                    
+                            @if (Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero) < 0)
+                            {
+                                var a = "(" + Math.Round(Model.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                    </th>
+
+                    <th style="text-align:center;font-size:xx-small">@Math.Round(Model.DepitMov, 2, MidpointRounding.AwayFromZero)</th>
+                    <th style="text-align:center;font-size:xx-small">@Math.Round(Model.CeditMov, 2, MidpointRounding.AwayFromZero)</th>
+                    <th style="text-align:center;">
+                        @if ( Math.Round(Model.AmountOfPeriod, 2, MidpointRounding.AwayFromZero) < 0)
+                        {
+                            var a = "(" + Math.Round(Model.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(Model.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </th>
+                    <th style="text-align:center;">
+                        @if (Math.Round( Model.FinalAmount,2,MidpointRounding.AwayFromZero) < 0)
+                        {
+                            var a = "(" + Math.Round(Model.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(Model.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+
+                    </th>
+                   
+
+
+                </tr>
+            </thead>
+            @*<thead>
+                <tr style="text-align:right;">
+
+
+                    <th style="text-align:center">الاجمالي<br />Total</th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right"></th>
+                    <th style="text-align:right">
+                        @if (totalAmount < 0)
+                        {
+                            var a = "(" + Math.Round(totalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                            <h>
+                                @a
+                            </h>
+                        }
+                        else
+                        {
+                            @Math.Round(totalAmount, 2, MidpointRounding.AwayFromZero)
+                        }
+                    </th>
+                    <th style="text-align:right"></th>
+
+                </tr>
+
+            </thead>*@
+        </table>
+    </div>
+
+    <footer style="margin-top:50%;"></footer>
+</body>
+</html>
+
+
+
+

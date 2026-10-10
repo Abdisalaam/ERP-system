@@ -1,0 +1,324 @@
+﻿@model Accountingsystem.Models.MasterPOSInvoice
+
+@{
+    decimal TotalAmountbeforeDisc = Model.DetailPOSInvoices.Select(a => a.Product_Quantity * a.Product_Price).Sum();
+
+
+    HttpCookie cookie = Request.Cookies["Language"];
+    var incoceDate = Model.Invoice_Date.ToString();
+    var _CompanyId = Convert.ToInt32(Model.Company_Id);
+    var _Company = Accountingsystem.Models.Company.GetCompanyById(_CompanyId);
+   // Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <link rel="icon" type="image/x-icon" href="@Url.Content("~/ContentLTR/assets/img/LOGO.ico")">
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+                <script src="@Url.Content("~/ContentLTR/assets/js/loader.js")"></script>
+                <!-- BEGIN GLOBAL MANDATORY STYLES -->
+                <link href="@Url.Content("~/ContentLTR/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+                <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+                <link href="@Url.Content("~/ContentLTR/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/Content/PrintPOS.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                <link rel="icon" type="image/x-icon" href="@Url.Content("~/ContentRTL/assets/img/LOGO.ico")">
+                <link href="@Url.Content("~/ContentRTL/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+                <script src="@Url.Content("~/ContentRTL/assets/js/loader.js")"></script>
+                <!-- BEGIN GLOBAL MANDATORY STYLES -->
+                <link href="@Url.Content("~/ContentRTL/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+                <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+                <link href="@Url.Content("~/ContentRTL/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/Content/PrintPOS.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            <link rel="icon" type="image/x-icon" href="@Url.Content("~/ContentRTL/assets/img/LOGO.ico")">
+            <link href="@Url.Content("~/ContentRTL/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+            <script src="@Url.Content("~/ContentRTL/assets/js/loader.js")"></script>
+            <!-- BEGIN GLOBAL MANDATORY STYLES -->
+            <link href="@Url.Content("~/ContentRTL/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+            <link href="@Url.Content("~/ContentRTL/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Content/PrintPOS.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+</head>
+
+
+<body>
+ 
+    <div style="page-break-after: always;" id="contentToPrint">
+        <div class="ticket myDivToPrint">
+            @if (_Company.CompanyPhotoDetails.FirstOrDefault() != null)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(_Company.CompanyPhotoDetails.FirstOrDefault().ProImg)" alt="Sutumatic" style="width:200px; height:100px;" />
+            }
+
+            <p class="centered">
+                @_Company.Comp_Name
+                <br><b>@Model.PointOfSale.POS_Name </b>/ @Model.PointOfSale.POS_Id
+                <br>@Model.PointOfSale.Adress
+                <br>@_Company.Comp_phone
+                <br>@_Company.Tax_Number
+                <br>@Model.Serial_Number
+                <br>@Model.Invoice_Date
+            </p>
+            <hr />
+            <div class="row layout-top-spacing">
+                @foreach (var detail in Model.DetailPOSInvoices)
+                {
+                    var product = @Accountingsystem.Models.Product.GetProdectById(detail.Product_Id);
+                    <div class="row">
+                        <div class="col-md-12">
+                            @product.Prod_Name <span>
+
+                                @if (string.IsNullOrEmpty(product.Prod_Descrip))
+                                {
+
+                                }
+                                else
+                                {
+                                    <span>#</span> @product.Prod_Descrip
+                                }
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                        </div>
+                        <div class="col-md-4">
+                            @Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)
+                        </div>
+                        <div class="col-md-4">
+                            @Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                        </div>
+                        <div class="col-md-4">
+                            @Math.Round(detail.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.Total)
+                                            </div>
+                                            <div>
+                                                @Math.Round(TotalAmountbeforeDisc, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.DiscountValue)
+                                            </div>
+                                            <div>
+                                                @Math.Round(TotalAmountbeforeDisc * (Model.Master_Discount.Value / 100), 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalTax)
+                                            </div>
+                                            <div>
+                                                @if (Model.Total_Tax > 0)
+                                                {
+                                                    if (Model.TotalNewTaxs != null)
+                                                    {
+
+                                                        @Math.Round(Model.Total_Tax.Value + Model.TotalNewTaxs.Value, 2, MidpointRounding.AwayFromZero)
+
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @Math.Round(Model.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+                                                    }
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.MasterPOSInvoice.TotalCost)
+                                            </div>
+                                            <div>
+                                                @Math.Round(Model.Total_Amount.Value, 2, MidpointRounding.AwayFromZero) <span>@Model.Invoice_Currency </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+                 
+
+
+                </div>
+
+    </div>
+  
+    
+
+</body>
+</html>
+
+
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/assets/js/libs/jquery-3.1.1.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/bootstrap/js/popper.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/bootstrap/js/bootstrap.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/app.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/assets/js/libs/jquery-3.1.1.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/bootstrap/js/popper.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/bootstrap/js/bootstrap.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/app.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/assets/js/libs/jquery-3.1.1.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/bootstrap/js/popper.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/app.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+
+
+        }
+    }
+
+    <script type="text/javascript">
+        //$("#btnPrint").click(function (e) {
+        //    //var restorepage = $('body').html();
+        //    //var printcontent = $('#myDivToPrint' + el).clone();
+        //    //$('body').empty().html(printcontent);
+        //    //window.print();
+        //    //$('body').html(restorepage);  
+        //    //var headstr = "<html><head><title>Print Invoice</title>" + "<link href=" +"~/Content/PrintPOS.css" + "rel="+ "stylesheet"+" /> " +  "</head><body>";
+        //    //var footstr = "</body>";
+        //    //var newstr = document.all.item('contentToPrint').innerHTML;
+        //    //var oldstr = document.body.innerHTML;
+        //    //document.body.innerHTML = headstr + newstr + footstr;
+        //    //window.print();
+        //    //document.body.innerHTML = oldstr;
+        //    //return false;
+        //    var myWindow = window.open('', '#myDivToPrint', 'height=400,width=600');
+        //    myWindow.document.write('<html><head><title>my div</title><link href="~/Content/PrintPOS.css" rel="stylesheet" />');
+        //    /*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        //    myWindow.document.write('</head><body >');
+        //    myWindow.document.write(data);
+        //    myWindow.document.write('</body></html>');
+        //    myWindow.document.close(); // necessary for IE >= 10
+
+        //    myWindow.onload = function () { // necessary if the div contain images
+
+        //        myWindow.focus(); // necessary for IE >= 10
+        //        myWindow.print();
+        //        myWindow.close();
+        //    };
+
+
+            
+        //});
+        function PrintElem() {
+            var divContents = document.getElementById("contentToPrint").innerHTML;
+            var height = $("#contentToPrint").height();
+            document.body.style.height = height;
+            var myWindow = window.open('', 'contentToPrint', 'height=400,width=600');
+            myWindow.document.write('<html style="page-break-inside: avoid;"><head><title>my div</title><link href="~/Content/PrintPOS.css" media = "print" rel="stylesheet" />');
+            /*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            myWindow.document.write('</head><body style="page-break-inside: avoid;">');
+
+            //myWindow.document.write('<html style="margin:0;padding:0; max-height: ' + height + ';' + 'height:' + height+ '; "><head><title>my div</title><link href="~/Content/PrintPOS.css" rel="stylesheet" />');
+            ///*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            //myWindow.document.write('</head><body style="max-height: ' + height + ';' + 'height:' + height + '; ">');
+            myWindow.document.write(divContents);
+            myWindow.document.write('<div>&nbsp;</div> </body></html>');
+            myWindow.document.close(); // necessary for IE >= 10
+
+            myWindow.onload = function () { // necessary if the div contain images
+
+                myWindow.focus(); // necessary for IE >= 10
+                myWindow.print();
+                myWindow.close();
+            };
+        }
+
+    </script>
+
+
+}

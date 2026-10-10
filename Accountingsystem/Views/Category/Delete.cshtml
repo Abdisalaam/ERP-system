@@ -1,0 +1,54 @@
+﻿@model Accountingsystem.Models.Category
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.CategoryDelete.Delete;
+}
+
+<h2  class="HEADTITLE-STYLE">@Accountingsystem.Resources.CategoryDelete.Delete</h2>
+
+<h3>@Accountingsystem.Resources.CategoryDelete.DeletionCategoryQuestion</h3>
+<div>
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" data-sortable-initialized="true">
+                @Html.HiddenFor(model => model.Cat_ID)
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.CategoryDelete.CategoryNumber)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Cat_Code)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.CategoryDelete.CategoryName)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(model => model.Cat_Descrip)
+                    </td>
+
+
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.CategoryDelete.BackToList
+                </a>
+                <input type="submit" value=@Accountingsystem.Resources.CategoryDelete.Delete class="btn BTN-style-danger final-BTN" />
+            </div>
+        </div>
+
+    }
+
+
+</div>

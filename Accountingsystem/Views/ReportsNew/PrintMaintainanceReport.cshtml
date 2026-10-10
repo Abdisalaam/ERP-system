@@ -1,0 +1,237 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.SubscriptionMaintainDateVM
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+    int counter = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.From).ToString("yyyy/MM/dd ");
+    var company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير تحويل المخزن للصيانة</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير تحويل المخزن للصيانة / Transfer From Store to Maintainance Report
+
+        </div>
+
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+
+                <th>
+                    الرقم
+                    <br />
+                    NO
+                </th>
+                <th style="text-align:center;">
+                    الى مصروف
+                    <br />
+                    To Expence
+                </th>
+                <th style="text-align:center;">
+                    من مخزن
+                    <br />
+                    From Store
+                </th>
+                <th style="text-align:center;">
+                    مركز التكلفه
+                    <br />
+                    Subledger
+                </th>
+                <th style="text-align:center;">
+                    التكلفه
+                    <br />
+                    Cost
+                </th>
+
+
+            </tr>
+            </thead>
+            @foreach (var item in Model.List)
+            {
+                totalamount = totalamount + item.amount;
+                counter++;
+                <tr>
+
+                    <td>
+
+                        @item.TransCode
+                    </td>
+                    <td>
+                        @item.PayName
+                    </td>
+
+                    <td>
+
+                        @item.StoreName
+                    </td>
+                    <td>
+                        @item.SubledgerName
+                    </td>
+
+                    <td>
+                        @Math.Round(item.amount, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+
+                </tr>
+
+            }
+            <tr>
+
+                <th>
+                    الاجمالى
+                    <br />
+                    Total
+                </th>
+                <th style="text-align:center;">
+
+                </th>
+                <th style="text-align:center;">
+
+                </th>
+                <th style="text-align:center;">
+
+                </th>
+                <th style="text-align:center;">
+                    @Math.Round(totalamount, 2, MidpointRounding.AwayFromZero)
+                </th>
+
+
+            </tr>
+    </table>
+    
+</body>
+</html>
+

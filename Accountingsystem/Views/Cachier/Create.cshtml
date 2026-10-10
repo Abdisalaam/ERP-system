@@ -1,0 +1,1562 @@
+﻿@model Accountingsystem.ViewModel.OrderVM
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.CachierCreate.Title;
+    int count = 0;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var _orderId = ViewBag.ModelOrderId;
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_CashierLayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/apps/mailing-chat.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/apps/contacts.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_CashierLayout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/apps/mailing-chat.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/apps/contacts.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_CashierLayout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/apps/mailing-chat.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/forms/theme-checkbox-radio.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/apps/contacts.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+@using (Html.BeginForm("Create", "Cachier", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ExtraTaxName)
+    @Html.HiddenFor(model => model.StoreId)
+    @Html.HiddenFor(model => model.Invoice_State)
+
+    @*@Html.HiddenFor(model => model.EmployeeID)*@
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <div class="makeSpaceBottem">
+            <div class="layout-top-spacing">
+                <div class="cashier-sub-header-container">
+                    <div class="cashier-sub-header-container-navbar">
+                        <header class="header navbar navbar-expand-sm">
+                            <ul class="navbar-item theme-brand flex-row  text-center">
+                                <li id="showCartDesk" class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <a href='javascript:;' onclick='showCart();'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart textColorMakeColored"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>  <span id="OrderCartCountId" class="textColorMakeColored">@count</span></svg>
+                                    </a>
+                                </li>
+                                <li id="showCartMobile" class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <a href='javascript:;' onclick='showCartMobile();'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart textColorMakeColored"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>  <span id="OrderCartCountSmall" class="textColorMakeColored">@count</span></svg>
+                                    </a>
+                                </li>
+                                <li id="showAllProductsDeskId" class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <a href='javascript:;' onclick='showAllProducts();'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers textColorMakeColored"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                    </a>
+                                </li>
+                                <li id="showAllProductsMobileId" class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <a href='javascript:;' onclick='showAllProductsMobile();'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers textColorMakeColored"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                    </a>
+                                </li>
+                                <li class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <a href='javascript:;' onclick='showCategoeryProducts();'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid textColorMakeColored"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                    </a>
+                                </li>
+                                @*<li class="nav-item align-self-center makeSpaceOnlyLeft">
+                                        <a href='javascript:;' onclick='showAllHoldedOrder();'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause textColorMakeColored"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect> <span id="holdedOrdersCountId" class="textColorMakeColored">@count</span></svg>
+                                        </a>
+                                    </li>*@
+
+                                @*<li class="nav-item align-self-center makeSpaceOnlyLeft">
+                                    <button id="getAllHoldedOrdersBTN" class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#holdedOrdersModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause textColorMakeColored"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect> <span id="holdedOrdersCountId" class="textColorMakeColored">@count</span></svg>
+                                    </button>
+                                </li>*@
+                                <li class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <button id="getAllOrdersBTN" class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#alldOrdersModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                    </button>
+
+                                </li>
+                                @*<li class="nav-item align-self-center makeSpaceOnlyLeft" style="padding-left:30px; padding-right:30px;">
+                                    <button id="addNewProductBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#productModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                    </button>
+                                </li>*@
+
+                            </ul>
+                        </header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form id="offerCreateMasterForm">
+            <div class="">
+
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <h4 class="text-center">@ViewBag.Message</h4>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="display: none;">
+                                    <input class="form-control mb-4" type="text" value="@ViewBag.ModelOrderId" id="orderIdToPrint" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div id="myCategoeryList" class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="display:none;">
+                                <div class="">
+                                    <div class="row layout-spacing layout-top-spacing">
+
+                                        @{
+                                            if (Model.OrderProducts.Any())
+                                            {
+                                                foreach (var item in Model.OrderCategoery)
+                                                {
+
+                                                    if (item.Cat_Img != null)
+                                                    {
+                                                        <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
+                                                            <a href="JavaScript:void(0)" data-id="@item.Cat_ID" class="categoeryClassClieck">
+                                                                <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Cat_Img)" alt="@item.Cat_Descrip" class="rounded" width="150px" height="150px" />
+
+                                                            </a>
+
+                                                        </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
+
+                                                            <a href="JavaScript:void(0)" data-id="@item.Cat_ID" class="categoeryClassClieck">
+                                                                <h6 style="width:150px; height:150px" class="details-form-control">@item.Cat_Descrip</h6>
+                                                            </a>
+                                                        </div>
+
+
+                                                    }
+
+                                                }
+                                            }
+                                        }
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                <div id="customerSectionID" class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Customer)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedCustomer_Id, Model.MyCustomerList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.DropDownListCustomer, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <button id="innerAddNewCustomerBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="2" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedCustomer_Id, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @{
+                                        _orderId = ViewBag.ModelOrderId;
+                                        if (_orderId > 0)
+                                        {
+                                            <a id="editOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetAllOrderDetailsToPrintNewWindow" , new { orderId = _orderId })' target="_blank">
+                                                @Accountingsystem.Resources.MasterPOSInvoice.ThermalPrinting
+                                                <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                            </a>
+                                        }
+                                    }
+                                </div>
+                                @*<div id="customerSectionID" class="form-group">
+                                        <input type="text" class="form-control" id="inputScannerSearch" placeholder="@Accountingsystem.Resources.CachierCreate.ScanProduct"  onkeypress="return (event.key!='Enter')">
+                                    </div>*@
+                                <div class="search-bar">
+                                    <input type="text" class="form-control product-search" id="input-search" placeholder="@Accountingsystem.Resources.CachierCreate.SearchProduct">
+                                </div>
+                                <div id="myProductList">
+                                    <div class="layout-px-spacing">
+                                        <div class="layout-spacing layout-top-spacing">
+                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                <div class="widget-content searchable-container list">
+                                                    <br />
+                                                    <div class="searchable-items list">
+                                                        @{
+                                                            if (Model.OrderProducts.Any())
+                                                            {
+                                                                foreach (var item in Model.OrderProducts)
+                                                                {
+                                                                    <div class="items">
+
+                                                                        <div class="item-content">
+
+                                                                            <a href="JavaScript:void(0)" data-id="@item.PatchID" class="productClassClieck">
+
+                                                                                <div class="item-content">
+                                                                                    <div class="user-profile" style="vertical-align: middle;">
+
+                                                                                        @if (item.ProductImage != null)
+                                                                                        {
+                                                                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.ProductImage)" alt="Image" />
+
+                                                                                        }
+                                                                                        <div class="user-meta-info" style="vertical-align: middle;">
+
+                                                                                            <p class="user-name" style="vertical-align: middle; color:black;"><span><b>@item.ProductCode</b></span>  <b>@item.ProductName</b></p>
+                                                                                            <p class="user-name" style="vertical-align: middle; color:black;">
+                                                                                                <b>@Math.Round(item.AvailableQuantity, 2, MidpointRounding.AwayFromZero)</b>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                            <div class="user-email">
+                                                                                <input id="@item.PatchID" type="text" class="details-form-control" style="color:black;" placeholder="@Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)">
+                                                                                @*<p id="@item.PatchID" class="details-form-control" style="vertical-align: middle; color:black;"><span><b>@Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)</b></span></p>*@
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
+
+
+                                                            }
+
+
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="categoeryProductList" style="display:none;">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                <div>
+                                    <div class="layout-px-spacing">
+                                        <div class="layout-spacing layout-top-spacing">
+                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                <div id="posInvoice" class="invoiceCashierFixedAtTop">
+                                                    <div id="allItemsOfInvoice">
+
+                                                    </div>
+                                                    @*<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.DiscountPercentage)
+                                                                @Html.EditorFor(model => model.DicountPrecentage, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                                                @Html.ValidationMessageFor(model => model.DicountPrecentage, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>*@
+                                                    <div id="extraTaxesContentPlaceHolderId" class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="display:none;">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.InvoiceMasterDetails.TotalTaxes) <span id="nameOfTotalOfExtraTaxes"> @Html.DisplayName("Extra tax Name")</span>
+                                                            @Html.EditorFor(model => model.TotalExtraTaxAmount, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                                        </div>
+                                                    </div>
+
+
+                                                    @if (package.ExtraTaxes == true)
+                                                    {
+                                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddExtraTaxes)
+                                                                <div class="input-group">
+                                                                    @Html.DropDownListFor(model => model.SelectedTaxID, Model.MyTaxList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.TaxInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                                                </div>
+                                                                @Html.ValidationMessageFor(model => model.SelectedTaxID, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+
+                                                    }
+
+
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.EmployeeNumber)
+                                                            <div class="input-group">
+                                                                @Html.DropDownListFor(model => model.EmployeeID, Model.EmpListList, htmlAttributes: new { @class = "form-control  mb-4 Dropdownlist-select" })
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.PointOfSaleCreate.PaymentMethod)
+                                                            <div class="input-group">
+                                                                @Html.DropDownListFor(model => model.SelectedPaymentMethodeID, Model.MyPaymentMethodesList, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                                                <div class="input-group-append">
+                                                                    <div class="form-control">
+                                                                        <label class="text-danger">*</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @Html.ValidationMessageFor(model => model.SelectedPaymentMethodeID, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.InvoiceMasterDetails.Net)
+                                                            <div class="input-group">
+
+                                                                <input id="totalOfAllDetilas" class="form-control mb-4" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.CachierCreate.PaidAmount)
+                                                            <div class="input-group">
+                                                                <input id="totalOfPaiedAmount" class="form-control mb-4">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.CachierCreate.RemainingAmount)
+                                                            <div class="input-group">
+                                                                <input id="totalOfRemainingAmount" class="form-control mb-4" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @Html.Label(Accountingsystem.Resources.CachierCreate.OrderType)
+                                                            <div class="input-group">
+                                                                @Html.DropDownListFor(model => model.SelectedTypeOrderId, Model.OrderTypeList, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                                                <div class="input-group-append">
+                                                                    <div class="form-control">
+                                                                        <label class="text-danger">*</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @Html.ValidationMessageFor(model => model.SelectedTypeOrderId, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes)
+                                                                @Html.TextAreaFor(model => model.Comment, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.OfferPriceMasterCreateOffer.OfferDescription })
+                                                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            @*<a href='javascript:;' class="btn btn-block btn-outline-secondary mb-lg-0" onclick='showAllHoldedOrder();'>
+                                                                @Accountingsystem.Resources.CachierCreate.HoldOrder<span id="holdOrderBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                                            </a>*@
+                                                            @{
+                                                                _orderId = ViewBag.ModelOrderId;
+                                                                if (_orderId > 0)
+                                                                {
+                                                                    <a id="editOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetAllOrderDetailsToPrintNewWindow" , new { orderId = _orderId })' target="_blank">
+                                                                        @Accountingsystem.Resources.MasterPOSInvoice.ThermalPrinting
+                                                                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                                                                    </a>
+                                                                }
+                                                            }
+
+                                                            <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                                                            @*<button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">Checkout & Print <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+         <div id="additionalDetailModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Accountingsystem.Resources.CachierCreate.AddAdditionalToItemTitle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="addAdditinalDetailPartialDialogDiv"></div>
+                    </div>
+                    <div class="md-button">
+                        <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="customerModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddNewCustomer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="customerPartialDialogDiv"></div>
+                    </div>
+                    <div class="md-button">
+                        <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="productModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddProduct</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="productPartialDialogDiv"></div>
+                    </div>
+                    <div class="md-button">
+                        <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="holdedOrdersModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Accountingsystem.Resources.CachierCreate.HoldedOrders</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="holdedOrdersPartialDialogDiv"></div>
+                    </div>
+                    <div class="md-button">
+                        <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="alldOrdersModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Accountingsystem.Resources.CachierCreate.Orders</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="allOrdersPartialDialogDiv"></div>
+                    </div>
+                    <div class="md-button">
+                        <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="contentToPrint" style="display: none;">
+        <div id="posToPrint">
+
+
+        </div>
+
+    </div>
+
+
+}
+
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/apps/mailbox-chat.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/apps/contact.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/apps/mailbox-chat.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/apps/contact.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+
+            }
+        }
+        else
+        {
+
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/apps/mailbox-chat.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/apps/contact.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+    <script>
+        $("#totalOfAllDetilas").change(function (e) {
+
+                    var serialId = @Model.Id;
+                    var selectedValue = $(this).val();
+
+                    $.ajax({
+                        url: '@Url.Action("updateDiscountDebendOnNet", "Cachier")',
+                        data: { net: selectedValue, id: serialId },
+                        type: 'get',
+                    }).done(function (result) {
+                        $("#DicountPrecentage").val(result);
+                        updateTaxes();
+                    }
+                    );
+        });
+        $("#totalOfPaiedAmount").keyup(function (e) {
+            var paiedAmount = $('#totalOfPaiedAmount').val();
+            var total = $('#totalOfAllDetilas').val();
+            if (paiedAmount < total) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CachierCreate.PaiedAmountIsLessThanTotal",
+                    pos: 'top-center'
+                });
+                $("#totalOfPaiedAmount").addClass("addRequiredFieldToInput");
+                $('#totalOfPaiedAmount').trigger('focus');
+            }
+            var changeAmount = $('#totalOfPaiedAmount').val() - $('#totalOfAllDetilas').val();
+            $('#totalOfRemainingAmount').val(changeAmount.toFixed(2))
+
+        });
+
+    </script>
+    <script>
+         function updateTaxes() {
+              var orderId = @Model.Id;
+             var discountPrecentageValue = $("#DicountPrecentage").val();
+            var parameters = { 'precentageValue': discountPrecentageValue, 'orderId': orderId };
+            var data = JSON.stringify(parameters);
+            $.ajax(
+            {
+                    url: '@Url.Action("UpdateOrderPrecentage", "Cachier")',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                    },
+                    error: function () { alert('error'); }
+
+
+        });
+
+        }
+    </script>
+    <script>
+           $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+               }
+               var modelOrderId = $('#orderIdToPrint').val();
+                @*$("#posToPrint").load('@(Url.Action("GetAllOrderDetailsToPrint", "Cachier"))?orderId=' + modelOrderId);*@
+               $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+               $("#customerPartialDialogDiv").load('@(Url.Action("CustomerPartialView", "Cachier"))');
+               $("#productPartialDialogDiv").load('@(Url.Action("GetProductPartialDialogNoModel", "MasterPOSInvoice"))');
+               $("#holdedOrdersPartialDialogDiv").load('@(Url.Action("GetHoldedOrdersPartialDialog", "Cachier"))');
+               $("#allOrdersPartialDialogDiv").load('@(Url.Action("GetAllOrdersPartialDialog", "Cachier"))');
+               var modelExtraTaxName = $('#ExtraTaxName').val();
+               $("#nameOfTotalOfExtraTaxes").text(modelExtraTaxName);
+
+               
+               $("#SelectedTypeOrderId").chosen();
+               $("#SelectedTypeOrderId_chosen").addClass("form-control Dropdownlist-select");
+
+               $("#SelectedTaxID").chosen();
+               $("#SelectedCustomer_Id").chosen();
+               $("#SelectedPaymentMethodeID").chosen();
+               $("#EmployeeID").chosen();
+               $("#EmployeeID_chosen").addClass("form-control Dropdownlist-select");
+               $("#SelectedPaymentMethodeID_chosen").addClass("form-control Dropdownlist-select");
+               $("#SelectedTaxID_chosen").addClass("form-control Dropdownlist-select");
+               $("#SelectedCustomer_Id_chosen").addClass("form-control Dropdownlist-select");
+               $('#inputScannerSearch').focus();
+               $('#inputScannerSearch').show();
+               $(document).on('click', '.categoeryClassClieck', function () {
+                   var categoeryId = $(this).data('id');
+                   //var categoeryId = 1;
+                   $('#myCategoeryList').hide();
+                   $('#myProductList').hide();
+                   $('#categoeryProductList').show();
+                   $("#categoeryProductList").load('@(Url.Action("GetAllCategoeryProducts", "Cachier"))?categoeryId=' + categoeryId);
+                   $('#posInvoice').show();
+                   $('#customerSectionID').show();
+                   $('#input-search').show();
+                   $('#inputScannerSearch').show();
+                   $('#inputScannerSearch').focus();
+               });
+
+               $(document).on('click', '.productClassClieck', function () {
+                   var patchId = $(this).data('id');
+                   var orderId =@Model.Id;
+                   var customer = $("#SelectedCustomer_Id").val();
+                   $("#Invoice_State").val("");
+                   var inputQuantity = document.getElementById(patchId).value;
+
+                   if (inputQuantity == 0 || inputQuantity == null || inputQuantity == "")
+                   {
+                       inputQuantity = 1;
+
+                   }
+                   if (customer > 0) {
+
+
+                   }
+                   else {
+                       customer = 0;
+                   }
+                   var parameters = { 'qty': inputQuantity, 'orderId': orderId, 'patchId': patchId, 'customer': customer };
+
+                   var data = JSON.stringify(parameters);
+
+                   $.ajax(
+                       {
+                     url: '@Url.Action("AddProductToInvoiceDetails", "Cachier")',
+                     data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        $('#input-search').val('');
+                        $('#inputScannerSearch').val('');
+                        $('#inputScannerSearch').focus();
+                        $("#Invoice_State").val("");
+                        $('.searchable-items .items:not(.items-header-section)').show();
+                        $("#OrderCartCountId").text(data);
+                        $("#OrderCartCountSmall").text(data);
+                    },
+                    error: function () { alert('error'); }
+
+                       });
+               });
+               $(document).on('click', '.categoeryProductClassClieck', function () {
+
+                   var patchId = $(this).data('id');
+                   var orderId =@Model.Id;
+                   var inputId = patchId + "#";
+                   var customer = $("#SelectedCustomer_Id").val();
+                   var inputQuantity = document.getElementById(inputId).value;
+                   if (inputQuantity == 0 || inputQuantity == null || inputQuantity == "")
+                   {
+                       inputQuantity = 1;
+                   }
+                   $("#Invoice_State").val("");
+                   if (customer > 0) {
+
+
+                   }
+                   else {
+                       customer = 0;
+                   }
+                   var parameters = { 'qty': inputQuantity, 'orderId': orderId, 'patchId': patchId, 'customer': customer };
+                   var data = JSON.stringify(parameters);
+                   $.ajax(
+                       {
+                     url: '@Url.Action("AddProductToInvoiceDetails", "Cachier")',
+                     data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                        $('#input-search').val('');
+                        $('#inputScannerSearch').val('');
+                        $('#inputScannerSearch').focus();
+                        $('.searchable-items .items:not(.items-header-section)').show();
+                        $('#inputScannerSearch').focus();
+                        $("#OrderCartCountId").text(data);
+                        $("#OrderCartCountSmall").text(data);
+
+                    },
+                    error: function () { alert('error'); }
+
+                       });
+                   $('#inputScannerSearch').focus();
+               });
+
+        });
+
+    </script>
+    @*<script type="text/javascript">
+
+            function PrintElem() {
+                var divContents = document.getElementById("contentToPrint").innerHTML;
+                var height = $("#contentToPrint").height();
+                document.body.style.height = height;
+                var myWindow = window.open('', 'contentToPrint', 'height=400,width=600');
+                myWindow.document.write('<html><head>');
+                myWindow.document.write('</head><body>');
+                myWindow.document.write(divContents);
+                myWindow.document.write('</body></html>');
+                myWindow.document.close(); // necessary for IE >= 10
+
+                myWindow.onload = function () { // necessary if the div contain images
+
+                    myWindow.focus(); // necessary for IE >= 10
+                    myWindow.print();
+                    myWindow.close();
+                };
+            }
+
+        </script>*@
+    <script>
+        @*$("#input-search").change(function (e) {
+            var selectedValue = $(this).val();
+            var orderId =@Model.Id;
+                    $.ajax({
+                        url: '@Url.Action("GetBatchIdByBarcode", "Cachier")',
+                        type: 'get',
+                        data: { barcode: selectedValue, orderId: orderId }
+                    }).done(function (result) {
+                        alert(result);
+                         $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        $("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);
+                        $('#input-search').val('');
+                        $('#input-search').trigger(':reset');
+                        $('.searchable-items .items:not(.items-header-section)').show();
+                        //$("#input-search").trigger("change");
+                        $('#input-search').focus();
+
+                    });
+        });*@
+        $('#input-search').on('keyup', function () {
+            $("#Invoice_State").val(2);
+            var a = $('#Invoice_State').val();
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable-items .items:not(.items-header-section)').hide();
+            $('.searchable-items .items:not(.items-header-section)').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+
+        });
+
+        //$('#inputScannerSearch').on('keyup', function () {
+        //    alert("Hi");
+
+
+        //});
+
+    </script>
+
+    <script>
+        $('#inputScannerSearch').on('input', function () {
+            var barCode = $(this).val();
+                   var orderId =@Model.Id;
+                   var customer = $("#SelectedCustomer_Id").val();
+                   $("#Invoice_State").val("");
+                   var inputQuantity = 1;
+
+                   if (inputQuantity == 0 || inputQuantity == null || inputQuantity == "")
+                   {
+                       inputQuantity = 1;
+
+                   }
+                   if (customer > 0) {
+
+
+                   }
+                   else {
+                       customer = 0;
+                   }
+
+                    var parameters = { 'qty': inputQuantity, 'orderId': orderId, 'productBarcode': barCode, 'customer': customer };
+                   var data = JSON.stringify(parameters);
+                   $.ajax(
+                       {
+
+                           url: '@Url.Action("AddProductToInvoiceDetailsFromScanner", "Cachier")',
+                               data: data,
+                               contentType: 'application/json',
+                               dataType: 'json',
+                               type: 'POST',
+                                success: function (data) {
+                                  $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                                  $('#input-search').val('');
+                                  $('#inputScannerSearch').val('');
+                                  $('#inputScannerSearch').focus();
+                                  $("#Invoice_State").val("");
+                                  $('.searchable-items .items:not(.items-header-section)').show();
+                                  $("#OrderCartCountId").text(data);
+                                  $("#OrderCartCountSmall").text(data);
+                    },
+
+                           error: function () { alert('error'); }
+
+
+                       });
+        });
+    </script>
+    <script>
+        function showCartMobile() {
+
+            $('#posInvoice').show();
+            $('#myCategoeryList').hide();
+            $('#customerSectionID').show();
+            $('#myProductList').hide();
+            $('#categoeryProductList').hide();
+            $('#input-search').hide();
+            $('#inputScannerSearch').hide();
+            window.scrollTo(0, 0);
+        }
+        function showCart() {
+
+            $('#posInvoice').show();
+            $('#myCategoeryList').hide();
+            $('#myProductList').show();
+            $('#categoeryProductList').hide();
+            $('#customerSectionID').show();
+            $('#input-search').show();
+            $('#inputScannerSearch').show();
+            $('#inputScannerSearch').focus();
+
+        }
+        function showCategoeryProducts() {
+            $('#posInvoice').hide();
+            $('#customerSectionID').hide();
+            $('#myCategoeryList').show();
+            $('#myProductList').hide();
+            $('#categoeryProductList').hide();
+            $('#input-search').hide();
+            $('#inputScannerSearch').hide();
+            window.scrollTo(0, 0);
+        }
+        function showAllProductsMobile() {
+            $('#posInvoice').hide();
+            $('#myCategoeryList').hide();
+            $('#customerSectionID').show();
+            $('#myProductList').show();
+            $('#categoeryProductList').hide();
+            $('#input-search').show();
+            $('#inputScannerSearch').show();
+            $('#inputScannerSearch').focus();
+        }
+        function showAllProducts() {
+            $('#posInvoice').show();
+            $('#myCategoeryList').hide();
+            $('#customerSectionID').show();
+            $('#myProductList').show();
+            $('#categoeryProductList').hide();
+            $('#input-search').show();
+            $('#inputScannerSearch').show();
+            $('#inputScannerSearch').focus();
+        }
+        function showAllHoldedOrder() {
+            var modelId = @Model.Id;
+            var employeeId = @Model.EmployeeID;
+            var customerId = 0;
+            var modelDiscountPrecentag = 0.0;
+            var modelExtraTaxId = 0;
+            var modelPaymentMethodId = 0;
+            if ($("#SelectedCustomer_Id").val() > 0) {0
+                customerId = parseInt($("#SelectedCustomer_Id").val());
+            }
+            if ($("#DicountPrecentage").val() > 0) {
+                modelDiscountPrecentag = parseFloat($("#DicountPrecentage").val());
+            }
+            if ($("#SelectedTaxID").val() > 0) {
+                modelExtraTaxId = parseInt($("#SelectedTaxID").val());
+            }
+            if ($("#SelectedPaymentMethodeID").val() > 0) {
+                modelPaymentMethodId = parseInt($("#SelectedPaymentMethodeID").val());
+            }
+            var comment = $("#Comment").val();
+            var parameters = { 'orderId': modelId, 'employeeId': employeeId, 'customerId': customerId, 'discountPrecentag': modelDiscountPrecentag, 'extraTaxId': modelExtraTaxId, 'paymentMethodId': modelPaymentMethodId, 'comment': comment,  };
+            var data = JSON.stringify(parameters);
+            $.ajax(
+                {
+                    url: '@Url.Action("HoldOrder", "Cachier")',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        $("#holdedOrdersPartialDialogDiv").load('@(Url.Action("GetHoldedOrdersPartialDialog", "Cachier"))');
+                        Snackbar.show({
+                            text: "@Accountingsystem.Resources.CachierCreate.YourOrderIDis " + data,
+                            pos: 'top-center'
+                        });
+                        location.reload();
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                    },
+                    error: function () { alert('error'); }
+                });
+        }
+    </script>
+    <script>
+        $('#DicountPrecentage').on('input', function () {
+            $("#DicountPrecentage").removeClass("addRequiredFieldToInput");
+        });
+        $('#SelectedPaymentMethodeID').on('change', function () {
+            $("#SelectedPaymentMethodeID_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedPaymentMethodeID_chosen span').css('background', '#ffffff');
+            $('#SelectedPaymentMethodeID_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+        $("#DicountPrecentage").keyup(function () {
+
+            if ($('#DicountPrecentage').val() == "" || $('#DicountPrecentage').val() == null || $('#DicountPrecentage').val() < 0 || $('#DicountPrecentage').val() > 100) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.OfferPriceMasterCreateOffer.DiscountPrecentageCorrectAmountMessage",
+                    pos: 'top-center'
+                });
+                $("#DicountPrecentage").addClass("addRequiredFieldToInput");
+                $('#DicountPrecentage').trigger('focus');
+            }
+        });
+
+    </script>
+
+    <script>
+        //$.ajaxSetup({ cache: false });
+        $("#SelectedTaxID").change(function (e) {
+            var orderId = @Model.Id;
+            var selectedValue = 0;
+            if ($(this).val() > 0) {
+                selectedValue = $(this).val();
+            }
+
+                var parameters = { 'taxId': selectedValue, 'tempOrderId': orderId};
+                var data = JSON.stringify(parameters);
+                $.ajax(
+                {
+                    url: '@Url.Action("GetTaxById", "Cachier")',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                        success: function (data) {
+                            if (data.Tax_ID > 0) {
+                                $("#extraTaxesContentPlaceHolderId").show();
+                                $("#nameOfTotalOfExtraTaxes").text(data.Tax_Name);
+                            }
+
+                        $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                        },
+                        error: function () {
+                            $("#extraTaxesContentPlaceHolderId").hide();
+                            $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                            @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                        }
+                });
+
+        });
+    </script>
+    <script>
+        //$.ajaxSetup({ cache: false });
+        $("#SelectedCustomer_Id").change(function (e) {
+            var orderId = @Model.Id;
+            var selectedValue = 0;
+            if ($(this).val() > 0) {
+                selectedValue = $(this).val();
+            }
+
+                var parameters = { 'customerId': selectedValue, 'tempOrderId': orderId};
+                var data = JSON.stringify(parameters);
+                $.ajax(
+                {
+                    url: '@Url.Action("AddCustomerToRder", "Cachier")',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                        success: function (data) {
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                    },
+                        error: function () {
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                        }
+                });
+
+
+
+        });
+    </script>
+    <script>
+        //$.ajaxSetup({ cache: false });
+        $("#DicountPrecentage").change(function (e) {
+            var orderId = @Model.Id;
+            var discountPrecentageValue = $(this).val();
+            var parameters = { 'precentageValue': discountPrecentageValue, 'orderId': orderId };
+            var data = JSON.stringify(parameters);
+            $.ajax(
+            {
+                    url: '@Url.Action("UpdateOrderPrecentage", "Cachier")',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+                        @*$("#posToPrint").load('@(Url.Action("GetAllTempOrderDetailsToPrint", "Cachier"))?orderId=' + @Model.Id);*@
+                    },
+                    error: function () { alert('error'); }
+
+
+        });
+            //var currentDiscountAmountValue = parseFloat(discountPrecentageValue);
+            //var currentCartSubTotal = parseFloat($("#subTotalBeforeTaxInput").val());
+            //var currentCartSubTotalTax = parseFloat($("#subTotalTaxesInput").val());
+            //var discountAmount = (currentCartSubTotal * currentDiscountAmountValue) / 100;
+            //$("#TotalDiscountAmount").val(discountAmount.toFixed(2));
+            //var totalafterdiscount = currentCartSubTotal - discountAmount;
+            //$("#TotalAfterDiscount").val(totalafterdiscount.toFixed(2));
+            //var currentExtraTax = parseFloat($("#TotalExtraTaxAmount").val());
+            //var totalNet = (totalafterdiscount + currentCartSubTotalTax) + currentExtraTax;
+            //$("#totalOfAllDetilas").val(totalNet.toFixed(2));
+            //$("#TotalDiscountAmountContentPlaceHolderId").show();
+            //$("#TotalAfterDiscountContentPlaceHolderId").show();
+        });
+    </script>
+    <script>
+        function DeleteTemp(e) {
+            var id = e;
+            var offerMasterId=@Model.Id;
+        $.ajax({
+            url: '@Url.Action("DeleteInvoiceDetails", "Cachier")',
+            type: 'POST',
+            data: { orderDetailId: id }
+        }).done(function (result) {
+            $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+            //$("#totalOfInvoiceRow").animate({ scrollTop: $('#totalOfInvoiceRow').prop("scrollHeight") }, 1000);
+            //var elmnt = document.getElementById("totalOfInvoiceRow");
+            //elmnt.scrollIntoView();
+            var currentCartItemsCount = parseInt($("#OrderCartCountId").text());
+            var cartItemsCount = currentCartItemsCount - parseInt(result);
+            $("#OrderCartCountId").text(cartItemsCount);
+            $("#OrderCartCountSmall").text(cartItemsCount);
+
+        });
+    }
+    </script>
+    <script>
+        function TEMPAddAdditionalDetailToOrderDetail(e) {
+            var id = e;
+            var offerMasterId=@Model.Id;
+        $.ajax({
+            url: '@Url.Action("DeleteInvoiceDetails", "Cachier")',
+            type: 'POST',
+            data: { orderDetailId: id }
+        }).done(function (result) {
+            $("#allItemsOfInvoice").load('@(Url.Action("GetAllTempOrderDetails", "Cachier"))?orderId=' + @Model.Id);
+            //$("#totalOfInvoiceRow").animate({ scrollTop: $('#totalOfInvoiceRow').prop("scrollHeight") }, 1000);
+            //var elmnt = document.getElementById("totalOfInvoiceRow");
+            //elmnt.scrollIntoView();
+            var currentCartItemsCount = parseInt($("#OrderCartCountId").text());
+            var cartItemsCount = currentCartItemsCount - parseInt(result);
+            $("#OrderCartCountId").text(cartItemsCount);
+            $("#OrderCartCountSmall").text(cartItemsCount);
+
+        });
+    }
+    </script>
+    <script>
+        function DeleteHoldedOrder(e) {
+            var id = e;
+        $.ajax({
+            url: '@Url.Action("DeleteHoldedOrder", "Cachier")',
+            type: 'POST',
+            data: { holdedOrderId: id }
+        }).done(function (result) {
+            $("#holdedOrdersPartialDialogDiv").load('@(Url.Action("GetHoldedOrdersPartialDialog", "Cachier"))');
+        });
+    }
+    </script>
+    <script>
+        function GetHoldedOrder(e) {
+            var id = e;
+        $.ajax({
+            url: '@Url.Action("GetHoldedOrder", "Cachier")',
+            type: 'POST',
+            data: { holdedOrderId: id }
+        }).done(function (result) {
+            window.location.href = '@Url.Action("Create", "Cachier")?holdedOrderId=' + result;
+        });
+    }
+    </script>
+
+    <script type="text/javascript">
+        
+        $('#addNewCustomerBTN').on('click', function () {
+            $("#additionalDetailModal").dialog('open');
+            return false;
+        });
+        $('#addNewCustomerBTN').on('click', function () {
+            $("#customerModal").dialog('open');
+            return false;
+        });
+        $('#innerAddNewCustomerBTN').on('click', function () {
+            $("#customerModal").dialog('open');
+            return false;
+        });
+
+        $('#addNewProductBTN').on('click', function () {
+            $("#productModal").dialog('open');
+            return false;
+        });
+        $('#getAllHoldedOrdersBTN').on('click', function () {
+            $("#holdedOrdersModal").dialog('open');
+            return false;
+        });
+
+    </script>
+
+
+
+    @*<script>
+
+        function addCustomer() {
+
+            var CustomerId = $("#Customer_Id").val();
+            var CustomerName = $("#Customer_Name").val();
+            var CustomerCode = $("#Customer_Code").val();
+            var CustomerAddress = $("#Customer_Address").val();
+            var CustomerPhone = $("#Customer_Phone").val();
+            var CustomerMail = $("#Customer_Mail").val();
+            var ProvinceId = $("#SelectedProvinceId").val();
+            var CountryId = $("#SelectedCountryId").val();
+            var CityId = $("#SelectedCityId").val();
+            var CustomerFax = $("#Customer_Fax").val();
+            var BranchId = $("#CustomerBranch_Id").val();
+            var CustomerMobile = $("#Customer_Mobile").val();
+            var PurchasePrice = $("#Purchase_Price").val();
+            var PaymentPolicy = $("#Payment_Policy_Id").val();
+            var CustomerWebsite = $("#Customer_Website").val();
+            var CustomerSelectSlice_Id = $("#CustomerSelectSlice_Id").val();
+            var Files = $("#customerFiles").val();
+            if (CustomerName == "" || CustomerName == null || CustomerPhone == "" || CustomerPhone == null || CustomerSelectSlice_Id < 1) {
+
+                if (CustomerSelectSlice_Id < 1) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CustomerCreate.SliceIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#CustomerSelectSlice_Id").addClass("addRequiredFieldToInput");
+                    $("#CustomerSelectSlice_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#CustomerSelectSlice_Id_chosen span').css('background', 'red');
+                    $('#CustomerSelectSlice_Id_chosen b').css('background', 'red');
+                    $('#CustomerSelectSlice_Id_chosen').trigger('focus');
+
+                }
+                if (CustomerName == "" || CustomerName == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CustomerCreate.CustomerNameIsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Customer_Name").addClass("addRequiredFieldToInput");
+                    $('#Customer_Name').trigger('focus');
+                }
+                if (CustomerPhone == "" || CustomerPhone == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CustomerCreate.CustomerPhoneIsRequired",
+                        pos: 'top-center'
+                    });
+                    $("#Customer_Phone").addClass("addRequiredFieldToInput");
+                    $('#Customer_Phone').trigger('focus');
+                }
+            }
+            else {
+                $('#customerModal').modal('toggle');
+                //$("#customerPartialSpinner").show();
+            var DataForCustomer;
+            DataForCustomer = {
+                Custcomer_Id:CustomerId,
+                Customer_Name:CustomerName,
+                Customer_Code:CustomerCode,
+                Customer_Address:CustomerAddress,
+                Customer_Phone:CustomerPhone,
+                Customer_Mail:CustomerMail,
+                SelectedProvinceId:ProvinceId,
+                SelectedCountryId:CountryId,
+                SelectedCityId:CityId,
+                Customer_Fax:CustomerFax,
+                Branch_Id:BranchId,
+                Customer_Mobile:CustomerMobile,
+                Purchase_Price:PurchasePrice,
+                Payment_Policy_Id:PaymentPolicy,
+                Customer_Website:CustomerWebsite,
+                CustomerSelectSlice_Id: CustomerSelectSlice_Id,
+                customerFiles:Files
+            };
+                var formData = new FormData();
+                var file = document.getElementById('customerFiles');
+                formData.append("Custcomer_Id", DataForCustomer.Custcomer_Id);
+                formData.append("Customer_Name", DataForCustomer.Customer_Name);
+                formData.append("Customer_Code", DataForCustomer.Customer_Code);
+                formData.append("Customer_Address", DataForCustomer.Customer_Address);
+                formData.append("Customer_Phone", DataForCustomer.Customer_Phone);
+                formData.append("Customer_Mail", DataForCustomer.Customer_Mail);
+                formData.append("SelectedProvinceId", DataForCustomer.SelectedProvinceId);
+                formData.append("SelectedCountryId", DataForCustomer.SelectedCountryId);
+                formData.append("SelectedCityId", DataForCustomer.SelectedCityId);
+                formData.append("Customer_Fax", DataForCustomer.Customer_Fax);
+                formData.append("CustomerBranch_Id", DataForCustomer.CustomerBranch_Id);
+                formData.append("Customer_Mobile", DataForCustomer.Customer_Mobile);
+                formData.append("Purchase_Price", DataForCustomer.Purchase_Price);
+                formData.append("Payment_Policy_Id", DataForCustomer.Payment_Policy_Id);
+                formData.append("Customer_Website", DataForCustomer.Customer_Website);
+                formData.append("CustomerSelectSlice_Id", DataForCustomer.CustomerSelectSlice_Id);
+                formData.append("customerFiles", DataForCustomer.customerFiles);
+                for (i = 0; i < file.files.length; i++) {
+                    //Appending each file to FormData object
+                    formData.append(file.files[i].name, file.files[i]);
+                }
+
+            $.ajax(
+             {
+                    url: "@Url.Action("AddNewCustomerPartial", "OfferPriceMaster")",
+                    data: formData,
+                    type: "post",
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+
+                        Snackbar.show({
+                            text: "@Accountingsystem.Resources.CustomerCreate.CustomerHasBeenAdded" + "  " + data,
+                            pos: 'top-center'
+                        });
+                        $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "OfferPriceMaster"))');
+                        $("#customerPartialSpinner").hide();
+                        $.ajax({
+
+                            url: '@Url.Action("GetCustomerDropdownList", "OfferPriceMaster")',
+                            type: 'get'
+                        }).done(function (result) {
+
+                            $("#SelectedCustomer_Id").empty();
+                            for (var i = 0; i < result.length; i++) {
+                                var p = new Option(result[i].Text, result[i].Value);
+                                $("#SelectedCustomer_Id").append(p);
+                                $("#SelectedCustomer_Id option:last").attr("selected", "selected");
+                            }
+                            $('#SelectedCustomer_Id').trigger('chosen:updated');
+                            $("#SelectedCustomer_Id_chosen").removeClass("addRequiredFieldToInput");
+                            $('#SelectedCustomer_Id_chosen span').css('background', '#ffffff');
+                            $('#SelectedCustomer_Id_chosen b').css('background', '#ffffff');
+                            $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+
+                        });
+                 },
+                    error: function () {
+
+                        Snackbar.show({
+                        text: "@Accountingsystem.Resources.CustomerCreate.ErrorMessage",
+                            pos: 'top-center'
+                        });
+                        $("#customerPartialSpinner").hide();
+                    }
+             });
+            };
+        };
+        </script>*@
+
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            var a = $('#Invoice_State').val();
+
+            if ($('#Invoice_State').val() == "" || $('#Invoice_State').val() == null || $('#Invoice_State').val() == '0' || $('#Invoice_State').val() == 0) {
+
+
+
+
+
+            }
+            else {
+
+                $('#createOfferbtn').prop('disabled', false);
+
+                $("#createOfferSpinner").hide();
+                event.preventDefault();
+
+                $("#Invoice_State").val("");
+            }
+
+
+
+        });
+
+    </script>
+
+
+}
+

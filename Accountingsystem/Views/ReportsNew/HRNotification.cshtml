@@ -1,0 +1,203 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.EmployeeList
+
+@{
+    Layout = null;
+
+}
+<html>
+
+<head>
+
+    <title>تقرير تنبيهات الموظفيين </title>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير تنبيهات الموظفيين/ Employees Notifications Report
+
+        </div>
+
+
+
+
+    </div>
+    <hr />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr style="text-align:right;">
+
+                <th style="text-align:center;">
+                    الرقم
+                    <br />
+                    NO
+                </th>
+                <th>
+                    اسم الموظف
+                    <br />
+                    Employee
+                </th>
+
+            
+                <th style="text-align:center;">
+                    نهاية الاقامة
+                    <br />
+                    End Residence
+                </th>
+                <th style="text-align:center;">
+                    نهاية التأمين الطبي
+                    <br />
+                    End Of Healty Insurance
+                </th>
+
+            
+
+            </tr>
+        </thead>
+        @foreach (var item in Model.EmpList)
+        {
+
+            <tr>
+                <td>
+                    @item.Emp_Code
+                </td>
+                <td>
+
+                    @item.Emp_Name
+              
+             
+                @if (item.End_Date_Residency != null)
+                {
+                    <td>
+                        @Convert.ToDateTime(item.End_Date_Residency).ToString("yyyy/MM/dd ")
+                        @*@Convert.ToDateTime(item.End_Date_Residency).ToShortDateString()*@
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (item.End_medical_Insurance != null)
+                {
+                    <td>
+                        @Convert.ToDateTime(item.End_medical_Insurance).ToString("yyyy/MM/dd ")
+                        @*@Convert.ToDateTime(item.End_Date_Residency).ToShortDateString()*@
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+             
+
+
+            </tr>
+
+        }
+    </table>
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+
+
+</html>
+
+

@@ -1,0 +1,103 @@
+﻿@model Accountingsystem.ViewModel.SalesReceiptDetailsVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.InvoiceMasterDetails.ProductOrService)
+                @{ Html.EnableClientValidation(false); }
+
+                <div class="input-group mb-4">
+                    @Html.DropDownListFor(model => model.productNotBatched_ID, Model.ProductNotBatchList, Accountingsystem.Resources.InvoiceMasterDetails.SelectProduct, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                    <div class="input-group-append">
+                        <div class="form-control">
+                            <label class="text-danger">*</label>
+                        </div>
+                        <button id="addProductBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#productModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+<script>
+
+
+     $("#productNotBatched_ID").change(function (e) {
+        var serialId = $("#productNotBatched_ID").val();
+          $("#productBat").hide();
+         var customer = $("#SelectedCustomerId").val();
+        if (customer == 0 || customer == null) {
+            customer = 0;
+        }
+            $.ajax({
+                url: '@Url.Action("GetProductPrice", "InvoiceMaster")',
+                data: { proId: serialId, customer: customer },
+                type: 'get',
+            }).done(function (result) {
+               // $("#Product_Tax").val(result["Tax"]);
+                $("#Product_Price").val(result["price"]);
+                $("#Product_Tax").val(result["Tax"]).trigger('change');
+                AddDetailToMaster();
+            }
+            );
+    });
+        function addProductForDialog() {
+
+         var serialId = $("#productNotBatched_ID").val();
+            var customer = $("#Customer_Id").val();
+
+            $("#productBat").hide();
+            if (customer == "") {
+                customer = "0";
+            }
+             $.ajax({
+                url: '@Url.Action("GetProductPrice", "InvoiceMaster")',
+                data: { proId: serialId, customer: customer },
+                type: 'get'
+            }).done(function (result) {
+                $("#Product_Tax").val(result["Tax"]).trigger('change');
+                $("#Product_Price").val(result["price"]);
+                AddDetailToMaster();
+            }
+            );
+
+
+    }
+
+
+
+</script>
+<script>
+    $('#productNotBatched_ID').on('input', function () {
+        $("#productNotBatched_ID_chosen").removeClass("addRequiredFieldToInput");
+        $('#productNotBatched_ID_chosen span').css('background', '#ffffff');
+        $('#productNotBatched_ID_chosen b').css('background', '#ffffff');
+    });
+    $(document).ready(function () {
+
+
+        $("#productNotBatched_ID").chosen();
+        $("#productNotBatched_ID_chosen").addClass("form-control Dropdownlist-select");
+
+
+        return false;
+    });
+</script>
+

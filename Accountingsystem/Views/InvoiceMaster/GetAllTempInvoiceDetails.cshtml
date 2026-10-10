@@ -1,0 +1,354 @@
+﻿
+@model Accountingsystem.ViewModel.InvoiceDetailsTempVM
+@{decimal tax = 0;
+    decimal TotalAmount = 0;
+    decimal cost = 0;
+    decimal quantity = 0;
+    decimal TotalBeforDiscount = 0;
+}
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table id="invoiceMasterDetailList" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.ItemNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Item)
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.ItemPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceDiscount)
+
+                    </th>
+                    <th>
+                        @Html.DisplayName(@Accountingsystem.Resources.InvoiceMasterDetails.DiscountValue)
+
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalTax)
+
+                    </th>
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.Net)
+                    </th>
+
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.TotalCost)
+                    </th>
+
+
+
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.invoiceTemp)
+                {
+
+                    @Html.HiddenFor(modelItem => item.Details_Id)
+                    @Html.HiddenFor(modelItem => item.InvoiceMaster_Id)
+
+                <tr>
+                    <td hidden>
+                        @Html.HiddenFor(modelItem => item.Details_Id, htmlAttributes: new { @class = "Details_Id" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product_Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product_Name)
+                    </td>
+
+                    <td>
+
+                        @*@Html.EditorFor(modelItem => item.Product_Quantity, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.EditorFor(model => item.Product_Quantity, new { htmlAttributes = new { onchange = "OnChangeEvent(this)", @class = "details-form-control-AllInput" } })
+
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                        @Html.EditorFor(model => item.Product_Price, new { htmlAttributes = new { onchange = "OnChangeEventPrice(this)", @class = "details-form-control-AllInput" } })
+                    </td>
+                    <td>
+
+
+                        @Html.EditorFor(model => item.Detail_Discount, new { htmlAttributes = new { onchange = "OnChangeDetailDiscount(this)", @class = "details-form-control-AllInput" } })
+
+                    </td>
+                    <td>
+
+
+                        @Html.EditorFor(model => item.Detail_Discount_Amount, new { htmlAttributes = new { onchange = "OnChangeDetailDiscountAmount(this)", @class = "details-form-control-AllInput" } })
+
+                    </td>
+                    <td>
+                        @Math.Round((item.Product_Quantity*item.Product_Price)-item.Detail_Discount_Amount.Value,2,MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+
+                        <select class="details-form-control Dropdownlist-select" onchange="OnChangeDrop(this)">
+                            <option value=0>@Accountingsystem.Resources.InvoiceMasterDetails.WithoutTax</option>
+                            @foreach (var a in Accountingsystem.Models.Tax.GetAlltaxes().Where(e => e.Tax_Code.StartsWith("02") && e.IsActive != false))
+                            {
+                                if (a.Tax_ID == item.Product_Tax)
+                                {
+                                    <option value=@a.Tax_ID selected>@a.Tax_Name @*% @a.Tax_Percentage*@ </option>
+                                }
+                                else
+                                {
+                                    <option value=@a.Tax_ID>@a.Tax_Name </option>
+                                }
+                            }
+                        </select>
+                    </td>
+
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                        @Html.EditorFor(model => item.Total_Amount, new { htmlAttributes = new { onchange = "OnChangeDetailTotal(this)", @class = "details-form-control-AllInput" } })
+                        @{ TotalAmount += item.Total_Amount;
+                            tax += item.Detail_Total_Tax;
+
+                            quantity += item.Product_Quantity;
+                            TotalBeforDiscount += item.Product_Quantity * item.Product_Price;
+                        }
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                        @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+                        @{
+                            cost += item.Detail_Total_Cost;
+                        }
+                    </td>
+
+
+                    <td>
+                        <a href='javascript:;' onclick="@("DeleteTemp('"+item.Details_Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                    </td>
+
+
+
+                </tr>
+
+                }
+                <tr>
+                    <td hidden></td>
+                    <td>
+                        @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Total)
+                    </td>
+                    <td></td>
+                    <td>
+
+
+                        @Math.Round(quantity, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+         
+                    <td></td>
+                    <td>
+                        @Math.Round(tax, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                        @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                        @Math.Round(cost, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+
+                    <td></td>
+
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+    function OnChangeEvent(obj) {
+
+        var quantity = $(obj).val();
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+        var masterDiscount = $("#Master_Discount").val();
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependOnquantity", "InvoiceMaster")',
+                        data: { detailId: detailId, quantity: quantity, masterDiscount: masterDiscount },
+                type: 'get',
+            }).done(function (result) {
+
+
+                $("#Master_Discount").val(result);
+                updateTaxes();
+
+            }
+        );
+    }
+
+</script>
+<script>
+    function OnChangeEventPrice(obj) {
+        var price = $(obj).val()
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+        var masterDiscount = $("#Master_Discount").val();
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependOnPrice", "InvoiceMaster")',
+                        data: { detailId: detailId, price: price, masterDiscount: masterDiscount },
+                type: 'get',
+                    }).done(function (result) {
+
+                        $("#Master_Discount").val(result);
+                        updateTaxes();
+
+            }
+        );
+    }
+</script>
+<script>
+    function OnChangeDrop(obj) {
+        var Tax = $(obj).val()
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+        var masterDiscount = $("#Master_Discount").val();
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependTax", "InvoiceMaster")',
+                        data: { detailId: detailId, Tax: Tax, masterDiscount: masterDiscount },
+                type: 'get',
+            }).done(function (result) {
+
+                updateTaxes();
+
+            }
+        );
+    }
+</script>
+<script>
+    function OnChangeDetailDiscount(obj) {
+        //    alert($(e).val());
+
+        var detaildiscount = $(obj).val()
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+
+
+
+
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependOnDetailDiscount", "InvoiceMaster")',
+                        data: { detailId: detailId, detaildiscount: detaildiscount },
+                type: 'get',
+            }).done(function (result) {
+
+                $("#Master_Discount").val(result);
+                updateTaxes();
+
+            }
+            );
+
+    }
+
+
+
+
+
+
+
+</script>
+<script>
+    function OnChangeDetailDiscountAmount(obj) {
+        //    alert($(e).val());
+
+        var detaildiscountAmount = $(obj).val()
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+
+
+
+
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependOnDetailDiscountAmount", "InvoiceMaster")',
+                        data: { detailId: detailId, detaildiscountAmount: detaildiscountAmount },
+                type: 'get',
+            }).done(function (result) {
+
+                $("#Master_Discount").val(result);
+                updateTaxes();
+
+            }
+            );
+
+    }
+
+
+
+
+
+
+
+</script>
+<script>
+    function OnChangeDetailTotal(obj) {
+        var detailTotalAmount = $(obj).val()
+        var detailId = $(obj).parents('tr').find('.Details_Id').val();
+        var invoiceMasterId =@Model.invoice_Id;
+
+
+
+
+                    $.ajax({
+                        url: '@Url.Action("updatePOSDependOnDetailTotalAmount", "InvoiceMaster")',
+                        data: { detailId: detailId, detailTotalAmount: detailTotalAmount },
+                type: 'get',
+                    }).done(function (result) {
+                        debugger
+
+                updateTaxes();
+
+            }
+            );
+
+    }
+
+
+</script>
+<script>
+    $(document).ready(function () {
+        var detailsTotalDiscountAmount = @Math.Round((TotalBeforDiscount + tax) - TotalAmount, 2, MidpointRounding.AwayFromZero);
+        var detailsTotalTaxesAmount = @Math.Round(Model.TotalNewTaxs, 2, MidpointRounding.AwayFromZero);
+        var detailsTotalInvoiceAmount = @Math.Round((TotalAmount + Model.TotalNewTaxs) - Model.AllowDiscount, 2, MidpointRounding.AwayFromZero);
+        $("#masterTotalDiscountAmount").val(detailsTotalDiscountAmount);
+        $("#masterTotalTaxesAmount").html(detailsTotalTaxesAmount);
+        $("#masterTotalInvoiceAmount").val(detailsTotalInvoiceAmount);
+        //$("#masterTotalInvoiceAmount").val(detailsTotalInvoiceAmount);
+    });
+</script>

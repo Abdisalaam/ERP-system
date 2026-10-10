@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCustomer" xml:space="preserve">
+    <value>اضف عميل</value>
+  </data>
+  <data name="AddToRegulation" xml:space="preserve">
+    <value>اضافة +</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>مرفقات</value>
+  </data>
+  <data name="AttachmentsInformation" xml:space="preserve">
+    <value>قم بوضع ملف لا يتعدى 1ميجا والا لن يتم حفظه</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>القائمة</value>
+  </data>
+  <data name="BaptismNumber" xml:space="preserve">
+    <value>رقم التعميد</value>
+  </data>
+  <data name="BaptismNumberInformation" xml:space="preserve">
+    <value>حدد رقم التعميد</value>
+  </data>
+  <data name="SelectBranchInformation" xml:space="preserve">
+    <value>اختر الفرع</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>مركز التكلفة</value>
+  </data>
+  <data name="CostCenterInformation" xml:space="preserve">
+    <value>اختر مركز التكلفة</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>انشاء</value>
+  </data>
+  <data name="CreateSalesInvoice" xml:space="preserve">
+    <value>انشاء فاتورة اجل</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="CustomerNameInformation" xml:space="preserve">
+    <value>اختر الاسم</value>
+  </data>
+  <data name="CustomerNameValidation" xml:space="preserve">
+    <value>يجب تحديد العميل</value>
+  </data>
+  <data name="DepartmentInformation" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="DiscountAllowedOnBill" xml:space="preserve">
+    <value>خصم مسموح به</value>
+  </data>
+  <data name="DiscountAllowedOnBillInformation" xml:space="preserve">
+    <value>ادخال خصم مسموح به للفاتورةمع ملاحظه عدم تاثره بالضرائب</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>تاريخ الاستحقاق</value>
+  </data>
+  <data name="DueDateInformation" xml:space="preserve">
+    <value>حدد تاريخ الاستحقاق</value>
+  </data>
+  <data name="DueDateValidation" xml:space="preserve">
+    <value>يجب ادخال تاريخ استحقاق الفاتورة</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>الموظف</value>
+  </data>
+  <data name="EmployeeInformation" xml:space="preserve">
+    <value>اختر الموظف</value>
+  </data>
+  <data name="EmployeeValidation" xml:space="preserve">
+    <value>يجب ادخال اسم الموظف</value>
+  </data>
+  <data name="FutureInvoice" xml:space="preserve">
+    <value>فواتير اجلة</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="InvoiceDateInformation" xml:space="preserve">
+    <value>ادخل تاريخ الفاتورة</value>
+  </data>
+  <data name="InvoiceDescription" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="InvoiceDescriptionInformation" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="InvoiceDiscount" xml:space="preserve">
+    <value>%الخصم</value>
+  </data>
+  <data name="InvoiceDiscountInformation" xml:space="preserve">
+    <value>ادخل الخصم</value>
+  </data>
+  <data name="InvoiceDiscountValidation" xml:space="preserve">
+    <value>الخصم يجب ان يكون رقم</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>رقم الفاتورة</value>
+  </data>
+  <data name="InvoiceNumberInformation" xml:space="preserve">
+    <value>حدد الرقم</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>اسم الصنف</value>
+  </data>
+  <data name="ItemNumber" xml:space="preserve">
+    <value>رقم الصنف</value>
+  </data>
+  <data name="ItemPrice" xml:space="preserve">
+    <value>سعر الصنف</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="NotesInformation" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="OfferPrice" xml:space="preserve">
+    <value>رقم العرض</value>
+  </data>
+  <data name="OfferPriceInformation" xml:space="preserve">
+    <value>اختر عرض السعر</value>
+  </data>
+  <data name="PaymentDayesPeriod" xml:space="preserve">
+    <value>مدة الدفع</value>
+  </data>
+  <data name="PaymentDayesPeriodInformation" xml:space="preserve">
+    <value>ادخل مدة الدفع</value>
+  </data>
+  <data name="PaymentDayesPeriodValidation" xml:space="preserve">
+    <value>يجب تحديد مدة الدفع</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="PriceInformation" xml:space="preserve">
+    <value>حدد السعر</value>
+  </data>
+  <data name="ProductOrService" xml:space="preserve">
+    <value>الأصناف</value>
+  </data>
+  <data name="ProductOrServiceInformation" xml:space="preserve">
+    <value>حدد الصنف</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="QuantityInformation" xml:space="preserve">
+    <value>حدد الكمية</value>
+  </data>
+  <data name="Revenue" xml:space="preserve">
+    <value>حساب الايراد</value>
+  </data>
+  <data name="RevenueInformation" xml:space="preserve">
+    <value>حساب الايراد</value>
+  </data>
+  <data name="SelectActivity" xml:space="preserve">
+    <value>النشاط</value>
+  </data>
+  <data name="SelectActivityInformation" xml:space="preserve">
+    <value>اختر النشاط</value>
+  </data>
+  <data name="SelectBranch" xml:space="preserve">
+    <value>الفرع</value>
+  </data>
+  <data name="SelectDepartment" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>اختر ملف</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>المخزن</value>
+  </data>
+  <data name="StoreInformation" xml:space="preserve">
+    <value>ادخل المخزن</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>الضريبة</value>
+  </data>
+  <data name="Taxes" xml:space="preserve">
+    <value>ضرائب إضافية</value>
+  </data>
+  <data name="TaxesInformation" xml:space="preserve">
+    <value>الضرائب</value>
+  </data>
+  <data name="TaxInformation" xml:space="preserve">
+    <value>الضرائب</value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>الاجمالى</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>التكلفة التقديرية</value>
+  </data>
+  <data name="TotalInvoice" xml:space="preserve">
+    <value>اجمالي الفاتورة</value>
+  </data>
+  <data name="TotalTax" xml:space="preserve">
+    <value>اجمالى الضريبة</value>
+  </data>
+  <data name="TotalTaxes" xml:space="preserve">
+    <value>اجمالي الضرائب</value>
+  </data>
+  <data name="TotalTaxesAddedToTotalInvoice" xml:space="preserve">
+    <value>الضرائب الاضافية</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>الاقسام</value>
+  </data>
+  <data name="AddAttachments" xml:space="preserve">
+    <value>اضف مرفقات</value>
+  </data>
+  <data name="Branch" xml:space="preserve">
+    <value>الفرع</value>
+  </data>
+  <data name="DurationOfOfferInDays" xml:space="preserve">
+    <value>المدة بالأيام</value>
+  </data>
+  <data name="CreateSalesInvoiceForPriceOffer" xml:space="preserve">
+    <value>انشاء فاتورة اجل</value>
+  </data>
+  <data name="EditSalesInvoice" xml:space="preserve">
+    <value>تعديل فاتورة اجل</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>المبيعات</value>
+  </data>
+  <data name="Post" xml:space="preserve">
+    <value>تعميد</value>
+  </data>
+  <data name="Byte" xml:space="preserve">
+    <value>بايت</value>
+  </data>
+  <data name="DueDateIsRequiredMessage" xml:space="preserve">
+    <value>تاريخ الاستحقاق الزامي</value>
+  </data>
+  <data name="DurationDateIsRequiredMessage" xml:space="preserve">
+    <value>الفترة الزمنية الزامية</value>
+  </data>
+  <data name="FileExtension" xml:space="preserve">
+    <value>نوع الملف</value>
+  </data>
+  <data name="FileLength" xml:space="preserve">
+    <value>حجم الملف</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>اسم الملف</value>
+  </data>
+  <data name="FileNumber" xml:space="preserve">
+    <value>رقم الملف</value>
+  </data>
+  <data name="FileSizePopupMessage" xml:space="preserve">
+    <value>إجمالي حجم الملفات اكبر من المسموح به. الرجاء تصغير الحجم و اعادة المحاولة</value>
+  </data>
+  <data name="InvoiceDateIsRequiredMessage" xml:space="preserve">
+    <value>التاريخ الزامي</value>
+  </data>
+  <data name="MaxOfFilesSize" xml:space="preserve">
+    <value>لا يجب ان يتعدي إجمالي حجم الملفات 4000000 بايت</value>
+  </data>
+  <data name="SelectOfferPrice" xml:space="preserve">
+    <value>اختر رقم العرض</value>
+  </data>
+  <data name="TotalSizeOfFiles" xml:space="preserve">
+    <value>إجمالي حجم الملفات</value>
+  </data>
+  <data name="TotalSizeOfSelectedFiles" xml:space="preserve">
+    <value>إجمالي حجم الملفات التي تم اختيارها</value>
+  </data>
+  <data name="CantDeleteInvoiceModelMessage" xml:space="preserve">
+    <value>الفاتورة  فى حالة التأثير فى الحسابات لايمكنك الحذف</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>تمت الإضافة</value>
+  </data>
+  <data name="FinancialYearOfTheCompanyControllerMessage" xml:space="preserve">
+    <value>يجب ادخال تاريخ خلال السنة المالية الحالية</value>
+  </data>
+  <data name="InvoiceBackEndErrorController" xml:space="preserve">
+    <value>يرجى مراجعة هذا الخطأ</value>
+  </data>
+  <data name="InvoiceHasbeenDeletedModelMessage" xml:space="preserve">
+    <value>تم الحذف بنجاح</value>
+  </data>
+  <data name="InvoiceIsNotCreatedControllerrMessage" xml:space="preserve">
+    <value>لم يتم إنشاء الفاتورة ، يرجى المحاولة مرة أخرى</value>
+  </data>
+  <data name="InvoiceIsNotFounControllerMessage" xml:space="preserve">
+    <value>لم يتم العثور الفاتورة رقم</value>
+  </data>
+  <data name="InvoiceTechnicalErrorControllerMessage" xml:space="preserve">
+    <value>حدث خطاء فني, الرجاء اعادة المحاولة</value>
+  </data>
+  <data name="OfferCodeExisit" xml:space="preserve">
+    <value>هذا الكود موجود علي النظام</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ الأنتهاء</value>
+  </data>
+  <data name="OfferPriceNumber" xml:space="preserve">
+    <value>رقم العرض</value>
+  </data>
+  <data name="paymentStatus" xml:space="preserve">
+    <value>حالة الدفع</value>
+  </data>
+</root>

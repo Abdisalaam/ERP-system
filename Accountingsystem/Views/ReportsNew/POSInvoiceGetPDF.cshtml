@@ -1,0 +1,258 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.POSListVM
+
+
+@{
+    Layout = null;
+    var dateto = "الي" + Convert.ToDateTime(Model.End_Date).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.StartDate).ToString("yyyy/MM/dd ");
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+    <style>
+        @@media screen {
+            div.divFooter {
+                display: none;
+            }
+        }
+
+        @@media print {
+            div.divFooter {
+                position: fixed;
+                bottom: 0;
+            }
+
+            @@media print {
+                body {
+                    margin-top: 50px;
+                }
+            }
+        }
+    </style>
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+    </style>
+    <title>تقرير مبيعات نقطة بيع</title>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير مبيعات نقطة بيع / Point Of Sales Report
+
+        </div>
+
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      @dateto
+
+        </div>
+
+
+    </div>
+
+    <br />
+
+    <hr />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+                <th style="text-align:center">رقم العميل<br />Customer NO</th>
+                <th style="text-align:center">العميل<br />Customer</th>
+                <th style="text-align:center" width="150px">رقم الفاتورة<br />Invoice NO</th>
+                <th style="text-align:center" width="100px">التاريخ<br />Date</th>
+
+                <th style="text-align:center">قيمة الفاتورة<br />Invoice Amount</th>
+                <th style="text-align:center">الضرائب<br />Tax</th>
+
+                <th style="text-align:center">القيمة بعد الضريبة<br />Amount after Tax</th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+        </thead>
+        @{
+            decimal TotalAmount = 0;
+            decimal totalTax = 0;
+            decimal TotalAfterTax = 0;
+        }
+
+        @foreach (var item in Model.AllInvoice.OrderBy(a=>a.Invoice_Date))
+        {
+            <tr>
+                @if (item.Customer_Id == 0 || item.Customer_Id == null)
+                {
+                    <td></td>
+
+                    <td></td>
+
+                }
+                else
+                {
+                    var cus = @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value);
+                    <td>
+                        @cus.Customer_Name
+                    </td>
+                    <td>
+                        @cus.Customer_Code
+                    </td>
+                }
+
+                <td>
+                    @item.Serial_Number
+                </td>
+                <td>
+                    @item.Invoice_Date.Value.ToString("yyyy/MM/dd ")
+                    @*@item.Invoice_Date.Value.ToShortDateString()*@
+                </td>
+
+                @{
+                    var totalAmount = (item.Total_Amount.Value + item.AllowDiscount.Value) - item.Total_Tax.Value;
+                    TotalAmount += totalAmount;
+                    totalTax += item.Total_Tax.Value;
+                    TotalAfterTax += item.Total_Amount.Value;
+
+                }
+                <td>
+
+                    @Math.Round(totalAmount, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td>
+                    @Math.Round(item.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+                <td>
+                    @Math.Round(item.Total_Amount.Value, 2, MidpointRounding.AwayFromZero)
+
+                </td>
+            </tr>
+        }
+
+            <tr>
+
+
+
+                <th style="text-align:center">اجمالى <br />Total </th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+
+                <td style="width:100px">
+                    @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+                <td style="width:100px">
+                    @Math.Round(totalTax, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="width:100px">
+                    @Math.Round(TotalAfterTax, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+
+
+
+            </tr>
+    </table>
+
+
+
+  
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+
+
+</html>
+

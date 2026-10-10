@@ -1,0 +1,258 @@
+﻿@model Accountingsystem.ViewModel.ProductOpenBalanceVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ProductCreate.CreateOpeningBalanceForItems;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.ProductCreate.CreateOpeningBalanceForItems</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.Prod_ID, Model.ProductList, Accountingsystem.Resources.ProductCreate.ItemNameInformation, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Prod_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ProductCreate.ItemName>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.ProductCreate.ItemName)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.Selectedcomp_ID, Model.CompList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Selectedcomp_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ProductCreate.Company>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Selectedcomp_ID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Product_Quantity, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Product_Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ProductCreate.Quantity>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Product_Quantity, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedStore_ID, Model.StoreList, Accountingsystem.Resources.ProductCreate.SelectStore, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedStore_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1">*</span>
+
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ProductCreate.SelectStore>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedStore_ID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Batch_Date, new { htmlAttributes = new { @class = "textfield" } })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="تاريخ الشحنة ">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Batch_Date, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Batch_ExpireDate, new { htmlAttributes = new { @class = "textfield" } })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="تاريخ انتهاء الصنف ">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Batch_ExpireDate, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.SelectedCurrency_ID, Model.CurrencyList, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCurrency_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.ProductCreate.SelectCurrency>
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.ProductCreate.Currency)
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+                    @Accountingsystem.Resources.ProductCreate.BackToList
+                </a>
+                <input type="submit" value=@Accountingsystem.Resources.ProductCreate.Create class="btn BTN-style final-BTN" />
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $('#Batch_Date').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#Batch_ExpireDate').datetimepicker({ format: 'DD/MM/YYYY' });
+    </script>
+
+    <script type="text/javascript">
+
+  $(function () {
+
+        var sliceProductId = @Model.Prod_ID;
+        //alert(sliceProductId);
+      $("#SliceProductDetailCreationForOpen").load('@(Url.Action("PrepareSliceProductDetailForOpen", "Product"))');
+      $("#SliceProductDetailTempForOpen").load('@(Url.Action("GetAllTempSlicesDetailsForOpen", "Product"))?tempProductId=' + sliceProductId);
+
+    });
+
+
+    function AddDetailToMaster() {
+
+        var sliceProductIds = @Model.Prod_ID;
+        var SlicesSlice_Ids =  $("#SlicesSlice_Id").val();
+        var Slice_Prices =  $("#Slice_Price").val();
+
+        var slicesDetail;
+        slicesDetail = {
+            Product_ID:sliceProductIds,
+            SlicesSlice_Id:SlicesSlice_Ids,
+            Slice_Price:Slice_Prices
+
+        };
+
+        $.ajax(
+         {
+             url: '@Url.Action("AddSliceToProductForOpen", "Product")',
+             data: JSON.stringify(slicesDetail),
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'Post',
+             success: function (data) {
+
+                  alert(data);
+                 $("#SliceProductDetailTempForOpen").load('@(Url.Action("GetAllTempSlicesDetailsForOpen", "Product"))?tempProductId=' + sliceProductIds);
+
+
+             },
+             error: function () { alert('error'); }
+         });
+     };
+
+
+    function DeleteTemp(e) {
+
+        var ids = e;
+        var productId=@Model.Prod_ID;
+
+        $.ajax({
+
+            url: '@Url.Action("DeleteTempDetailForOpen", "Product")',
+            type: 'get',
+            data: {iD:ids}
+        }).done(function (result) {
+
+
+            $("#SliceProductDetailTempForOpen").load('@(Url.Action("GetAllTempSlicesDetailsForOpen", "Product"))?tempProductId=' + productId);
+
+
+        });
+    }
+
+    </script>
+
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/UiUtils.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+             fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#SelectedStore_ID");
+            fillDropdownWithResponse("@Url.Action("getProductBatchJsondrobDown", "Product")", "#Prod_ID");
+
+    })
+    </script>
+}
+
+
+
+

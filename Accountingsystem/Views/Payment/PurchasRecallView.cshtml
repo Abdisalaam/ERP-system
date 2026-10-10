@@ -1,0 +1,36 @@
+﻿@model Accountingsystem.ViewModel.PaymentPurchaseRecallVM
+<h4 class="HEADTITLE-STYLE">@Accountingsystem.Resources.PaymentCreate.ReturnesPurchasesBill </h4>
+<hr />
+<div class="widget">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" data-sortable-initialized="true">
+            <tr>
+                <th>@Accountingsystem.Resources.PaymentCreate.ReturnesBillNumber</th>
+                <td>
+                    @foreach (var code in Model.Recall_Code)
+                    {
+                        @code
+
+                    }
+                </td>
+                <th>@Accountingsystem.Resources.PrintReports.Quantity</th>
+                <td>
+                    @foreach (var quantity in Model.RecallQuantity)
+                    {
+                        @quantity
+
+                    }
+                </td>
+                <th>@Accountingsystem.Resources.PrintReports.Cost</th>
+                <td>
+                    @foreach (var cost in Model.RecallTotalCost)
+                    {
+                        @Math.Round(cost,2, MidpointRounding.AwayFromZero)
+
+                    }
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>

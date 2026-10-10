@@ -1,0 +1,1060 @@
+﻿@model Accountingsystem.ViewModel.MasterPOSInvoiceVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.MasterPOSInvoice.CreateQuickInventorySalesInvoice;
+    var msg = ViewBag.msg;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("CreateForMain", "MasterPOSInvoice", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MasterPOSInvoiceId)
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.msg</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.MasterPOSInvoice.CreateQuickInventorySalesInvoice)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            @Html.HiddenFor(model => model.MaintenanceOrder_Id)
+
+                            @Html.HiddenFor(model => model.PointOfSalePOS_Id)
+                            @Html.HiddenFor(model => model.Emp_Id)
+                            @*@Html.HiddenFor(model => model.Invoice_Date)*@
+                            @Html.HiddenFor(model => model.RevenueAccount)
+
+                            @*else
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.SalesCenter)
+                                            @Html.DropDownListFor(model => model.PointOfSalePOS_Id, Model.PointSaleList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                            @Html.ValidationMessageFor(model => model.PointOfSalePOS_Id, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                }*@
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.GLMasterFillGlForCreate.DailyConstraintNumber)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Serial_Number, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Serial_Number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Customer)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Customer_Id, Model.CustomerList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.DropDownListCustomer, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+
+                                            <button id="addNewCustomerBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Customer_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.RevenueAccount)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.RevenueAccount, Model.RevenueList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div class="input-group-append">
+                                                    <div class="form-control">
+                                                        <label class="text-danger">*</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.RevenueAccount, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceDescriptionInformation)
+                                    @Html.TextAreaFor(model => model.Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.InvoiceMasterAddNewInvoice.InvoiceDescriptionInformation })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes)
+                                    @Html.TextAreaFor(model => model.Notes, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.OfferPriceMasterCreateOffer.Notes })
+                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*@if (!User.IsInRole("بائع"))
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.EmployeeNumber)
+                                            <div class="input-group">
+                                                @Html.DropDownListFor(model => model.Emp_Id, Model.EmpList, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                                <div class="input-group-append">
+                                                    <div class="form-control">
+                                                        <label class="text-danger">*</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Emp_Id, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.InvoiceDate)
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.Invoice_Date, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                                <div class="input-group-append">
+                                                    <div>
+                                                        <span class="form-control text-danger">*</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Invoice_Date, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.RevenueAccount)
+                                            <div class="input-group">
+                                                @Html.DropDownListFor(model => model.RevenueAccount, Model.RevenueList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.RevenueAccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                                <div class="input-group-append">
+                                                    <div class="input-group-append">
+                                                        <div class="form-control">
+                                                            <label class="text-danger">*</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.RevenueAccount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                }*@
+
+                        </div>
+                    </div>
+                </div>
+                <div id="POSDetailPrepare"></div>
+                <div id="InvoicesDetailList"></div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.DiscountPercentage)
+                        <div class="input-group mb-4">
+                            @Html.EditorFor(model => model.Master_Discount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                            @Html.ValidationMessageFor(model => model.Master_Discount, "", new { @class = "text-danger" })
+                            <div class="input-group-append">
+                                <h3 class="form-control">%</h3>
+                                <h3 class="form-control text-danger">*</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.TotalDiscountAmount)
+                        <div class="input-group mb-4">
+                            <input id="masterTotalDiscountAmount" class="form-control mb-4" style="background:#ffffff">
+                            <div class="input-group-append">
+                                <h3 class="form-control">$</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @if (package.ExtraTaxes == true)
+                {
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.ExtraTaxes)
+                            <div class="input-group">
+                                @{
+                                    if (cookie != null && cookie.Value != null)
+                                    {
+                                        if (cookie.Value == "en")
+                                        {
+                                            @Html.ListBoxFor(model => model.Taxes, Model.TaxList, new Dictionary<string, Object> { { "class", "chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddExtraTaxes }, { "multiple", "true" } })
+                                            @Html.ValidationMessageFor(model => model.Taxes, "", new { @class = "text-danger" })
+
+                                        }
+                                        else
+                                        {
+                                            @Html.ListBoxFor(model => model.Taxes, Model.TaxList, new Dictionary<string, Object> { { "class", "chosen-rtl chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddExtraTaxes }, { "multiple", "true" } })
+                                            @Html.ValidationMessageFor(model => model.Taxes, "", new { @class = "text-danger" })
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @Html.ListBoxFor(model => model.Taxes, Model.TaxList, new Dictionary<string, Object> { { "class", "chosen-rtl chosen-select form-control mb-4" }, { "data-placeholder", Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddExtraTaxes }, { "multiple", "true" } })
+                                        @Html.ValidationMessageFor(model => model.Taxes, "", new { @class = "text-danger" })
+
+                                    }
+                                }
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.TotalTaxesOfExtraTaxes)
+                            <div class="input-group mb-4">
+                                <h3 id="masterTotalTaxesAmount" class="form-control mb-4" style="background:#ffffff"></h3>
+                                <div class="input-group-append">
+                                    <h3 class="form-control">$</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                @*<div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.AllowableDiscountOnBill)
+                            <div class="input-group mb-4">
+                                @Html.EditorFor(model => model.AllowDiscount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                @Html.ValidationMessageFor(model => model.AllowDiscount, "", new { @class = "text-danger" })
+                                <div class="input-group-append">
+                                    <h3 class="form-control">$</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>*@
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.Total)
+                        <div class="input-group mb-4">
+                            <input id="masterTotalInvoiceAmount" class="form-control mb-4" style="background:#ffffff">
+                            <div class="input-group-append">
+                                <div>
+                                    <h3 class="form-control">$</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="PosPaymentPrepare"></div>
+            <div id="PosPaymentDetailList"></div>
+            <div id="reminingShow"></div>
+            <div id="TotalShow"></div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.MasterPOSInvoice.Residual)
+                        <div class="input-group mb-4">
+                            <h3 id="Remaining" class="form-control mb-4" style="background:#ffffff"></h3>
+                            <div class="input-group-append">
+                                <div>
+                                    <h3 class="form-control">$</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="PlusInvoiceBtn" class="btn btn-block btn-outline-info mb-lg-0" href="~/MasterPOSInvoice/Create" target="_blank" rel="noopener noreferrer">
+                        انشاء فاتورة جديدة<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="customerModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddNewCustomer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="customerPartialDialogDiv"></div>
+                </div>
+                <div class="md-button">
+                    <button class="btn btn-block btn-outline-secondary mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal animated fadeInRight custo-fadeInRight" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddProduct</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="productPartialDialogDiv"></div>
+                </div>
+                <div class="md-button">
+                    <button class="btn btn-block btn-dark mb-lg-0" data-dismiss="modal"><i class="flaticon-cancel-2"></i>@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Cancel</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+@section Scripts {
+
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script>
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+    </script>
+    <script>
+        $("#masterTotalInvoiceAmount").change(function (e) {
+                    var serialId = @Model.MasterPOSInvoiceId;
+                    var selectedValue = $(this).val();
+
+                    $.ajax({
+                        url: '@Url.Action("updateDiscountDebendOnNet", "MasterPOSInvoice")',
+                        data: { net: selectedValue, id: serialId },
+                        type: 'get',
+                    }).done(function (result) {
+                        $("#Master_Discount").val(result);
+                        debugger
+                        updateTaxes();
+                    }
+                    );
+                });
+    </script>
+    <script>
+      $(document).ready(function () {
+          if ($('.chosen-container').length > 0) {
+              $('.chosen-container').on('touchstart', function (e) {
+                  e.stopPropagation(); e.preventDefault();
+                  $(this).trigger('mousedown');
+
+              });
+          }
+            $("#customerPartialDialogDiv").load('@(Url.Action("PartialDialog", "MasterPOSInvoice"))');
+               $("#productPartialDialogDiv").load('@(Url.Action("GetProductPartialDialogNoModel", "MasterPOSInvoice"))');
+          $("#createOfferSpinner").hide();
+
+            $("#reminingShow").hide();
+          $("#TotalShow").hide();
+
+          @*var bol = '@User.IsInRole("بائع")';
+          if (bol != "True") {
+              var currentDate = new Date();
+
+
+              var _OfferDate = flatpickr(document.getElementById('Invoice_Date'), {
+                  defaultDate: currentDate
+              });
+          }*@
+
+
+        $("#Customer_Id").chosen();
+          $("#Taxes").chosen();
+
+
+
+
+          $("#Customer_Id_chosen").addClass("form-control Dropdownlist-select");
+      //    $("#Emp_Id").chosen();
+      //$("#Emp_Id_chosen").addClass("form-control Dropdownlist-select");
+
+
+          $("#Taxes_chosen").addClass("form-control mb-4");
+
+          $('#Taxes_chosen ul').css('background', '#ffffff');
+          $('#Taxes_chosen ul li').css('background', '#ffffff');
+          $('#Taxes_chosen ul li span').css('background', '#ffffff');
+          $('#Taxes_chosen ul li a').css('background', '#ffffff');
+          $("#Taxes_chosen").data("chosen").default_text = "New Default Text";
+          $("#Taxes_chosen").trigger("liszt:updated")
+          $(".chosen-select").chosen({ rtl: true });
+          return false;
+
+      });
+
+    </script>
+
+    <script>
+
+                  $(function () {
+
+                      var invoiceMasterId = @Model.MasterPOSInvoiceId;
+                      var order =@Model.MaintenanceOrder_Id;
+
+
+
+                  var pos = @Model.PointSaleList.FirstOrDefault().Value;
+
+
+                      $("#InvoicesDetailList").load('@(Url.Action("GetAllTempInvoiceDetailsForOrder", "MasterPOSInvoice"))?tempInvoiceMasterId=' + invoiceMasterId, 'Orderid=' + order);
+                      $("#PosPaymentDetailList").load('@(Url.Action("allTempPay", "MasterPOSInvoice"))?POSTemp=' + @Model.MasterPOSInvoiceId);
+
+
+                      $("#POSDetailPrepare").load('@(Url.Action("PrepareDetail", "MasterPOSInvoice"))?POS_ID=' + pos);
+                      $("#PosPaymentPrepare").load('@(Url.Action("PreparePayment", "MasterPOSInvoice"))?POS_ID=' + pos);
+
+
+                      updateTaxes();
+
+              });
+
+    </script>
+    <script>
+      $('.chosen-select').chosen();
+      $('.chosen-select').chosen().change(function (e) {
+
+          updateTaxes();
+
+
+      });
+      function updateTaxes() {
+
+          var LisOfTax = $('.chosen-select').chosen().val();
+
+
+          var master =@Model.MasterPOSInvoiceId;
+
+          var data = { 'LisOfTaxa': LisOfTax, 'MasterIda': master };
+          var data = JSON.stringify(data);
+
+           $.ajax(
+        {
+                   url: '@Url.Action("AddingTax", "MasterPOSInvoice")',
+                   data: data,
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+
+
+                $("#InvoicesDetailList").load('@(Url.Action("GetAllTempInvoiceDetails", "MasterPOSInvoice"))?tempIPosId=' + @Model.MasterPOSInvoiceId);
+                   $("#PosPaymentDetailList").load('@(Url.Action("allTempPay", "MasterPOSInvoice"))?POSTemp=' + @Model.MasterPOSInvoiceId);
+
+
+
+            },
+            error: function () { alert('error'); }
+        });
+
+      }
+    </script>
+    <script>
+      function AddDetailToMaster() {
+                                 var pos = @Model.PointSaleList.FirstOrDefault().Value;
+                  var invoiceMasterId = @Model.MasterPOSInvoiceId;
+
+                  var batchId = $("#Batch_ID").val();
+                  var qty = $("#Product_Quantity").val();
+                  var productPrice = $("#Product_Price").val();
+                  var productTax = $("#Product_Tax").val();
+          var Discount = $("#Master_Discount").val();
+          var CustomerID = $("#Customer_Id").val();
+                  var invoiceMasterDetail;
+                  invoiceMasterDetail = {
+                      Master_Id: invoiceMasterId,
+                              Batch_ID: batchId,
+                              Product_Price: productPrice,
+                              Product_Tax: productTax,
+                              Discount: Discount,
+                      Product_Quantity: qty,
+                      CustomerID: CustomerID
+                          };
+
+                          $.ajax(
+                              {
+                      url: '@Url.Action("Addtatatotemp", "MasterPOSInvoice")',
+                                  data: JSON.stringify(invoiceMasterDetail),
+                                  contentType: 'application/json',
+                                  dataType: 'json',
+                                  type: 'POST',
+                                  success: function (data) {
+                                      Snackbar.show({
+                                          text: data,
+                                          pos: 'top-center'
+                                      });
+
+                                      $("#Batch_ID").val('0');
+                                      updateTaxes();
+                      },
+                                  error: function() { alert('error'); }
+                  });
+              }
+
+    </script>
+    <script type="text/javascript">
+
+
+      function AddAAlDetailToMaster() {
+          debugger
+          var invoiceMasterId = @Model.MasterPOSInvoiceId;
+
+          var PaymentMethod_Id = $("#PaymentMethod_Id").val();
+
+          var Amounts = $("#Amount").val();
+
+
+          var invoiceMasterDetail;
+          invoiceMasterDetail = {
+              MasterPOSInvoiceId: invoiceMasterId,
+              PaymentMethod_Id: PaymentMethod_Id,
+              Amount: Amounts,
+
+          };
+
+          $.ajax(
+              {
+                  url: '@Url.Action("AddPayemnt", "MasterPOSInvoice")',
+                  data: JSON.stringify(invoiceMasterDetail),
+                  contentType: 'application/json',
+                  dataType: 'json',
+                  type: 'POST',
+                  success: function (data) {
+                      Snackbar.show({
+                          text: data,
+                          pos: 'top-center'
+                      });
+
+                      $("#Batch_ID").val('0');
+                      updateTaxes();
+                  },
+                  error: function () { alert('error'); }
+              });
+      }
+
+    </script>
+    <script>
+                    function DeleteTemp(e) {
+
+                    var ids = e;
+
+                    $.ajax({
+
+                        url: '@Url.Action("DeleteTemp", "MasterPOSInvoice")',
+                        type: 'POST',
+                        data: { ids: ids }
+                    }).done(function(result) {
+                        Snackbar.show({
+                            text: result,
+                            pos: 'top-center'
+                        });
+                          $("#PosPaymentDetailList").load('@(Url.Action("allTempPay", "MasterPOSInvoice"))?POSTemp=' + @Model.MasterPOSInvoiceId);
+
+                    });
+                }
+    </script>
+
+
+    <script>
+                    function DeleteDetail(e) {
+
+                    var idss = e;
+
+                    $.ajax({
+
+                        url: '@Url.Action("DeleteAllDetails", "MasterPOSInvoice")',
+                        type: 'POST',
+                        data: { idss: idss }
+                    }).done(function (result) {
+                        $("#Master_Discount").val(result);
+                        updateTaxes();
+
+
+                    });
+                }
+    </script>
+
+
+
+    <script>
+
+        $("#Master_Discount").change(function (e) {
+            var serialId = @Model.MasterPOSInvoiceId;
+        var selectedValue = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("updateDataDebendOnDiscount", "MasterPOSInvoice")',
+                data: { discount: selectedValue, id: serialId },
+                type: 'get',
+            }).done(function (result) {
+
+
+                updateTaxes();
+            }
+            );
+        });
+    </script>
+
+    <script>
+        $("#AllowDiscount").change(function (e) {
+            var serialId = @Model.MasterPOSInvoiceId;
+        var selectedValue = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("updateDataDebendOnAlowDiscount", "MasterPOSInvoice")',
+                data: { discount: selectedValue, id: serialId },
+                type: 'get',
+            }).done(function (result) {
+
+
+                updateTaxes();
+            }
+            );
+        });
+
+    </script>
+
+
+    <script>
+                $('#Invoice_Date').on('change', function (e)
+                {
+                    $("#Invoice_Date").removeClass("addRequiredFieldToInput");
+                var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Company")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                        }
+                    }
+                    );
+                     $.ajax({
+                        url: '@Url.Action("CheckStartdate", "GLMaster")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            var currentDate = new Date();
+
+                            var _OfferDate = flatpickr(document.getElementById('Invoice_Date'), {
+                                defaultDate: currentDate
+                            });
+                        }
+                    }
+                    );
+                });
+
+    </script>
+
+    <script>
+        $("#masterTotalDiscountAmount").change(function (e) {
+                    var serialId = @Model.MasterPOSInvoiceId;
+                    var selectedValue = $(this).val();
+
+                    $.ajax({
+                        url: '@Url.Action("updateDiscountDebendOnDiscountAmount", "MasterPOSInvoice")',
+                        data: { discount: selectedValue, id: serialId },
+                        type: 'get',
+                    }).done(function (result) {
+                        $("#Master_Discount").val(result);
+                        debugger
+                        updateTaxes();
+                    }
+                    );
+                });
+    </script>
+
+    <script>
+    function addCustomer() {
+
+        var CustomerId = $("#Customer_Id").val();
+        var CustomerName = $("#Customer_Name").val();
+        var CustomerCode = $("#Customer_Code").val();
+        var CustomerAddress = $("#Customer_Address").val();
+        var CustomerPhone = $("#Customer_Phone").val();
+        var CustomerMail = $("#Customer_Mail").val();
+        var ProvinceId = $("#SelectedProvinceId").val();
+        var CountryId = $("#SelectedCountryId").val();
+        var CityId = $("#SelectedCityId").val();
+        var CustomerFax = $("#Customer_Fax").val();
+        var BranchId = $("#Branch_Id").val();
+        var CustomerMobile = $("#Customer_Mobile").val();
+        var PurchasePrice = $("#Purchase_Price").val();
+        var PaymentPolicy = $("#Payment_Policy_Id").val();
+        var CustomerWebsite = $("#Customer_Website").val();
+        var SelectSlice_Id = $("#SelectSlice_Id").val();
+        var Files1 = $("#Files").val();
+        var DataForCustomer;
+        DataForCustomer = {
+            Customer_Id: CustomerId,
+            Customer_Name: CustomerName,
+            Customer_Code: CustomerCode,
+            Customer_Address: CustomerAddress,
+            Customer_Phone: CustomerPhone,
+            Customer_Mail: CustomerMail,
+            SelectedProvinceId: ProvinceId,
+            SelectedCountryId: CountryId,
+            SelectedCityId: CityId,
+            Customer_Fax: CustomerFax,
+            Branch_Id: BranchId,
+            Customer_Mobile: CustomerMobile,
+            Purchase_Price: PurchasePrice,
+            Payment_Policy: PaymentPolicy,
+            Customer_Website: CustomerWebsite,
+            SelectSlice_Id: SelectSlice_Id,
+            Files: Files1
+        };
+
+        $.ajax(
+         {
+            url: "@Url.Action("AddNewCustomerPartial", "MasterPOSInvoice")",
+             data: JSON.stringify(DataForCustomer),
+             contentType: 'application/json',
+             dataType: 'json',
+             type: 'POST',
+             success: function (data) {
+
+                 $("#partialDialogDiv").dialog("close");
+                 var custo_ID=0;
+                 Snackbar.show({
+                     text:'@Accountingsystem.Resources.MasterPOSInvoice.AddingCustomer',
+                     pos: 'top-center'
+                 });
+
+
+             },
+             error: function () { alert('ssssssssss'); }
+         });
+    };
+    </script>
+    <script>
+
+        $('#Emp_Id').on('change', function () {
+            $("#Emp_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#Emp_Id_chosen span').css('background', '#ffffff');
+            $('#Emp_Id_chosen b').css('background', '#ffffff');
+        });
+
+
+        $('#Invoice_Date').on('input', function () {
+            $("#Invoice_Date").removeClass("addRequiredFieldToInput");
+        });
+        $('#Master_Discount').on('input', function () {
+            $("#Master_Discount").removeClass("addRequiredFieldToInput");
+        });
+        $('#AllowDiscount').on('input', function () {
+            $("#AllowDiscount").removeClass("addRequiredFieldToInput");
+        });
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+
+            var remain = parseFloat(document.getElementById("reminingShow").innerHTML);
+            var total = parseFloat(document.getElementById("TotalShow").innerHTML);
+            $("#createOfferSpinner").show();
+            if ($('#Emp_Id').val() == "" || $('#Emp_Id').val() == null || $('#Master_Discount').val() == "" || $('#Master_Discount').val() == null || $('#Master_Discount').val() < 0 || $('#Master_Discount').val() > 100 || total <= 0 || (remain < total && remain > 0)) {
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createOfferSpinner").hide();
+
+                if (remain < total && remain != 0) {
+                    Snackbar.show({
+                        text: '@Accountingsystem.Resources.MasterPOSInvoice.TotalinvoiceisBigger',
+                        pos: 'top-center'
+                    });
+                }
+
+
+                if ($('#Master_Discount').val() == "" || $('#Master_Discount').val() == null) {
+                    Snackbar.show({
+                        text: '@Accountingsystem.Resources.MasterPOSInvoice.DiscountMust',
+                        pos: 'top-center'
+                    });
+                    $("#Master_Discount").addClass("addRequiredFieldToInput");
+                    $('#Master_Discount').trigger('focus');
+                }
+                if ($('#Master_Discount').val() < 0 || $('#Master_Discount').val() > 100) {
+                    Snackbar.show({
+                        text:'@Accountingsystem.Resources.MasterPOSInvoice.DiscountValue',
+                        pos: 'top-center'
+                    });
+                    $("#Master_Discount").addClass("addRequiredFieldToInput");
+                    $('#Master_Discount').trigger('focus');
+                }
+
+                @*if ($('#AllowDiscount').val() == "" || $('#AllowDiscount').val() == null) {
+                    var detail2 = $('#AllowDiscount').val();
+                    Snackbar.show({
+                        text:'@Accountingsystem.Resources.MasterPOSInvoice.FixedDiscountMust',
+                        pos: 'top-center'
+                    });
+                    $("#AllowDiscount").addClass("addRequiredFieldToInput");
+                    $('#AllowDiscount').trigger('focus');
+                }
+
+                if ($('#AllowDiscount').val() < 0) {
+                    Snackbar.show({
+                        text:'@Accountingsystem.Resources.MasterPOSInvoice.FixedDiscountValue',
+                        pos: 'top-center'
+                    });
+                    $("#AllowDiscount").addClass("addRequiredFieldToInput");
+                    $('#AllowDiscount').trigger('focus');
+                }*@
+
+
+                if (total <= 0) {
+                    Snackbar.show({
+                        text: '@Accountingsystem.Resources.validate.invoiceProductMust',
+                        pos: 'top-center'
+                    });
+                    var detail = $('#InvoiceMasterDetailList tr').length;
+                    $("#InvoiceMasterDetailList").addClass("addRequiredFieldToInput");
+                    $("#Batch_ID_chosen").addClass("addRequiredFieldToInput");
+                    $('#Batch_ID_chosen span').css('background', 'red');
+                    $('#Batch_ID_chosen b').css('background', 'red');
+                    $('#Batch_ID_chosen').trigger('focus');
+                }
+                if ($('#Emp_Id').val() == "" || $('#Emp_Id').val() == null) {
+                    Snackbar.show({
+                        text: "الموظف الزامي",
+                        pos: 'top-center'
+                    });
+
+                    $("#Emp_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#Emp_Id_chosen span').css('background', 'red');
+                    $('#Emp_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#Emp_Id").offset().top
+                    }, 2000);
+                }
+
+
+                // Eng Mohammed
+
+
+
+                $("#createOfferSpinner").hide();
+                event.preventDefault();
+            }
+
+
+        });
+
+    </script>
+}

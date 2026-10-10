@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/Image/ByanatyLogo.png")">
+
+    <link href="@Url.Content("~/ContentLTR/assets/css/loader.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/ContentLTR/assets/js/loader.js")"></script>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="@Url.Content("~/ContentLTR/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/ContentLTR/assets/css/plugins.css")" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="@Url.Content("~/ContentLTR/Custom/CustomStyleSheet.css")" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <style>
+        .deleteicon {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN LOADER -->
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <!--  END LOADER -->
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container fixed-top">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item theme-brand flex-row  text-center">
+                <li class="nav-item theme-logo">
+
+                    <img src="@Url.Content("~/Image/ByanatyLogo.png")" class="navbar-logo" alt="logo">
+
+                </li>
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+               
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+                                <ul class="nav navbar-nav navbar-right">
+
+
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a class="dropdown-item d-flex" href='@Url.Action("ChangeLanguage", "Account", new { url = Request.Url.AbsoluteUri, languageChoice = "ar" })'><img src="@Url.Content("~/ContentRTL/assets/img/SaudiArabiaFlag.png")" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;@Accountingsystem.Resources.SharedLayout.Arabic</span></a>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a class="dropdown-item d-flex" href='@Url.Action("ChangeLanguage","Account", new { url = Request.Url.AbsoluteUri, languageChoice = "en" })'><img src="@Url.Content("~/ContentRTL/assets/img/UKFlag.png")" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;@Accountingsystem.Resources.SharedLayout.English</span></a>
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </header>
+    </div>
+    <!--  END NAVBAR  -->
+    <div class="main-container" id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+        <!--  BEGIN NAVBAR  -->
+      
+        <!--  END NAVBAR  -->
+        <!--  BEGIN SIDEBAR  -->
+      
+        <!--  END SIDEBAR  -->
+        <div id="" class="main-content">
+            <div class="layout-px-spacing">
+                @RenderBody()
+            </div>
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    <p class="">©Copy right  @DateTime.Now.Year <a target="_blank" href="https://www.byanaty.com"> Byanaty </a>All rights reserved.</p>
+                </div>
+                <div class="footer-section f-section-2">
+                    <p class="">Byanaty</p>
+                </div>
+            </div>
+        </div>
+        <script src="@Url.Content("~/ContentLTR/assets/js/libs/jquery-3.1.1.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/bootstrap/js/popper.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/bootstrap/js/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/plugins/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/assets/js/app.js")"></script>
+        <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+        <script>
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>
+        <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+        @RenderSection("scripts", required: false)
+    </div>
+</body>
+
+</html>

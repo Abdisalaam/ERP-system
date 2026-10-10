@@ -1,0 +1,53 @@
+﻿@model Accountingsystem.ViewModel.Salary_ComponentsVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Employee_Id)
+        @Html.HiddenFor(model => model.Salary_Components_Id)
+ 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Account_Id, Model.AccountList, Accountingsystem.Resources.EmployeeRoleList.SelectAccount, htmlAttributes: new { @class = "Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.Account_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.EmployeeRoleList.Account)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.EditorFor(model => model.Account_Amount, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Account_Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label(Accountingsystem.Resources.EmployeeRoleList.Value)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+     
+    </div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href='javascript:;' onclick='AddDetailToMaster();' class="btn btn-success" style="text-decoration:none;">@Accountingsystem.Resources.EmployeeRoleList.AddToRegulation</a>
+    </div>
+</div>
+}

@@ -1,0 +1,157 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.SalesDatesVM
+
+
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+    var dateto = "الي" + Convert.ToDateTime(Model.to).ToString("yyyy/MM/dd ");
+    var datefrom = "من" + Convert.ToDateTime(Model.from).ToString("yyyy/MM/dd ");
+}
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير عروض الاسعار</title>
+</head>
+<body>
+
+    <br />
+    <br />
+    <br />
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        تقرير عروض الاسعار / OfferPrice Report
+
+    </div>
+    <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+        @datefrom      @dateto
+
+    </div>
+
+
+
+    <br />
+   
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr style="text-align:center;">
+                <th style="text-align:center">رقم العميل<br />Customer NO</th>
+                <th style="text-align:center"> العميل<br />Customer</th>
+                <th style="text-align:center">الرقم<br />NO</th>
+                <th style="text-align:center">التاريخ<br />Date</th>
+                <th style="text-align:center">الانتهاء<br />DeadLine</th>
+                <th style="text-align:center">القيمة<br />Amount</th>
+
+
+
+
+
+
+
+
+            </tr>
+        </thead>
+        @foreach (var item in Model.OfferList.OrderBy(a=>a.OfferPriceDate))
+        {
+            totalamount = totalamount + item.OfferPriceTotal;
+
+            <tr>
+
+                <td>
+
+                    @item.CustomerCode
+                </td>
+                <td>
+                    @item.CustomerName
+                </td>
+
+                <td>
+
+                    @item.OfferPriceCode
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.OfferPriceDate).ToString("yyyy/MM/dd ")
+                    @*@item.OfferPriceDate*@
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.OfferPriceDeadLine).ToString("yyyy/MM/dd ")
+                    @*@item.OfferPriceDeadLine*@
+                </td>
+
+                <td>
+
+                    @Math.Round(item.OfferPriceTotal, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+
+            </tr>
+
+        }
+            <tr>
+
+                <th style="text-align:center">الاجمالي<br />Total</th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"> @Math.Round(totalamount, 2, MidpointRounding.AwayFromZero)</th>
+
+                
+
+
+            </tr>
+
+
+    </table>
+    
+
+</body>
+</html>

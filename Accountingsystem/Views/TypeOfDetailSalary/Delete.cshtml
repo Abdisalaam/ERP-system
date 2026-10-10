@@ -1,0 +1,51 @@
+﻿@model Accountingsystem.Models.TypeOfDetailSalary
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.TypeOfDetailSalaryCreate.DeleteSalary;
+}
+
+
+
+<div class="form-horizontal">
+    <h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.TypeOfDetailSalaryCreate.DeleteSalary</h2>
+
+    <h2>@Accountingsystem.Resources.TypeOfDetailSalaryCreate.DeleteSalaryQuestion</h2>
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+                <tr>
+                    @Html.HiddenFor(mode => Model.Id)
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.TypeOfDetailSalaryCreate.SalaryName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.SalaryDetail_Name)
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayName(Accountingsystem.Resources.TypeOfDetailSalaryCreate.SalaryType)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Sal_Type)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Accountingsystem.Resources.TypeOfDetailSalaryCreate.Delete class="btn BTN-style final-BTN" /> 
+            <a class="btn BTN-style final-BTN" href='@Url.Action("Index")'>
+               
+
+                    @Accountingsystem.Resources.TypeOfDetailSalaryCreate.BackToList
+                
+            </a>
+        </div>
+    }
+</div>

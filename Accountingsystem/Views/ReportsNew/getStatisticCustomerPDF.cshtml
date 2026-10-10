@@ -1,0 +1,382 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.CustomerStatisticListVM
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+
+
+    var datefrom = " التاريخ " + Convert.ToDateTime(Model.StartDate).ToString("yyyy/MM/dd ");
+    decimal Currentbalance = 0;
+    decimal Datebalance = 0;
+    decimal befor30balance = 0;
+    decimal after30balance = 0;
+    decimal after60balance = 0;
+    decimal after90balance = 0;
+    decimal after120balance = 0;
+
+}
+
+<html>
+
+<head>
+
+    <title>إعمار ذمم العملاء </title>
+
+</head>
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            إعمار ذمم العملاء / Aging of receivables to customers
+
+        </div>
+
+        
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @datefrom      
+
+        </div>
+
+
+    </div>
+    
+    <br />
+    <br />
+
+
+
+    <br />
+    <br />
+
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+
+                <th width="200px">الرقم<br />NO</th>
+                <th style="text-align:center">العميل <br /> Customer</th>
+                <th style="text-align:center" width="100px">الرصيد <br /> balance</th>
+
+                <th width="10px" style="text-align:center">رصيد الفترة<br />Period Balance</th>
+
+
+
+                <th width="10px" style="text-align:center">30-0</th>
+                <th width="10px" style="text-align:center">31-60</th>
+                <th width="10px" style="text-align:center">61-90</th>
+                <th width="10px" style="text-align:center">90+</th>
+
+
+
+            </tr>
+        </thead>
+        
+       
+        <tbody>
+            @foreach (var item in Model.List)
+            {
+                Currentbalance += item.CurrentBalance;
+                Datebalance += item.Datebalance;
+                befor30balance += item.Date30Befor;
+                after30balance += item.Date30After;
+                after60balance += item.Date60After;
+                after90balance += item.Date90After;
+                after120balance += item.Date120After;
+
+                <tr>
+
+
+
+
+                    <td>
+                        @item.customer.Customer_Code
+                    </td>
+
+                    <td>
+                        @item.customer.Customer_Name
+
+                    </td>
+                    <td>
+                        @if (item.CurrentBalance >= 0)
+                        {
+                            @Math.Round(item.CurrentBalance, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.CurrentBalance * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+
+                    </td>
+                    <td>
+
+                        @if (item.Datebalance >= 0)
+                        {
+                            @Math.Round(item.Datebalance, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.Datebalance * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+                    </td>
+                   
+                    <td>
+
+                        @if (item.Date30After >= 0)
+                        {
+                            @Math.Round(item.Date30After, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.Date30After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+
+                    </td>
+                    <td>
+
+                        @if (item.Date60After >= 0)
+                        {
+                            @Math.Round(item.Date60After, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.Date60After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+
+                    </td>
+                    <td>
+
+                        @if (item.Date90After >= 0)
+                        {
+                            @Math.Round(item.Date90After, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.Date90After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+
+                    </td>
+                    <td>
+
+                        @if (item.Date120After >= 0)
+                        {
+                            @Math.Round(item.Date120After, 2, MidpointRounding.AwayFromZero)
+                        }
+                        else
+                        {
+                            <p> ( @Math.Round(item.Date120After * -1, 2, MidpointRounding.AwayFromZero)  )</p>
+                        }
+
+                    </td>
+                </tr>
+            }
+            <tr>
+
+
+
+
+                <th>
+                  الاجمالي
+                    <br />
+                    Total
+                </th>
+
+                <th>
+                   
+
+                </th>
+                <th>
+                    @if (Currentbalance >= 0)
+                    {
+                        @Math.Round(Currentbalance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(Currentbalance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+
+                </th>
+                <th>
+
+                    @if (Datebalance >= 0)
+                    {
+                        @Math.Round(Datebalance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(Datebalance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+                </th>
+                @*<th>
+
+                    @if (befor30balance >= 0)
+                    {
+                        @Math.Round(befor30balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(befor30balance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+                </th>*@
+                <th>
+
+                    @if (after30balance >= 0)
+                    {
+                        @Math.Round(after30balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(after30balance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+
+                </th>
+                <th>
+
+                    @if (after60balance >= 0)
+                    {
+                        @Math.Round(after60balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(after60balance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+
+                </th>
+                <th>
+
+                    @if (after90balance >= 0)
+                    {
+                        @Math.Round(after90balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(after90balance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+
+                </th>
+                <th>
+
+                    @if (after120balance >= 0)
+                    {
+                        @Math.Round(after120balance, 2, MidpointRounding.AwayFromZero)
+                    }
+                    else
+                    {
+                        <p> (@Math.Round(after120balance * -1, 2, MidpointRounding.AwayFromZero))</p>
+                    }
+
+                </th>
+            </tr>
+
+        </tbody>
+               
+
+
+     
+    </table>
+
+    <footer style="margin-top:15%;"></footer>
+
+</body>
+
+@*<footer style="margin-top:25%;">
+        <hr />
+        <h style="text-align:right;margin-left:65%;color:black;font-size:x-large;">Balance Due : @Model.Total</h>
+    </footer>*@
+
+</html>
+

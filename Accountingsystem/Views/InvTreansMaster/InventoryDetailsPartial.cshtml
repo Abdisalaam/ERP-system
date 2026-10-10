@@ -1,0 +1,56 @@
+﻿@model Accountingsystem.ViewModel.InventorytransferHdDetailsVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <hr />
+    @Html.HiddenFor(model => model.Detail_TotalCoct, new { htmlAttributes = new { @class = "textfield" } })
+  
+    @Html.HiddenFor(model => model.TransferDetail_Id, new { htmlAttributes = new { @class = "textfield" } })
+    @Html.HiddenFor(model => model.InventoryTransfer_Id, new { htmlAttributes = new { @class = "textfield" } })
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.ReversePOSInvoiceDetails.Product)
+                @Html.DropDownListFor(model => model.Batch_ID, Model.MyProductsList, Accountingsystem.Resources.InvoiceMasterDetails.SelectProduct, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.ReversePOSInvoiceDetails.Quantity)
+                @Html.EditorFor(model => model.Product_Qty, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+
+            <a href='javascript:;' onclick='AddDetailToMaster1();' class="btn btn-outline-info mb-2" style="text-decoration:none;">@Accountingsystem.Resources.ReversePOSInvoiceDetails.AddToRegulation</a>
+        </div>
+    </div>
+    
+</div>
+
+
+}
+
+<script>
+    $("#Batch_ID").chosen();
+
+
+
+    $("#Batch_ID_chosen").addClass("form-control Dropdownlist-select");
+</script>
+
+

@@ -1,0 +1,177 @@
+﻿@model Accountingsystem.ViewModel.CurrencyVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.CurrencyCreate.CreateCurrency</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Currency_Type, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Currency_Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CurrencyCreate.CurrencyType>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency_Type, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                        
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Currency_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Currency_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CurrencyCreate.CurrencyName>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency_Name, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Currency_ISO, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Currency_ISO, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CurrencyCreate.ShortcutArabicInformation>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency_ISO, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Currency_Country, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Currency_Country, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CurrencyCreate.CountryOfCurrency>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency_Country, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Currency_Iso2, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Currency_Iso2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CurrencyCreate.SecondShortcut>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Currency_Iso2, htmlAttributes: new { @class = "control-label " })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Break_Coin, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Break_Coin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Break_Coin, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Current_Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Current_Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Current_Price, htmlAttributes: new { @class = "control-label " })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Break_Coin2, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Break_Coin2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Break_Coin2, htmlAttributes: new { @class = "control-label " })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-offset-2 col-md-10">
+
+            <a href='javascript:;' onclick='addCurrency();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.CurrencyCreate.CreateCurrency</a>
+        </div>
+
+    </div>
+}
+
+

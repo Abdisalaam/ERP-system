@@ -1,0 +1,232 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.AssetsReportVM 
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+
+    Layout = null;
+    string Name = "";
+    decimal netTotalPrice = 0;
+    decimal netTotalBookValue = 0;
+    decimal netTotalComplex = 0;
+    decimal totalPricess = 0;
+    decimal totalBookValue = 0;
+    decimal totalComplex = 0;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقارير الاصول</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+<body>
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+        <div class="col-md-12">
+            <div class="col-lg-6">
+                <table class="table" style="float:left; width:10%;color:blue;font-size:small"></table>
+            </div>
+
+
+        </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            الاصول
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-lg-6">
+                <table class="table" style="float:right; width:10%;color:black;font-size:small"></table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <hr />
+    <div style="text-align:center;color:blue;font-size:medium;margin-bottom:25px;">
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            @if (Model.AssetType.Count != 0)
+            {
+            <div class="col-lg-6">
+                @foreach (var type in Model.AssetType)
+                {
+                    <table class="table" style="float:right; width:100%" border="1" dir="rtl">
+
+                        <div style="text-align:right;color:black;font-size:medium;margin-bottom:25px;">
+                            @type.FixedAssetType
+                        </div>
+                        <tr style="background-color:gray;">
+                            <th style="text-align:center; ">
+                                الاصل
+
+                            </th>
+                            <th style="text-align:center; ">
+                                سعر الاصل
+                            </th>
+                            <th style="text-align:center; ">
+                                الرصيد الدفتري
+                            </th>
+
+                            <th style="text-align:center; ">
+                                مجمع الاهلاك
+                            </th>
+
+
+
+                        </tr>
+                        @foreach (var item in Model.AssetDetails.Where(e => e.FAsset_Types == type.FixedAssetType))
+                        {
+
+                            <tr  >
+
+                                <td>@item.FAsset_Descriptions</td>
+                                <td>@item.FAsset_PurchasePrices</td>
+                                <td>@item.BookVlaue</td>
+
+                                <td>@item.Complex</td>
+
+
+                            </tr>
+                            netTotalPrice += (decimal)item.FAsset_PurchasePrices;
+                            netTotalBookValue += (decimal)item.BookVlaue;
+                            netTotalComplex += (decimal)item.Complex;
+                            totalPricess += (decimal)item.FAsset_PurchasePrices;
+                            totalBookValue += (decimal)item.BookVlaue;
+                            totalComplex += (decimal)item.Complex;
+                        }
+
+
+
+
+
+
+                    </table>
+                    <br />
+                    <table class="table" style="float:right; width:100%" border="1" dir="rtl">
+                        <tr  style="background-color:gray;">
+                            <th style="text-align:center; ">
+                                اجمالي سعر @type.FixedAssetType
+
+                            </th>
+                            <th style="text-align:center; ">
+                                اجمالي رصيد الدفتري @type.FixedAssetType
+                            </th>
+                            <th style="text-align:center; ">
+                                اجمالي الاهلاكات علي @type.FixedAssetType
+                            </th>
+                        </tr>
+
+                        <tr>
+
+                            <td style="color:black;">  @netTotalPrice</td>
+                            <td style="color:black;">   @netTotalBookValue</td>
+                            <td style="color:black;">   @netTotalComplex</td>
+
+                        </tr>
+                    </table>
+                    @*<div class="row">
+                    <div class="col-md-5" style="color:blue;font-size:medium;margin-left:55%;">
+                        <h>اجمالي سعر @type.FixedAssetType @netTotalPrice<h>
+                    </div>
+                    <div class="col-md-5" style="color:blue;font-size:medium;margin-left:50%;">
+                        <h>اجمالي رصيد الدفتري @type.FixedAssetType @netTotalBookValue</h>
+                    </div>
+                    <div class="col-md-5" style="color:blue;font-size:medium;margin-left:50%;">
+                        <h>اجمالي الاهلاكات علي @type.FixedAssetType @netTotalComplex</h>
+                    </div>
+                </div>*@
+                    netTotalPrice = 0;
+                    netTotalBookValue = 0;
+                    netTotalComplex = 0;
+                }
+            </div>
+            }
+          
+                <table class="table" style="float:right; width:100%" border="1"dir="rtl">
+                    <tr  style="background-color:gray;">
+                        <th style="text-align:center; ">
+                            اجمالي سعر كل الاصول
+
+                        </th>
+                        <th style="text-align:center; "> 
+                            اجمالي رصيد الدفتري لكل الاصول
+                        </th>
+                        <th style="text-align:center; ">
+                            اجمالي الاهلاكات علي الاصول
+                        </th>
+                    </tr>
+
+                    <tr>
+
+                        <td style="color:black;">  @totalPricess</td>
+                        <td style="color:black;">  @totalBookValue</td>
+                        <td style="color:black;">   @totalComplex</td>
+
+                    </tr>
+                </table>
+            
+            @*<table class="table" style="float:right; width:100%" border="1">
+            <tr>
+                <td></td>
+                <td style="color:blue;font-size:medium;margin-bottom:25px;"> اجمالي سعر كل الاصول  @totalPricess</td>
+                <td style="color:blue;font-size:medium;margin-bottom:25px;"> اجمالي رصيد الدفتري لكل الاصول   @totalBookValue</td>
+                <td style="color:blue;font-size:medium;margin-bottom:25px;"> اجمالي الاهلاكات علي الاصول   @totalComplex</td>
+            </tr>
+        </table>*@
+
+        </div>
+
+    </div>
+
+
+    <footer style="margin-top:25%;">
+        <hr />
+
+    </footer>
+</body>
+</html>

@@ -1,0 +1,404 @@
+﻿@model IEnumerable<Accountingsystem.Models.ProductBatches>
+@{
+    ViewBag.Title = Accountingsystem.Resources.StoreCreate.EditProductPriceForStores;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var TaxList = Accountingsystem.Models.Tax.GetAlltaxes();
+    int count = 0;
+}
+
+@{
+
+
+    if (cookie != null && cookie.Value != null)
+    {
+        if (cookie.Value == "en")
+        {
+            Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+    <div class="text-center">
+        @Accountingsystem.Resources.StoreCreate.EditProductPriceForStore
+    </div>
+    <div class="widget-content widget-content-area">
+        <div class=''>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.ProductDetails.ItemNumber)
+                                    </div>
+                                    <div>
+                                        @Html.DisplayFor(model => model.FirstOrDefault().Product.Prod_Code)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Item)
+                                    </div>
+                                    <div>
+                                        @Html.DisplayFor(model => model.FirstOrDefault().Product.Prod_Name)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Barcode)
+                                    </div>
+                                    <div>
+                                        @Html.DisplayFor(model => model.FirstOrDefault().Product.Bar_Code)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-responsive mb-4 mt-4">
+        <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th>
+                        @Accountingsystem.Resources.InvoiceMasterIndex.Number
+                    </th>
+
+                    <th>
+                        @Accountingsystem.Resources.StoreCreate.StoreName
+
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Minimum)
+
+                    </th>
+
+                    <th>
+                        @Accountingsystem.Resources.ProductCreate.EstimatedCost
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.ProductDetails.SellingPrice
+
+                    </th>
+
+                    <th>
+                        @Accountingsystem.Resources.StoreCreate.NewPrice
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.TaxCreate.TaxPercentage
+
+                    </th>
+                    <th>
+                        @Accountingsystem.Resources.validate.PriceWithTax
+
+                    </th>
+
+
+                    <th>
+                        <input type="checkbox" name="select-all" id="select-all" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderByDescending(a=>a.IsActive))
+                {
+                    decimal taxpercentage = 0;
+                    decimal salePrice = 0;
+                    decimal SalepriceWithTax = 0;
+                    if (item.Product.Tax_Id > 0)
+                    {
+                        taxpercentage = TaxList.Where(a => a.Tax_ID == item.Product.Tax_Id).FirstOrDefault().Tax_Percentage;
+                    }
+                    if (item.SalesPrice != null)
+                    {
+                        salePrice = item.SalesPrice.Value;
+
+
+                    }
+                    else
+                    {
+                        salePrice = item.Product.Sale_Price.Value;
+
+                    }
+
+                    if (item.IsActive == null)
+                    {
+                        item.IsActive = true;
+                    }
+                <tr>
+                    @{
+                        SalepriceWithTax = salePrice * (taxpercentage / 100) + salePrice;
+                        count++;
+                    }
+                    <td hidden>
+                        @Html.HiddenFor(a => taxpercentage, htmlAttributes: new { @class = "taxPercentage" })
+                    </td>
+                    <td>@count</td>
+                    <td hidden>@item.Batch_ID</td>
+                    <td>@item.Store.Store_Name</td>
+
+                    <td>0</td>
+
+                    <td><input type="number"  class="cost" id="Prod_Cost_Price" value="@Math.Round(item.Product.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)"></td>
+                    <td>@Math.Round(salePrice, 2, MidpointRounding.AwayFromZero)</td>
+                    <td><input type="number" onchange="OnChangeSalesPrice(this)" class="SalesPrices" id="SalesPrice" value="@Math.Round(salePrice, 2, MidpointRounding.AwayFromZero)"></td>
+
+
+                    <td id="taxPercentage">@taxpercentage</td>
+                    <td><input type="number" onchange="OnChangeSalesWithTax(this)" class="SalesPriceWithTax" id="SalesPriceWithTax" value="@Math.Round(SalepriceWithTax, 2, MidpointRounding.AwayFromZero)"></td>
+
+
+
+                    <td>@Html.EditorFor(model => item.IsActive.Value)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" id="createOfferbtn" onclick="fun()" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.InvoiceMasterIndex.Edit <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 5000,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 5000,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+
+
+
+
+
+
+    <script>
+
+        function fun() {
+
+
+            $("#createOfferSpinner").show();
+            $('#createOfferbtn').prop('disabled', true);
+            var orderArr = [];
+            orderArr.length = 0;
+            debugger
+            $.each($("#default-ordering tbody tr"), function () {
+                orderArr.push({
+
+                    batchId: $(this).find('td:eq(2)').html(),
+                    Prod_Cost_Price: $(this).find('td:eq(5)').find('input').val(),
+                    SalesPrice: $(this).find('td:eq(7)').find('input').val(),
+                    IsActive: $(this).find('td:eq(10)').find('input').prop('checked')
+                });
+
+            });
+
+
+
+            var xz = 22;
+            var datao = JSON.stringify(orderArr);
+
+            var data = { 'btachQan': datao, 'hh': xz };
+            var data = JSON.stringify(data);
+            debugger 
+            console.log(data);
+             $.ajax(
+                 {
+
+                     url: '@Url.Action("GetAllProductBatchPOst", "Product")',
+                     data: data,
+                     contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+                     type: 'POST',
+
+
+            }).done(function (result) {
+
+                setTimeout(function () {
+
+                    window.location = result;
+
+                }, 5000);
+            });
+
+        };
+
+    </script>
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+    <script>
+        function OnChangeSalesPrice(obj) {
+            debugger
+            var Price = $(obj).val();
+
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var category = $(obj).parents('tr').find('.Cat').val();
+            var priceWithTax = (parseFloat(TaxPercentage) / 100) * parseFloat(Price) + parseFloat(Price);
+
+
+            $(obj).parents('tr').find('.SalesPriceWithTax').val(priceWithTax);
+
+        }
+
+    </script>
+    <script>
+        function OnChangeSalesWithTax(obj) {
+            debugger
+            var PriceWithTax = $(obj).val();
+            var TaxPercentage = $(obj).parents('tr').find('.taxPercentage').val();
+            var price = parseFloat(PriceWithTax) * (100 / (parseFloat(TaxPercentage) + 100));
+        
+
+            $(obj).parents('tr').find('.SalesPrices').val(price);
+
+        }
+
+    </script>
+}

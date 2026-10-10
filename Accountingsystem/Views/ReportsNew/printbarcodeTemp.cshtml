@@ -1,0 +1,182 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.BarCodePrint
+
+@{
+    ViewBag.Title = "printbarcodeTemp";
+    decimal TaxPercentage = 0;
+    if (Model.product.Tax_Id > 0)
+    {
+
+        TaxPercentage = Accountingsystem.Models.Tax.GetTaxesbyId(Model.product.Tax_Id.Value).Tax_Percentage / 100;
+    }
+    //var barcodeIMG = Convert.ToBase64String(Model.product.Bar_Code_one);
+
+}
+<head>
+    <meta charset="UTF-8">
+</head>
+
+
+<div class="col-md-12">
+    <div class="col-lg-6">
+        <div id="card">
+            <img src="data:image/png;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeBarcode(Model.product.Bar_Code))" alt="Image" style="width: 100%; height:200px" />
+        </div>
+        @if (Model.name == true)
+        {
+            <p style="font-size:16px;" dir="rtl">@Model.product.Prod_Name </p>
+
+        }
+        @if (Model.Price == true)
+        {
+            <p style="font-size:16px;" dir="rtl"> السعر بدون ضريبة : @Math.Round(Model.product.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)  </p>
+
+        }
+        @if (Model.PriceWithTax == true)
+        {
+            <p style="font-size:16px;" dir="rtl"> السعر شامل الضريبة : @Math.Round(Model.product.Sale_Price.Value + (Model.product.Sale_Price.Value * TaxPercentage), 2, MidpointRounding.AwayFromZero)  </p>
+
+        }
+        @if (Model.DateOfExpire == true && Model.product.Validity != null)
+        {
+            <p style="font-size:16px;" dir="rtl"> انتهاء الصلاحية :@Convert.ToDateTime(DateTime.Today.AddDays(Model.product.Validity.Value)).ToString("yyyy/MM/dd ") </p>
+
+        }
+        @if (Model.product.Notes != null && Model.product.Notes != "" && Model.Notes == true)
+        {
+            <p style="font-size:16px;" dir="rtl"> @Model.product.Notes</p>
+
+        }
+    </div>
+    <button id="btnPrint" class="btn btn-block btn-outline-primary mb-lg-0 hidden-print layout-top-spacing" onclick="PrintElem()">
+        @Accountingsystem.Resources.MasterPOSInvoice.ThermalPrinting
+        <span id="PrintSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+
+    </button>
+</div>
+
+<div id="contentToPrint" style="display: none; width:100%; height:400px; max-height:400px; page-break-after:always;">
+    <div class="ticket" style="text-align: center;">
+   
+        <div class="row layout-top-spacing">
+
+            <table style="text-align: center; width:100%;">
+                <thead>
+                    <tr>
+                        @if (Model.name == true)
+                        {
+                            <th>
+                                @Accountingsystem.Resources.MasterPOSInvoice.Item
+
+                            </th>
+
+
+                        }
+                        @if (Model.Price == true)
+                        {
+                            <th>
+                                @Accountingsystem.Resources.MasterPOSInvoice.PriceWithOutTax
+                            </th>
+
+
+                        }
+                        @if (Model.PriceWithTax == true)
+                        {
+                            <th>
+                                @Accountingsystem.Resources.MasterPOSInvoice.PriceWithTax
+                            </th>
+
+                        }
+                        @if (Model.DateOfExpire == true && Model.product.Validity != null)
+                        {
+                            <th>
+                                @Accountingsystem.Resources.MasterPOSInvoice.ValidTillDate
+                            </th>
+                        }
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @if (Model.name == true)
+                        {
+                            <td>
+                                @Model.product.Prod_Name
+                            </td>
+
+
+                        }
+                        @if (Model.Price == true)
+                        {
+                            <td>@Math.Round(Model.product.Sale_Price.Value, 2, MidpointRounding.AwayFromZero) </td>
+
+
+
+                        }
+                        @if (Model.PriceWithTax == true)
+                        {
+                            <td>@Math.Round(Model.product.Sale_Price.Value + (Model.product.Sale_Price.Value * TaxPercentage), 2, MidpointRounding.AwayFromZero)</td>
+
+
+                        }
+                        @if (Model.DateOfExpire == true && Model.product.Validity != null)
+                        {
+                            <td>@Convert.ToDateTime(DateTime.Today.AddDays(Model.product.Validity.Value)).ToString("yyyy/MM/dd ") </td>
+
+
+
+                        }
+
+
+                    </tr>
+
+                </tbody>
+            </table>      
+            <div class="row" style="text-align: center; padding-top:10px;">
+                <div class="col-sm-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        <img src="data:image/png;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeBarcode(Model.product.Bar_Code))" alt="Image" style="width: 100%; height:200px;" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+@section Scripts {
+    @{
+        <script type="text/javascript">
+           
+            function PrintElem() {
+             
+                var divContents = document.getElementById("contentToPrint").innerHTML;
+                var height = $("#contentToPrint").height();
+                document.body.style.height = height;
+                var myWindow = window.open('', 'contentToPrint', 'height=400,width=600');
+                myWindow.document.write('<html><head>');              
+                myWindow.document.write('</head><body>');
+                myWindow.document.write(divContents);
+                myWindow.document.write('</body></html>');
+                myWindow.document.close(); // necessary for IE >= 10
+
+                myWindow.onload = function () { // necessary if the div contain images
+
+                    myWindow.focus(); // necessary for IE >= 10
+                    myWindow.print();
+                    myWindow.close();
+                };
+            }
+
+        </script>
+
+    }
+}

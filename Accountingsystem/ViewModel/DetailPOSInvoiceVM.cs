@@ -1,0 +1,41 @@
+﻿
+
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Accountingsystem.ViewModel
+{
+    public class DetailPOSInvoiceVM
+    {
+        public int Details_Id { get; set; }
+        public int CustomerID { get; set; }
+        public decimal Product_Quantity { get; set; }
+     
+        public decimal Product_Price { get; set; }
+
+ 
+        public decimal Total_Amount { get; set; }
+     
+    
+        public Nullable <int> Product_Tax { get; set; }
+     
+        public decimal Detail_Total_Tax { get; set; }
+  
+        public decimal Detail_Total_Cost { get; set; }
+     
+        public Nullable<int> Batch_ID { get; set; }
+        public int Master_Id { get; set; }
+
+        public int Product_Id { get; set; }
+        public SelectList ProducttaxList { get; set; } 
+        public SelectList BatchList { get; set; }
+        public decimal Discount { get; set; }
+        public decimal commition { get; set; }
+    }
+}

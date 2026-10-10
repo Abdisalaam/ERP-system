@@ -1,0 +1,254 @@
+﻿@model Accountingsystem.Models.SalesReceiptMaster
+@{
+    var _Company = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault();
+    var branch = Accountingsystem.Models.Branch.getAddressForInvoice(Model.Branch_Id);
+ 
+    decimal subTotalBeforeTax = 0;
+
+    var employee = Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value);
+
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/Content/PrintPOS.css" rel="stylesheet" />
+    <title>Receipt Cashier</title>
+</head>
+<body>
+    <center>
+        <div class="ticket" style="font-size:smaller;">
+            @if (branch.BranchLogo != null)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(branch.BranchLogo)" alt="Sutumatic" style="width:150px; height:50px;" />
+            }
+            <p class="centered" style="border-bottom:dotted;border-top:dotted;">
+                <span style="font-size:14px;"><strong>فاتورة ضريبية مبسطة</strong></span>
+                <br />
+                <span style="font-size:14px"><strong>Simplified Tax Invoice</strong></span>
+            </p>
+            <table>
+
+                <tr style="border-top:hidden; border-bottom:dotted">
+
+
+                    <th style="font-size:12px; width:200px">
+
+                        <span style="font-size:10px"> @_Company.Comp_Name</span>
+                        <br />
+                       
+                        <span style="font-size:10px"> @branch.Branch_Name</span>
+                        <br />
+
+                        <span style="font-size:10px">@branch.Branch_Address</span>
+                        <br />
+                        <span style="font-size:8px">@_Company.Tax_Number / </span>  <span style="font-size:10px"> الرقم الضريبي </span>
+
+                        <br />
+                        <span style="font-size:10px">@employee.Emp_Name</span>
+                        <br />
+                        <span style="font-size:10px">Tel:  @branch.Branch_Phone</span>
+                        <br />
+                        <span style="font-size:10px">Email:  @branch.Branch_Email</span>
+                    </th>
+
+                </tr>
+
+            </table>
+
+            <table>
+
+                <tr style="border-top:hidden">
+                    <th class="description" style="font-size:8px; text-align:left; padding-left:5px"> Invoice Number</th>
+                    @if (Model.Number == null)
+                    {
+                        <th class="description" style="font-size:8px; padding-right:10px"> <b>@Model.Serial_Number</b></th>
+                    }
+                    else { 
+                    <th class="description" style="font-size:8px; padding-right:10px"> <b>@Model.Number</b></th>
+                    }
+                    <th class="quantity" style="font-size:8px; text-align:right; padding-right:5px"> رقم الفاتورة</th>
+
+                </tr>
+                <tr style="border-top:hidden; text-align:center;">
+                    <th class="description" style="font-size:8px; text-align:left; padding-left:5px"> Invoice Date</th>
+
+                    <th class="description" style="font-size:8px;">@DateTime.Now</th>
+                    <th class="quantity" style="font-size:8px; text-align:right; padding-right:5px">تاريخ الفاتورة</th>
+
+                </tr>
+
+            </table>
+            @if (Model.Customer_Id > 0)
+            {
+                var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id.Value);
+                <table>
+
+                    <tr>
+                        <th class="description" style="font-size:10px"> Customer</th>
+
+                        <th class="description" style="font-size:10px">@customer.Customer_Name</th>
+                        <th class="quantity" style="font-size:10px">العميل</th>
+
+                    </tr>
+                    <tr style="border-top:hidden">
+                        <th class="description" style="font-size:10px">Phone</th>
+
+                        <th class="description" style="font-size:10px">@customer.Customer_Phone</th>
+                        <th class="quantity" style="font-size:10px">الهاتف</th>
+
+                    </tr>
+                    @if (customer.Customer_TaxNumber != null)
+                    {
+                        <tr style="border-top:hidden">
+                            <th class="description" style="font-size:10px">Tax No</th>
+
+                            <th class="description" style="font-size:10px">@customer.Customer_TaxNumber</th>
+                            <th class="quantity" style="font-size:10px">الرقم الضريبي</th>
+
+                        </tr>
+
+
+                    }
+
+                </table>
+
+            }
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <th class="description" style="font-size:10px;"> <b> Price | السعر </b></th>
+
+                        <th class="quantity" style="font-size:9px"> <b>QTY | الكمية</b></th>
+
+                        <th class="description" style="font-size:10px; text-align:right; padding-right:5px"><b>Item | الصنف</b></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.SalesReceiptDetails)
+                    {
+                        var a = Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero);
+
+                        var product = Accountingsystem.Models.Product.GetProdectById(detail.Product_Id);
+
+                        <tr style="border-top:hidden; text-align:center">
+                            <th class="description" style="font-size:8px"> <b>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero) </b></th>
+
+                            <th class="quantity" style="font-size:8px"> <b>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</b></th>
+
+                            <th class="description" style="font-size:8px; word-break: break-all; text-align:right; padding-right:5px"> <b>@product.Prod_Name </b></th>
+                        </tr>
+                        subTotalBeforeTax += detail.Product_Quantity * detail.Product_Price;
+
+
+                    }
+
+                    <tr></tr>
+                </tbody>
+            </table>
+            <br />
+            <p class="centered">
+                <table style="width:250px">
+                    <tr>
+                        <th class="description" style="font-size:10px;width:100px">Total exclude Tax</th>
+                        <th class="quantity" style="font-size:10px;width:50px">@Math.Round(subTotalBeforeTax, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:10px;width:100px">المجموع غير شامل الضريبة</th>
+
+                    </tr>
+                    @if (Model.Master_Discount > 0)
+                    {
+                        <tr>
+                            <th class="description" style="font-size:10px">Discount</th>
+                            <th class="quantity" style="font-size:10px">@Math.Round(subTotalBeforeTax * (Model.Master_Discount / 100), 2, MidpointRounding.AwayFromZero)</th>
+                            <th class="description" style="font-size:10px">الخصم % @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero) </th>
+
+                        </tr>
+
+                    }
+
+
+
+
+
+                    <tr>
+                        <th class="description" style="font-size:10px">Total VAT Amount</th>
+                        <th class="quantity" style="font-size:10px">
+                            @if (Model.TotalNewTaxs != null)
+                            {
+
+                                @Math.Round(Model.Total_Tax + Model.TotalNewTaxs.Value, 2, MidpointRounding.AwayFromZero)
+
+
+
+                            }
+                            else
+                            {
+                                @Math.Round(Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th class="description" style="font-size:8px">مجموع ضريبة القيمة المضافة</th>
+
+                    </tr>
+
+
+
+                    <tr>
+                        <th class="description" style="font-size:10px">Total including VAT</th>
+                        <th class="quantity" style="font-size:10px">@Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:10px">مجموع المبلغ المستحق</th>
+
+                    </tr>
+
+
+                 
+                
+                           
+                                    <tr>
+                                        <th class="description" style="font-size:10px">Payment Method</th>
+                                        <th class="quantity" style="font-size:10px">@Accountingsystem.Models.PaymentMethod.GetPaymentMethodById(Model.PaymentMethod_Id).Payment_Type</th>
+                                        <th class="description" style="font-size:10px">طريقة الدفع</th>
+
+                                    </tr>
+
+                                
+                              
+                          
+
+                     
+
+
+
+                </table>
+            </p>
+
+
+
+            <div style=' text-align:center; '>
+                @if (Model.QRNumber != null)
+                {
+
+                    <br />
+                    <img src="data:image/jpg;base64,@Accountingsystem.Models.TLVCls.GenerateInvoiceQRbase(Model.QRNumber.Value)" alt="Image" width="150px" height="150px" />
+
+                }
+
+            </div>
+
+        </div>
+
+    </center>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print(); window.onfocus = function () { window.close(); }
+
+        }
+    </script>
+</body>
+</html>

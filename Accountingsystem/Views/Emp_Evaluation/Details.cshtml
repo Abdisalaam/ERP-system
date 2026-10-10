@@ -1,0 +1,103 @@
+﻿@model Accountingsystem.Models.Emp_Evaluation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>التفاصيل</h2>
+
+<div>
+
+    <hr />
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+
+
+                    <td id="Rec_ID">
+                        @Html.DisplayName("عدد الايام")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Evaluation_Days)
+                    </th>
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("حالة التقييم")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Evaluation_State)
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("قيمة التقييم")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Evaluation_Amount)
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("اسم الموظف")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Employee.Emp_Name)
+                    </th>
+                </tr>
+
+                <tr>
+
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("تاريخ التقييم")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Evaluation_Date)
+                    </th>
+
+
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("مرجع")
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Reference)
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+        </div>
+        @*<p>
+                @Html.ActionLink("Edit", "Edit", new {  id = Model.Evaluation_Id  }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>*@
+
+        <div class="container">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <a class="btn btn-primary" href='@Url.Action("Edit", new { id=Model.Evaluation_Id})'>
+                                تعديل
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-primary" href='@Url.Action("Index")'>
+                                العودة
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>

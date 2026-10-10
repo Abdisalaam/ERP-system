@@ -1,0 +1,135 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.PrintChartOfAccountVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الشجرة المحاسبية</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+    <STYLE TYPE="text/css">
+        .breakhere {
+            page-break-after: always
+        }
+    </STYLE>
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="80" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1% ">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+       
+        <div style="text-align:Center;color:black;font-size:xx-large;margin-bottom:25px;">
+            <h> الشجرة المحاسبية</h>
+        </div>
+
+       
+        <table class="table table-bordered" style="text-align:center;margin-top:0%; width:1000px" data-sortable="" border="1"dir="rtl">
+            <caption></caption>
+            <tr style="background-color:gray">
+
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    اسم الحساب
+                </th>
+
+                <th class="col-md-4" style="text-align:center; font-size:large">
+                    القيمة
+                </th>
+                
+
+            </tr>
+            @foreach (var item in Model.chart)
+            {
+                
+            <tr>
+                @if (item.Account_Level == 1)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:xx-large">
+                        @item.Account_Name
+                    </td>
+                }
+                @if (item.Account_Level == 2)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:x-large">
+                        @item.Account_Name
+                    </td>
+                }
+                @if (item.Account_Level == 3)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @item.Account_Name
+                    </td>
+                }
+                @if (item.Account_Level == 4)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:medium">
+                        @item.Account_Name
+                    </td>
+                }
+                @if (item.Account_Level == 5)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:small">
+                        @item.Account_Name
+                    </td>
+                }
+                @if (@item.BalanceSheetValue.Value >= 0)
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        @Math.Round(item.BalanceSheetValue.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                }
+                else
+                {
+                    <td class="col-md-3" style="font-weight:bolder; font-size:large">
+                        (    @Math.Round(item.BalanceSheetValue.Value * -1, 2, MidpointRounding.AwayFromZero) )
+                    </td>
+                }
+
+            </tr>
+
+               
+            }
+            </table>
+    </div>
+</body>
+</html>
+
+

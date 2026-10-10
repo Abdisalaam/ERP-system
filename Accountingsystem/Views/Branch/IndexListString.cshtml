@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Accountingsystem.Models.Branch>
+
+@{
+    ViewBag.Title = "IndexListString";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>IndexListString</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyComp_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Province)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch_Fax)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyComp_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Province)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch_Fax)
+            </td>
+        
+        </tr>
+    }
+
+</table>

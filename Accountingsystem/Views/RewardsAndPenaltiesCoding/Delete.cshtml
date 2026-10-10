@@ -1,0 +1,253 @@
+﻿@model Accountingsystem.Models.RewardsAndPenaltiesCoding
+
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.Atttendace.DetailsRewardsOrPenalties;
+    HttpCookie cookie = Request.Cookies["Language"];
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+@using (Html.BeginForm("Delete", "RewardsAndPenaltiesCoding", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <form id="catchReceiptCreateForm">
+        <h3 class="text-center"></h3>
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                            @Accountingsystem.Resources.Atttendace.DetailsRewardsOrPenalties
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-content widget-content-area">
+                <div class=''>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.Atttendace.RewardOrPenaltyName)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.Atttendace.Type)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.TypeOfDetailSalary.SalaryDetail_Name)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.Atttendace.SalaryCode)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.TypeOfDetailSalary.SalaryDetail_Name)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.Atttendace.duration
+                    </div>
+
+
+                    <div class="row">
+                        @if (Model.DurationInMinute > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.Atttendace.Minute)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.DurationInMinute)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.DurationInhour > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.Atttendace.Hour)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.DurationInhour)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.DurationInDay > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.Atttendace.Day)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.DurationInDay)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Accountingsystem.Resources.Atttendace.procedure
+                    </div>
+
+                    <div class="row">
+                        @if (Model.RewordinHour > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.Atttendace.Hour)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.RewordinHour)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.RewordInDay > 0)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.Atttendace.Day)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.RewordInDay)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="row layout-top-spacing">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.TaxDelete.Save<span id="subButSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                        <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                            @Accountingsystem.Resources.TaxDelete.BackToList
+                            <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+</div>
+
+}
+
+    @section scripts{
+
+        <script>
+            $("#subBut").click(function (e) {
+                $("#subBut").show();
+            });
+            $("#ChangeTaxCase").click(function (e) {
+                $("#ChangeTaxCaseSpinner").show();
+            });
+
+            $("#BackToList").click(function (e) {
+                $("#BackToListSpinner").show();
+            });
+        </script>
+    }
+

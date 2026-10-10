@@ -1,0 +1,480 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.TrialBalanceNew
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsMakeTrilBallane.Titel;
+    HttpCookie cookie = Request.Cookies["Language"];
+}
+
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item flex-row text-center">
+
+                <li class="nav-item theme-text">
+
+                </li>
+
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+
+
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+
+
+                            <div class="dropdown-item">
+
+                                <ul class="nav navbar-nav navbar-right">
+
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href="@Url.Action( "TrialBalanceNewPdf")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>PDF</a>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href="@Url.Action( "TrialBalanceNewExcel")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>Excel</a>
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+
+            </ul>
+        </header>
+    </div>
+    <!--  END NAVBAR  -->
+    <div class="widget-content widget-content-area br-6">
+        <div class="text-center">
+            <label>@ViewBag.Msg</label>
+        </div>
+        <div class="text-center">
+            <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ReportsMakeTrilBallane.Titel)</h3>
+        </div>
+
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+                    <tr style="text-align:right;">
+
+
+                        <th style="text-align:right" width="300:px">الحساب<br />Account</th>
+                        <th style="text-align:center" width="300:px">رقم الحساب<br />Account NO</th>
+                        <th style="text-align:center;font-size:xx-small">رصيد قبل المدة<br />Balance Before duration</th>
+                        <th colspan="3" style="text-align:center;font-size:xx-small">الحركات<br />Transaction</th>
+                        <th style="text-align:center;font-size:xx-small">رصيد اخر المدة<br />Final Balance</th>
+
+                        <th></th>
+                    </tr>
+                    <tr style="text-align:right;">
+
+
+                        <th style="text-align:center;" width="300:px"></th>
+                        <th style="text-align:center;font-size:xx-small"></th>
+                        <th style="text-align:center;font-size:xx-small"></th>
+                        <th style="text-align:center;font-size:xx-small">مدين<br />Debit</th>
+                        <th style="text-align:center;font-size:xx-small">دائن<br />Credit</th>
+                        <th style="text-align:center;font-size:xx-small">الصافي<br />Net</th>
+
+
+                        <th style="text-align:center;font-size:xx-small"></th>
+
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var item in Model.Detail)
+                    {
+                        if (item.Account.Account_Level == 1)
+                        {
+                    <tr>
+
+                        @if (item.ChildAccountd == null && item.Asset == null)
+                        {
+                            <td style="float:right;font-size:x-large;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.LevelExpresion@item.Account.Account_Name</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.Account.Account_Code
+                            </td>
+                        }
+                        else if (item.Asset != null)
+                        {
+                            <td style="float:right;font-size:x-large;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.Asset.FAsset_Description</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.Asset.FAsset_Code
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="float:right;font-size:x-large;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.ChildAccountd.Account_Name</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.ChildAccountd.Account_Code
+                            </td>
+                        }
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round(item.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @Math.Round(item.DepitMov, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @Math.Round(item.CeditMov, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.AmountOfPeriod < 0)
+                            {
+                                var a = "(" + Math.Round(item.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.FinalAmount < 0)
+                            {
+                                var a = "(" + Math.Round(item.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+
+                        <td>
+                            <div class="btn-group">
+
+                                <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                  
+
+                          
+
+                    <a class="dropdown-item" href='@Url.Action("getListofLedger", "ReportsNew",new {code=item.Account.Account_Code })'>
+                        @Accountingsystem.Resources.ReportsGetAllReports.GeneralLedger
+                    </a>
+             
+
+                                   
+                                </div>
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+                        }
+                        else
+                        {
+                    <tr>
+
+                        @if (item.ChildAccountd == null && item.Asset == null)
+                        {
+                            <td style="float:right;font-size:small;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.LevelExpresion@item.Account.Account_Name</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.Account.Account_Code
+                            </td>
+                        }
+                        else if (item.Asset != null)
+                        {
+                            <td style="float:right;font-size:small;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.Asset.FAsset_Description</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.Asset.FAsset_Code
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="float:right;font-size:small;width:300px;">
+
+                                <div style="text-align: right;">
+                                    <span style="white-space: pre-line" dir="rtl" ;>@item.ChildAccountd.Account_Name</span>
+                                </div>
+                            </td>
+                            <td style="text-align:center;font-size:small;">
+                                @item.ChildAccountd.Account_Code
+                            </td>
+                        }
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.AmountBefor < 0)
+                            {
+                                var a = "(" + Math.Round(item.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @Math.Round(item.DepitMov, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @Math.Round(item.CeditMov, 2, MidpointRounding.AwayFromZero)
+                        </td>
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.AmountOfPeriod < 0)
+                            {
+                                var a = "(" + Math.Round(item.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td style="text-align:center;font-size:small;">
+                            @if (item.FinalAmount < 0)
+                            {
+                                var a = "(" + Math.Round(item.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(item.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </td>
+
+                        <td>
+                            <div class="btn-group">
+
+                                <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+
+
+
+                                    
+                                    <a class="dropdown-item" href='@Url.Action("getListofLedger", "ReportsNew",new {code=item.Account.Account_Code })'>
+                                        @Accountingsystem.Resources.ReportsGetAllReports.GeneralLedger
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </td>
+
+
+
+                    </tr>
+                        }
+
+                    }
+
+                </tbody>
+                <thead>
+
+                    <tr style="text-align:right;">
+
+                        }
+
+                        <th style="text-align:center;" width="300:px">الاجمالي<br />Total</th>
+                        <th style="text-align:center;">
+
+                            @if (Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero) < 0)
+                            {
+                                var a = "(" + Math.Round(Model.AmountBefor * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Model.AmountBefor, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+
+                        <th style="text-align:center;font-size:xx-small">@Math.Round(Model.DepitMov, 2, MidpointRounding.AwayFromZero)</th>
+                        <th style="text-align:center;font-size:xx-small">@Math.Round(Model.CeditMov, 2, MidpointRounding.AwayFromZero)</th>
+                        <th style="text-align:center;">
+                            @if (Math.Round(Model.AmountOfPeriod, 2, MidpointRounding.AwayFromZero) < 0)
+                            {
+                                var a = "(" + Math.Round(Model.AmountOfPeriod * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Model.AmountOfPeriod, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+                        <th style="text-align:center;">
+                            @if (Math.Round(Model.FinalAmount, 2, MidpointRounding.AwayFromZero) < 0)
+                            {
+                                var a = "(" + Math.Round(Model.FinalAmount * -1, 2, MidpointRounding.AwayFromZero) + ")";
+                                <h>
+                                    @a
+                                </h>
+                            }
+                            else
+                            {
+                                @Math.Round(Model.FinalAmount, 2, MidpointRounding.AwayFromZero)
+                            }
+
+                        </th>
+
+                        <th></th>
+
+                    </tr>
+                </thead>
+               
+            </table>
+        </div>
+
+    </div>
+
+@section Scripts {
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            
+        }
+    }
+
+}
+
+

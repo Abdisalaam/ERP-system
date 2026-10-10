@@ -1,0 +1,526 @@
+﻿@model Accountingsystem.ViewModel.FixedDisposeVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.FixedAssetdisposeAsset.AssetExclusion;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var fixedd = Accountingsystem.Models.FixedAsset.GetAssetByID(Model.Fasset_IDs);
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+@using (Html.BeginForm("disposeAsset", "FixedAsset", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Fasset_IDs)
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="offerCreateMasterForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.AssetExclusion)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.AssetName)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.FAsset_Descriptions, new { htmlAttributes = new { @class = "form-control mb-4", @readonly = "readonly" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FAsset_Descriptions, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.DiscontinuedDateOfAsset)
+                                    <div class="input-group mb-4">
+                                        @Html.EditorFor(model => model.FAsset_SellDates, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FAsset_SellDates, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.Account)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.SelectedAccountID, Model.MyAccountList, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.SelectedAccountID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.SellingPriceOfAsset)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.sellingPrice, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        @Html.ValidationMessageFor(model => model.sellingPrice, "", new { @class = "text-danger" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.AccountUsedWhenSelling)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedBankAccountID, Model.MyAccountBankList, Accountingsystem.Resources.FixedAssetdisposeAsset.AccountInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="form-control">
+                                                <label class="text-danger">*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedBankAccountID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.DepreciationComplex)
+                                    <div class="input-group mb-4">
+                                        <h3 class="form-control mb-4" style="background:#ffffff">
+
+                                            <h>@Math.Round(fixedd.FixedAssetDetails.Select(q => q.DestructionValue).Sum(), 2, MidpointRounding.AwayFromZero) </h>
+                                        </h3>
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FAsset_Descriptions, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.PurchasingPrice)
+                                    <div class="input-group mb-4">
+                                        <h3 class="form-control mb-4" style="background:#ffffff">
+                                            @{decimal purchaseprice = 0;
+                                                if (fixedd.FAsset_PurchasePrice == 0 || fixedd.FAsset_PurchasePrice == null)
+                                                {
+                                                    purchaseprice = 0;
+                                                    <h>@purchaseprice</h>
+                                                }
+                                                else
+                                                {
+                                                    purchaseprice = (decimal)fixedd.FAsset_PurchasePrice;
+                                                    <h>@purchaseprice</h>
+                                                }
+                                            }
+                                        </h3>
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FAsset_Descriptions, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.BookBalance)
+                                    <div class="input-group mb-4">
+                                        <h3 class="form-control mb-4" style="background:#ffffff">
+                                            @{decimal book = Convert.ToDecimal(fixedd.BookValue.Value) - fixedd.FixedAssetDetails.Select(g => g.DestructionValue).Sum();}
+
+
+                                            <h>@Math.Round(book, 2, MidpointRounding.AwayFromZero)</h>
+
+
+
+                                        </h3>
+                                        <div class="input-group-append">
+                                            <label class="form-control text-danger">*</label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FAsset_Descriptions, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.FixedAssetdisposeAsset.ReasonForExclusion)
+                                    @Html.TextAreaFor(model => model.WhyDispose, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.FixedAssetdisposeAsset.ReasonForExclusion })
+                                    @Html.ValidationMessageFor(model => model.WhyDispose, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.VacationsCreate.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+@section Scripts {
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script>
+        $(function () {
+            $("#sellingPrice").change(function () {
+                debugger
+                var FixedID = $("#Fasset_IDs").val();
+
+                $("#BankAccount").show();
+
+            });
+        });
+
+
+    </script>
+    <script>
+
+        //$('#End_Date_Vacations').datetimepicker({ format: 'DD/MM/YYYY' });
+        //$('#Start_Date_Vacations').datetimepicker({ format: 'DD/MM/YYYY' });
+        var currentDate = new Date();
+        var _OfferDate = flatpickr(document.getElementById('FAsset_SellDates'), {
+            defaultDate: currentDate
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+
+                });
+            }
+
+
+            $("#SelectedAccountID").chosen();
+
+            $("#SelectedAccountID_chosen").addClass("form-control Dropdownlist-select");
+            $("#SelectedBankAccountID").chosen();
+
+            $("#SelectedBankAccountID_chosen").addClass("form-control Dropdownlist-select");
+
+
+
+        });
+
+    </script>
+
+    <script>
+
+
+        $('#FAsset_SellDates').on('input', function () {
+            $("#FAsset_SellDates").removeClass("addRequiredFieldToInput");
+        });
+        $('#SelectedAccountID').on('input', function () {
+            $("#SelectedAccountID").removeClass("addRequiredFieldToInput");
+        });
+
+
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            if ($('#FAsset_SellDates').val() == "" || $('#FAsset_SellDates').val() == null||
+                $('#SelectedBankAccountID').val() == "" || $('#SelectedBankAccountID').val() == null
+                || $('#sellingPrice').val() == "" || $('#sellingPrice').val() == null
+            ) {
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createOfferSpinner").hide();
+                if ($('#FAsset_SellDates').val() == "" || $('#FAsset_SellDates').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.FixedAssetdisposeAsset.DiscontinuedDateOfAsset",
+                        pos: 'top-center'
+                    });
+                    $("#FAsset_SellDates").addClass("addRequiredFieldToInput");
+                    $('#FAsset_SellDates').trigger('focus');
+                }
+
+                if ($('#SelectedBankAccountID').val() == "" || $('#SelectedBankAccountID').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.FixedAssetdisposeAsset.AccountInformation",
+                        pos: 'top-center'
+                    });
+
+                    $("#SelectedBankAccountID_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedBankAccountID_chosen span').css('background', 'red');
+                    $('#SelectedBankAccountID_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedBankAccountID").offset().top
+                    }, 2000);
+                }
+                if ($('#sellingPrice').val() == "" || $('#sellingPrice').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.FixedAssetdisposeAsset.SellingPriceOfAsset",
+                        pos: 'top-center'
+                    });
+                    $("#sellingPrice").addClass("addRequiredFieldToInput");
+                    $('#sellingPrice').trigger('focus');
+                }
+
+                $("#createOfferSpinner").hide();
+                event.preventDefault();
+            }
+
+
+        });
+
+    </script>
+    <script>
+        $('#SelectedAccountID').on('change', function () {
+            $("#SelectedAccountID_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedAccountID_chosen span').css('background', '#ffffff');
+            $('#SelectedAccountID_chosen b').css('background', '#ffffff');
+        });
+    </script>
+    <script>
+        $('#FAsset_SellDates').on('change', function (e)
+                {
+            $("#FAsset_SellDates").removeClass("addRequiredFieldToInput");
+                var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Company")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                        }
+                    }
+                    );
+                     $.ajax({
+                        url: '@Url.Action("CheckStartdate", "GLMaster")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            var currentDate = new Date();
+
+                            var _OfferDate = flatpickr(document.getElementById('FAsset_SellDates'), {
+                                defaultDate: currentDate
+                            });
+                        }
+                    }
+                    );
+                });
+
+    </script>
+
+}
+
+
+
+

@@ -1,0 +1,608 @@
+﻿@model Accountingsystem.ViewModel.BranchVM
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.BranchEdit.EditBranch;
+    HttpCookie cookie = Request.Cookies["Language"];
+    Model.Company_Name = "1";
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+    }
+
+
+</head>
+
+
+
+@using (Html.BeginForm("Edit", "Branch", FormMethod.Post, new { @id = "offerCreateMasterForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+
+
+{
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+        <form id="offerCreateMasterForm">
+            @Html.HiddenFor(model => model.Branch_Id)
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center"><lable>@Accountingsystem.Resources.BranchEdit.EditBranch</lable> </h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchCreate.Code)
+                                    @Html.EditorFor(model => model.Branch_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Branch_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.BranchName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.Country)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Country, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Country, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.Governorate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Province, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Province, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.City)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_City, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_City, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.BranchAddress)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Address, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.BranchPhone)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Phone, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.BranchEmail)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Email, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.BranchEdit.BranchFax)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Branch_Fax, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Fax, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CompanyEdit.CompanyLogo)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.Photo, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtPhoto" class="list-unstyled"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.FrontPage)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.ImageHeader, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedImageHeader" class="list-unstyled"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.EndPage)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.ImageFooter, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedImageHeader" class="list-unstyled"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.validate.ImageWaterMark)
+                                    <label class="custom-file-container__custom-file">
+                                        @Html.TextBoxFor(model => model.ImageWaterMark, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.AddAttachments</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedImageHeader" class="list-unstyled"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" id="createOfferbtn" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.Create <span id="createOfferSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                        <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index", new { id = Model.Company_ID })'>
+                            @Accountingsystem.Resources.OfferPriceMasterCreateOffer.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+@section Scripts {
+    @{
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+    <script>
+        if ($('.chosen-container').length > 0) {
+            $('.chosen-container').on('touchstart', function (e) {
+                e.stopPropagation(); e.preventDefault();
+                $(this).trigger('mousedown');
+
+            });
+        }
+
+    $('#Photo').change(function () {
+
+        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+         $('#selectedtPhoto').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Photo').empty();
+                    $('#selectedtPhoto').empty();
+                    $('#selectedtPhoto').append('<li class="addRequiredFieldToInput">' +"@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee </li > ');
+                    $('#selectedtPhoto').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.validate.LimitOfSizeFile" + '</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.ReduceSize ",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedtPhoto').append('<li>' + "@Accountingsystem.Resources.validate.FileName "  + fileName + '</li> ');
+                    $('#selectedtPhoto').append('<li>' +"  @Accountingsystem.Resources.validate.TotalFileSize"  + this.files[i].size + ' @Accountingsystem.Resources.validate.bytee  </li> ');
+
+                }
+            }
+         $('#selectedtPhoto').append('<li>' + "@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee  </li >');
+
+        });
+         $('#ImageHeader').change(function () {
+        
+        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+        $('#selectedImageHeader').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#ImageHeader').empty();
+                    $('#selectedImageHeader').empty();
+                    $('#selectedImageHeader').append('<li class="addRequiredFieldToInput">' +"@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee </li > ');
+                    $('#selectedImageHeader').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.validate.LimitOfSizeFile" + '</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.ReduceSize ",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedImageHeader').append('<li>' + "@Accountingsystem.Resources.validate.FileName "  + fileName + '</li> ');
+                    $('#selectedImageHeader').append('<li>' +"  @Accountingsystem.Resources.validate.TotalFileSize"  + this.files[i].size + ' @Accountingsystem.Resources.validate.bytee  </li> ');
+
+                }
+            }
+        $('#selectedImageHeader').append('<li>' + "@Accountingsystem.Resources.validate.TotalFilesSize " + totalConteLength + ' @Accountingsystem.Resources.validate.bytee  </li >');
+
+        });
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ cache: false });
+    $(function () {
+
+        $("#SelectedCountryId").change(function (e) {
+
+            var selectedText = $(this).find("option:selected").text();
+
+            var selectedValue = $(this).val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetProvinces", "Company")',
+                type: 'get',
+                data: { countryId: selectedValue }
+            }).done(function (result) {
+
+                $("#SelectedProvinceId").empty();
+
+
+
+           for (var i = 0; i < result.length; i++) {
+            var item = result[i];
+            var p = new Option(result[i].Text, result[i].Value);
+            $("#SelectedProvinceId").append(p)
+
+           }
+           GetAllcity();
+
+            });
+        });
+
+        function GetAllcity()
+        {
+
+            var selectedValue = $("#SelectedProvinceId").val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetCities", "Company")',
+                type: 'get',
+                data: { provinceId: selectedValue }
+            }).done(function (result) {
+
+                $("#SelectedCityId").empty();
+
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#SelectedCityId").append(p)
+
+                }
+
+            });
+        }
+
+        $("#SelectedProvinceId").change(function (e) {
+
+            var selectedText = $(this).find("option:selected").text();
+
+            var selectedValue = $(this).val();
+
+            $.ajax({
+
+                url: '@Url.Action("GetCities", "Company")',
+                type: 'get',
+                data: { provinceId: selectedValue }
+            }).done(function (result) {
+
+                $("#SelectedCityId").empty();
+
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    var p = new Option(result[i].Text, result[i].Value);
+                    $("#SelectedCityId").append(p)
+
+                }
+
+            });
+
+
+        });
+    });
+
+
+    </script>
+    <script>
+        $('#Branch_Name').on('input', function () {
+            $("#Branch_Name").removeClass("addRequiredFieldToInput");
+        });
+
+
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+    </script>
+    <script>
+
+        $('#offerCreateMasterForm').submit(function () {
+
+            $('#createOfferbtn').prop('disabled', true);
+            $("#createOfferSpinner").show();
+            //var a = $.datepicker.parseDate('dd-mm-yy',('#StartFinancialDate').val());
+
+
+            if ($('#Branch_Name').val() == "" || $('#Branch_Name').val() == null) {
+
+                $('#createOfferbtn').prop('disabled', false);
+                $("#createOfferSpinner").hide();
+                if ($('#Branch_Name').val() == "" || $('#Branch_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.BranchCreate.BranchNameValidation",
+                        pos: 'top-center'
+                    });
+                    $("#Branch_Name").addClass("addRequiredFieldToInput");
+                    $('#Branch_Name').trigger('focus');
+                }
+
+
+
+
+
+                event.preventDefault();
+            }
+
+
+
+        });
+
+    </script>
+}
+
+
+

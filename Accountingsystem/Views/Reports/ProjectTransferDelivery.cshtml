@@ -1,0 +1,355 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.PrentProjectInvoiceMasterVM
+
+@{
+    Layout = null;
+    var branch = Accountingsystem.Models.Branch.getAddressForInvoice(Model.branchId);
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+
+
+@{
+    Layout = "";
+    int counter = 1;
+    decimal totals = 0;
+    decimal totalbeforTax = 0;
+    decimal totalaftertax = 0;
+    decimal totaltaxes = 0;
+    decimal totalafterFixed = 0;
+    decimal discount = 0;
+}
+
+
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>سند توريد/استلام بضاعة</title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+
+<body>
+    <header></header>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+
+
+                    @if (branch.BranchLogo == null)
+                    {
+                        <div>
+                            <h style="padding-top:100px">
+                                <br /><br />
+                            </h>
+                        </div>
+                    }
+                    else
+                    {
+
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(branch.BranchLogo )" alt="Image" style="width:150px" />
+
+
+                    }
+                </div>
+                <div class="col-md-6" style="margin-top:-120px">
+                    <table style="text-align:right;" data-sortable="" width="900">
+
+
+                        <tr>
+                            <td style="text-align:right;font-weight:900">@Model.company.Comp_Name</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">العنوان: &nbsp&nbsp @branch.Branch_Address  </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">@branch.Branch_Phone &nbsp&nbsp  :  الهاتف</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">@branch.Branch_Email &nbsp&nbsp  : البريد الالكتروني </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                        </tr>
+
+                        @*<tr>
+                        <td style="text-align:right; padding-top:20px">
+                            @Convert.ToDateTime(Model.Invoice_Date).Day-@Convert.ToDateTime(Model.Invoice_Date).Month-@Convert.ToDateTime(Model.Invoice_Date).Year
+                            &nbsp&nbsp  : تاريخ عرض السعر
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td> </td>
+                    </tr>*@
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container">
+
+
+     
+        <div style="text-align:center; font-size:x-large">
+            <h2>سند توريد/استلام بضاعة</h2>
+        </div>
+     
+        <br />
+        <form>
+            <fieldset>
+
+                <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+                    <tr>
+                        <td style="text-align:right;border-bottom:hidden;" width="320">
+                            @Model.Customer_Name
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;" width="130">
+                            العميل
+                        </th>
+
+                        <td style="text-align:right;border-bottom:hidden;" width="320">
+                            @Model.EmployeeName
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;" width="130">
+                            الموظف
+                        </th>
+
+                    </tr>
+
+                    <tr>
+
+
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.CustomerTel
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            جوال
+                        </th>
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.EmployeeMobile
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            جوال
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.CustomerEmail
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            البريد الالكترونى
+                        </th>
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.EmployeeEmail
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            البريد الالكترونى
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.CustomerTax
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            رقم الضريبى للعميل
+                        </th>
+                        <td style="text-align:right;border-bottom:hidden;">
+                            @Model.company.Tax_Number
+                        </td>
+                        <th style="text-align:right;border-bottom:hidden;">
+                            رقم الضريبى للشركة
+                        </th>
+
+                    </tr>
+
+
+
+
+                </table>
+            </fieldset>
+
+
+        </form>
+
+        <br />
+        <table class="table" style="width:900px;text-align:center;direction:rtl;" border="1">
+            <tr style="background-color:gray;">
+
+                <th>التاريخ</th>
+                <th> مشروع</th>
+
+
+
+
+            </tr>
+
+            <tr>
+
+
+                <td>
+                    @Convert.ToDateTime(Model.invDate).ToString("yyyy/MM/dd ")
+                </td>
+                <td>
+                    @Model.Project_Name
+                </td>
+
+
+
+            </tr>
+
+
+        </table>
+
+        <hr />
+        <br />
+    </div>
+    <table class="table" style="width:900px;text-align:center;direction:rtl" border="1">
+        <tr style="background-color:gray;">
+            <th>رقم</th>
+
+            <th style="text-align:center;">
+                المنتج &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+                الكمية &nbsp&nbsp&nbsp&nbsp
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.MyDetails)
+        {
+            <tr>
+                <td>
+                    @counter
+                </td>
+                <td>
+                    @item.Product_Name
+                </td>
+                <td>
+
+                    @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                </td>
+
+
+
+
+            </tr>
+            counter++;
+
+        }
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <br />
+    <br />
+    <br />
+    <table class="table table-bordered" style="text-align:center;" data-sortable="" width="900" border="1">
+        <tr style="background-color:gray;">
+
+            @*<th style="text-align:center; ">
+                    المتبقى &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+
+            <th style="text-align:center; ">
+                تم إستلام البضاعة / العميل  &nbsp&nbsp&nbsp&nbsp
+            </th>
+        </tr>
+
+        <tr>
+            @*<td>
+                    @Math.Round(Model.AmountStill, 2, MidpointRounding.AwayFromZero)
+                </td>*@
+
+            <td>
+                ---------------------------------
+            </td>
+        </tr>
+
+
+    </table>
+    @*<div style="text-align:right;color:black;font-size:medium;margin-bottom:25px;">
+
+            <h style="text-align:right;margin-left:55%;color:black;font-size:large;">مخزن الاصناف &nbsp&nbsp&nbsp&nbsp :&nbsp&nbsp&nbsp&nbsp&nbsp @Model.StoreName  </h>
+
+            <h style="text-align:right;margin-left:55%;margin-top:5%;color:black;font-size:large;">مدة عرض السعر &nbsp&nbsp :  &nbsp&nbsp&nbsp&nbsp&nbsp @Model.ValidateDays  &nbsp&nbsp&nbsp&nbsp&nbsp اشهر</h>
+
+
+        </div>*@
+    <br />
+    <br />
+    <br />
+    <br />
+    @*<p style="text-align:left;color:black;font-size:medium;margin-bottom:25px;">
+            please let us know if you need  any further assistance.
+        </p>*@
+    <footer style="margin-top:0%;"></footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</body>
+
+</html>

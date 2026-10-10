@@ -1,0 +1,28 @@
+﻿@model Accountingsystem.ViewModel.ProductVM
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">     
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="textfieldcont" style="margin-left: -35px">
+                        @Html.DropDownListFor(model => model.SelectedCategory_ID, Model.CategoryList, Accountingsystem.Resources.CategoryCreate.SelectCategory, htmlAttributes: new { @class = "Dropdownlist-select" })
+                        @*@Html.ValidationMessageFor(model => model.SelectedCategory_ID, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CategoryCreate.Category)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+}

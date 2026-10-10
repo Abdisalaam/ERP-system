@@ -1,0 +1,602 @@
+﻿@model Accountingsystem.Models.ExtrnalSalesEmployee
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.AdminExterNalEmployee.TitleDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var paymentsCount = 0;
+    var salesCount = 0;
+}
+}
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+</head>
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div>
+                        @Html.Label(@Accountingsystem.Resources.AdminExterNalEmployee.TitleDetails)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.Name)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.RegistrationDate)
+                                        </div>
+                                        <div>
+                                            @Model.RegistedDate.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.Email)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Email)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.MobileNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.MobileNumber)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.City)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.City)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.BankName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.BankName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.AccountNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.BankAccountNumber)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.IBAN)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.IBAN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.PromoCode)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.PromoCode)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.EmailConfirmation)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.EmailConfirmed)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.ParentName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.ParentName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.ParentPromoCode)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.ParentPromoCode)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalSalesCount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalCustommersCount)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalSalesAmount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalAmountBalance)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ExternalEmployee.TotalReceivedAmount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalReceivedAmount)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalCommissionsAmount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalCommissionAmount)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalCommissionAmountFromChilds)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalCommissionAmountFromChild)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalChildsSalesAmountBalance)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalChildsSalesAmountBalance)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.TotalChildsSalesCount)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.TotalChildsSalesCount)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.AdminExterNalEmployee.Comment)
+                            </div>
+                            @Html.TextAreaFor(model => model.Comment, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="table-responsive">
+                                <table class="table mb-4">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.Amount</th>
+
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.SalesDate</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.ClientName</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.ClientEmail</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.ClientPhoneNumber</th>
+                                            <th></th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.EmployeeSalesDetails)
+                                        {
+                                        <tr>
+                                            @{
+                                                salesCount = salesCount + 1;
+                                            }
+                                            <td>@salesCount</td>
+                                            <td>@Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)</td>
+                                            <td> @Html.DisplayFor(modelitem => item.SalesDate)</td>
+                                            <td> @Html.DisplayFor(modelitem => item.CustommerName)</td>
+                                            <td> @Html.DisplayFor(modelitem => item.CustommerEmail)</td>
+                                            <td> @Html.DisplayFor(modelitem => item.CustommerMobileNumber)</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                                        <a href="@Url.Action( "SalesDetails", new { id = item.Id})" class="dropdown-item">
+                                                            @Accountingsystem.Resources.OfferPriceMasterIndex.Details
+                                                        </a>
+                                                        <a href="@Url.Action( "EditSale", new { id = item.Id})" class="dropdown-item">
+                                                            @Accountingsystem.Resources.OfferPriceMasterIndex.Edit
+                                                        </a>
+                                                        <a href="@Url.Action( "DeleteSale", new { id = item.Id})" class="dropdown-item">
+                                                            @Accountingsystem.Resources.OfferPriceMasterIndex.Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+
+              
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                        <div class="widget-content widget-content-area br-6">
+                            <div class="table-responsive mb-4 mt-4">
+                                <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.ReceivedAmount</th>
+
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.PaymentReceivedDate</th>
+                                            <th>@Accountingsystem.Resources.AdminExterNalEmployee.Comment</th>
+                                            <th></th>
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ExternalEmployeePayments)
+                                        {
+                                            <tr>
+                                                @{
+                                                    paymentsCount = paymentsCount + 1;
+                                                }
+                                                <td>@paymentsCount</td>
+
+                                                <td>@Math.Round(item.PaymentAmount, 2, MidpointRounding.AwayFromZero)</td>
+                                                <td> @item.PaymentDate.ToString("yyyy/MM/dd")</td>
+                                                <td> @Html.DisplayFor(modelitem => item.Comment)</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+                                                            <a href="@Url.Action( "PaymentDetails", new { id = item.Id})" class="dropdown-item">
+                                                                @Accountingsystem.Resources.OfferPriceMasterIndex.Details
+                                                            </a>
+                                                            <a href="@Url.Action( "EditPayment", new { id = item.Id})" class="dropdown-item">
+                                                                @Accountingsystem.Resources.AdminExterNalEmployee.EditPayment
+                                                            </a>
+                                                            <a href="@Url.Action( "DeletePayment", new { id = item.Id})" class="dropdown-item">
+                                                                @Accountingsystem.Resources.AdminExterNalEmployee.DeletePaymentTitle
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div id="childeringsDetailList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="editBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Edit" , new { id = Model.Id})'>
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.Edit
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="newPaymentBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("AddPaymentToEmployee" , new { empID = Model.Id})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.NewPayment
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                   
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="createNewOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Create")'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.NewAmbassador
+                        <span id="createNewOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @if (Model.ParentID != Model.Id)
+                    {
+                        <a id="newPaymentBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Details" , new { id = Model.ParentID})'>
+                            @Accountingsystem.Resources.AdminExterNalEmployee.ParentName
+                            <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                    <a id="newSaleBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("AddSalesToEmployee" , new { empID = Model.Id})'>
+                        @Accountingsystem.Resources.AdminExterNalEmployee.NewSale
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @{
+
+                        if (!string.IsNullOrEmpty(Model.MobileNumber))
+                        {
+                            if (Model.MobileNumber.Contains(" "))
+                            {
+                                Model.MobileNumber = Model.MobileNumber.Replace(" ", string.Empty);
+                            }
+                            if (Model.MobileNumber.Contains("-"))
+                            {
+                                Model.MobileNumber = Model.MobileNumber.Replace("-", string.Empty);
+                            }
+                            if (Model.MobileNumber.Contains("#"))
+                            {
+                                Model.MobileNumber = Model.MobileNumber.Replace("#", string.Empty);
+                            }
+                            if (!Model.MobileNumber.StartsWith("0") && Model.MobileNumber.Length == 9)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += Model.MobileNumber;
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+
+                                </a>
+                            }
+
+                            if (Model.MobileNumber.StartsWith("0") && Model.MobileNumber.Length == 10)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += Model.MobileNumber.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                </a>
+                            }
+                            if (Model.MobileNumber.StartsWith("00") && Model.MobileNumber.Length > 13)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.MobileNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                            if (Model.MobileNumber.StartsWith("+966") && Model.MobileNumber.Length >= 12)
+                            {
+                                Model.MobileNumber = Model.MobileNumber.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.MobileNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                            if (Model.MobileNumber.StartsWith("966") && Model.MobileNumber.Length >= 12)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@Model.MobileNumber" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                        }
+                    }
+                    <a id="backToListBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.List.CommissionsIndex
+                        <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+
+        $("#childeringsDetailList").load('@(Url.Action("AllChilderingsIndex", "AdminExternalEmployee"))?empID=' + @Model.Id);
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+
+    </script>
+}
+
+

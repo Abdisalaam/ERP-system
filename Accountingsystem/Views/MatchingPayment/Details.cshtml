@@ -1,0 +1,203 @@
+﻿@model Accountingsystem.Models.MatchingPayment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>التفاصيل</h2>
+
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+
+            <tr>
+
+
+
+                <td id="Match_Id">
+                    @Html.DisplayFor(model => model.Match_Id)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("رقم الحركه")
+                </th>
+
+                <td class="col-md-2">
+                    @{var Pay = Accountingsystem.Models.Payment.GetPaymentById(Model.PaymentPay_ID).Pay_Number;
+                        <h>@Pay</h>}
+                    @*@Html.DisplayFor(model => model.PaymentPay_ID)*@
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("رقم الايصال")
+                </th>
+
+
+
+            </tr>
+            <tr>
+
+
+
+
+
+                <td class="col-md-2">
+                   @{var PurInv = Accountingsystem.Models.PurInvoiceMaster.GetpurchInvByID(Model.PurInvoiceMaster_Id).Serial_Number;
+                                    <h>@PurInv</h>}
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("رقم الفاتوره")
+                </th>
+
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Date)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("تاريخ الحركه")
+                </th>
+            </tr>
+            <tr>
+
+
+
+
+                <td class="col-md-2">
+                    @{var Cur = Accountingsystem.Models.Currency.GetCurrencyById(Model.Match_currency).Currency_Type;
+                        <h>@Cur</h>}
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("العمله")
+                </th>
+
+
+
+                <td class="col-md-2">
+                    @{var Com = Accountingsystem.Models.Company.GetCompanyById(Model.Comp_ID).Comp_Name;
+                        <h>@Com</h>}
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("رقم الشركه")
+                </th>
+            </tr>
+            <tr>
+
+
+
+                @*<td class="col-md-2">
+                    @Html.DisplayFor(model => model.Match_BU)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("نشاط الشركه")
+                </th>*@
+
+
+
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Tota_Amount)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("قيمه الخصم")
+                </th>
+            </tr>
+            <tr>
+
+                <td id="Match_state">
+                    @Html.DisplayFor(model => model.Match_state)
+                </td>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("حاله الحركه")
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal-footer">
+    <div class="col-md-offset-2 col-md-10">
+        <input id="changeState" type="button" value="Post" class="btn btn-primary" />
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        updateButtonText();
+
+
+        function updateButtonText() {
+            var Match_state = $.trim($("#Match_state").text());
+            if (Match_state == "Void") {
+                $("#changeState").hide();
+                return;
+            }
+            else if (Match_state == "Pending")
+                $("#changeState").val("Post");
+            else if (Match_state == "Post")
+                $("#changeState").val("Void");
+        }
+        function UpdateMatchingPaymentStateText() {
+            var Match_state = $.trim($("#Match_state").text());
+            if (Match_state == "Pending")
+                $("#Match_state").text("Post");
+            else if (Match_state == "Post")
+                $("#Match_state").text("Void");
+        }
+
+
+
+        function UpdateMatchingPaymentState(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+        
+                   url: '@Url.Action("Edit", "MatchingPayment")',
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+
+
+        $("#changeState").click(function (e) {
+
+            e.preventDefault();
+            var data = JSON.stringify({
+                Match_Id: $.trim($("#Match_Id").text()),
+                Match_state: $("#changeState").val()
+            });
+
+            $.when(UpdateMatchingPaymentState(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+            updateButtonText();
+            UpdateMatchingPaymentStateText();
+        })
+
+
+    </script>
+}
+
+
+<div align="left">
+    <a class="btn btn-primary" href='@Url.Action("Index")'>
+        <p>
+
+            العودة الى القائم
+        </p>
+    </a>
+
+</div>

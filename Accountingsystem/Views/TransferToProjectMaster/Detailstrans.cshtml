@@ -1,0 +1,546 @@
+﻿@model Accountingsystem.Models.TransferToProjectMaster
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Details;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var thisProject = Accountingsystem.Models.SubLedger.getDetail(Model.Project_Id);
+    var thisaccount = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Account_Id);
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var storeName = Accountingsystem.Models.Store.GetStoreById(Model.Store_ID);
+    decimal total = 0;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    @Html.HiddenFor(model => model.Master_Id)
+    @Html.HiddenFor(model => model.Project_Id)
+    @Html.HiddenFor(model => model.Account_Id)
+    @Html.HiddenFor(model => model.Store_ID)
+    <h3 class="text-center"></h3>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Details)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.TransferNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Trans_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ProjectName)
+                                        </div>
+                                        <div>
+                                            @thisProject.SubLed_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Account)
+                                        </div>
+                                        <div>
+                                            @thisaccount.Account_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Store)
+                                        </div>
+                                        <div>
+                                            @storeName.Store_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Reference)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Reference)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.InvoiceCase)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Invoice_State)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.TransferDate)
+                                        </div>
+                                        <div>
+                                            @Model.Trans_Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.TotalAmount)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (package.Number_Branch > 0)
+                    {
+                        if (Model.Branch_Id != null && Model.Branch_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.Branch_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.BranchName)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (Model.Department_ID != null && Model.Department_ID != 0)
+                        {
+                            var department = Accountingsystem.Models.SubLedger.getDetail(Model.Department_ID.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.DepartmentName)
+                                                </div>
+                                                <div>
+                                                    @department.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        if (Model.BussinesUnit_ID != null && Model.BussinesUnit_ID != 0)
+                        {
+                            var bussinessUnit = Accountingsystem.Models.SubLedger.getDetail(Model.BussinesUnit_ID.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ActivityName)
+                                                </div>
+                                                <div>
+                                                    @bussinessUnit.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                    @if (Model.SubLedger_ID != 0 && Model.SubLedger_ID != null)
+                    {
+                        var subledger = Accountingsystem.Models.SubLedger.getDetail(Model.SubLedger_ID.Value);
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.CostCenter)
+                                            </div>
+                                            <div>
+                                                @Html.DisplayName(subledger.SubLed_Name)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.TransferDescription)
+                            </div>
+                            @Html.TextAreaFor(model => model.Describtion, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-4">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ItemName</th>
+                        <th>@Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ItemNumber</th>
+                        <th>@Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ItemPrice</th>
+                        <th>@Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Quantity</th>
+                        <th>@Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.TransferToProjectDetails)
+                    {
+                    <tr>
+                        <td>@Accountingsystem.Models.Product.GetProdectById(detail.Product_ID).Prod_Name</td>
+                        <td>@Accountingsystem.Models.Product.GetProdectById(detail.Product_ID).Prod_Code</td>
+
+                        <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(detail.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)</td>
+                        @{total += detail.Detail_Total_Cost;}
+                        <td>
+                            <a href="@Url.Action("Details", "Product", new { id = detail.Product_ID })" class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.ProductDetails.ItemDetails
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class=''>
+            <div class="row layout-top-spacing">
+                <div class="col-md-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Total)
+                                    </div>
+                                    <div>
+                                        @Math.Round(total, 2, MidpointRounding.AwayFromZero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.TransferToprojectFile1.Any())
+        {
+            <div class="row inv--product-table-section">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="">
+                                <tr>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileNumber</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileName</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileExtension</th>
+                                    <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.FileLength</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var file in Model.TransferToprojectFile1)
+                                {
+                                    <tr>
+                                        <td>@file.Id</td>
+                                        <td>@file.FileName</td>
+                                        <td>@file.FileContent</td>
+                                        <td>@file.ContentLength</td>
+                                        <td>
+                                            <a href='@Url.Action("ReturnproFile",  new { fileId = file.Id   })' class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Download" data-original-title="Download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row layout-top-spacing">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @if (Request.IsAuthenticated @*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب")*@)
+                    {
+                        <input id="changeState" type="button" value="Post" class="btn btn-block btn-outline-info mb-lg-0" />
+
+                        <a id="createBtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("CreateForTFPS")">
+                            @Accountingsystem.Resources.TransferToProjectMasterDetailstrans.CreateNew
+                            <span id="createBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+
+                        <div id="EditAndDelete">
+                            @if (Model.Invoice_State == Accountingsystem.Models.TransactionState.Pending)
+                            {
+
+
+
+                            <a id="deleteBtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Delete", new { id = Model.Master_Id })">
+                                @Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Delete
+                                <span id="deleteBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+
+                            </a>
+
+
+
+
+                            }
+                            else
+                            {
+
+                            <a id="constraintBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("DetailByCode", new { controller = "GLMaster", code = Model.Trans_Code })'>
+
+                                @Accountingsystem.Resources.TransferToProjectMasterDetailstrans.ConstraintCode
+
+                                <span id="constraintBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+
+                            </a>
+
+
+                            }
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <a id="printbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("transfaretoproject", new { controller = "Reports", id = Model.Master_Id })' target="_blank">
+                        @Accountingsystem.Resources.TransferToProjectMasterDetailstrans.Print
+                        <span id="printbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="BackToList" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("IndexoftranstoProject")">
+                        @Accountingsystem.Resources.TransferToProjectMasterDetailstrans.BackToList
+                        <span id="BackToListSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updateButtonText();
+            hideEditAndDeleteActions();
+        });
+               
+                function updateButtonText() {
+                    var Invoice_State = "@Model.Invoice_State";                   
+                    if (Invoice_State == "Post") {
+                        $("#changeState").hide();
+                        return;
+                    }
+                    else if (Invoice_State == "Pending")
+                        $("#changeState").val("Post");
+                    else if (Invoice_State == "Post")
+                        $("#changeState").val("Void");
+                }
+                function updateInvoiceStateText() {
+                    var Invoice_State =  "@Model.Invoice_State";
+                    if (Invoice_State == "Pending")
+                        $("#Invoice_State").text("Post");
+                    else if (Invoice_State == "Post")
+                        $("#Invoice_State").text("Void");
+                }
+
+                function hideEditAndDeleteActions() {
+                    /// <summary>Hides the edit and delete actions if the invoice is not pending
+                    var Invoice_State =  "@Model.Invoice_State";
+                    if (Invoice_State != "Pending")
+                        $("#EditAndDelete").hide();
+                }
+
+                function updateInvoiceState(data) {
+                    return $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: 'POST',
+                           url: '@Url.Action("Edittrans", "TransferToProjectMaster")',
+                        data: data,
+                        success: function (result) {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                            setTimeout(function () {
+
+                                location.reload();
+
+                            }, 5000);
+                        },
+                        error: function () {
+                            Snackbar.show({
+                                text: "Error",
+                                pos: 'top-center'
+                            });
+                        }
+                    });
+                }
+
+                $("#changeState").click(function (e) {
+                    this.disabled = true;
+                    e.preventDefault();
+                    var data = JSON.stringify({
+                        Master_Id:  "@Model.Master_Id",
+                        Invoice_State: $("#changeState").val()
+                    });
+                    $.when(updateInvoiceState(data)).then(function (response) {
+                        console.log(response);
+                    }).fail(function (err) {
+                        console.log(err);
+                    });
+                    updateButtonText();
+                    updateInvoiceStateText();
+                    hideEditAndDeleteActions();
+
+                })
+    </script>
+    <script>
+        $("#createBtn").click(function (e) {
+            $("#createBtnSpinner").show();
+        });
+        $("#deleteBtn").click(function (e) {
+            $("#deleteBtnSpinner").show();
+        });
+        $("#constraintBtn").click(function (e) {
+            $("#constraintBtnSpinner").show();
+        });
+        
+        $("#printbtn").click(function (e) {
+            $("#printbtnSpinner").show();
+        });
+        $("#BackToList").click(function (e) {
+            $("#BackToListSpinner").show();
+        });
+    </script>
+
+}

@@ -1,0 +1,324 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.ReportsVM.AllSalseInvoices>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    decimal totalamount = 0;
+    decimal totarecall = 0;
+    decimal totaldef = 0;
+    int counter = 0;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير المبيعات</title>
+</head>
+<body>
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        <header>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </header>
+
+        @if (Model.FirstOrDefault().company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.FirstOrDefault().company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+
+        <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+
+
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_Name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>رقم الضريبى :&nbsp&nbsp @Model.FirstOrDefault().company.Tax_Number &nbsp&nbsp</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">العنوان: &nbsp&nbsp @Model.FirstOrDefault().company.Comp_Address  </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@DateTime.Now.Day - @DateTime.Now.Month - @DateTime.Now.Year &nbsp&nbsp : تاريخ الطباعة </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.FirstOrDefault().company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td></td>
+                <td></td>
+                <td> </td>
+            </tr>
+
+
+
+        </table>
+        <br />
+        <div style="text-align:center; font-size:x-large">
+            <h>فواتير المبيعات</h>
+        </div>
+        <table class="table" style="width:900px;text-align:center;" border="1">
+            <tr style="background-color:gray;">
+                <th></th>
+                <th>رقم العميل</th>
+                <th style="text-align:center;">
+                    اسم العميل &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    رقم الفاتورة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    تاريخ الفاتورة  &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    تاريخ الاستحقاق  &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center;">
+                    قيمة الفاتورة  &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    قيمة المردود   &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    صافي المبيعات بدون ضريبة  &nbsp&nbsp&nbsp&nbsp
+                </th>
+            </tr>
+            @foreach (var item in Model.FirstOrDefault().allSales)
+            {
+                totalamount = totalamount + Model.FirstOrDefault().totalBeforeTaxSales;
+                totarecall = totarecall + Model.FirstOrDefault().totalOfRecallSales;
+                counter = counter + 1;
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id).Customer_Code
+                    </td>
+                    <td>
+
+                        @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id).Customer_Name
+                    </td>
+                    <td>
+
+                        @item.Serial_Number
+                    </td>
+                    <td>
+                        @item.Invoice_Date.ToString("yyyy/MM/dd ")
+                    </td>
+                    <td>
+                        @item.Due_Date.ToString("yyyy/MM/dd ")
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(item.Total_Amount - item.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(Model.FirstOrDefault().recallSales, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp&nbsp&nbsp
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round((item.Total_Amount - item.Total_Tax) - Model.FirstOrDefault().recallSales, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp
+                    </td>
+                </tr>
+
+            }
+            @foreach (var item in Model.FirstOrDefault().allSalesReceipt)
+            {
+                totalamount = totalamount + Model.FirstOrDefault().totalBeforeTaxSalesReceipt;
+                totarecall = totarecall + Model.FirstOrDefault().totalOfRecallSalesReceipt;
+                counter = counter + 1;
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        @if (item.Customer_Id == 0 || item.Customer_Id == null)
+                        {
+
+                        }
+                        else
+                        {
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Code
+                        }
+                    </td>
+                    <td>
+                        @if (item.Customer_Id == 0 || item.Customer_Id == null)
+                        {
+
+                        }
+                        else
+                        {
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Name
+                        }
+
+                    </td>
+                    <td>
+
+                        @item.Serial_Number
+                    </td>
+                    <td>
+                        @item.Invoice_Date
+                    </td>
+                    <td></td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(item.Total_Amount - item.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(Model.FirstOrDefault().recallSalesREceipt, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp&nbsp&nbsp
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round((item.Total_Amount - item.Total_Tax) - Model.FirstOrDefault().recallSalesREceipt, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp
+                    </td>
+                </tr>
+
+            }
+            @foreach (var item in Model.FirstOrDefault().allSalesPOS)
+            {
+                totalamount = totalamount + Model.FirstOrDefault().totalBeforeTaxSalesPOS;
+                totarecall = totarecall + Model.FirstOrDefault().totalOfRecallSalesPOS;
+                counter = counter + 1;
+
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        @if (item.Customer_Id == 0 || item.Customer_Id == null)
+                        {
+
+                        }
+                        else
+                        {
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Code
+                        }
+                    </td>
+                    <td>
+                        @if (item.Customer_Id == 0 || item.Customer_Id == null)
+                        {
+
+                        }
+                        else
+                        {
+                            @Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Name
+                        }
+
+                    </td>
+                    <td>
+
+                        @item.Serial_Number
+                    </td>
+                    <td>
+                        @item.Invoice_Date
+                    </td>
+                    <td></td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(item.Total_Amount.Value - item.Total_Tax.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round(Model.FirstOrDefault().recallSalesPOS, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp&nbsp&nbsp
+                    </td>
+
+                    <td style="width:100px">
+
+                        @Math.Round((item.Total_Amount - item.Total_Tax).Value - Model.FirstOrDefault().recallSalesPOS, 2, MidpointRounding.AwayFromZero) &nbsp&nbsp
+                    </td>
+                </tr>
+
+            }
+        </table>
+        <table class="table" style="width:900px;text-align:center;" border="1">
+            <tr>
+                <td style="width:590px">
+                    الاجمالي  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+                <td style="width:100px">
+                    @Math.Round(totalamount, 2, MidpointRounding.AwayFromZero)
+                </td>
+                <td style="width:100px">
+                    @Math.Round(totarecall, 2, MidpointRounding.AwayFromZero)&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+                <td style="width:100px">
+                    @Math.Round(totalamount - totarecall, 2, MidpointRounding.AwayFromZero)
+                </td>
+            </tr>
+        </table>
+</body>
+</html>
+
+

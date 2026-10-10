@@ -1,0 +1,521 @@
+﻿@model Accountingsystem.Models.Store
+
+@{
+    /**/
+
+    ViewBag.Title = Accountingsystem.Resources.StoreDetails.StoreDetailss;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    //var Acco = Accountingsystem.Models.Store.EditStoreCardLikeStore();
+    //Accountingsystem.Models.Store.gettheDifferenceOfAccountandstoreCard(Model.Store_ID);
+    // var c= Accountingsystem.Models.GLMaster.addGlDetail();
+    decimal cost = 0;
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/custom_dt_html5.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+        }
+    }
+
+
+</head>
+@*@using (Html.BeginForm("ImportStartBalance", "Store", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    var msg = ViewBag.Error;
+    @Html.Raw(ViewBag.Error)
+    <a href="@Url.Action("maketestExcel","Store",new {id=Model.Store_ID })"><i class="BTN-style"> تحميل الملف</i></a>
+    <span>>>></span>
+    <input type="file" name="excelfile" />
+    <span>>>></span>
+    <input type="submit" value="Excel ادخال الاصناف من" class="BTN-style" />
+
+}*@
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div>
+                        @Accountingsystem.Resources.StoreDetails.StoreDetailss
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.StoreDetails.StoreName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Store_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(@Accountingsystem.Resources.StoreDetails.StoreAccountNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Store_Code)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(@Accountingsystem.Resources.StoreDetails.StoreAddress)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Store_Address)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Emp_Id != null && Model.Emp_Id != 0)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(@Accountingsystem.Resources.StoreDetails.EmployeeInCharge)
+                                            </div>
+
+
+                                            <div>
+
+                                                @{var Emp = Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value).Emp_Name; }
+                                                <h>@Emp</h>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Branch_Id != null && Model.Branch_Id != 0)
+                    {
+                        <div class="col-md-6">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @Html.DisplayName(@Accountingsystem.Resources.StoreCreate.SelectBranch)
+                                            </div>
+
+
+                                            <div>
+
+                                                @{var branch = Accountingsystem.Models.Branch.GetBranchById(Model.Branch_Id.Value).Branch_Name; }
+                                                <h>@branch</h>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+        <div>
+            @if (Model.StoreEmployees.Any())
+            {
+                int count = 0;
+                <div class="row inv--product-table-section">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="">
+                                    <tr>
+                                        <th>@Accountingsystem.Resources.validate.Number</th>
+                                        <th>@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Employee</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var file in Model.StoreEmployees)
+                                    {
+                                        count += 1;
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@Accountingsystem.Models.Employee.getEmpById(file.Employee_Id).Emp_Name</td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        <br />
+        <div class="table-responsive mb-4 mt-4">
+            <table id="default-ordering" class="table table-hover non-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.SettlementOfStoresDetails.ItemNumber</th>
+                        <th>@Accountingsystem.Resources.ProductDetails.Barcode</th>
+                        <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Item</th>
+                        <th>@Accountingsystem.Resources.SettlementOfStoresDetails.Quantity</th>
+                        <th>@Accountingsystem.Resources.ProductCreate.AverageItemCost</th>
+                        <th>@Accountingsystem.Resources.ProductCreate.AverageTotalCost</th>
+                        <th>@Accountingsystem.Resources.ProductCreate.lastpurchaseprice </th>
+                        <th>@Accountingsystem.Resources.ProductCreate.lastSaleprice </th>
+                        <th>@Accountingsystem.Resources.ProductCreate.SellingPrice</th>
+                        @*<th>
+                            @Html.DisplayName(Accountingsystem.Resources.validate.TotalSaleQuantity)
+                        </th>*@
+
+                        <th>@Accountingsystem.Resources.ProductCreate.EstimatedCost</th>
+
+
+                        <th>
+
+                        </th>
+
+
+
+
+                     
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ProductBatches.Where(a=>a.Product_Quantity>0))
+                    {
+                      
+
+                    <tr>
+                        <td>@item.Product.Prod_Code</td>
+                        <td>@item.Product.Bar_Code</td>
+                        <td>@item.Product.Prod_Name</td>
+                       
+                        <td>@decimal.Parse(item.Product_Quantity.ToString()).ToString("G29")</td>
+
+                        @if (item.Product_Quantity > 0)
+                        {
+                            <td>@Math.Round(item.Batch_Cost / item.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                        <td>@Math.Round(item.Batch_Cost, 2, MidpointRounding.AwayFromZero)</td>
+
+                        <td>@Math.Round(Accountingsystem.Models.Store.LastPricePurchase(Model.Store_ID, item.Product.Prod_ID), 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(Accountingsystem.Models.Store.LastPriceSale(Model.Store_ID, item.Product.Prod_ID), 2, MidpointRounding.AwayFromZero)</td>
+
+
+
+
+
+
+                        @if (item.SalesPrice > 0)
+                        {
+                            <td>
+                                @Math.Round(item.SalesPrice.Value, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                        }
+                        else if (item.Product.Sale_Price > 0)
+                        {
+                            <td>
+                                @Math.Round(item.Product.Sale_Price.Value, 2, MidpointRounding.AwayFromZero)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                0
+                            </td>
+                        }
+                        @*<td>
+
+
+            @Math.Round(Accountingsystem.Models.Product.getQuantitySaleProduct(item.Product.Prod_ID), 2, MidpointRounding.AwayFromZero)
+        </td>*@
+
+                        <td>@Math.Round(item.Product.Prod_Cost_Price.Value, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>
+                            <div class="btn-group">
+
+                                <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference2">
+
+
+
+                                    <a href="@Url.Action("Details","Product", new { id = item.Product.Prod_ID })" class="dropdown-item">
+                                        @Accountingsystem.Resources.ProductDetails.ItemDetails
+                                    </a>
+                                  
+                                    <a href='@Url.Action("GetAllProductBatch","Product", new { ProductId = item.Product.Prod_ID })' class="dropdown-item">
+                                        @Accountingsystem.Resources.StoreCreate.EditProductPriceForStores
+                                    </a>
+                                </div>
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class=''>
+            <div class="row layout-top-spacing">
+                <div class="col-md-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(@Accountingsystem.Resources.StoreDetails.TotalAverageCost)
+                                    </div>
+                                    <div>
+                                        @Math.Round(Model.ProductBatches.Select(a=>a.Batch_Cost).Sum(), 2, MidpointRounding.AwayFromZero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <a id="Print" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("RenewPriceProductStore", new {  StoreId = Model.Store_ID })'>
+                        @Accountingsystem.Resources.StoreCreate.EditProductPriceForStore
+                        <span id="PrintSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @if (Request.IsAuthenticated@*&& !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب")*@)
+{
+<a id="Editbtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Edit", new { id = Model.Store_ID })">
+    @Accountingsystem.Resources.ReceiptDetails.Edit
+    <span id="EditbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+</a>
+<a id="printEmailbtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("DeleteTrans", new { id = Model.Store_ID })">
+    @if (Model.isActive != false)
+    {
+        @Accountingsystem.Resources.ProductDetails.TransferToNotActive
+    }
+    else
+    {
+        @Accountingsystem.Resources.ProductDetails.TransferToActive
+    }
+    <span id="printEmailbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+</a>
+}
+                    @if (package.Number_store > 0)
+                    {
+                        <a id="Createbtn" class="btn btn-block btn-outline-info mb-lg-0" href="@Url.Action("Create")">
+                            @Accountingsystem.Resources.StoreCreate.New
+                            <span id="CreatebtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="Print" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("StoreReport", new { controller = "Reports", id = Model.Store_ID })'>
+                        @Accountingsystem.Resources.StoreCreate.PrintDetailsOfStore
+                        <span id="PrintSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="glbtn" class="btn btn-block btn-outline-primary mb-lg-0" href="@Url.Action("Create", "SettlementOfStores", new { storeId = Model.Store_ID })">
+                        @Accountingsystem.Resources.StoreDetails.StoreSettlement
+                        <span id="glbtnSpinner" style="display:none;" class="spinner-border text-danger mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="indexbtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.ReceiptDetails.BackToList
+                        <span id="indexbtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "Showing page  _PAGE_ of _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "Search...",
+                            "sLengthMenu": "Results :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+                <script>
+                    $('#default-ordering').DataTable({
+                        "oLanguage": {
+                            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                            "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                            "sSearchPlaceholder": "ابحث...",
+                            "sLengthMenu": "النتائج :  _MENU_",
+                        },
+                        "order": [[3, "desc"]],
+                        "stripeClasses": [],
+                        "lengthMenu": [7, 10, 20, 50],
+                        "pageLength": 20,
+                        drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/dataTables.buttons.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/jszip.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.html5.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/button-ext/buttons.print.min.js")"></script>
+            <script>
+                $('#default-ordering').DataTable({
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+                        "sInfo": "إظهار الصفحة _PAGE_ من _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "ابحث...",
+                        "sLengthMenu": "النتائج :  _MENU_",
+                    },
+                    "order": [[3, "desc"]],
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    drawCallback: function () { $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5'); },
+                });
+            </script>
+        }
+    }
+}
+<script>
+    $("#Createbtn").click(function (e) {
+        $("#CreatebtnSpinner").show();
+    });
+    $("#deletebtn").click(function (e) {
+        $("#deletebtnSpinner").show();
+    });
+    $("#Editbtn").click(function (e) {
+        $("#EditbtnSpinner").show();
+    });
+    $("#glbtn").click(function (e) {
+        $("#glbtnSpinner").show();
+    });
+    $("#printEmailbtn").click(function (e) {
+        $("#printEmailbtnSpinner").show();
+    });
+    $("#Print").click(function (e) {
+        $("#PrintSpinner").show();
+    });
+    $("#SentCustomerEmail").click(function (e) {
+        $("#SentCustomerEmailSpinner").show();
+    });
+
+    $("#indexbtn").click(function (e) {
+        $("#indexbtnSpinner").show();
+    });
+
+
+
+</script>
+}
+
+
+

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Accountingsystem.Models.Payment>
+
+<h4>@Accountingsystem.Resources.SupplierCreate.Payments</h4>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_Currency_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayComp_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exchange_Rate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayBank_Account)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rec_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayGl_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pay_BU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalAmountAfMat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_Currency_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayComp_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Exchange_Rate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayBank_Account)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rec_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayGl_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pay_BU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalAmountAfMat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", "Payment", new { id = item.Supplier_Id }, null)
+        </td>
+    </tr>
+}
+
+</table>

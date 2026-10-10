@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Accountingsystem.Models.Subscription>
+
+@{
+    ViewBag.Title = "getSupsJson";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeadLine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estimate_Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Comp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_BU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Pranch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Team)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payment_Method)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tel_customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_Stop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subscrip_DateEnd)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeadLine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estimate_Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Comp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_BU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Pranch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emp_Team)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment_Method)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tel_customer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_Stop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subscrip_DateEnd)
+        </td>
+        <td>
+            @Html.ActionLink("تفعيل الايقاف", "Date", new { id = item.Subscrip_Id })
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

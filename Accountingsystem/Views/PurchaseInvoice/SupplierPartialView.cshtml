@@ -1,0 +1,364 @@
+﻿@model Accountingsystem.ViewModel.SupplierVM
+
+
+
+
+@using (Html.BeginForm("AddNewSupplierPartial", "PurchaseInvoice", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierNumber)
+                                    @Html.EditorFor(model => model.Supp_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Supp_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Supp_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierPhone)
+                                        <div class="input-group mb-4">
+                                            @Html.EditorFor(model => model.Supp_Phone, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                            <div class="input-group-append">
+                                                <div>
+                                                    <span class="form-control text-danger">*</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Supp_Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierAdress)
+                                    @Html.EditorFor(model => model.Supp_Address, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierWebsite)
+                                    @Html.EditorFor(model => model.Supp_Website, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Website, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierEmail)
+                                    @Html.EditorFor(model => model.Supp_Mail, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Mail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.Country)
+                                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.Governorate)
+                                    @Html.EditorFor(model => model.Province, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.City)
+                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierFax)
+                                    @Html.EditorFor(model => model.Supp_Fax, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Fax, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SupplierPhoneNumber)
+                                    @Html.EditorFor(model => model.Supp_Mobile, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Supp_Mobile, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.Branch)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Branch_Id, Model.BranchList, Accountingsystem.Resources.CustomerCreate.SelectBranch, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Branch_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.PrintReports.PaymentMethod)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.Payment_Policy_Id, Model.MyPaymentPolicy, Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Payment_Policy_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.SelectFile)
+                                    <label class="custom-file-container__custom-file form-control mb-4">
+                                        @Html.TextBoxFor(model => model.SuppFiles, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.CustomerCreate.SeletFolder</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul class="list-unstyled" id="SuppselectedtFiles"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SuppFiles, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.SupplierCreate.TaxNumber)
+                                    @Html.EditorFor(model => model.Tax_Number, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Tax_Number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addSupplier();' class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.SupplierCreate.Create  <div id="SupplierPartialSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+<script>
+        $(document).ready(function () {
+            $("#SupplierPartialSpinner").hide();
+
+            $("#Branch_Id").chosen();
+            $("#Payment_Policy_Id").chosen();
+          
+
+            $("#Branch_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Payment_Policy_Id_chosen").addClass("form-control Dropdownlist-select");
+         
+
+        });
+    $('#SuppFiles').change(function () {
+        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+        $('#SuppselectedtFiles').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#SuppFiles').empty();
+                    $('#SuppselectedtFiles').empty();
+                    $('#SuppselectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.TotalSizeOfSelectedFiles : " + totalConteLength + " " + " @Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Byte " +'</li> ');
+                    $('#SuppselectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.MaxOfFilesSize" + '.</li> ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.FileSizePopupMessage",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#SuppselectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileName : " + fileName + '</li> ');
+                    $('#SuppselectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileLength :  " + this.files[i].size + " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li> ');
+
+
+                }
+            }
+        $('#SuppselectedtFiles').append('<li>' +"@Accountingsystem.Resources.CustomerCreate.TotalSizeOfFiles : " + totalConteLength +  " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li > ');
+        });
+</script>
+<script>
+    $('#Supp_Name').on('input', function () {
+        $("#Supp_Name").removeClass("addRequiredFieldToInput");
+    });
+
+    $('#Supp_Phone').on('input', function () {
+        $("#Supp_Phone").removeClass("addRequiredFieldToInput");
+    });
+   
+
+</script>
+<script>
+    function addSupplier() {
+        debugger;
+        var SuppId = $("#Supp_Id").val();
+        var SuppName = $("#Supp_Name").val();
+        var SuppCode = $("#Supp_Code").val();
+        var SuppAddress = $("#Supp_Address").val();
+        var SuppPhone = $("#Supp_Phone").val();
+        var SuppMail = $("#Supp_Mail").val();
+        var ProvinceId = $("#Province").val();
+        var Country = $("#Country").val();
+        var CityId = $("#City").val();
+        var SuppFax = $("#Supp_Fax").val();
+        var TaxNumb = $("#Tax_Number").val();
+        var BranchId = $("#Branch_Id").val();
+        var SuppMobile = $("#Supp_Mobile").val();
+      
+        var PaymentPolicy = $("#Payment_Policy_Id").val();
+        var SuppWebsite = $("#Supp_Website").val();
+       
+        var Files = $("#SuppFiles").val();
+        if (SuppName == "" || SuppName == null || SuppPhone == "" || SuppPhone == null ) {
+
+            
+            if (SuppName == "" || SuppName == null) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.CustomerNameIsRequiredMessage",
+                    pos: 'top-center'
+                });
+                $("#Supp_Name").addClass("addRequiredFieldToInput");
+                $('#Supp_Name').trigger('focus');
+            }
+            if (SuppPhone == "" || SuppPhone == null) {
+                Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.CustomerPhoneIsRequired",
+                    pos: 'top-center'
+                });
+                $("#Supp_Phone").addClass("addRequiredFieldToInput");
+                $('#Supp_Phone').trigger('focus');
+            }
+        }
+        else {
+            $('#SuppModal').modal('toggle');
+            //$("#SupplierPartialSpinner").show();
+        var DataForSupp;
+            DataForSupp = {
+            Supp_Id: SuppId ,
+            Supp_Name: SuppName ,
+            Supp_Code: SuppCode ,
+            Supp_Address: SuppAddress ,
+            Supp_Phone: SuppPhone ,
+            Supp_Mail: SuppMail ,
+            Province: ProvinceId ,
+            Country: Country ,
+            City: CityId ,
+            Supp_Fax: SuppFax ,
+            Branch_Id: BranchId ,
+            Tax_Number: TaxNumb  ,
+            Supp_Mobile: SuppMobile ,
+           
+            Payment_Policy_Id: PaymentPolicy ,
+            Supp_Website: SuppWebsite ,
+           
+            SuppFiles: Files 
+        };
+            var formData = new FormData();
+            var file = document.getElementById('SuppFiles');
+            formData.append("Supp_Id", DataForSupp.Supp_Id);
+            formData.append("Supp_Name", DataForSupp.Supp_Name);
+            formData.append("Supp_Code", DataForSupp.Supp_Code);
+            formData.append("Supp_Address", DataForSupp.Supp_Address);
+            formData.append("Supp_Phone", DataForSupp.Supp_Phone);
+            formData.append("Supp_Mail", DataForSupp.Supp_Mail);
+            formData.append("Province", DataForSupp.Province);
+            formData.append("Country", DataForSupp.Country);
+            formData.append("City", DataForSupp.City);
+            formData.append("Supp_Fax", DataForSupp.Supp_Fax);
+            formData.append("Branch_Id", DataForSupp.Branch_Id);
+            formData.append("Supp_Mobile", DataForSupp.Supp_Mobile);
+           
+            formData.append("Payment_Policy_Id", DataForSupp.Payment_Policy_Id);
+            formData.append("Supp_Website", DataForSupp.Supp_Website);
+            formData.append("Tax_Number", DataForSupp.Tax_Number);
+            formData.append("SuppFiles", DataForSupp.SuppFiles);
+            for (i = 0; i < file.files.length; i++) {
+                //Appending each file to FormData object
+                formData.append(file.files[i].name, file.files[i]);
+            }
+
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewSupplierPartial", "PurchaseInvoice")",
+                data: formData,
+                type: "post",
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    debugger
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.PurchaseInvoiceEditForPending.SupplierInformation" + "  "  + data,
+                        pos: 'top-center'
+                    });
+                    $("#SuppPartialDialogDiv").load('@(Url.Action("PartialDialog", "PurchaseInvoice"))');
+                    $("#SupplierPartialSpinner").hide();
+                    $.ajax({
+
+                        url: '@Url.Action("GetSupplierDropdownList", "PurchaseInvoice")',
+                        type: 'get'
+                    }).done(function (result) {
+
+                        $("#SelectedSupplierId").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+
+                            $("#SelectedSupplierId").append(p);
+                            $("#SelectedSupplierId option:last").attr("selected", "selected");
+
+                        }
+                        $('#SelectedSupplierId').trigger('chosen:updated');
+                        $("#SelectedSupplierId_chosen").removeClass("addRequiredFieldToInput");
+                        $('#SelectedSupplierId_chosen span').css('background', '#ffffff');
+                        $('#SelectedSupplierId_chosen b').css('background', '#ffffff');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+                   
+                    });
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.ErrorMessage",
+                        pos: 'top-center'
+                    });
+                    $("#SupplierPartialSpinner").hide();
+                }
+         });
+        }
+    };
+</script>
+
+

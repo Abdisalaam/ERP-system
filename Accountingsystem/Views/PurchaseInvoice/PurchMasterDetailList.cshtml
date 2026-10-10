@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Accountingsystem.Models.PurchaseDetails>
+@{
+    decimal Totals = 0;
+    decimal tax = 0;
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PrintReports.Product)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PrintReports.ProductNumber)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceCreateAssPurchaseInv.ProductQuantity)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceCreateAssPurchaseInv.PriceInformation)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PurchaseInvoiceCreateAssPurchaseInv.TotalBeforeTax)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PrintReports.TotalTax)
+        </th>
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.PrintReports.TotalAfterTax)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.invoiceTemp)
+    {
+        @Html.HiddenFor(modelItem => item.Details_Id)
+        @Html.HiddenFor(modelItem => item.Product_Tax)
+        @Html.HiddenFor(modelItem => item.Asset_Id)
+        @Html.HiddenFor(modelItem => item.Product_ID)
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Code)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Product_Quantity)*@
+                @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Product_Price)*@
+                @Math.Round(item.Product_Price, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Total_Amount)*@
+                @Math.Round(item.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                @*@{ Totals += item.Total_Amount;
+
+                    }*@
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Detail_Total_Tax)*@
+                @Math.Round(item.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)
+                @{ tax += item.Detail_Total_Tax;
+
+                }
+            </td>
+
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+                @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+                @{ Totals += item.Detail_Total_Cost;
+
+                }
+            </td>
+            <td>
+                <a href='javascript:;' onclick="@("DeleteTemps('"+item.Details_Id+"')")" class="btn BTN-style" style="text-decoration:none;">@Accountingsystem.Resources.PurchaseInvoiceDetails.Delete</a>
+
+            </td>
+
+        </tr>
+    }
+
+</table>
+<div class="row" style="text-align:right;">
+    <div class="col-md-1">
+        <div class="textfieldcont">
+            <h>@Math.Round(tax, 2, MidpointRounding.AwayFromZero)</h>
+        </div>
+    </div>
+    <div class="col-md-1">
+
+        <div class="form-group">
+            @Accountingsystem.Resources.PurchaseInvoiceEditForPending.TotalTaxes;
+
+        </div>
+    </div>
+
+    <div class="col-md-1">
+        <div class="textfieldcont">
+            <h>@Math.Round(Totals - Model.AllowDiscount, 2, MidpointRounding.AwayFromZero)</h>
+        </div>
+    </div>
+    <div class="col-md-1">
+
+        <div class="form-group">
+            @Accountingsystem.Resources.PrintReports.Net;
+
+        </div>
+    </div>
+</div>

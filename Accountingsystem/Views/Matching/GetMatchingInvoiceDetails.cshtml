@@ -1,0 +1,260 @@
+﻿@model Accountingsystem.ViewModel.MatchingInvoiceDetailsVM
+
+<h2>تفاصيل الفاتورة</h2>
+<div>
+    <div class="widget">
+        <div class="table-responsive">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("تاريخ الفاتورة")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Invoice_Date)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayName("سريال الفاتورة")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Serial_Number)
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("اسم العميل")
+                    </td>
+                    <th class="col-md-2">
+                        @{var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Name;
+                            <h>@customer</h> }
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("تاريخ الاستحقاق")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Due_Date)
+                    </th>
+                </tr>
+
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName("المخزن")
+                    </td>
+                    <th class="col-md-2">
+                        @{var store = Accountingsystem.Models.Store.GetStoreById(Model.Store_ID).Store_Name;
+                            <h>@store</h> }
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("نسبة الخصم")
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Master_Discount)
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.DisplayName("رقم حساب الايراد")
+                    </td>
+                    <th class="col-md-2">
+                        @{var account = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.Account_ID).Account_Name;
+                            <h>@account</h> }
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("العملة")
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Invoice_Currency)
+                    </th>
+                </tr>
+
+                <tr>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("الشركة")
+                    </td>
+                    <th class="col-md-2">
+                        @{var company = Accountingsystem.Models.Company.GetCompanyById(Model.Company_Id).Comp_Name;
+                            <h>@company</h> }
+                    </th>
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("الاجمالى")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Total_Amount)
+                    </th>
+                </tr>
+       
+
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayName("القيمة الفاتورة بعد المطابقة")
+                    </td>
+
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.TotalAmountAfMat)
+                    </th>
+                    <td class="col-md-2">
+                        @Html.DisplayName("القيمة المسددة من الفاتورة")
+                    </td>
+
+                    <th class="col-md-2">
+                        @(Model.Total_Amount - Model.TotalAmountAfMat)
+                    </th>
+                </tr>
+                <tr>
+
+
+                    <td class="col-md-2">
+                        @Html.DisplayName("اجمالى الضريبة")
+                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayFor(model => model.Total_Tax)
+                    </th>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Serial_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serial_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Invoice_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Due_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Due_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GL_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GL_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Invoice_Currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Store_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Store_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmountAfMat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmountAfMat)
+        </dd>
+
+    </dl>
+</div>*@

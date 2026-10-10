@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Accountingsystem.Models.MatchingPayment>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>القائمه</h2>
+
+<p>
+    @Html.ActionLink("انشاء ماتش", "Create")
+</p>
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true"id="sasa">
+           
+                <thead>
+                    <tr>
+                      
+                        <th class="col-md-2">
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th class="col-md-2">
+                            @Html.DisplayName("العمله")
+                        </th>
+                        <th class="col-md-2">
+                            @Html.DisplayName("رقم الشركه")
+                        </th>
+                        @*<th class="col-md-2">
+                            @Html.DisplayName("نوع النشاط")
+                        </th>*@
+                        <th class="col-md-2">
+                            @Html.DisplayName("القيمه")
+                        </th>
+                        <th class="col-md-2">
+                            @Html.DisplayName("الايصال")
+                        </th>
+                        <th class="col-md-2">
+                            @Html.DisplayName("الفاتوره")
+                        </th>
+
+                        <th class="col-md-2">
+                            @Html.DisplayName("المورد")
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                          
+                            <td class="col-md-2">
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td class="col-md-2">
+                               @{var Cur = Accountingsystem.Models.Currency.GetCurrencyById(item.Match_currency).Currency_Type;
+                                       <h>@Cur</h>}
+                                @*@Html.DisplayFor(modelItem => item.Match_currency)*@
+                            </td>
+                            <td class="col-md-2">
+                                  @{var Com = Accountingsystem.Models.Company.GetCompanyById(item.Comp_ID).Comp_Name;
+                                       <h>@Com</h>}
+                                @*@Html.DisplayFor(modelItem => item.Comp_ID)*@
+                            </td>
+                            @*<td class="col-md-2">
+                                @Html.DisplayFor(modelItem => item.Match_BU)
+                            </td>*@
+                            <td class="col-md-2">
+                                @Html.DisplayFor(modelItem => item.Tota_Amount)
+                            </td>
+                            <td class="col-md-2">
+                                @{var Pay = Accountingsystem.Models.Payment.GetPaymentById(item.PaymentPay_ID).Pay_Number;
+                                    <h>@Pay</h>}
+                                @*@Html.DisplayFor(modelItem => item.PaymentPay_ID)*@
+                            </td>
+                            <td class="col-md-2">
+                                @{var PurInv = Accountingsystem.Models.PurInvoiceMaster.GetpurchInvByID(item.PurInvoiceMaster_Id).Serial_Number;
+                                    <h>@PurInv</h>}
+                                @*@Html.DisplayFor(modelItem => item.PurInvoiceMaster_Id)*@
+                            </td>
+
+                            <td class="col-md-2">
+
+                                @{var supplier = Accountingsystem.Models.Supplier.GetSupplierById(item.Supp_Id).Supp_Name;
+                                    <h>@supplier</h>}
+
+                                </td>
+                            <td class="col-md-2">
+                                <p>
+                                    @Html.ActionLink("التفاصيل", "Details", new { id = item.Match_Id })
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#sasa').DataTable();
+        });
+    </script>
+}

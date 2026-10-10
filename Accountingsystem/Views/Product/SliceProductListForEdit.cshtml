@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Accountingsystem.Models.SlicesProduct>
+
+
+<table class="table table-bordered table-striped">
+    <tr>
+
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.Price)
+        </th>
+
+        <th>
+            @Html.DisplayName(Accountingsystem.Resources.SlicesCreate.SliceName)
+        </th>
+        <th>@Accountingsystem.Resources.ProductEditForPending.Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.SlicesProduct_Id)
+        @Html.HiddenFor(modelItem => item.Product_ID)
+        @Html.HiddenFor(modelItem => item.SlicesSlice_Id)
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Slice_Price)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Slice.Slice_Name)
+            </td>
+            <td>
+                <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick="@("EditDetail('"+item.SlicesProduct_Id+"')")" class="btn BTN-style" style="text-decoration:none;">@Accountingsystem.Resources.ProductEditForPending.Edit</a>
+                </div>
+
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,92 @@
+﻿@model Accountingsystem.ViewModel.ProductBatchSelection
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+            @Html.HiddenFor(model => model.Product_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SettlementOfStoresDetails.Item>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SettlementOfStoresDetails.Quantity>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.SettlementOfStoresDetails.Quantity)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.QuantityExact, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.QuantityExact, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.SettlementOfStoresDetails.ActualQuantity>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.SettlementOfStoresDetails.ActualQuantity)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+            <div class="form-group">
+                @Html.HiddenFor(model => model.storeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-offset-2 col-md-10">
+                        <a href='javascript:;' onclick='AddToTemp();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.OfferPriceMasterCreateOffer.AddToRegulation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+

@@ -1,0 +1,92 @@
+﻿@model Accountingsystem.ViewModel.ReportsNewVM.SalesOfProductVM
+
+@{
+    Layout = null;
+    decimal quality = 0;
+    decimal ProductSaled = 0;
+    decimal PrecentageSaled = 0;
+    decimal Profit = 0;
+    decimal PrecentageProfit = 0;
+    decimal TotalCost = 0;
+    decimal taxAmount = 0;
+    decimal totalTaxAmount = 0;
+}
+
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/Content/PrintPOS.css" rel="stylesheet" />
+    <title> تقرير مبيعات الاصناف</title>
+
+</head>
+<body>
+   
+    <center>
+        <div class="ticket" style="font-size:smaller;">
+
+            <p class="centered">
+                <strong>
+                    <span style="font-size:16px;"><strong> تقرير مبيعات الاصناف / Items Sales Report</strong></span>
+                    <br />
+                    <span style="font-size:16px">  From :  @Model.startDate </span>   <br />    <span style="font-size:16px">  Till :  @Model.EndDate </span>
+                </strong>
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+
+                        <th class="description" style="font-size:14px"><strong> Total | اجمالى</strong>  </th>
+
+                        <th class="description" style="font-size:14px;">QTY | الكمية  </th>
+
+                        <th class="description" style="font-size:14px;">Item | الصنف</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.DetailList)
+                    {
+                        quality += item.quantitySaled;
+                        ProductSaled += item.tatalSaledPrice;
+                        PrecentageSaled += item.PrecentageTotalPrice;
+                        Profit += item.netProfit;
+                        PrecentageProfit += item.PrecentageNetProfit;
+                        TotalCost += item.TotalCostOfProduct;
+                        taxAmount = (item.tatalSaledPrice * 15) / 100;
+                        totalTaxAmount += taxAmount;
+
+                    <tr style="border-top:hidden; text-align:center">
+                        <th class="description" style="font-size:14px"> @Math.Round(item.tatalSaledPrice + taxAmount, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px"> @Math.Round(item.quantitySaled, 0, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px">@item.product.Prod_Name</th>
+
+                    </tr>
+
+                    }
+
+                   
+                    <tr style="text-align:center">
+
+                        <th class="description" style="font-size:14px"> @Math.Round(ProductSaled + totalTaxAmount, 2, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px"> @Math.Round(quality, 0, MidpointRounding.AwayFromZero)</th>
+                        <th class="description" style="font-size:14px">اجمالى</th>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+
+        </div>
+    </center>
+    <script type="text/javascript">
+            window.onload = function () {
+                window.print(); window.onfocus = function () { window.close(); }
+            }
+    </script>
+</body>

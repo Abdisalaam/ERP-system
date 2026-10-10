@@ -1,0 +1,65 @@
+﻿@model Accountingsystem.ViewModel.ProductCompoundVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Main_Product_Id)
+       
+
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.ProductOrService)
+                    @{ Html.EnableClientValidation(false); }
+
+                    <div class="input-group mb-4">
+                        @Html.DropDownListFor(model => model.ProductId, Model.ProductList, Accountingsystem.Resources.OfferPriceMasterCreateOffer.ProductOrService, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                        <div class="input-group-append">
+                            <div class="form-control">
+                                <label class="text-danger">*</label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label(Accountingsystem.Resources.OfferPriceMasterCreateOffer.Quantity)
+                    @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <a href='javascript:;' onclick='AddDetailCompound();' class="btn btn-outline-info mb-2" style="text-decoration:none;">@Accountingsystem.Resources.ReversePOSInvoiceDetails.AddToRegulation</a>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+<script type="text/javascript">
+
+    $("#ProductId").chosen();
+
+
+    $("#ProductId_chosen").addClass("form-control Dropdownlist-select");
+</script>

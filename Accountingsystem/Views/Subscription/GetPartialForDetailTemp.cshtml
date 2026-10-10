@@ -1,0 +1,80 @@
+﻿@model Accountingsystem.ViewModel.SubscriptionItemsTempVM
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+<div class="container">
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.SubTempID)
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-5">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Item_Name, new { htmlAttributes = new { @class = "form-control" } })
+                   
+                </div>
+            </div>
+            <span class="required-mark col-md-1"></span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اكتب اسم الصنف المشتخدم في المشروع">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label" for="Item_Name">اسم الصنف</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-5">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Item_price, new { htmlAttributes = new { @class = "form-control" } })
+                   
+                </div>
+            </div>
+            <span class="required-mark col-md-1"></span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="سعر المنتج">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Item_price">سعر المنتج</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-5">
+                <div class="textfieldcont">
+                    @Html.EditorFor(model => model.Item_Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                  
+                </div>
+            </div>
+            <span class="required-mark col-md-1"></span>
+
+            <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="كمية الصنف">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Item_Quantity">الكمية</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href='javascript:;' onclick='addProudect();' class="btn BTN-style final-BTN" style="text-decoration:none;">اضف الي  القائمة</a>
+        </div>
+    </div>
+</div>
+}
+

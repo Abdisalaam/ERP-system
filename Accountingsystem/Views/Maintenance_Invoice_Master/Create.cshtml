@@ -1,0 +1,191 @@
+﻿@model Accountingsystem.ViewModel.Maintenance_Invoice_MasterVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>انشاء فاتورة صيانة</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       @Html.HiddenFor(model => model.Main_Invoice_Id)
+        @Html.HiddenFor(model => model.Customer_Name)
+        @Html.HiddenFor(model => model.Starting_Date)
+        @Html.HiddenFor(model => model.Ending_Date)
+        @Html.HiddenFor(model => model.Subscription_Code)
+       
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Main_Invoice_Code, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.Main_Invoice_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Main_Invoice_Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Describtion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Describtion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Describtion, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="col-md-6">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control"  ,@disabled = "disable" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Customer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-6">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Starting_Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disable" } })
+                        @Html.ValidationMessageFor(model => model.Starting_Date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Starting_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Ending_Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disable" } })
+                            @Html.ValidationMessageFor(model => model.Ending_Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ending_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Subscription_Code, new { htmlAttributes = new { @class = "form-control", @disabled = "disable" } })
+                            @Html.ValidationMessageFor(model => model.Subscription_Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Subscription_Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <a href='javascript:;' onclick='getLists();' class="btn btn-primary" style="text-decoration:none;">التفاصيل</a>
+
+
+
+                </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="انشاء" class="btn btn-default" />
+                    </div>
+                </div>
+
+                }
+               <div id="PurchaseInvoicesDetailList1"></div>
+                <div id="PurchaseInvoicesDetailList"></div>
+                <div id="PurchaseInvoicesDetail"></div>
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                    <script type="text/javascript">
+                        function getLists() {
+                            var MasterInv=@Model.Subscription_Id;
+                            alert(MasterInv);
+
+                            $("#PurchaseInvoicesDetailList1").load('@(Url.Action("getDetailFromOrder", "Maintenance_Invoice_Master"))?Order=' + MasterInv);
+
+                        };
+    $(function () {
+    var purchaseInvoiceMasterId = @Model.Main_Invoice_Id;
+    $("#PurchaseInvoicesDetailList").load('@(Url.Action("GetAllTempPurchaseInvoiceDetails", "Maintenance_Invoice_Master"))?tempPurchaseInvoiceMasterId=' + purchaseInvoiceMasterId);
+    $("#PurchaseInvoicesDetail").load('@(Url.Action("PreparePurchaseMasterDetails", "Maintenance_Invoice_Master"))');
+    });
+
+    function AddDetailToMaster() {
+
+        var Maintenance_Invoice_MasterMain_Invoice_Id =   @Model.Main_Invoice_Id;
+        alert( @Model.Main_Invoice_Id);
+        var Subscription_Name =  $("#Subscription_Name").val();
+        var Subscription_Cost =  $("#Subscription_Cost").val();
+        var  Main_Detail_Id= $("#Main_Detail_Id").val();
+        var PurchaseDetailsVM;
+        PurchaseDetailsVM = {
+            Maintenance_Invoice_MasterMain_Invoice_Id:Maintenance_Invoice_MasterMain_Invoice_Id,
+            Subscription_Name:Subscription_Name,
+            Subscription_Cost:Subscription_Cost,
+            Main_Detail_Id:Main_Detail_Id
+        };
+
+        $.ajax(
+        {
+            url: '@Url.Action("AddPurchaseInvoiceDetailsToMaster", "Maintenance_Invoice_Master")',
+            data: JSON.stringify(PurchaseDetailsVM),
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+
+                alert(data);
+                $("#PurchaseInvoicesDetailList").load('@(Url.Action("GetAllTempPurchaseInvoiceDetails", "Maintenance_Invoice_Master"))?tempPurchaseInvoiceMasterId=' + Maintenance_Invoice_MasterMain_Invoice_Id);
+
+            },
+            error: function () { alert('error'); }
+        });
+
+    };
+
+
+
+
+                    </script>
+
+
+
+                }

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Accountingsystem.Models.ProductBatches>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table-condensed table-hover" id="sasa">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Batch_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Batch_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Batch_ExpireDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Batch_Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurInvoice_ID)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batch_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product_Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product_Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batch_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batch_ExpireDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batch_Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurInvoice_ID)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#sasa').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,211 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.DoingOfEmployeeVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    int counter = 1;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" />
+    <title>نشاطات المستخدم </title>
+</head>
+
+<body>
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        <header>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </header>
+
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:right;color:black;font-size:x-large;margin-bottom:35px;">
+            @{
+                var fromdate = Convert.ToDateTime(Model.Start_Date);
+                var ToDate = Convert.ToDateTime(Model.End_Date);
+
+            }
+            @if (fromdate.Year != 1995 && ToDate.Year != 2200)
+            {
+                <h style="text-align:right;color:black;font-size:large;"> @Model.Start_Date :من </h><br />
+                <h style="text-align:right;color:black;font-size:large;">@Model.End_Date :الى </h>
+            }
+        </div>
+
+        <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+
+
+            <tr>
+                <td style="text-align:left;">@Model.company.Comp_Name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>رقم الضريبى :&nbsp&nbsp @Model.company.Tax_Number &nbsp&nbsp</td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">العنوان: &nbsp&nbsp @Model.company.Comp_Address  </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@DateTime.Now.Day - @DateTime.Now.Month - @DateTime.Now.Year &nbsp&nbsp : تاريخ الطباعة </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.company.Comp_phone &nbsp&nbsp  :  هاتف الشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:left;">@Model.company.Comp_Email &nbsp&nbsp  : البريد الالكتروني للشركة</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td></td>
+                <td></td>
+                <td> </td>
+            </tr>
+
+
+
+        </table>
+        <br />
+        <div style="text-align:center; font-size:x-large">
+            <h>نشاطات المستخدم</h>
+        </div>
+
+        <br />
+
+
+        <hr />
+        <br />
+    </div>
+
+    <form>
+        <fieldset>
+            <table class="table table-bordered" style="text-align:right;margin-top:0%;" data-sortable="" width="900">
+
+                <tr>
+                    <td> اسم الموظف &nbsp&nbsp  : @Model.Emp_Name  </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Model.Emp_Code &nbsp&nbsp : رقم الموظف</td>
+                </tr>              
+
+            </table>
+        </fieldset>
+    </form>
+    <br />
+    <br />
+    <br />
+    <table class="table" style="width:900px;text-align:center;" border="1" dir="rtl">
+        <tr style="background-color:gray;">
+            <th>الرقم</th>
+            <th>التاريخ</th>
+            <th>
+                رقم السند &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+               نوع السند &nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th style="text-align:center;">
+                الوصف &nbsp&nbsp&nbsp&nbsp
+            </th>
+
+
+
+        </tr>
+        @foreach (var item in Model.TransactionBatches)
+        {
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @item.Date.ToString("yyyy/MM/dd ")
+            </td>
+            <td style="text-align:center;">
+                @item.Operation_Code
+            </td>
+            <td>
+                @item.OperationName
+            </td>
+
+
+            <td>
+                @item.Description
+            </td>
+
+
+        </tr>
+            counter++;
+
+        }
+    </table>
+
+    <br />
+
+    <hr />
+    <br />
+    <br />
+    <br />
+    <footer style="margin-top:0%;"></footer>
+
+
+</body>
+</html>

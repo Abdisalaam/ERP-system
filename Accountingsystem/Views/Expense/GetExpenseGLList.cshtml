@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Accountingsystem.Models.ExpenseAccountTemp>
+@{
+    decimal totalDebits = 0;
+    decimal totalCredits = 0;
+ }
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+
+        <table id="expensesDetailList" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.Debtor)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.Creditor)                    
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.Account)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.AssistantAccount)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.CostCenter)
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.ExpenseDetails.ExpenseDescription)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    @Html.HiddenFor(modelItem => item.Id)
+                    @Html.HiddenFor(modelItem => item.Tax_Bool)
+                    @Html.HiddenFor(modelItem => item.SubLedger_ID)
+                    @Html.HiddenFor(modelItem => item.RandoumVAlue)
+                    @Html.HiddenFor(modelItem => item.Expense_ID)
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountExp_Debit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountTreat_Credit)
+                        </td>
+                        <td>
+                            @if (item.AccountExp_ID > 0 && item.Tax_Bool == false)
+                            {
+                                var Exp = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount((int)item.AccountExp_ID).Account_Name;
+                                <h>@Exp</h>
+                            }
+                            else if (item.AccountExp_ID > 0 && item.Tax_Bool == true)
+                            {
+                                var taxName = Accountingsystem.Models.Tax.GetTaxesbyId((int)item.AccountExp_ID).Tax_Name;
+                                <h>@taxName</h>
+                            }
+                            else
+                            {
+                                var Tresuary = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount((int)item.AccountTreasury_ID).Account_Name;
+                                <h>@Tresuary</h>
+                            }
+                        </td>
+                        @if (item.ChildAccount_Id != null && item.ChildAccount_Id != 0)
+                        {
+                            <td>
+                                @Accountingsystem.Models.Accounts.findAccountbyID(item.ChildAccount_Id.Value).Account_Name
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            @{
+                                totalDebits = totalDebits + item.AccountExp_Debit;
+                                totalCredits = totalCredits + item.AccountTreat_Credit;
+                            }
+                            @if (item.SubLedger_ID > 0)                            {
+                                var SubLed = Accountingsystem.Models.SubLedger.getDetail(item.SubLedger_ID.Value);
+                                <h>@SubLed.SubLed_Name</h>
+                            }
+                           
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpDesc)
+                        </td>
+                        <td>
+                            <div class="col-md-offset-2 col-md-10">
+                                <a href='javascript:;' onclick="@("DeleteTemp('"+item.Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="حذف" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+
+    </div>
+    </div>
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="form-group">
+            @Html.Label(Accountingsystem.Resources.Expenses.TotalDebtor)
+            <div class="input-group mb-4">
+                <h3 class="form-control mb-4">@Math.Round(totalDebits, 2, MidpointRounding.AwayFromZero)</h3>
+                <div class="input-group-append">
+                    <div>
+                        <span class="form-control">$</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+       
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label(Accountingsystem.Resources.Expenses.TotalCreditor)
+            <div class="input-group mb-4">
+                <h3 class="form-control mb-4">@Math.Round(totalCredits, 2, MidpointRounding.AwayFromZero)</h3>
+                <div class="input-group-append">
+                    <div>
+                        <span class="form-control">$</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

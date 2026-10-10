@@ -1,0 +1,68 @@
+﻿@model Accountingsystem.ViewModel.SlicesProductVM
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Product_ID)
+    @Html.HiddenFor(model => model.SlicesProduct_Id)
+
+
+
+    
+
+
+    <div class="row">
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.SlicesCreate.SliceName)
+                @{ Html.EnableClientValidation(false); }
+
+                <div class="input-group mb-4">
+                    @Html.DropDownListFor(model => model.SlicesSlice_Id, Model.MySliceList, Accountingsystem.Resources.SlicesCreate.SliceNameInformation, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                    <div class="input-group-append">
+                        <div class="form-control">
+                            <label class="text-danger">*</label>
+                        </div>
+                        <button id="addSliceBTN" class="btn btn-success" type="button" data-toggle="modal" data-target="#SliceModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.SlicesCreate.Price)
+                @Html.EditorFor(model => model.Slice_Price, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+
+            <a href='javascript:;' onclick='AddDetailToMaster();' class="btn btn-outline-info mb-2" style="text-decoration:none;">@Accountingsystem.Resources.ReversePOSInvoiceDetails.AddToRegulation</a>
+        </div>
+    </div>
+
+</div>
+}
+
+
+<script type="text/javascript">
+
+    $("#SlicesSlice_Id").chosen();
+
+
+    $("#SlicesSlice_Id_chosen").addClass("form-control Dropdownlist-select");
+</script>

@@ -1,0 +1,63 @@
+﻿@model Accountingsystem.Models.AnotherAsset
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+
+
+    <hr />
+    <div class="form-horizontal">
+        <h2 class="HEADTITLE-STYLE">حذف</h2>
+        <div class="widget">
+            <div class="table-responsive">
+                <table data-sortable="" class="table" data-sortable-initialized="true">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayName("كود الاصل")
+                        </th>
+                        <td id="Master_Id">
+                            @Html.DisplayFor(model => model.AnothrAsst_ID)
+                        </td>
+
+                        <th>
+                            @Html.DisplayName("وصف الاصل")
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.AnothrAsst_Desc)
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayName("قيمة الاصل")
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.AnothrAsst_Price)
+                        </td>
+
+
+                    </tr>
+                </table>
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                <input type="submit" value="حذف" class="BTN-style" />
+                <a class="BTN-style" href='@Url.Action("Index")'>
+                    العودة
+                </a>
+
+            }
+        </div>
+     
+     
+</div>
+
+

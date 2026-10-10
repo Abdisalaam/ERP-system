@@ -1,0 +1,77 @@
+﻿@font-face {
+    font-family: 'Droid Sans Arabic Regular' !important;
+    src: url('../../fonts/Droid Sans Arabic Regular.ttf') format('truetype');
+    font-family: DroidSansArabicRegular;
+}
+
+.addRequiredFieldToInput {
+    background-color: red;
+}
+
+.details-form-control {
+    height: auto;
+    border: 1px solid #1b2e4b;
+    color: #0c0d0d;
+    font-size: 15px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.make-text-color-form {
+    color: red;
+}
+
+
+.make-text-color-chosen {
+    background: #ffffff;
+}
+
+
+@media (min-width: 1200px) {
+
+    #showAllProductsMobileId {
+        display: none;
+    }
+
+    #showCartMobile {
+        display: none;
+    }
+}
+
+@media (max-width: 1200px) {
+    #posInvoice {
+        display: none;
+    }
+
+    /*#addNewProductBTN {
+        display: none;
+    }
+
+    #addNewCustomerBTN {
+        display: none;
+    }*/
+
+    #showAllProductsMobileId {
+        display: inline;
+    }
+
+    #showCartMobile {
+        display: inline;
+    }
+
+    #showCartDesk {
+        display: none;
+    }
+
+    #showAllProductsDeskId {
+        display: none;
+    }
+}
+
+@media (min-width: 400px) {
+    .d-xl-flex {
+        display: -ms-flexbox !important;
+        display: flex !important;
+    }
+}

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Accountingsystem.Models.BussinesUnit>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 1;
+}
+<p>
+    @Html.ActionLink("انشاء نشاط جديد", "Create")
+</p>
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+            <tr>
+                <th class="col-md-3">
+                    @Html.DisplayName("الرقم")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("كود النشاط")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("اسم النشاط")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("وصف النشاط")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("نوع النشاط")
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName("الشركة")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @count
+                        @{count = count + 1;}
+
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.BU_Code)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.BU_Name)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.BU_Description)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.BU_Type)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.CompanyComp_Id)
+                    </td>
+                    <td class="col-md-3">
+                        <p>
+                            @Html.ActionLink("تعديل", "Edit", new { id = item.BU_Id })
+                        </p>
+                    </td>
+                    <td class="col-md-3">
+                        <p>
+                            @Html.ActionLink("تفاصيل", "Details", new { id = item.BU_Id })
+                        </p>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

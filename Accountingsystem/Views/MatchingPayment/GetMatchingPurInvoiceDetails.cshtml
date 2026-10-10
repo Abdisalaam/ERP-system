@@ -1,0 +1,129 @@
+﻿@model Accountingsystem.ViewModel.MatchingPurInvoiceDetailVM
+
+<div>
+    <h4>المطابقة</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("")
+        </dt>
+
+        <dd>
+            @*@Html.HiddenFor(model => model.Master_Id)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayName("كود الفاتورة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serial_Number)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("الوصف")
+        </dt>
+
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ الفاتورة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ الاستحقاق")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Due_Date)
+        </dd>
+
+    
+
+        <dt>
+            @Html.DisplayName("الخصم")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("العملة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice_Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اجمالي قبل الضريبة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اجمالي الضريبة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اجمالي بعد الضريبة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("المورد")
+        </dt>
+        @{var thisup = Accountingsystem.Models.Supplier.GetSupplierById(Model.Supplier_Id); }
+        <dd>
+           <h>@thisup.Supp_Id</h>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("المخزن")
+        </dt>
+        @{var thistore = Accountingsystem.Models.Store.GetStoreById(Model.Store_ID); }
+        <dd>
+            <h>@thistore.Store_Name</h>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("الشركة")
+        </dt>
+        @{var thiscom = Accountingsystem.Models.Company.GetCompanyById(Model.Company_Id); }
+        <dd>
+            <h>@thiscom.Comp_Name</h>
+        <dd>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اجمالي  القيمة")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmountAfMat)
+        </dd>
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

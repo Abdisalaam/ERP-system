@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Accountingsystem.Models.Branch>
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.BranchIndex.BranchesList;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>IndexList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th hidden>
+            @Html.DisplayNameFor(model => model.Branch_Id)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Name)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Address)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Phone)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.CompanyComp_Id)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Email)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Country)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Province)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_City)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.Branch_Fax)
+        </th>
+        <th class="col-md-1"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td hidden>
+                @Html.DisplayFor(modelItem => item.Branch_Id)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Name)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Address)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Phone)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.CompanyComp_Id)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Email)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Country)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Province)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_City)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Branch_Fax)
+            </td>
+            <td class="col-md-1">
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Branch_Id  }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Branch_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Branch_Id })
+            </td>
+        </tr>
+    }
+
+</table>

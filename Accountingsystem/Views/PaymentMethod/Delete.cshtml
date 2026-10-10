@@ -1,0 +1,48 @@
+﻿@model Accountingsystem.Models.PaymentMethod
+
+<h3>@Accountingsystem.Resources.PaymentMethodEdit.Delete</h3>
+<div>
+    <h4>@Accountingsystem.Resources.PaymentMethodEdit.DoYouWantToDeleteThis</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodEdit.PaymentMethod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payment_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodEdit.BankAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank_Account_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName(Accountingsystem.Resources.PaymentMethodIndex.Percentage)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Percentage)*@
+            @Math.Round(Model.Percentage.Value, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Accountingsystem.Resources.PaymentMethodEdit.Delete class="btn btn-primary" />
+
+            @Html.ActionLink(Accountingsystem.Resources.PaymentMethodEdit.BackToList, "Index")
+        </div>
+    }
+</div>

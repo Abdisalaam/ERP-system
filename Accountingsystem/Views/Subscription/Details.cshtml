@@ -1,0 +1,248 @@
+﻿@model Accountingsystem.Models.Subscription
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="HEADTITLE-STYLE">التفاصيل</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("رقم الاشتراك")
+        </dt>
+
+        <dd id="Subscrip_Id">
+            @Html.DisplayFor(model => model.Subscrip_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("رقم الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Code)
+        </dd>
+        <dt>
+            @Html.DisplayName("نوع الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Type)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("وصف الاشتراك")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Description)
+        </dd>
+        @if (Model.Sub_Date==null) {
+        <dt>
+            @Html.DisplayName("تاريخ الاشتراك")
+        </dt>
+
+        <dd>
+            @Model.Sub_Date.Value.ToString("yyyy/MM/dd ")
+        </dd>
+        }
+        <dt>
+            @Html.DisplayName("تاريخ الانتهاء")
+        </dt>
+
+        <dd>
+            @Model.DeadLine.ToString("yyyy/MM/dd ")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("تاريخ البدء")
+        </dt>
+
+        <dd>
+            @Model.StartTime.ToString("yyyy/MM/dd ")
+        </dd>
+        <dt>
+            @Html.DisplayName("تاريخ الايقاف")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_DateEnd)
+        </dd>
+        <dt>
+            @Html.DisplayName("قيمه الاشتراك")
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Estimate_Amount)*@
+            @Math.Round(Model.Estimate_Amount, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم العميل")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+        <dd>
+            @Html.Display("حاله العميل")
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.SubType_State)
+        </dd>
+        <dt>
+            @Html.DisplayName("حاله الاشتراك")
+        </dt>
+
+        <dd id="Subscrip_State">
+            @Html.DisplayFor(model => model.Subscrip_State)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("اسم الشركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_Comp)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("نشاط الشركه")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscrip_BU)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("فرق الموظفين")
+        </dt>
+
+        <dd>
+            @{
+                if (Model.Emp_Team == 0 || Model.Emp_Team == null)
+                {
+
+                }
+                else
+                {
+                    var employeeTeam = Accountingsystem.Models.EmployeeTeam.getEmployeeBYID(Model.Emp_Team.Value).Team_Name;
+                    <h>@employeeTeam</h>
+                }
+            }
+        </dd>
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("تجديد الاشتراك", "Edit", new {  id = Model.Subscrip_Id }) |
+    @Html.ActionLink("العودة", "Index")
+</p>*@
+
+
+<div class="modal-footer">
+    <a class="btn BTN-style final-BTN" href="@Url.Action("Edit", new { id = Model.Subscrip_Id })">تجديد الاشتراك</a>
+
+
+    <a class="btn BTN-style final-BTN" href="@Url.Action("Index")">العودة إلي القائمة</a>
+    @if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("مساعد محاسب"))
+    {
+        <input id="changeState" type="button" value="Post" class="btn BTN-style final-BTN" />
+    }
+   
+    <a class="btn BTN-style final-BTNs" href='@Url.Action("SubscripInvoice", new { controller = "Reports", id = Model.Subscrip_Id })'>
+        طباعة
+    </a>
+</div>
+
+    @section scripts{
+        <script type="text/javascript">
+            updateButtonText();
+
+
+            function updateButtonText() {
+                var Subscrip_State = $.trim($("#Subscrip_State").text());
+                if (Subscrip_State == "Void") {
+                    $("#changeState").hide();
+                    return;
+                }
+
+                else if (Subscrip_State == "Pending")
+                    $("#changeState").val("Post");
+                else if (Subscrip_State == "Post")
+                    $("#changeState").val("Void");
+            }
+
+            function UpdateSubscriptionStateText() {
+                var Subscrip_State = $.trim($("#Subscrip_State").text());
+                if (Subscrip_State == "Pending")
+                    $("#Subscrip_State").text("Post");
+                else if (Subscrip_State == "Post")
+                    $("#Subscrip_State").text("Void");
+            }
+
+
+
+
+            function UpdateSubscriptionState(data) {
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                
+                     url: '@Url.Action("Update", "Subscription")',
+                    data: data,
+                    success: function (result) {
+                        alert(result);
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("ssssssssssssss!");
+                    }
+                });
+            }
+
+
+            $("#changeState").click(function (e) {
+
+                e.preventDefault();
+                alert("hii!");
+                var data = JSON.stringify({
+                    Subscrip_Id: $.trim($("#Subscrip_Id").text()),
+                    Subscrip_State: $("#changeState").val()
+                });
+
+                $.when(UpdateSubscriptionState(data)).then(function (response) {
+                    console.log(response);
+                }).fail(function (err) {
+                    console.log(err);
+                });
+                updateButtonText();
+                UpdateMatchingStateText();
+            })
+
+        </script>
+   <script>
+       $(document).ready(function () {
+           $("تجديد الاشتراك").click(function () {
+               $("DeadLine").hide();
+           });
+       });
+</script>
+}
+    <div align="left">
+        <a class="btn btn-primary" href='@Url.Action("Index")'>
+            <p>
+
+                العودة الى القائم
+            </p>
+        </a>
+
+    </div>
+

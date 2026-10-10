@@ -1,0 +1,219 @@
+﻿@model Accountingsystem.ViewModel.MatchingReceiptDetailsVM
+
+
+
+<h2>تفاصيل الايصال</h2>
+
+<div class="widget">
+    <div class="table-responsive">
+        <table data-sortable="" class="table" data-sortable-initialized="true">
+
+            <tr>
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Rec_Number)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("كود السند")
+                </th>
+
+
+                <td class="col-md-2">
+                    @{var company = Accountingsystem.Models.Company.GetCompanyById(Model.RecComp_ID).Comp_Name;
+                        <h>@company</h> }
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("اسم الشركة")
+                </th>
+
+            </tr>
+
+            <tr>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Rec_Amount)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("قيمة الايصال")
+                </th>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Rec_Date)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("تاريخ الايصال")
+                </th>
+            </tr>
+
+            <tr>
+                <td id="Rec_state">
+                    @Html.DisplayFor(model => model.Rec_state)
+                </td>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("حالة الايصال")
+                </th>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.RecCurrency_ID)
+                </td>
+
+                <th class="col-md-2">
+                    @Html.DisplayName("العملة")
+                </th>
+            </tr>
+
+            <tr>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.TotalAmountAfMat)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("قيمة الايصال بعد خصمه من الفاتورة")
+                </th>
+
+
+
+
+                <td class="col-md-2">
+                    @{var account = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.RecBank_Account).Account_Name;
+                        <h>@account</h> }
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("اسم الحساب")
+                </th>
+            </tr>
+
+            <tr>
+                <td class="col-md-2">
+                    @{var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Name;
+                        <h>@customer</h> }
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("اسم العميل")
+                </th>
+
+                <td class="col-md-2">
+                    @Html.DisplayFor(model => model.Rec_Description)
+                </td>
+                <th class="col-md-2">
+                    @Html.DisplayName("وصف الايصال ")
+                </th>
+            </tr>
+
+
+        </table>
+    </div>
+</div>
+
+
+@*<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecComp_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecComp_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exchange_Rate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exchange_Rate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecBank_Account)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecBank_Account)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecGl_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecGl_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rec_BU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rec_BU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmountAfMat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmountAfMat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecCurrency_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecCurrency_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Id)
+        </dd>
+
+    </dl>
+</div>*@
+

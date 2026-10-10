@@ -1,0 +1,25 @@
+﻿@model Accountingsystem.ViewModel.PurMasterVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="col-md-5">
+            <div class="textfieldcont">
+                @Html.EditorFor(model => model.Due_Date, new { htmlAttributes = new { @class = "textfield" } })
+                @Html.ValidationMessageFor(model => model.Due_Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.PrintReports.DueDate)
+            </div>
+        </div>
+    </div>
+
+}

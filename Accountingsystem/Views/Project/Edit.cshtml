@@ -1,0 +1,787 @@
+﻿@model Accountingsystem.ViewModel.ProjectVM
+
+@{
+    HttpCookie cookie = Request.Cookies["Language"];
+    ViewBag.Title = Accountingsystem.Resources.ProjectEdit.EditProject;
+    Model.Company_ID = Accountingsystem.Models.Company.GetCompanies().FirstOrDefault().Comp_Id;
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+                <link href="@Url.Content("~/ContentLTR/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentLTR/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentLTR/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+                <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+                <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            <link href="@Url.Content("~/ContentRTL/assets/css/scrollspyNav.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/assets/css/components/custom-modal.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.css")" rel="stylesheet" type="text/css" />
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/flatpickr/custom-flatpickr.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-slider.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/ContentRTL/plugins/table/datatable/dt-global_style.css")" rel="stylesheet" type="text/css" />
+
+
+            <link href="@Url.Content("~/ContentRTL/assets/css/chosen.css")" rel="stylesheet" type="text/css" />
+
+
+
+        }
+    }
+
+
+</head>
+
+
+
+@using (Html.BeginForm("Edit", "Project", FormMethod.Post, new { @id = "catchReceiptCreateForm", @class = "col-xl-12 col-lg-12 col-md-12 layout-spacing", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Project_Code)
+    @Html.HiddenFor(model => model.Project_Id)
+    @Html.HiddenFor(model => model.Company_ID)
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form id="catchReceiptCreateForm">
+            <div class="">
+                <h3 class="text-center"><label>@ViewBag.Message</label></h3>
+                <h3 class="text-center">@Html.Label(Accountingsystem.Resources.ProjectEdit.EditProject)</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.StartingDate)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.ProjectName)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Project_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectCreate.ProjectLocation)
+                                    @Html.EditorFor(model => model.Project_Location, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Project_Location, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectCreate.Description)
+                                    @Html.EditorFor(model => model.Project_Description, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Project_Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.Amount)
+                                    <div class="input-group">
+                                        @Html.EditorFor(model => model.Estimate_Amount, new { htmlAttributes = new { @class = "form-control mb-4", @type = "number", @step = "any" } })
+                                        <div class="input-group-append">
+                                            <div>
+                                                <span class="form-control text-danger">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Estimate_Amount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.Customer)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.CustomerCustomer_Id, Model.CustomerList, Accountingsystem.Resources.ProjectCreate.CustomerInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select", @disabled = "disabled" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.CustomerCustomer_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(Accountingsystem.Resources.ProjectEdit.PaymentMethod)
+                <div class="input-group">
+                    @Html.DropDownListFor(model => model.Payment_Method, Model.MyPaymentPolicy, Accountingsystem.Resources.ProjectCreate.PaymentMethodInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                    <div class="input-group-append">
+                        <div class="input-group-append">
+                            <div class="form-control">
+                                <label class="text-danger">*</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.Payment_Method, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectCreate.Employee)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedEmpId, Model.MyEmpList, Accountingsystem.Resources.ProjectCreate.EmployeeInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedEmpId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.RevenueAccount)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectedReveId, Model.MyRevenuelList, Accountingsystem.Resources.ProjectEdit.RevenueAccountInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-append">
+                                                <div class="form-control">
+                                                    <label class="text-danger">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SelectedReveId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @if (package.Number_Branch > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ProjectEdit.Branch)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.BranchSubledger_Id, Model.BranchSubList, Accountingsystem.Resources.ProjectEdit.BranchInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ProjectEdit.Department)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.DepartSubledger_Id, Model.DepartSubList, Accountingsystem.Resources.ProjectEdit.DepartmentInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ProjectEdit.Activity)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.BussinesSubledger_Id, Model.BussinessList, Accountingsystem.Resources.ProjectCreate.ActivityInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (package.Number_subLedgger > 0)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label(Accountingsystem.Resources.ProjectEdit.CostCenter)
+                                        <div class="input-group">
+                                            @Html.DropDownListFor(model => model.Subledger_Id, Model.SubledgerList, Accountingsystem.Resources.ProjectEdit.CostCenterInformation, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.ProjectsTeam)
+                                    <div class="input-group">
+                                        @Html.DropDownListFor(model => model.SelectEmp_Team_Id, Model.MyEmpTeam, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.ProjectCase)
+                                    <div class="input-group">
+                                        @Html.EnumDropDownListFor(model => model.Project_State, htmlAttributes: new { @class = "form-control mb-4 Dropdownlist-select" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="dealine">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.EndDate)
+                                    @Html.EditorFor(model => model.deadline, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.deadline, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.Attachments)
+                                    <label class="custom-file-container__custom-file form-control mb-4">
+                                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input form-control mb-4" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.ProjectEdit.SelectFile</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul id="selectedtFiles" class="list-unstyled"></ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectDetails.Notes)
+                                    @Html.TextAreaFor(model => model.notes, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.ProjectEdit.Notes })
+                                    @Html.ValidationMessageFor(model => model.notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProjectEdit.ProjectDetail)
+                                    @Html.TextAreaFor(model => model.detailOfProject, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @placeholder = Accountingsystem.Resources.ProjectEdit.ProjectDetail })
+                                    @Html.ValidationMessageFor(model => model.detailOfProject, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div id="PrepareDetail" class="row"></div>
+                        <div id="DetailList" class="col-md-12"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" id="subBut" class="btn btn-block btn-outline-primary mb-lg-0">@Accountingsystem.Resources.ProjectEdit.Edit<span id="createSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span></button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("Index")'>
+                        @Accountingsystem.Resources.ProjectEdit.BackToList<span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+
+@section Scripts {
+
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                <script src="@Url.Content("~/ContentLTR/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentLTR/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentLTR/assets/js/chosen.jquery.js")"></script>
+            }
+            else
+            {
+                <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+                <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+
+
+                <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+            }
+        }
+        else
+        {
+            <script src="@Url.Content("~/ContentRTL/plugins/jquery-ui/jquery-ui.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/blockui/jquery.blockUI.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/highlight/highlight.pack.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/custom.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/scrollspyNav.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/flatpickr/flatpickr.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/nouislider.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/noUiSlider/custom-nouiSlider.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/plugins/file-upload/file-upload-with-preview.min.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/notification/snackbar/snackbar.min.js")"></script>
+
+            <script src="@Url.Content("~/ContentRTL/assets/js/components/notification/custom-snackbar.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/plugins/table/datatable/datatables.js")"></script>
+            <script src="@Url.Content("~/ContentRTL/assets/js/chosen.jquery.js")"></script>
+
+        }
+    }
+
+
+
+    <script>
+        $(document).ready(function () {
+            if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function (e) {
+                    e.stopPropagation(); e.preventDefault();
+                    $(this).trigger('mousedown');
+                });
+            }
+            $("#dealine").hide();
+            $("#createSpinner").hide();
+        
+         
+
+
+            var _OfferDate = flatpickr(document.getElementById('StartTime'), {
+                defaultDate: $("#StartTime").val()
+            });
+            $("#backToListBtn").click(function (e) {
+                $("#backTolistBtnSpinner").show();
+            });
+            $("#CustomerCustomer_Id").chosen();
+            $("#Payment_Method").chosen();
+            $("#SelectedReveId").chosen();
+            $("#BranchSubledger_Id").chosen();
+            $("#DepartSubledger_Id").chosen();
+            $("#BussinesSubledger_Id").chosen();
+            $("#Subledger_Id").chosen();
+            $("#SelectEmp_Team_Id").chosen();
+            $("#Project_State").chosen();
+            $("#CustomerCustomer_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Payment_Method_chosen").addClass("form-control Dropdownlist-select");
+            $("#SelectedReveId_chosen").addClass("form-control Dropdownlist-select");
+            $("#BranchSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#DepartSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#BussinesSubledger_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Subledger_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#SelectEmp_Team_Id_chosen").addClass("form-control Dropdownlist-select");
+            $("#Project_State_chosen").addClass("form-control Dropdownlist-select");
+            $("#DetailList").load('@(Url.Action("ListTempDetailForEdit", "Project"))?master_ID=' + @Model.Project_Id);
+            $("#PrepareDetail").load('@(Url.Action("PrepareDetail", "Project"))');
+            return false;
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#Project_State").change(function () {
+
+                var currentDate = new Date();
+                var _end_Date = flatpickr(document.getElementById('deadline'), {
+                    defaultDate: currentDate
+                });
+                $("#dealine").show();
+                $('#deadline').trigger('focus');
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function AddDetailToMaster() {
+            if ($('#Description_Detail').val() == "" || $('#Description_Detail').val() == null || $('#Amount').val() == "" || $('#Amount').val() == null || $('#Amount').val() <= 0 || $('#Date_Amount').val() == "" || $('#Date_Amount').val() == null) {
+                if ($('#Description_Detail').val() == "" || $('#Description_Detail').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectEdit.PaymentDetailsRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Description_Detail").addClass("addRequiredFieldToInput");
+                    $('#Description_Detail').trigger('focus');
+                }
+                if ($('#Amount').val() == "" || $('#Amount').val() == null || $('#Amount').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectEdit.PaymemntFrequenceRequiredMessag",
+                        pos: 'top-center'
+                    });
+                    $("#Amount").addClass("addRequiredFieldToInput");
+                    $('#Amount').trigger('focus');
+                }
+                if ($('#Date_Amount').val() == "" || $('#Date_Amount').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectEdit.PaymentDateRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Date_Amount").addClass("addRequiredFieldToInput");
+                    $('#Date_Amount').trigger('focus');
+                }
+            }
+            else {
+                  var Project_Id = @Model.Project_Id;
+                var description = $("#Description_Detail").val();
+                var Amount = $("#Amount").val();
+                var Payed = $("#Payed").prop('checked');
+                var date = $("#Date_Amount").val();
+                var ProVM;
+                ProVM = {
+                    Description_Detail: description,
+                    Amount: Amount,
+                    Payed: Payed,
+                    Project_Id: Project_Id,
+                    Date_Amount: date
+                    };
+                $.ajax(
+                {
+                        url: '@Url.Action("AddToListDetail", "Project")',
+                        data: JSON.stringify(ProVM),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                         type: 'POST',
+                        success: function (data) {
+                            $("#DetailList").load('@(Url.Action("ListTempDetail", "Project"))?master_ID=' + @Model.Project_Id);
+                        },
+                        error: function () { alert('error'); }
+                    });
+            }
+        };
+
+    </script>
+
+    <script>
+
+        $('#StartTime').on('input', function () {
+            $("#StartTime").removeClass("addRequiredFieldToInput");
+        });
+        $('#Project_Name').on('input', function () {
+            $("#Project_Name").removeClass("addRequiredFieldToInput");
+        });
+        $('#Estimate_Amount').on('input', function () {
+            $("#Estimate_Amount").removeClass("addRequiredFieldToInput");
+        });
+        $('#CustomerCustomer_Id').on('change', function () {
+            $("#CustomerCustomer_Id_chosen").removeClass("addRequiredFieldToInput");
+            $('#CustomerCustomer_Id_chosen span').css('background', '#ffffff');
+            $('#CustomerCustomer_Id_chosen b').css('background', '#ffffff');
+        });
+        $('#Payment_Method').on('change', function () {
+            $("#Payment_Method_chosen").removeClass("addRequiredFieldToInput");
+            $('#Payment_Method_chosen span').css('background', '#ffffff');
+            $('#Payment_Method_chosen b').css('background', '#ffffff');
+        });
+        $('#SelectedReveId').on('change', function () {
+            $("#SelectedReveId_chosen").removeClass("addRequiredFieldToInput");
+            $('#SelectedReveId_chosen span').css('background', '#ffffff');
+            $('#SelectedReveId_chosen b').css('background', '#ffffff');
+        });
+
+    </script>
+    <script>
+        SelectedEmpId
+        $('#catchReceiptCreateForm').submit(function () {
+            $('#subBut').prop('disabled', true);
+            if ($('#SelectedReveId').val() == "" || $('#SelectedReveId').val() == null || $('#SelectedEmpId').val() == null || $('#SelectedEmpId').val() == "" || $('#SelectedReveId').val() <= 0 || $('#CustomerCustomer_Id').val() == "" || $('#CustomerCustomer_Id').val() == null || $('#CustomerCustomer_Id').val() <= 0 || $('#StartTime').val() == "" || $('#StartTime').val() == null || $('#Project_Name').val() == "" || $('#Project_Name').val() == null || $('#Estimate_Amount').val() == "" || $('#Estimate_Amount').val() == null || $('#Estimate_Amount').val() < 0) {
+                $('#subBut').prop('disabled', false);
+                $("#createSpinner").hide();
+
+                if ($('#SelectedReveId').val() == "" || $('#SelectedReveId').val() == null || $('#SelectedReveId').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.CreditAccountRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedReveId_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedReveId_chosen span').css('background', 'red');
+                    $('#SelectedReveId_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedReveId").offset().top
+                    }, 2000);
+                }
+
+                if ($('#CustomerCustomer_Id').val() == "" || $('#CustomerCustomer_Id').val() == null || $('#CustomerCustomer_Id').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.CreditAccountRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#CustomerCustomer_Id_chosen").addClass("addRequiredFieldToInput");
+                    $('#CustomerCustomer_Id_chosen span').css('background', 'red');
+                    $('#CustomerCustomer_Id_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#CustomerCustomer_Id").offset().top
+                    }, 2000);
+                }
+                if ($('#SelectedEmpId').val() == "" || $('#SelectedEmpId').val() == null || $('#SelectedEmpId').val() <= 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.Employee",
+                        pos: 'top-center'
+                    });
+                    $("#SelectedEmpId_chosen").addClass("addRequiredFieldToInput");
+                    $('#SelectedEmpId_chosen span').css('background', 'red');
+                    $('#SelectedEmpId_chosen b').css('background', 'red');
+                    $('html, body').animate({
+                        scrollTop: $("#SelectedEmpId").offset().top
+                    }, 2000);
+                }
+                if ($('#StartTime').val() == "" || $('#StartTime').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.ProjectStartDateRquiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#StartTime").addClass("addRequiredFieldToInput");
+                    $('#StartTime').trigger('focus');
+                }
+                if ($('#Project_Name').val() == "" || $('#Project_Name').val() == null) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.ProjectNameRquiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Project_Name").addClass("addRequiredFieldToInput");
+                    $('#Project_Name').trigger('focus');
+                }
+
+                if ($('#Estimate_Amount').val() == "" || $('#Estimate_Amount').val() == null || $('#Estimate_Amount').val() < 0) {
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProjectCreate.ProjectAmountRequiredMessage",
+                        pos: 'top-center'
+                    });
+                    $("#Estimate_Amount").addClass("addRequiredFieldToInput");
+                    $("#Estimate_Amount").empty();
+                    $('#Estimate_Amount').trigger('focus');
+                }
+
+                 
+                event.preventDefault();
+            }
+            else {
+                $("#createSpinner").show();
+            }
+
+
+        });
+
+    </script>
+
+    <script>
+
+             $('#Files').change(function () {
+                 $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+            $('#selectedtFiles').empty();
+
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                conteLength = this.files[i].size;
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Files').empty();
+                    $('#selectedtFiles').empty();
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.Expenses.TotalSizeOfSelectedFiles : " + totalConteLength + " "+ "@Accountingsystem.Resources.Expenses.Byte" + '</li > ');
+                    $('#selectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.Expenses.MaxOfFilesSize" + '.</li > ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.Expenses.FileSizePopupMessage",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.FileName : " + fileName + '</li> ');
+                    $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.FileLength :  " + this.files[i].size + " "+ "@Accountingsystem.Resources.Expenses.Byte" +'</li> ');
+                }
+            }
+            $('#selectedtFiles').append('<li>' + "@Accountingsystem.Resources.Expenses.TotalSizeOfFiles : " + totalConteLength +  " "+ "@Accountingsystem.Resources.Expenses.Byte" +'</li > ');
+        });
+    </script>
+
+    <script>
+        $('#Invoice_Date').on('change', function (e)
+       {
+
+        var selectedValue = $(this).val();
+
+             $.ajax({
+                        url: '@Url.Action("CheckEndDate", "Company")',
+                        data: { date : selectedValue },
+                    type: 'get',
+                    }).done(function (result) {
+                        if (result == "" || result == null) {
+
+                        }
+                        else {
+                            Snackbar.show({
+                                text: result,
+                                pos: 'top-center'
+                            });
+                        }
+                    }
+                    );
+        });
+
+    </script>
+
+    <script>
+        function DeleteTemp(e) {
+            var ids = e;
+            $.ajax({
+            url: '@Url.Action("DeleteTemp", "Project")',
+            type: 'POST',
+            data: { ids: ids }
+            }).done(function (result) {
+              $("#DetailList").load('@(Url.Action("ListTempDetail", "Project"))?master_ID=' + @Model.Project_Id);
+                });
+        }
+    </script>
+    <script type="text/javascript">
+     $("#DepartSubledger_Id").empty();
+        var departmentsOptions = new Option("@Accountingsystem.Resources.ProjectEdit.DepartmentInformation", 0);
+        $("#DepartSubledger_Id").append(departmentsOptions);
+        $('#DepartSubledger_Id').trigger('chosen:updated');
+        $("#BussinesSubledger_Id").empty();
+        var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.ProjectEdit.ActivityInformation", 0);
+        $("#BussinesSubledger_Id").append(bussinesSubledgerOptions);
+        $('#BussinesSubledger_Id').trigger('chosen:updated');
+        $("#BranchSubledger_Id").change(function (e) {
+            var selectedValue = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetDepartments", "Project")',
+                type: 'get',
+                data: { departId: selectedValue }
+                }).done(function (result) {
+                        $("#DepartSubledger_Id").empty();
+                        var d = new Option("@Accountingsystem.Resources.ProjectEdit.DepartmentInformation", 0);
+                        $("#DepartSubledger_Id").append(d);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#DepartSubledger_Id").append(p);
+                        }
+                        $('#DepartSubledger_Id').trigger('chosen:updated');
+                    });
+                });
+                $("#DepartSubledger_Id").change(function (e) {
+                    var selectedValue = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("GetBussiness", "Project")',
+                        type: 'get',
+                        data: { bussinId: selectedValue }
+                    }).done(function (result) {
+                        $("#BussinesSubledger_Id").empty();
+                         var bussinesSubledgerOptions = new Option("@Accountingsystem.Resources.ProjectEdit.ActivityInformation", 0);
+                        $("#BussinesSubledger_Id").append(bussinesSubledgerOptions);
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#BussinesSubledger_Id").append(p);
+                        }
+                        $('#BussinesSubledger_Id').trigger('chosen:updated');
+                    });
+                });
+    </script>
+
+}

@@ -1,0 +1,318 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SubscriptionNonPaidVM
+<link href="@Server.MapPath("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+
+<style>
+    @@media screen {
+        div.divFooter {
+            display: none;
+        }
+    }
+
+    @@media print {
+        div.divFooter {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @@media print {
+            body {
+                margin-top: 50px;
+            }
+        }
+    }
+</style>
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+    int counter = 0;
+    var thiscustomercode = "";
+    var thiscustomerName = "";
+    var thiscustomerPhone = "";
+    decimal balanceCustomrer = 0;
+    decimal TotalAmount = 0;
+    decimal TotalPayed = 0;
+   
+
+    var dateto = "الي تاريخ انتهاء" + Convert.ToDateTime(Model.EndDate).ToString("yyyy/MM/dd ");
+
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تقرير لم يدفع او دفع جزئيا</title>
+
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+            {
+                <div>
+                    <h style="padding-top:100px">
+                        <br /><br />
+                    </h>
+                </div>
+            }
+            else
+            {
+                foreach (var item2 in Model.company.CompanyPhotoDetails)
+                {
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+                }
+            }
+        </div>
+        <div class="col-md-6" style="margin-top:-70px">
+            <table style="text-align:right;" data-sortable="" width="900">
+
+
+                <tr>
+                    <td style="text-align:right;">@Model.company.Comp_Name</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div class="container">
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            تقرير الدفع للاشتراكات / Payment Subscribtion Report
+
+        </div>
+
+
+        <div style="text-align:center;color:black;font-size:medium;margin-bottom:25px;">
+            @dateto
+
+        </div>
+
+
+    </div>
+
+
+    <br />
+    <table class="table" style="text-align:right;direction:rtl;">
+        <thead>
+            <tr>
+
+                <th style="text-align:center;">
+                    رقم الاشتراك
+                    <br />
+                    No
+                </th>
+                <th style="text-align:center;">رقم العميل  <br />Customer NO </th>
+                <th style="text-align:center;">
+                    العميل
+                    <br />
+                    Customer
+                </th>
+                <th style="text-align:center;">
+                    جوال العميل
+                    <br />
+                    Phone
+                </th>
+                <th style="text-align:center;">
+                    رصيد العميل
+                    <br />
+                    Balance
+                </th>
+                <th style="text-align:center;">
+                    تاريخ البدء
+                    <br />
+                    Start Date
+                </th>
+                <th style="text-align:center;">
+                    تاريخ الانتهاء
+                    <br />
+                    End Date
+                </th>
+
+                <th style="text-align:center;">
+                    النوع
+                    <br />
+                    Type
+                </th>
+                <th style="text-align:center;">
+                    القيمة
+                    <br />
+                    Amount
+                </th>
+                <th style="text-align:center;">
+                    المدفوع
+                    <br />
+                    Payment
+                </th>
+                <th style="text-align:center;">
+                    المتبقى
+                    <br />
+                    Residual
+                </th>
+
+
+            </tr>
+        </thead>
+        @foreach (var item in Model.SubscribList.OrderBy(a => a.DeadLine))
+        {
+            TotalAmount += item.AmountAfterTax;
+            TotalPayed += item.Payed_Amount.Value;
+
+            if (item.Customer_Id.Value > 0)
+            {
+                thiscustomercode = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Code;
+                balanceCustomrer = Accountingsystem.Models.Accounts.RefreshTheBallanceOfCustomer(thiscustomercode);
+            }
+            counter++;
+            if (Convert.ToDouble(Math.Round(balanceCustomrer, 2, MidpointRounding.AwayFromZero)) > .01)
+            {
+                <tr>
+
+                    <td style="width:90px">
+
+                        @item.Subscrip_Code
+                    </td>
+
+                    @{
+                        if (item.Customer_Id.Value > 0)
+                        {
+
+                            thiscustomerName = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Name;
+                            thiscustomerPhone = Accountingsystem.Models.Customer.GetCustomerById(item.Customer_Id.Value).Customer_Phone;
+
+
+                        }
+                    }
+
+                    <td>
+                        @thiscustomercode
+                    </td>
+                    <td>
+                        @thiscustomerName
+                    </td>
+                    <td>
+                        @thiscustomerPhone
+                    </td>
+                    <td>
+                        @Math.Round(balanceCustomrer, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+
+                    <td>
+                        @Convert.ToDateTime(item.StartTime).ToString("yyyy/MM/dd ")
+                        @*@item.StartDate*@
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.DeadLine).ToString("yyyy/MM/dd ")
+                        @*@item.EndDate*@
+                    </td>
+                    <td>
+                        @(Accountingsystem.Models.Subscription_Type.GetallSubscription_TypeById( item.Sub_Type_ID).Subscrip_Name)
+
+                    </td>
+
+                    <td>
+                        @Math.Round(item.AmountAfterTax, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+
+                    <td style="width:90px">
+                        @Math.Round(item.Payed_Amount.Value, 2, MidpointRounding.AwayFromZero)
+
+                    </td>
+                    <td style="width:90px">
+                        @Math.Round(item.AmountAfterTax - item.Payed_Amount.Value, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                </tr>
+            }
+        }
+        <tr>
+
+            <th style="text-align:center;">
+              الاجمالي
+                <br />
+                Total
+            </th>
+            <th style="text-align:center;"></th>
+            <th style="text-align:center;">
+            
+            </th>
+            <th style="text-align:center;">
+           
+            </th>
+            <th style="text-align:center;">
+           
+            </th>
+            <th style="text-align:center;">
+          
+            </th>
+            <th style="text-align:center;">
+              
+            </th>
+
+            <th style="text-align:center;">
+             
+            </th>
+            <th style="text-align:center;">
+                @Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero)
+            </th>
+            <th style="text-align:center;">
+                @Math.Round(TotalPayed, 2, MidpointRounding.AwayFromZero)
+            </th>
+            <th style="text-align:center;">
+                @Math.Round(TotalAmount- TotalPayed, 2, MidpointRounding.AwayFromZero)
+            </th>
+
+
+        </tr>
+    </table>
+
+</body>
+</html>

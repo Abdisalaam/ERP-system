@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Accountingsystem.ViewModel.CategoeryProductVM>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-px-spacing">
+
+    @{
+
+        if (Model.Any())
+        {
+
+            <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="widget-content searchable-container list">                       
+                        <br />
+                        <div class="searchable-items list">
+
+                          
+
+                                @foreach (var item in Model)
+                                {
+                                    <div class="items">
+
+                                        <div class="item-content">
+
+                                            <a href="JavaScript:void(0)" data-id="@item.PatchID" class="categoeryProductClassClieck">
+
+                                                <div class="item-content">
+                                                   
+                                                    <div class="user-profile" style="vertical-align: middle;">
+
+                                                        @if (item.ProductImage != null)
+                                                        {
+                                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.ProductImage)" alt="Image" />
+
+                                                        }
+                                                            <div class="user-meta-info" style="vertical-align: middle;">
+
+                                                                <p class="user-name" style="vertical-align: middle; color:black;"><span><b>@item.ProductCode</b></span>  <b>@item.ProductName</b></p>
+                                                                <p class="user-name" style="vertical-align: middle; color:black;">
+                                                                    <b>@Math.Round(item.AvailableQuantity, 2, MidpointRounding.AwayFromZero)</b>
+                                                                </p>
+
+                                                            </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </a>
+                                            <div class="user-email">
+                                                @{ 
+                                                    var inputIdCat = item.PatchID + "#";
+                                                }
+                                                @*<input id="@inputIdCat" type="text" class="details-form-control" placeholder="1">*@
+                                                  <input id="@inputIdCat" type="text" class="details-form-control" style="color:black;" placeholder="@Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)">
+                                                  @*<p id="@inputIdCat" class="details-form-control" style="vertical-align: middle; color:black;"><span><b>@Math.Round(item.ProductPrice, 2, MidpointRounding.AwayFromZero)</b></span></p>*@
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                }       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row layout-spacing layout-top-spacing">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="text">
+                        <h2 class="text-center">Categoery Has no products</h2>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

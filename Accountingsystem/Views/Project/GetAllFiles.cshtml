@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Accountingsystem.Models.ProjectFileDetail>
+
+@{
+    ViewBag.Title = "GetAllFiles";
+}
+
+<h2>الملفات الملحقة بالمشروع</h2>
+
+<p>
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("طول المحتوى ")
+        </th>
+        <th>
+            @Html.DisplayName("اسم الملف")
+        </th>
+        <th>
+            @Html.DisplayName("رقم المشروع")
+        </th>
+        <th>
+            @Html.DisplayName("امتداد الملف")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentLength)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectProject_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File_Extention)
+        </td>
+        <td>
+            @Html.ActionLink("Download", "ReturnproFile", new { fileId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

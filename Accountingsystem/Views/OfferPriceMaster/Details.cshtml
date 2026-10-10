@@ -1,0 +1,745 @@
+﻿@model Accountingsystem.Models.OfferPriceMaster
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.OfferPriceMasterDetails.OfferPriceDetails;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+    var company = Accountingsystem.Models.Company.GetCompanyById(Model.Company_Id);
+    var customer = Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id);
+    var store = Accountingsystem.Models.Store.GetStoreById(Model.Store_ID.Value);
+    var revenueAccount = Accountingsystem.Models.ChartOfAccounting.getDataForThatAccount(Model.RevenueAccount_Id);
+    var Currency = Accountingsystem.Models.Currency.GetCurrencyById(Model.Currency_Id).Currency_Type;
+    var companyPrint = Accountingsystem.Models.InvoicePrintSetting.getCompanyPrint(3);
+    decimal total = 0;
+
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+
+
+</head>
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <lable class="text-center">@ViewBag.Message</lable>
+                    <div>
+                        @Html.Label(@Accountingsystem.Resources.OfferPriceMasterDetails.OfferPriceDetails)
+                    </div>
+
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content widget-content-area">
+            <div class=''>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.OfferPriceNumber)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Serial_Number)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.OfferStartDate)
+                                        </div>
+                                        <div>
+                                            @Model.Offer_Date.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.OfferEndDate)
+                                        </div>
+                                        <div>
+                                            @Model.OfferDeadLine.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (package.Number_Branch > 0)
+                    {
+                        if (Model.BranchSubledger_Id != null && Model.BranchSubledger_Id > 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BranchSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.BranchName)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (Model.DepartSubledger_Id != null && Model.DepartSubledger_Id > 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.DepartSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Department)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        if (Model.BussinesSubledger_Id != null && Model.BussinesSubledger_Id != 0)
+                        {
+                            var branch = Accountingsystem.Models.SubLedger.getDetail(Model.BussinesSubledger_Id.Value);
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Activity)
+                                                </div>
+                                                <div>
+                                                    @branch.SubLed_Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+
+                    @{if (Model.Reference != null)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.BaptismNumber)
+                                                </div>
+                                                <div>
+                                                    @Html.DisplayFor(model => model.Reference)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        } }
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.ProductDetails.Barcode)
+                                        </div>
+                                        <div>
+                                           
+                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(Accountingsystem.Utilites.QRcode.MakeQRcodeOffer(Model.OfferMas_Id, Request.Url.ToString()))" alt="Image" style="width:100px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.CustomerNumber)
+                                        </div>
+                                        <div>
+                                            @customer.Customer_Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.CustomerName)
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Customer_Name)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.RevenueAccount)
+
+                                        </div>
+                                        <div>
+                                            @revenueAccount.Account_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Store)
+                                        </div>
+                                        <div>
+                                            @store.Store_Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{if (Model.Emp_Id != null)
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.InvoiceMasterDetails.EmployeeName)
+                                                </div>
+                                                <div>
+
+                                                    @{
+                                                        var employee = Accountingsystem.Models.Employee.getEmpById(Model.Emp_Id.Value);
+                                                        @employee.Emp_Name
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        } }
+
+                    @if (Model.Branch_Id != 0 && Model.Branch_Id != null)
+                    {
+                        var subledger = Accountingsystem.Models.SubLedger.getDetail(Model.Branch_Id.Value);
+                        if (subledger.SubLed_Type == "مركز تكلفة يدوى" || subledger.SubLed_Type == "مشروع")
+                        {
+                            <div class="col-md-6">
+                                <div class=''>
+                                    <div class="media  d-md-flex d-block text-sm-left text-center">
+                                        <div class="media-body details-form-control mb-4">
+                                            <div class="d-xl-flex d-block justify-content-between">
+                                                <div class="">
+                                                    @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.CostCenter)
+                                                </div>
+                                                <div>
+
+                                                    @{if (Model.Branch_Id != null)
+                                                        {
+                                                            <span>  @subledger.SubLed_Name </span>
+                                                        }
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Description)
+                            </div>
+
+
+                            @Html.TextAreaFor(model => model.Description, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="text-center">
+                                @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Notes)
+                            </div>
+
+                            @Html.TextAreaFor(model => model.Notes, 10, 40, htmlAttributes: new { @class = "form-control mb-4", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table mb-4">
+                <thead>
+                    <tr>
+                        <th>@Accountingsystem.Resources.OfferPriceMasterDetails.Product</th>
+
+                        <th>@Accountingsystem.Resources.OfferPriceMasterDetails.Quantity</th>
+                        <th>@Accountingsystem.Resources.OfferPriceMasterDetails.UnitPrice</th>
+                        <th>@Accountingsystem.Resources.InvoiceMasterDetails.Discount</th>
+                        <th>@Accountingsystem.Resources.InvoiceMasterDetails.DiscountValue</th>
+                        <th>@Accountingsystem.Resources.OfferPriceMasterDetails.TotalTax</th>
+                        <th>@Accountingsystem.Resources.OfferPriceMasterDetails.Total</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.OfferPriceDetails)
+                    {
+                    <tr>
+                        <td>@Accountingsystem.Models.Product.GetProdectById(detail.Product_ID).Prod_Name</td>
+
+                        <td>@Math.Round(detail.Product_Quantity, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(detail.Product_Price, 2, MidpointRounding.AwayFromZero)</td>
+                        @if (detail.Detail_Discount > 0)
+                        {
+                            <td>@Math.Round(detail.Detail_Discount.Value, 2, MidpointRounding.AwayFromZero)</td>
+                            <td>@Math.Round(detail.Detail_Discount_Amount.Value, 2, MidpointRounding.AwayFromZero)</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                            <td>0</td>
+                        }
+                        <td>@Math.Round(detail.Detail_Total_Tax, 2, MidpointRounding.AwayFromZero)</td>
+                        <td>@Math.Round(@detail.Total_Amount, 2, MidpointRounding.AwayFromZero)</td>
+                        @{total += detail.Product_Quantity * detail.Product_Price;}
+                        <td>
+                            <a href="@Url.Action("Details", "Product", new { id = detail.Product_ID })" class="btn btn-block btn-outline-primary mb-lg-0">
+                                @Accountingsystem.Resources.ProductDetails.ItemDetails
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div class=''>
+            <div class="row layout-top-spacing">
+                <div class="col-md-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.Total)
+                                    </div>
+                                    <div>
+                                        @Math.Round(total, 2, MidpointRounding.AwayFromZero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @if (Model.Master_Discount > 0)
+                {
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Accountingsystem.Resources.InvoiceMasterDetails.Discount   @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero) %
+                                        </div>
+                                        <div>
+                                            @Math.Round(total * (Model.Master_Discount / 100), 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                @if (Model.Total_Tax > 0)
+                {
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.TotalTax)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.Total_Tax, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                @if (Model.OfferTaxes != null)
+                {
+                    foreach (var tax in Model.OfferTaxes)
+                    {
+                        var taxinfo = Accountingsystem.Models.Tax.GetTaxesbyId(Convert.ToInt32(tax.Tax_Id));
+                        <div class="col-md-12">
+                            <div class=''>
+                                <div class="media  d-md-flex d-block text-sm-left text-center">
+                                    <div class="media-body details-form-control mb-4">
+                                        <div class="d-xl-flex d-block justify-content-between">
+                                            <div class="">
+                                                @taxinfo.Tax_Name @taxinfo.Tax_Percentage %
+                                            </div>
+                                            <div>
+                                                @Math.Round(tax.Amount, 2, MidpointRounding.AwayFromZero)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+                @if (Model.FixedDiscount != 0 && Model.FixedDiscount != null)
+                {
+                    <div class="col-md-12">
+                        <div class=''>
+                            <div class="media  d-md-flex d-block text-sm-left text-center">
+                                <div class="media-body details-form-control mb-4">
+                                    <div class="d-xl-flex d-block justify-content-between">
+                                        <div class="">
+                                            @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.AllouwdDiscount)
+                                        </div>
+                                        <div>
+                                            @Math.Round(Model.FixedDiscount.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <div class="col-md-12">
+                    <div class=''>
+                        <div class="media  d-md-flex d-block text-sm-left text-center">
+                            <div class="media-body details-form-control mb-4">
+                                <div class="d-xl-flex d-block justify-content-between">
+                                    <div class="">
+                                        @Html.DisplayName(Accountingsystem.Resources.OfferPriceMasterDetails.FinalTotal)
+                                    </div>
+                                    @if (Model.TotaL_After_Fixed == null)
+                                    {
+
+                                        <div>
+                                            @Math.Round(Model.Total_Amount, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @Math.Round(Model.TotaL_After_Fixed.Value, 2, MidpointRounding.AwayFromZero)
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row layout-top-spacing">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="transferOfferToInvoiceBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("AddNewInvoice", new { controller = "InvoiceMaster", orderido = Model.OfferMas_Id,customerId=0 })'>
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.TransferToInvoice
+                        <span id="transferOfferToInvoiceBtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    <a id="transferToSalesReceiptBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("addnewSaleReciept", new { controller = "SalesReceiptMaster", orderid = Model.OfferMas_Id,cust_Id=0 })'>
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.TransferToCashReceipt
+                        <span id="transferToSalesReceiptBtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+                    @if (@*Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") &&*@ Model.Customer_Id != 0 && Model.Customer_Id != 0)
+                    {
+                        <a id="cutomerRepportBtn" class="btn btn-block btn-outline-info mb-lg-0"  href='@Url.Action("getListofLedgerChild", new { controller = "ReportsNew", code = customer.Customer_Code })'>
+                            @Accountingsystem.Resources.OfferPriceMasterDetails.CustomerReport
+                            <span id="cutomerRepportBtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                        </a>
+                  
+                        <a id="cutomerDetailsBtn" class="btn btn-block btn-outline-info mb-lg-0" href='@Url.Action("Details", new { controller = "Customer", id = Model.Customer_Id })'>
+                            @Accountingsystem.Resources.OfferPriceMasterDetails.CustomerDetails
+                            <span id="cutomerDetailsBtnSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a id="createNewOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("CreateOffer")'>
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.CreateNewOfferPrice
+                        <span id="createNewOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                    @*@if (Request.IsAuthenticated && !User.IsInRole("مدخل بيانات") && !User.IsInRole("بائع") && !User.IsInRole("مساعد محاسب"))
+                    {*@
+                        <a id="editOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditForOffer" , new { id = Model.OfferMas_Id ,isCopy=0})'>
+                            @Accountingsystem.Resources.OfferPriceMasterDetails.Edit
+                            <span id="editOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                        <a id="deleteOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("Delete" , new { id = Model.OfferMas_Id })'>
+                            @Accountingsystem.Resources.OfferPriceMasterDetails.Delete
+                            <span id="deleteOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    @*}*@
+
+                    <a id="copyToNewOfferBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("EditForOffer" , new { id = Model.OfferMas_Id,isCopy=1 })'>
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.CopyToNewOffer
+                        <span id="copyToNewOfferBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action(companyPrint.PrintLogo, new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.PrintEmail
+                    </a>
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("PrintOfferPricePackage", new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.PrintPackage
+                    </a>
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("proformaInvoiceEmail", new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+                        @Accountingsystem.Resources.validate.PromoformaInvoiceEmail
+                    </a>
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("proformaInvoice", new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+                        @Accountingsystem.Resources.validate.PromoformaInvoiceWhite
+                    </a>
+                    @*<a id="PrintSimple" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("PrintOfferPriceCustmize", new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+            @Accountingsystem.Resources.validate.CustomizePrinting
+
+        </a>*@
+                    <a class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action(companyPrint.printWhite, new { controller = "Reports", id = Model.OfferMas_Id })' target="_blank">
+                        @Accountingsystem.Resources.OfferPriceMasterDetails.Print
+                    </a>
+
+                    @if (Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Mail != null && Accountingsystem.Models.Customer.GetCustomerById(Model.Customer_Id).Customer_Mail != "")
+                    {
+                        <a id="sendOfferByMailBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href='@Url.Action("SendOfferPriceEmail", new { controller = "Reports", id = Model.OfferMas_Id})'>
+                            @Accountingsystem.Resources.InvoiceMasterDetails.SentCustomerEmail
+                            <span id="sendOfferByMailBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    }
+
+                    @{
+
+                        if (!string.IsNullOrEmpty(customer.Customer_Phone))
+                        {
+                            if (customer.Customer_Phone.Contains(" "))
+                            {
+                                customer.Customer_Phone = customer.Customer_Phone.Replace(" ", string.Empty);
+                            }
+                            if (customer.Customer_Phone.Contains("-"))
+                            {
+                                customer.Customer_Phone = customer.Customer_Phone.Replace("-", string.Empty);
+                            }
+                            if (customer.Customer_Phone.Contains("#"))
+                            {
+                                customer.Customer_Phone = customer.Customer_Phone.Replace("#", string.Empty);
+                            }
+                            if (!customer.Customer_Phone.StartsWith("0") && customer.Customer_Phone.Length == 9)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += customer.Customer_Phone;
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+
+                                </a>
+                            }
+
+                            if (customer.Customer_Phone.StartsWith("0") && customer.Customer_Phone.Length == 10)
+                            {
+                                var phoneNumber = "966";
+                                phoneNumber += customer.Customer_Phone.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@phoneNumber" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                </a>
+                            }
+                            if (customer.Customer_Phone.StartsWith("00") && customer.Customer_Phone.Length > 13)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                            if (customer.Customer_Phone.StartsWith("+966") && customer.Customer_Phone.Length >= 12)
+                            {
+                                customer.Customer_Phone = customer.Customer_Phone.Remove(0, 1);
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+
+                                </a>
+                            }
+                            if (customer.Customer_Phone.StartsWith("966") && customer.Customer_Phone.Length >= 12)
+                            {
+                                <a id="sendWhatsMessageBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="https://api.whatsapp.com/send?phone=@customer.Customer_Phone" target="_blank">
+
+                                    <img src="~/Image/WhatsApp.png" style="height:23px;" />
+                                </a>
+                            }
+                        }
+                    }
+                    <a id="backToListBtn" class="btn btn-block btn-outline-secondary mb-lg-0" href="@Url.Action("Index")">
+                        @Accountingsystem.Resources.InvoiceMasterDetails.BackToList
+                        <span id="backTolistBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+
+
+    <script>
+        $("#sendOfferByMailBtn").click(function (e) {
+            $("#sendOfferByMailBtnSpinner").show();
+        });
+        $("#transferToSalesReceiptBtn").click(function (e) {
+            $("#transferToSalesReceiptBtnSpinner").show();
+        });
+        $("#createNewOfferBtn").click(function (e) {
+            $("#createNewOfferBtnSpinner").show();
+        });
+        $("#transferOfferToInvoiceBtn").click(function (e) {
+            $("#transferOfferToInvoiceBtnSpinner").show();
+        });
+        $("#editOfferBtn").click(function (e) {
+            $("#editOfferBtnSpinner").show();
+        });
+        $("#deleteOfferBtn").click(function (e) {
+            $("#deleteOfferBtnSpinner").show();
+        });
+
+        $("#backToListBtn").click(function (e) {
+            $("#backTolistBtnSpinner").show();
+        });
+
+        $("#copyToNewOfferBtn").click(function (e) {
+            $("#copyToNewOfferBtnSpinner").show();
+        });
+
+        $("#cutomerRepportBtn").click(function (e) {
+            $("#cutomerRepportBtnSpinner").show();
+        });
+
+        $("#cutomerDetailsBtn").click(function (e) {
+            $("#cutomerDetailsBtnSpinner").show();
+        });
+
+    </script>
+
+
+}
+

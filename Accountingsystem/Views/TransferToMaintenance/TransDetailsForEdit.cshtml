@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Accountingsystem.Models.TransferToMaintenanceDetails>
+
+<table data-sortable="" class="table" data-sortable-initialized="true">
+    <tr>
+        <th>
+            @Html.DisplayName("الكميه")
+        </th>
+
+        <th>
+            @Html.DisplayName("اجمالي التكلفه")
+        </th>
+        <th>
+            @Html.DisplayName("رقم التحويل")
+        </th>
+        <th>
+            @Html.DisplayName(" المنتج")
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+
+            </td>
+
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Detail_Total_Cost)*@
+                @Math.Round(item.Detail_Total_Cost, 2, MidpointRounding.AwayFromZero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Batch_ID)
+            </td>
+            <td>
+                @{var Pro = Accountingsystem.Models.Product.GetProdectById(item.Product_Id).Prod_Name;
+                    <h>@Pro</h> }
+            </td>
+
+            <td>
+                <div class="col-md-offset-2 col-md-10">
+                    <a href='javascript:;' onclick="@("AddDetailToMasterss('"+item.Details_Id+"')")" class="BTN-style" style="text-decoration:none;">تعديل</a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

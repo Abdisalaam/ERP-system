@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = Accountingsystem.Resources.ReportsGetAllReports.Reports;
+    HttpCookie cookie = Request.Cookies["Language"];
+    var package = Accountingsystem.Models.Package.getAllPackage().FirstOrDefault();
+}
+
+<head>
+    @{
+
+        if (cookie != null && cookie.Value != null)
+        {
+            if (cookie.Value == "en")
+            {
+                Layout = "~/Views/Shared/_LayoutLTR.cshtml";
+
+            }
+            else
+            {
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+    }
+
+
+</head>
+
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+                    <div class="text-center">
+                        @Accountingsystem.Resources.ReportsGetAllReports.Reports
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="row col-xl-12 col-md-12 col-sm-12 col-12 text-center layout-top-spacing">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a id="salesReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("getListofLedger", "ReportsNew")'>
+                            @Accountingsystem.Resources.ReportsGetAllReports.GeneralLedger
+                            <span id="salesReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                        </a>
+                    </div>
+                </div>
+                @if (package.Number_subLedgger > 0)
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <a id="salesReturnReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("makeSubledgerReport")'>
+                                @Accountingsystem.Resources.ReportsGetAllReports.TotalCostCenterReport
+                                <span id="salesReturnReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <a id="salesClassificationReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("ReportOfSubledger", "ReportsNew")'>
+                                @Accountingsystem.Resources.ReportsGetAllReports.DetailedCostCenterReport
+                                <span id="salesClassificationReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+                @if (!User.IsInRole("بائع") && !User.IsInRole("مدخل بيانات"))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <a id="salesClassificationReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetAllReportsInvoiceSales", "Reports")'>
+                                @Accountingsystem.Resources.ReportsGetAllReportsInvoiceSales.SalesReports
+                                <span id="salesClassificationReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                }
+                @if (!User.IsInRole("مدخل بيانات"))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <a id="salesClassificationReportBtn" class="btn btn-block btn-outline-primary mb-lg-0" href='@Url.Action("GetAllReportfinancial", "Reports")'>
+                                @Accountingsystem.Resources.List.FinancialReports
+                                <span id="salesClassificationReportBtnSpinner" style="display:none;" class="spinner-border text-dark mr-2 align-self-center loader-sm"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $("#salesReportBtn").click(function (e) {
+            $("#salesReportBtnSpinner").show();
+        });
+        $("#salesReturnReportBtn").click(function (e) {
+            $("#salesReturnReportBtnSpinner").show();
+        });
+        $("#salesClassificationReportBtn").click(function (e) {
+            $("#salesClassificationReportBtnSpinner").show();
+        });
+    </script>
+}

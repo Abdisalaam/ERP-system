@@ -1,0 +1,543 @@
+﻿@model Accountingsystem.ViewModel.CustomerVM
+
+@{
+                /**/
+
+                ViewBag.Title = "AddNewInvoice";
+
+}
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Code, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Code, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerNumber>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerNumber)
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Phone, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerPhone>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerPhone)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1">*</span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerName>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerName)
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Address, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerAddress>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerAddress)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Website, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Website, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerEdit.WebsiteInformation>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerEdit.Website)
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Mail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Mail, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerEmail>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerEmail)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            @*<div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.SelectedCountryId, Model.MyCountryList, "اختر الدولة", htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اختر الدولة">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedCountryId, "اختر الدولة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>*@
+            @*<div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.SelectedProvinceId, Model.MyProvinceList, "اختر المحافظة", htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedProvinceId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اختر المحافظة">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedProvinceId, "اختر المحافظة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.Country>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.Country)
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Province, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.Governorate>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.Governorate)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            @*<div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="textfieldcont">
+                            @Html.DropDownListFor(model => model.SelectedCityId, Model.MyCitiesList, "اختر المدينة", htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                            @Html.ValidationMessageFor(model => model.SelectedCityId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <span class="required-mark col-md-1"></span>
+                    <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title="اختر المدينة">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedCityId, "اختر المدينة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+
+                </div>*@
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.City>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.City
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Fax, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Fax, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerFax>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerFax)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.DropDownListFor(model => model.Branch_Id, Model.BranchList, Accountingsystem.Resources.CustomerCreate.DropDownListSelectBranch, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                        @Html.ValidationMessageFor(model => model.Branch_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.DropDownListSelectBranch>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.DropDownListSelectBranch)
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Customer_Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer_Mobile, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerPhoneNumber>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerPhoneNumber)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.DropDownListFor(model => model.SelectSlice_Id, Model.SlicesList, Accountingsystem.Resources.CustomerCreate.DropDownListSlice, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                        @Html.ValidationMessageFor(model => model.SelectSlice_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1">*</span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.DropDownListSlice>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.DropDownListSlice)
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.DropDownListFor(model => model.Payment_Policy_Id, Model.MyPaymentPolicy, Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod, htmlAttributes: new { @class = "form-control Dropdownlist-select" })
+                        @Html.ValidationMessageFor(model => model.Payment_Policy_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.SelectPaymentMethod)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.TextBoxFor(model => model.Files, new { type = "file", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.AddAttachmentForCustomer>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.Attachments)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.customer_TaxNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.customer_TaxNumber, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                </div>
+                <span class="required-mark col-md-1"></span>
+
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.CustomerCreate.CustomerTaxNumber>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.Label(Accountingsystem.Resources.CustomerCreate.CustomerTaxNumber)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <a href='javascript:;' onclick='addCustomer();' class="btn btn-primary" style="text-decoration:none;">@Accountingsystem.Resources.CustomerCreate.CreateCustomer</a>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+
+            $(function () {
+
+                $("#SelectedCountryId").change(function (e) {
+
+                    var selectedText = $(this).find("option:selected").text();
+
+                    var selectedValue = $(this).val();
+
+                    $.ajax({
+
+                        url: '@Url.Action("GetProvinces", "Customer")',
+                        type: 'get',
+                        data: { countryId: selectedValue }
+                    }).done(function (result) {
+
+                        $("#SelectedProvinceId").empty();
+
+
+
+                        for (var i = 0; i < result.length; i++) {
+                            var item = result[i];
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#SelectedProvinceId").append(p)
+
+                        }
+                        GetAllcity();
+
+                    });
+                });
+
+                function GetAllcity() {
+
+                    var selectedValue = $("#SelectedProvinceId").val();
+
+                    $.ajax({
+
+                        url: '@Url.Action("GetCities", "Customer")',
+                        type: 'get',
+                        data: { provinceId: selectedValue }
+                    }).done(function (result) {
+
+                        $("#SelectedCityId").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var item = result[i];
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#SelectedCityId").append(p)
+
+                        }
+
+                    });
+                }
+
+                $("#SelectedProvinceId").change(function (e) {
+
+                    var selectedText = $(this).find("option:selected").text();
+
+                    var selectedValue = $(this).val();
+
+                    $.ajax({
+
+                        url: '@Url.Action("GetCities", "Customer")',
+                        type: 'get',
+                        data: { provinceId: selectedValue }
+                    }).done(function (result) {
+
+                        $("#SelectedCityId").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var item = result[i];
+                            var p = new Option(result[i].Text, result[i].Value);
+                            $("#SelectedCityId").append(p)
+
+                        }
+
+                    });
+
+
+                });
+            });
+
+
+</script>

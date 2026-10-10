@@ -1,0 +1,101 @@
+﻿@model Accountingsystem.Models.TransfareFromPorjectToStoretemp
+
+@{
+    ViewBag.Title = "DeleteTemps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeleteTemps</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TransfareFromPorjectToStoretemp</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Detail_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Price)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Product_Price)*@
+            @Math.Round(Model.Product_Price.Value, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Amount)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Total_Amount)*@
+            @Math.Round(Model.Total_Amount.Value, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Tax)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Product_Tax)*@
+            @Math.Round(Model.Product_Tax.Value, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detail_total_tax)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Detail_total_tax)*@
+            @Math.Round(Model.Detail_total_tax.Value, 2, MidpointRounding.AwayFromZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Batch_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Batch_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Master_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Master_ID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <p class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+</div>

@@ -1,0 +1,243 @@
+﻿@model Accountingsystem.ViewModel.PrintVM.PrintPurInvoiceMasterVM
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>فاتورة مشتريات </title>
+    @*<link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />*@
+</head>
+
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        @*<div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>*@
+        <div style="text-align:center; font-size:xx-large">
+            <h>فاتورة مشتريات</h>
+        </div>
+        <div style="text-align:right;color:black;font-size:xx-large;margin-bottom:25px;">
+
+            <h style="text-align:right;color:black;font-size:large;">@Model.company.Comp_Name</h>
+            <br />
+            <h style="text-align:right;color:black;font-size:large;">@Model.company.Comp_Address</h>
+            <br />
+            <h style="text-align:right;color:black;font-size:large;">@Model.company.Comp_phone</h>
+            <br />
+            <h style="text-align:right;color:black;font-size:large;">@Model.company.Comp_Email</h>
+            <br />
+            <h style="text-align:right;color:black;font-size:large;">@Model.company.Tax_Number</h>
+        </div>
+
+        <div style="text-align:right;color:black;font-size:x-large;">
+
+            <h>  اسم المورد : @Model.Supllier_Name</h>
+        </div>
+        <br />
+        <table class="table table-bordered" style="text-align:center;margin-top:0%;" data-sortable="" width="900">
+            <tr>
+                <th style="text-align:center; ">
+                    رقم الفاتورة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    التاريخ &nbsp&nbsp&nbsp&nbsp
+                </th>
+                @*<th style="text-align:center; color:darkslategrey;">
+                    المتبقى من الفاتورة &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+                <th style="text-align:center; ">
+                    تاريخ الاستحقاق &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center; ">
+                    الخصم &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    العملة &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Model.Serial_Number
+                </td>
+
+                <td>
+                    @Model.Invoice_Date
+                </td>
+                @*<td>
+                    @Model.TotalAmountAfterMatch
+                </td>*@
+                <td>
+                    @Model.Due_Date
+                </td>
+                <td>
+                  
+                    @Math.Round(Model.Master_Discount, 2, MidpointRounding.AwayFromZero)%
+                </td>
+                <td>
+                    @Model.Invoice_Currency
+                </td>
+
+            </tr>
+
+
+        </table>
+        <hr />
+        <br />
+        <table class="table table-bordered" style="text-align:center;margin-top:0%;" data-sortable="" width="900">
+            <tr>
+                <th style="text-align:center; ">
+                    المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    الكمية &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    السعر للوحدة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; ">
+                    وحدة قياس المنتج &nbsp&nbsp&nbsp&nbsp
+                </th>
+                @*<th style="text-align:center; color:darkslategrey;">
+                    الاجمالى قبل الضريبة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; color:darkslategrey;">
+                    الخصم &nbsp&nbsp&nbsp&nbsp
+                </th>
+
+                <th style="text-align:center; color:darkslategrey;">
+                    الضريبة &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center; color:darkslategrey;">
+                    اجمالى الضريبة &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+                <th style="text-align:center; ">
+                    الاجمالى &nbsp&nbsp&nbsp&nbsp
+                </th>
+            </tr>
+            @foreach (var item in Model.MyDetails)
+            {
+                <tr>
+                    <td>
+                        @item.ProductName
+                    </td>
+
+                    <td>                  
+                        @Math.Round(item.Product_Quantity, 2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+                        @Math.Round(item.Product_Price,2, MidpointRounding.AwayFromZero)
+                    </td>
+                    <td>
+                        @item.MeasureUnit
+                    </td>
+                    @*<td>
+                        @item.amountBeforeTax
+                    </td>
+                    <td>
+                        @item.discount
+                    </td>
+                    @{if (item.tax == null)
+                        {
+                            <td></td> }
+
+                        else
+                        {
+                            <td>
+                                @item.tax.Tax_Name  @item.tax.Tax_Percentage %
+
+
+                            </td>}
+
+                    }
+
+
+                    <td>
+                        @item.Detail_Total_Tax
+                    </td>*@
+                    <td>
+                        @Math.Round(item.Total_Amount,2, MidpointRounding.AwayFromZero)
+                    </td>
+                </tr>
+
+            }
+        </table>
+        <footer style="margin-top:10%;">
+            <div style="text-align:right;color:black;font-size:large;">
+                <h style="text-align:right;color:black;font-size:large;">الاجمالى  @Math.Round(Model.totalBeforeDiscount,2, MidpointRounding.AwayFromZero) </h>
+                <br />
+                <h style="text-align:right;color:black;font-size:large;">قيمه الخصم @Math.Round(Model.Masterdiscount, 2, MidpointRounding.AwayFromZero)</h>
+                <br />
+                @*<h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى بعد الخصم @Model.totalAfterdiscount</h>*@
+                <h style="text-align:right;color:black;font-size:large;">قيمه الضريبه  @Math.Round(Model.totalTax,2, MidpointRounding.AwayFromZero) </h>
+                <br />
+                <h style="text-align:right;color:black;font-size:large;">الصافى @Math.Round(Model.Total_Cost,2, MidpointRounding.AwayFromZero)</h>
+                
+                @*@{ var PaymentOfinvoice = Model.Total_Cost - Model.TotalAmountAfterMatch;
+                <h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى المدفوع من الفاتورة @PaymentOfinvoice</h>
+            }
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;"> الباقى من الفاتورة @Model.TotalAmountAfterMatch</h>*@
+                </div>
+        </footer>
+
+
+        @*<footer style="margin-top:0%;">
+            <hr />
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى قبل الخصم  @Model.totalBeforeDiscount </h>
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;">قيمه الخصم  @Model.Masterdiscount</h>
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى بعد الخصم @Model.totalAfterdiscount</h>
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;">قيمه الضريبه  @Model.totalTax</h>
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى بعد الضريبه @Model.Total_Cost</h>
+            @{ var PaymentOfinvoice = Model.Total_Cost - Model.TotalAmountAfterMatch;
+                <h style="text-align:right;margin-left:65%;color:black;font-size:large;">الاجمالى المدفوع من الفاتورة @PaymentOfinvoice</h>
+            }
+            <h style="text-align:right;margin-left:65%;color:black;font-size:large;"> الباقى من الفاتورة @Model.TotalAmountAfterMatch</h>
+        </footer>*@
+
+    </div>
+</body>
+</html>

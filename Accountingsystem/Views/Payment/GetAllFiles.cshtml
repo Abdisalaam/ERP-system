@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Accountingsystem.Models.PaymentFileDetail>
+
+@{
+    ViewBag.Title = "GetAllFiles";
+}
+
+<h2>GetAllFiles</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentPay_ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentLength)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentPay_ID)
+        </td>
+        <td>
+
+            @Html.ActionLink("Download", "ReturnPayFile", new { fileId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

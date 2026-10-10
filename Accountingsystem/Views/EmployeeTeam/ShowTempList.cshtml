@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Accountingsystem.Models.EmployeeTeamTemp>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table data-sortable="" class="table" data-sortable-initialized="true">
+                <tr>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.TeamName)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeCode)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeTeamDetails.EmployeeName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TeamID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Employee_Name)
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <a href='javascript:;' onclick="@("DeleteEmployee('"+item.EmployeeID+"')")" class="btn BTN-style" style="text-decoration:none;">@Accountingsystem.Resources.EmployeeTeamCreate.Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <input href='javascript:;' onclick='SaveTeam();' value=@Accountingsystem.Resources.EmployeeTeamCreate.SaveTeam class="btn BTN-style" style="text-decoration:none;" />
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

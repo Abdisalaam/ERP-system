@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Activity" xml:space="preserve">
+    <value>النشاط</value>
+  </data>
+  <data name="ActivityInformation" xml:space="preserve">
+    <value>اختر النشاط</value>
+  </data>
+  <data name="AddToRegulation" xml:space="preserve">
+    <value>اضافة +</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>قيمة العقد شامل الضريبة</value>
+  </data>
+  <data name="AmountInformation" xml:space="preserve">
+    <value>قيمة العقد شامل الضريبة</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>مرفقات</value>
+  </data>
+  <data name="AttachmentsInformation" xml:space="preserve">
+    <value>قم بوضع ملف بحيث لا يتعدى1ميجا والا لن يتم حفظه</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>القائمة</value>
+  </data>
+  <data name="Branch" xml:space="preserve">
+    <value>الفرع</value>
+  </data>
+  <data name="BranchInformation" xml:space="preserve">
+    <value>اختر الفرع او القسم الرئيسى</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>مركز التكلفة</value>
+  </data>
+  <data name="CostCenterInformation" xml:space="preserve">
+    <value>اختر مركز التكلفة</value>
+  </data>
+  <data name="CreateNewProject" xml:space="preserve">
+    <value>انشاء مشروع جديد</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>انشاء</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>العميل</value>
+  </data>
+  <data name="CustomerInformation" xml:space="preserve">
+    <value>اختر العميل</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>الاقسام</value>
+  </data>
+  <data name="DepartmentInformation" xml:space="preserve">
+    <value>الاقسام</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>الموظف</value>
+  </data>
+  <data name="EmployeeInformation" xml:space="preserve">
+    <value>اختر الموظف</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>تم الدفع</value>
+  </data>
+  <data name="PaymentDescription" xml:space="preserve">
+    <value>وصف الدفع</value>
+  </data>
+  <data name="PaymentDescriptionInformation" xml:space="preserve">
+    <value>وصف الدفع</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>طريقه الدفع</value>
+  </data>
+  <data name="PaymentMethodInformation" xml:space="preserve">
+    <value>حدد طريقة الدفع</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>تاريخ الدفع</value>
+  </data>
+  <data name="PaymentDateInformation" xml:space="preserve">
+    <value>تاريخ الدفع</value>
+  </data>
+  <data name="ProjectCase" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="ProjectCaseInformation" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="ProjectDescription" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="ProjectDescriptionInformation" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="ProjectDetail" xml:space="preserve">
+    <value>تفاصيل المشروع</value>
+  </data>
+  <data name="ProjectDetailInformation" xml:space="preserve">
+    <value>تفاصيل المشروع</value>
+  </data>
+  <data name="ProjectLocation" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="ProjectLocationInformation" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>المشروع</value>
+  </data>
+  <data name="ProjectNameInformation" xml:space="preserve">
+    <value>المشروع</value>
+  </data>
+  <data name="ProjectNameValidation" xml:space="preserve">
+    <value>ادخل اسم المشروع</value>
+  </data>
+  <data name="ProjectNumber" xml:space="preserve">
+    <value>رقم المشروع</value>
+  </data>
+  <data name="ProjectNumberInformation" xml:space="preserve">
+    <value>رقم المشروع</value>
+  </data>
+  <data name="ProjectsTeam" xml:space="preserve">
+    <value>فريق المشاريع</value>
+  </data>
+  <data name="ProjectsTeamInformation" xml:space="preserve">
+    <value>فريق المشاريع</value>
+  </data>
+  <data name="ProjectValueTaxed" xml:space="preserve">
+    <value>قيمة المشروع بالضرائب</value>
+  </data>
+  <data name="ProjectValueTaxedInformation" xml:space="preserve">
+    <value>قيمة المشروع</value>
+  </data>
+  <data name="ProjectValueTaxedValidation" xml:space="preserve">
+    <value>ادخل القيمة المتوقعة للمشروع</value>
+  </data>
+  <data name="RevenueAccount" xml:space="preserve">
+    <value>حساب الايراد</value>
+  </data>
+  <data name="RevenueAccountInformation" xml:space="preserve">
+    <value>حساب الايراد</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>اختر ملف</value>
+  </data>
+  <data name="StartingDate" xml:space="preserve">
+    <value>تاريخ البدء</value>
+  </data>
+  <data name="StartingDateInformation" xml:space="preserve">
+    <value>تاريخ بداية المشروع</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
+  <data name="AmountMandatory" xml:space="preserve">
+    <value>قيمة العقد شامل الضريبة الزامى</value>
+  </data>
+  <data name="CustomerMandatory" xml:space="preserve">
+    <value>العميل الزامى</value>
+  </data>
+  <data name="PaymentDateMandatory" xml:space="preserve">
+    <value>تاريخ الدفع الزامى</value>
+  </data>
+  <data name="PaymentDescriptionMandatory" xml:space="preserve">
+    <value>وصف الدفع الزامى</value>
+  </data>
+  <data name="ProjectNameMandatory" xml:space="preserve">
+    <value>اسم المشروع الزامى</value>
+  </data>
+  <data name="ProjectNumberMandatory" xml:space="preserve">
+    <value>رقم المشروع الزامى</value>
+  </data>
+  <data name="ProjectValueTaxedMandatory" xml:space="preserve">
+    <value>قيمة المشروع بالضرائب الزامى</value>
+  </data>
+  <data name="RevenueAccountMandatory" xml:space="preserve">
+    <value>حساب الايراد الزامى</value>
+  </data>
+  <data name="StartingDateMandatory" xml:space="preserve">
+    <value>تاريخ البدء الزامى</value>
+  </data>
+  <data name="AddDataToPaymentList" xml:space="preserve">
+    <value>أضف بيانات الي لائحة مبالغ الدفع</value>
+  </data>
+  <data name="CreditAccountRequiredMessage" xml:space="preserve">
+    <value>حساب الايراد الزامي</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="PaymemntFrequenceRequiredMessag" xml:space="preserve">
+    <value>مبلغ الدفعة الزامي</value>
+  </data>
+  <data name="PaymentDateRequiredMessage" xml:space="preserve">
+    <value>تاريخ الدفعة الزامي</value>
+  </data>
+  <data name="PaymentDetailsRequiredMessage" xml:space="preserve">
+    <value>تفاصيل الدفعة الزامي</value>
+  </data>
+  <data name="PaymentMethodeIsRequiredMessage" xml:space="preserve">
+    <value>طريقة الدفع الزامي</value>
+  </data>
+  <data name="ProjectAmountRequiredMessage" xml:space="preserve">
+    <value>قيمة المشروع الزامي</value>
+  </data>
+  <data name="ProjectNameRquiredMessage" xml:space="preserve">
+    <value>أسم المشروع الزامي</value>
+  </data>
+  <data name="ProjectStartDateRquiredMessage" xml:space="preserve">
+    <value>تاريخ بدأ المشروع الزامي</value>
+  </data>
+</root>

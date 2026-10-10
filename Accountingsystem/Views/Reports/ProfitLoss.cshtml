@@ -1,0 +1,154 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.Profit_LossVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ارباح وخسائر</title>
+</head>
+<body>
+    <img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            El Salam
+        </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:25px;">
+            ارباح وخسائر
+        </div>
+    </div>
+    <hr />
+
+    <div style="text-align:left;color:black;font-size:x-large;margin-bottom:20px;">
+        Income
+    </div>
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="900">
+        <caption></caption>
+            <tr>
+
+                <th class="col-md-4">
+                    Code
+                </th>
+                <th class="col-md-4">
+                    Name
+                </th>
+
+                <th class="col-md-4">
+                    Balance
+                </th>
+
+            </tr>
+        <tr>
+            <td class="col-md-4">
+               04
+            </td>
+            <td class="col-md-4">
+            الايرادات
+            </td>
+            <td class="col-md-4">
+                @Model.Total_Profit
+            </td>
+
+        </tr>
+            @foreach (var item in Model.Account_Revenue)
+            {
+
+                <tr>
+                    <td class="col-md-4">
+                        @item.Account_Code
+                    </td>
+                    <td class="col-md-4">
+                        @item.Account_Name
+                    </td>
+                    <td class="col-md-4">
+                        @item.Account_Balance
+                    </td>
+
+                </tr>
+
+            }
+    </table>
+    <hr />
+    <div style="text-align:left;color:black;font-size:xx-large;">
+        Total Income:
+        @Model.Total_Profit
+    </div>
+    <hr />
+    <div style="text-align:left;color:black;font-size:x-large;margin-bottom:20px;">
+        Expenses
+    </div>
+    <table class="table" style="text-align:center;" width="900">
+        <tr>
+            @*<th style="text-align:center;">
+                    Code &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;">
+                    Name &nbsp&nbsp&nbsp&nbsp
+                </th>
+                <th style="text-align:center;margin-left:50%;">
+                    Balance &nbsp&nbsp&nbsp&nbsp
+                </th>*@
+
+
+        </tr>
+        <tr>
+            <td class="col-md-4">
+                05
+            </td>
+            <td class="col-md-4">
+                المصروفات
+            </td>
+            <td class="col-md-4">
+                @Model.Total_Loss
+            </td>
+        </tr>
+        @foreach (var item in Model.Account_Expense)
+        {
+            <tr>
+                <td>
+                    @item.Account_Code
+                </td>
+                <td>
+                    @item.Account_Name
+                </td>
+                <td>
+                    @item.Account_Balance
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    <div style="text-align:left;color:black;font-size:xx-large;">
+        Total Expenses:
+        @Model.Total_Loss
+    </div>
+    <hr />
+    <div style="text-align:left;color:black;font-size:xx-large;">
+        NET EARNINGS:
+        @Model.Difference
+    </div>
+</body>
+</html>

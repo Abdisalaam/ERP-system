@@ -1,0 +1,194 @@
+﻿@model Accountingsystem.ViewModel.CategroyVM
+
+
+@using (Html.BeginForm("AddNewCategoryPartial", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @*<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.CategoryCreate.CreateCategory</h2>*@
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CategoryCreate.CategoryNumber)
+                                    @Html.EditorFor(model => model.Cat_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.Cat_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CategoryCreate.CategoryName)
+                                    @Html.EditorFor(model => model.Cat_Descrip, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.Cat_Descrip, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.CategoryCreate.CategoryPicture)
+                                    <label class="custom-file-container__custom-file form-control mb-4">
+                                        @Html.TextBoxFor(model => model.Cat_Img2, new { type = "file", @multiple = "multiple", @class = "custom-file-container__custom-file__custom-file-input" })
+                                        <span class="custom-file-container__custom-file__custom-file-control">@Accountingsystem.Resources.CategoryCreate.CategoryPictureInformation</span>
+                                    </label>
+                                    <div class="input-group mb-4">
+                                        <ul class="list-unstyled" id="catSelectedtFiles"></ul>
+                                    </div>
+
+                                    @Html.ValidationMessageFor(model => model.Cat_Img2, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addcat();' class="btn btn-block btn-dark mb-lg-0" style="text-decoration:none;">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create <div id="catPartialSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+}
+
+
+<script>
+    $('#Cat_Img2').change(function () {
+        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+        $('#catSelectedtFiles').empty();
+            var totalConteLength = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalConteLength += this.files[i].size;
+                if (totalConteLength > 4000000) {
+                    $('#Cat_Img2').empty();
+                    $('#catSelectedtFiles').empty();
+                    $('#catSelectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.TotalSizeOfSelectedFiles : " + totalConteLength + " " + " @Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Byte " +'</li> ');
+                    $('#catSelectedtFiles').append('<li class="addRequiredFieldToInput">' + "@Accountingsystem.Resources.CustomerCreate.MaxOfFilesSize" + '.</li> ');
+                    $(".custom-file-container__custom-file__custom-file-control").css("background-color", "red");
+                    Snackbar.show({
+                    text: "@Accountingsystem.Resources.CustomerCreate.FileSizePopupMessage",
+                        pos: 'bottom-center'
+                    });
+                    return false;
+                }
+                else {
+                    var fileName = this.files[i].name;
+                    if (fileName.length > 8) fileName = fileName.substring(0, 8);
+                    $('#catSelectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileName : " + fileName + '</li> ');
+                    $('#catSelectedtFiles').append('<li>' + "@Accountingsystem.Resources.CustomerCreate.FileLength :  " + this.files[i].size + " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li> ');
+
+
+                }
+            }
+        $('#catSelectedtFiles').append('<li>' +"@Accountingsystem.Resources.CustomerCreate.TotalSizeOfFiles : " + totalConteLength +  " "+ "@Accountingsystem.Resources.CustomerCreate.Byte" +'</li > ');
+        });
+    function addcat() {
+        debugger;
+        var Cat_Code = $("#Cat_Code").val();
+        var Cat_Descrip = $("#Cat_Descrip").val();
+        var Files = $("#Cat_Img2").val();
+        if (Cat_Descrip == "" || Cat_Descrip == null ) {
+
+            if (Cat_Descrip == "" || Cat_Descrip == null) {
+                Snackbar.show({
+                    text:"@Accountingsystem.Resources.validate.AddName",
+                    pos: 'top-center'
+                });
+                $("#Cat_Descrip").addClass("addRequiredFieldToInput");
+                $('#Cat_Descrip').trigger('focus');
+            }
+
+        }
+        else {
+            //$("#catPartialSpinner").show();
+            $('#ClassModal').modal('toggle');
+        var DataForslice;
+        DataForslice = {
+            Cat_Code: Cat_Code,
+            Cat_Descrip: Cat_Descrip,
+            Cat_Img2: Cat_Img2
+        };
+            var formData = new FormData();
+            var file = document.getElementById('Cat_Img2');
+            formData.append("Cat_Descrip", DataForslice.Cat_Descrip);
+            formData.append("Cat_Code", DataForslice.Cat_Code);
+            formData.append("Cat_Img2", DataForslice.Cat_Img2);
+            for (i = 0; i < file.files.length; i++) {
+             
+                formData.append(file.files[i].name, file.files[i]);
+            }
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewCategoryPartial", "Product")",
+                data: formData,
+                type: "post",
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.CategoryCreate.CategoryHasBeenAdded" + data,
+                        pos: 'top-center'
+                    });
+                    $("#catPartialDialogDiv").load('@(Url.Action("PartialDialog", "Product"))');
+                    $("#catPartialSpinner").hide();
+                    $.ajax({
+
+                        url: '@Url.Action("GetCategoryDropdownList", "Product")',
+                        type: 'get'
+                    }).done(function (result) {
+
+                        $("#SelectedCategory_ID").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+
+                            $("#SelectedCategory_ID").append(p);
+                            $("#SelectedCategory_ID option:last").attr("selected", "selected");
+
+                        }
+                        $('#SelectedCategory_ID').trigger('chosen:updated');
+                        $("#SelectedCategory_ID_chosen").removeClass("addRequiredFieldToInput");
+                        $('#SelectedCategory_ID_chosen span').css('background', '#ffffff');
+                        $('#SelectedCategory_ID_chosen b').css('background', '#ffffff');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+                       
+                    });
+
+
+
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.Error",
+                        pos: 'top-center'
+                    });
+                    $("#customerPartialSpinner").hide();
+                }
+         });
+        }
+
+    };
+
+
+
+</script>
+
+

@@ -1,0 +1,58 @@
+﻿@model Accountingsystem.Models.EmployeeTeam
+
+@{
+    ViewBag.Title = Accountingsystem.Resources.EmployeeTeamCreate.DeleteTeam;
+}
+
+
+
+<h3>@Accountingsystem.Resources.EmployeeTeamCreate.CancelTeam</h3>
+<div>
+    <h4>EmployeeTeam</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Team_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team_Leader_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team_Leader_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team_Leader_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team_Leader_ID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Accountingsystem.Resources.EmployeeTeamCreate.Cancel class="btn btn-primary" /> |
+            <a class="btn btn-primary" href='@Url.Action("Index")'>
+                @Accountingsystem.Resources.EmployeeTeamCreate.BackToList
+            </a>
+        </div>
+    }
+</div>

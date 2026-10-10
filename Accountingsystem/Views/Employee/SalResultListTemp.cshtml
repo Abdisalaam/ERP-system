@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Accountingsystem.Models.Salary_ComponentsTemp>
+@{
+
+    decimal total = 0;
+    decimal increase = 0;
+    decimal decrease = 0;
+}
+
+<div class="statbox widget box box-shadow">
+    <div class="table-responsive">
+        <table id="invoiceMasterDetailList" class="table table-hover">
+            <thead>
+                <tr>
+
+
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.SalarySettings)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Accountingsystem.Resources.EmployeeRoleList.Amount)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+
+
+                {
+                    var salaCop = Accountingsystem.Models.TypeOfDetailSalary.getDetailOfTypeSalaryById(item.Account_Id);
+                    if (salaCop ==null|| salaCop.Sal_Type == Accountingsystem.Models.SalaryTypeValue.يزيد_من_قيمة_اجمالى_الراتب)
+                    {
+                        increase += item.Account_Amount;
+                    }
+                    else
+                    {
+                        decrease += item.Account_Amount;
+                    }
+
+                    @Html.HiddenFor(modelItem => item.Salary_ComponentsTemp_Id)
+                    <tr>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account_Name)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Account_Amount)*@
+                            @Math.Round(item.Account_Amount, 2, MidpointRounding.AwayFromZero)
+                        </td>
+
+
+                        <td>
+                            <a href='javascript:;' onclick="@("DeleteTemp('"+item.Salary_ComponentsTemp_Id+"')")" class="bs-tooltip deleteicon" data-toggle="tooltip" data-placement="top" title="@Accountingsystem.Resources.InvoiceMasterDetails.Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                        </td>
+                    </tr>
+
+                }
+                <tr>
+
+
+                    <td>
+                        @Accountingsystem.Resources.EmployeeRoleList.TotalSalary
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Account_Amount)*@
+                        @Math.Round(increase - decrease, 2, MidpointRounding.AwayFromZero)
+                    </td>
+
+                    <td></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

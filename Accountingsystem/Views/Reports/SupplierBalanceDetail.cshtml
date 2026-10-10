@@ -1,0 +1,356 @@
+﻿@model Accountingsystem.ViewModel.ReportsVM.SupplierBalanceDetailsVM
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تفاصيل رصيد المورد</title>
+    <link href="~/Template/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    @*<img src="~/Content/Images/Logo/Logo login-01.png" alt="Image" width="70" />*@
+    <div style="width:50Px; margin-left:15px; margin-top:1%">
+        @if (Model.company.CompanyPhotoDetails.FirstOrDefault() == null)
+        {
+            <div>
+                <h style="padding-top:100px">
+                    <br /><br /><br /><br />
+                </h>
+            </div>
+        }
+        else
+        {
+            foreach (var item2 in Model.company.CompanyPhotoDetails)
+            {
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item2.ProImg)" alt="Image" style="width:100px" />
+
+            }
+        }
+    </div>
+    <div class="container">
+        <div style="text-align:left;color:black;font-size:x-large;margin-bottom:35px;">
+            @Model.company.Comp_Name
+        </div>
+        <div style="text-align:center;color:black;font-size:xx-large;margin-bottom:15px;">
+            تفاصيل رصيد المورد
+        </div>
+
+    </div>
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:15px;">
+
+        فواتير المشتريات من   :  @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1000">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الفاتورة
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ الاستحقاق
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                كود الفاتوره
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالي الفاتوره
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.PusMaster)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Supplier.Supp_Name
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Invoice_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Due_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Serial_Number
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Total_Cost,2)
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:15px;">
+
+        مردودات الفواتير الى:
+        @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ المردود
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                كود المردود
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالي المردود
+            </th>
+
+        </tr>
+        @foreach (var item in Model.RecallMaster)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+
+                    @{var SupplierName = Accountingsystem.Models.Supplier.GetSupplierById(Convert.ToInt32(item.SupplierSuppId)).Supp_Name;
+                        <h>@SupplierName</h> }
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Register_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Recall_MPurch_Serial
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Inv_TotalCost,2)
+                </td>
+            </tr>
+
+        }
+    </table>
+
+    <hr />
+
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:15px;">
+        سندات الصرف:
+        @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:right;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تارخ السند
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالي السند
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.PayList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @{var SupplierPay = Accountingsystem.Models.Supplier.GetSupplierById(Convert.ToInt32(item.Supplier_Id)).Supp_Name;
+                        <h>@SupplierPay</h> }
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Pay_Date
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Pay_Number
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.Pay_Amount,2)
+                </td>
+
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        سندات القبض العام:
+        @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ السند
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالي السند
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.CatchPaymentList)
+        {
+
+            <tr>
+                <td class="col-md-4">
+                    @{var SuplierCha = Accountingsystem.Models.Supplier.GetSupplierById(Convert.ToInt32(item.Child_AccountCredit_Id)).Supp_Name;
+                        <h>@SuplierCha</h> }
+                </td>
+                <td class="col-md-4">
+                    @item.CatchReceipt_date
+                </td>
+
+                <td class="col-md-4">
+                    @item.CatchReceipt_Code
+                </td>
+                <td class="col-md-4">
+                    @Math.Round(item.CatchReceipt_Value,2)
+                </td>
+
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        سندات القبض العام :
+        @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم المورد
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                تاريخ السند
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                كود السند
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالي السند
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model.SpentPaymentList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @{var SupplierSent = Accountingsystem.Models.Supplier.GetSupplierById(Convert.ToInt32(item.Child_AccountDebit_Id)).Supp_Name;
+                        <h>@SupplierSent</h> }
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @item.CatchReceipt_date
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @item.SpentReceipt_Code
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.SpentReceipt_Value,2)
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <hr />
+
+    <div style="text-align:right;color:black;font-size:x-large;margin-bottom:20px;">
+        اجمالى القيود اليدوية والافتتاحية  للمورد  :
+        @Model.Supplier_Name
+    </div>
+
+    <table class="table" style="text-align:center;margin-top:0%;" data-sortable="" width="1150">
+        <caption></caption>
+        <tr>
+            <th class="col-md-4" style="text-align:center">
+                اسم الحساب
+            </th>
+            <th class="col-md-4" style="text-align:center">
+                اجمالى الدائن
+            </th>
+
+            <th class="col-md-4" style="text-align:center">
+                اجمالى المدين
+            </th>
+
+
+
+        </tr>
+        @foreach (var item in Model.GLList)
+        {
+
+            <tr>
+                <td class="col-md-4" style="text-align:center">
+                    @item.Account_Name
+                </td>
+
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.GLDetail_Credit,2)
+                </td>
+                <td class="col-md-4" style="text-align:center">
+                    @Math.Round(item.GLDetail_Debit,2)
+                </td>
+
+            </tr>
+
+        }
+    </table>
+
+    <hr />
+    <div style="text-align:right;color:black;font-size:xx-large;margin-top:20%;">
+        @Model.Total_Balance : @Model.Supplier_Name اجمالى رصيد المورد
+    </div>
+</body>
+</html>

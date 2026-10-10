@@ -1,0 +1,143 @@
+﻿
+@model Accountingsystem.ViewModel.PurchaseDetailsVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Discount, new { htmlAttributes = new { @class = "textfield" } })
+ @*@Html.HiddenFor(model => model.Product_ID, new { htmlAttributes = new { @class = "textfield" } })
+    @Html.HiddenFor(model => model.AssetId, new { htmlAttributes = new { @class = "textfield" } })*@
+    @Html.HiddenFor(model => model.Details_Id, new { htmlAttributes = new { @class = "textfield" } })
+    @Html.HiddenFor(model => model.ItemDesc, new { htmlAttributes = new { @class = "textfield"} })
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Product_Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                       
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.EditQuantityOfPurchaseBill>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Product_Quantity, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                @{
+                    if (@Model.AssetId > 0)
+                    {
+
+
+                        <div class="col-md-5">
+
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.AssetId, Model.MyAssetList, Accountingsystem.Resources.PurchaseInvoiceDetails.SelectAsset, htmlAttributes: new { @class = "Dropdownlist-select" })
+                               
+                            </div>
+
+                        </div>
+
+                        <span class="required-mark col-md-1"></span>
+                        <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.EditAsset>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.Label(Accountingsystem.Resources.PurchaseInvoiceDetails.AssetName)
+                        </div>
+
+
+                    }
+                    else
+                    {
+
+                        <div class="col-md-5">
+
+                            <div class="Dropdownlist">
+                                @Html.DropDownListFor(model => model.Product_ID, Model.MyProductList, Accountingsystem.Resources.PurchaseInvoiceDetails.SelectProduct, htmlAttributes: new { @class = "Dropdownlist-select" })
+                             
+
+                            </div>
+
+                        </div>
+
+                        <span class="required-mark col-md-1"></span>
+                        <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.EditProduct>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.Label(Accountingsystem.Resources.PurchaseInvoiceDetails.ProductName)
+                        </div>
+
+
+
+
+                    }
+                }
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="textfieldcont">
+                        @Html.EditorFor(model => model.Product_Price, new { htmlAttributes = new { @class = "form-control" } })
+                       
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.EditProductPrice>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Product_Price, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="Dropdownlist">
+
+                        @Html.DropDownListFor(model => model.SelectProduct_Tax, Model.MyProduct_TaxList, Accountingsystem.Resources.PurchaseInvoiceDetails.SelectTax, htmlAttributes: new { @class = "Dropdownlist-select" })
+
+                    </div>
+                </div>
+                <span class="required-mark col-md-1"></span>
+                <div class="btn Hint col-md-1" data-toggle="tooltip" data-placement="top" title=@Accountingsystem.Resources.PurchaseInvoiceDetails.EditBillTax>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="col-md-5">
+                   
+                        @Html.LabelFor(model => model.SelectProduct_Tax, htmlAttributes: new { @class = "control-label" })
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href='javascript:;' onclick='AddOrder();' class="btn BTN-style final-BTN" style="text-decoration:none;">@Accountingsystem.Resources.PurchaseInvoiceDetails.AddToRegulation</a>
+            </div>
+        </div>
+    </div>
+</div>
+                        }
+
+

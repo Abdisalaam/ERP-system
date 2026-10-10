@@ -1,0 +1,145 @@
+﻿@model Accountingsystem.ViewModel.MeasureVM
+
+
+@using (Html.BeginForm("AddNewSlicePartial", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @*<h2 class="HEADTITLE-STYLE">@Accountingsystem.Resources.ProductEditForPending.CreateMeasruingUnit</h2>*@
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-11 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProductEditForPending.MeasruingUnitNumber)
+                                    @Html.EditorFor(model => model.MUnit_Code, new { htmlAttributes = new { @class = "form-control mb-4", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.MUnit_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label(Accountingsystem.Resources.ProductEditForPending.MeasruingUnit)
+                                    @Html.EditorFor(model => model.MUnit_Descrip, new { htmlAttributes = new { @class = "form-control mb-4" } })
+                                    @Html.ValidationMessageFor(model => model.MUnit_Descrip, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href='javascript:;' onclick='addunit();' class="btn btn-block btn-dark mb-lg-0" style="text-decoration:none;">@Accountingsystem.Resources.InvoiceMasterAddNewInvoice.Create <div id="unitPartialSpinner" style="display:none;" class="spinner-border text-primary mr-2 align-self-center loader-sm"></div></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+}
+
+
+<script>
+    function addunit() {
+        debugger;
+        var MUnit_Code = $("#MUnit_Code").val();
+        var MUnit_Descrip = $("#MUnit_Descrip").val();
+
+        if (MUnit_Descrip == "" || MUnit_Descrip == null ) {
+
+            if (MUnit_Descrip == "" || MUnit_Descrip == null) {
+                Snackbar.show({
+                    text:"@Accountingsystem.Resources.validate.AddName",
+                    pos: 'top-center'
+                });
+                $("#MUnit_Descrip").addClass("addRequiredFieldToInput");
+                $('#MUnit_Descrip').trigger('focus');
+            }
+
+        }
+        else {
+            $('#UnitModal').modal('toggle')
+            //$("#unitPartialSpinner").show();
+        var DataForslice;
+        DataForslice = {
+            MUnit_Descrip: MUnit_Descrip,
+            MUnit_Code: MUnit_Code
+
+        };
+            var formData = new FormData();
+            formData.append("MUnit_Descrip", DataForslice.MUnit_Descrip);
+            formData.append("MUnit_Code", DataForslice.MUnit_Code);
+
+
+        $.ajax(
+         {
+                url: "@Url.Action("AddNewMeasurePartial", "Product")",
+                data: formData,
+                type: "post",
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.ProductEditForPending.NewMeasruingUnitHasBeenCreated" + data,
+                        pos: 'top-center'
+                    });
+                    $("#UnitPartialDialogDiv").load('@(Url.Action("PartialDialog2", "Product"))');
+                    $("#UnitPartialSpinner").hide();
+                    $.ajax({
+
+                        url: '@Url.Action("GetMeasureDropdownList", "Product")',
+                        type: 'get'
+                    }).done(function (result) {
+
+                        $("#SelectedMeasuringUnit_ID").empty();
+
+                        for (var i = 0; i < result.length; i++) {
+                            var p = new Option(result[i].Text, result[i].Value);
+
+                            $("#SelectedMeasuringUnit_ID").append(p);
+                            $("#SelectedMeasuringUnit_ID option:last").attr("selected", "selected");
+
+                        }
+                        $('#SelectedMeasuringUnit_ID').trigger('chosen:updated');
+                        $("#SelectedMeasuringUnit_ID_chosen").removeClass("addRequiredFieldToInput");
+                        $('#SelectedMeasuringUnit_ID_chosen span').css('background', '#ffffff');
+                        $('#SelectedMeasuringUnit_ID_chosen b').css('background', '#ffffff');
+                        $(".custom-file-container__custom-file__custom-file-control").css("background-color", "#ffffff");
+                        ;
+                    });
+
+
+
+
+             },
+                error: function () {
+
+                    Snackbar.show({
+                        text: "@Accountingsystem.Resources.validate.Error",
+                        pos: 'top-center'
+                    });
+                    $("#customerPartialSpinner").hide();
+                }
+         });
+        }
+
+    };
+
+
+
+</script>

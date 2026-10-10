@@ -1,0 +1,105 @@
+﻿@model Accountingsystem.ViewModel.PaymentMethodVM
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PaymentMethod_Id)
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Payment_Type, new { htmlAttributes = new { @class = "textfield" } })
+                            @Html.ValidationMessageFor(model => model.Payment_Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Payment_Type, "اسم طريقة الدفع", htmlAttributes: new { @class = "control-label" })
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-5">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Expense_Id, Model.ExpenseList, "اختار الحساب", htmlAttributes: new { @class = "Dropdownlist-select" })
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            <label class="control-label" for="Expense_Id" style="margin-left: 60px;">حساب المصروف</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="textfieldcont">
+                            @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "textfield" } })
+                            @*@Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Percentage, "النسبة المئوية", htmlAttributes: new { @class = "control-label" })
+
+                        </div>
+                    </div>
+                </div>                          
+                    
+                 <div class="col-md-5">
+                            <div class="col-md-6">
+                                <div class="textfieldcont">
+                                    @Html.EditorFor(model => model.Operation_Cost, new { htmlAttributes = new { @class = "textfield" } })
+                                    @*@Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Operation_Cost, "قيمة المصروف فى عملية", htmlAttributes: new { @class = "control-label" })
+                                </div>
+                            </div>
+                   </div>                 
+                 
+                </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="Dropdownlist">
+                            @Html.DropDownListFor(model => model.Bank_Account_Id, Model.MyChartOfAccountList, "اختار الحساب", htmlAttributes: new { @class = "Dropdownlist-select" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Bank_Account_Id, "حساب البنك او الخزينة", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+       
+     
+
+        <div class="modal-footer">
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <a href='javascript:;' onclick='addPayment();' class="btn btn-primary" style="text-decoration:none;">انشاء طريقة دفع</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+ 
