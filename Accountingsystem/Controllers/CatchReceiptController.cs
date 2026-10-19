@@ -76,7 +76,7 @@ namespace Accountingsystem.Controllers
             }
             catch
             {
-                return View();
+                return View(CVM);
             }
         }
 
